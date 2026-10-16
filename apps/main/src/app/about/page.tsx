@@ -8,6 +8,12 @@ export const metadata = {
   title: "About | Kathleen Miller",
   description:
     "Learn more about Kathleen Miller, her research, and background.",
+  openGraph: {
+    title: "About | Kathleen Miller",
+    description:
+      "Learn more about Kathleen Miller, her research, and background.",
+    type: "website",
+  },
 };
 
 export default function AboutPage() {

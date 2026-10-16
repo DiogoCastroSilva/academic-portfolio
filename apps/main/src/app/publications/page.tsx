@@ -5,6 +5,11 @@ import { ContentCardSection } from "../ui/ContentCardSection";
 export const metadata = {
   title: "Publications | Kathleen Miller",
   description: "Research publications by Kathleen Miller.",
+  openGraph: {
+    title: "Publications | Kathleen Miller",
+    description: "Research publications by Kathleen Miller.",
+    type: "website",
+  },
 };
 
 export default function PublicationsPage() {

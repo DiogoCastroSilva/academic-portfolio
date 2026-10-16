@@ -2,6 +2,7 @@ import {
   getAllProjects,
   getProjectContentBySlug,
 } from "@katie-portfolio/projects";
+import { getDeploymentUrl } from "@katie-portfolio/content";
 import { notFound } from "next/navigation";
 import { ContentDetail } from "../../ui/ContentDetail";
 
@@ -31,13 +32,37 @@ export async function generateMetadata({ params }: ProjectPageProps) {
 
   if (!project) {
     return {
-      title: "Project Not Found | Kathleen Miller",
+      title: "Project Not Found",
+      description: "The requested project does not exist.",
     };
   }
 
+  const description = project.excerpt || `Project: ${project.title}`;
+  const deploymentUrl = getDeploymentUrl();
+  const canonical = `${deploymentUrl}/projects/${project.slug}/`;
+  const fullImageUrl = deploymentUrl
+    ? `${deploymentUrl}${project.imageSrc}`
+    : project.imageSrc;
+
   return {
-    title: `${project.title} | Kathleen Miller`,
-    description: project.excerpt || `Project: ${project.title}`,
+    title: project.title,
+    description,
+    openGraph: {
+      title: project.title,
+      description,
+      type: "article",
+      publishedTime: project.date,
+      url: canonical,
+      images: [
+        {
+          url: fullImageUrl,
+          alt: project.title,
+        },
+      ],
+    },
+    alternates: {
+      canonical,
+    },
   };
 }
 

@@ -81,9 +81,12 @@ jobs:
           echo "NEXT_PUBLIC_DEPLOYMENT_URL=$URL" >> $GITHUB_ENV
           echo "NEXT_PUBLIC_BASE_PATH=$BASE_PATH" >> $GITHUB_ENV
 
-      # ✅ Build and export Next.js app the Nx way
+            # ✅ Build and export Next.js app the Nx way
       - name: Build Next.js app
         run: npx nx build main
+
+      - name: Generate sitemap and robots.txt
+        run: npx nx run main:generate-sitemap
 
       - name: Show exported output
         run: ls -R public

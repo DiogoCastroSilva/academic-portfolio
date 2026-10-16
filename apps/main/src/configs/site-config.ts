@@ -7,6 +7,8 @@ export const siteConfig = {
   contentLicenseUrl: "https://creativecommons.org/licenses/by-nc-nd/4.0/",
   repoLicenseName: "MIT",
   repoLicenseUrl: "https://opensource.org/licenses/MIT",
+  /** Canonical deployment URL. Set by CI from GITHUB_REPOSITORY. */
+  deploymentUrl: process.env.NEXT_PUBLIC_DEPLOYMENT_URL || undefined,
   analytics: {
     cloudflare: {
       token:

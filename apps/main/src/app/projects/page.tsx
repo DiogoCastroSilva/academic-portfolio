@@ -1,9 +1,15 @@
 import { getAllProjects } from "@katie-portfolio/projects";
+
 import { ContentCardSection } from "../ui/ContentCardSection";
 
 export const metadata = {
   title: "Projects | Kathleen Miller",
   description: "Projects by Kathleen Miller.",
+  openGraph: {
+    title: "Projects | Kathleen Miller",
+    description: "Projects by Kathleen Miller.",
+    type: "website",
+  },
 };
 
 export default function ProjectsPage() {

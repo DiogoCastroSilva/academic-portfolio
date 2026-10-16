@@ -2,6 +2,7 @@ import {
   getAllPublications,
   getPublicationContentBySlug,
 } from "@katie-portfolio/publications";
+import { getDeploymentUrl } from "@katie-portfolio/content";
 import { notFound } from "next/navigation";
 import { ContentDetail } from "../../ui/ContentDetail";
 
@@ -31,13 +32,38 @@ export async function generateMetadata({ params }: PublicationPageProps) {
 
   if (!publication) {
     return {
-      title: "Publication Not Found | Kathleen Miller",
+      title: "Publication Not Found",
+      description: "The requested publication does not exist.",
     };
   }
 
+  const description =
+    publication.excerpt || `Publication: ${publication.title}`;
+  const deploymentUrl = getDeploymentUrl();
+  const canonical = `${deploymentUrl}/publications/${publication.slug}/`;
+  const fullImageUrl = deploymentUrl
+    ? `${deploymentUrl}${publication.imageSrc}`
+    : publication.imageSrc;
+
   return {
-    title: `${publication.title} | Kathleen Miller`,
-    description: publication.excerpt || `Publication: ${publication.title}`,
+    title: publication.title,
+    description,
+    openGraph: {
+      title: publication.title,
+      description,
+      type: "article",
+      publishedTime: publication.date,
+      url: canonical,
+      images: [
+        {
+          url: fullImageUrl,
+          alt: publication.title,
+        },
+      ],
+    },
+    alternates: {
+      canonical,
+    },
   };
 }
 
