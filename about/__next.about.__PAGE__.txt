@@ -5,5 +5,5 @@
 5:I[7076,["175","static/chunks/175-4f3cfb935e52b808.js","539","static/chunks/539-52f2b0aea1d2fa71.js","220","static/chunks/app/about/page-901465a7a181306d.js"],"SkillsGrid"]
 6:I[887,[],"OutletBoundary"]
 7:"$Sreact.suspense"
-0:{"rsc":["$","$1","c",{"children":[["$","main",null,{"className":"flex grow flex-col gap-6 py-8","children":[["$","$L2",null,{"email":"katie.miller6572@gmail.com"}],["$","$L3",null,{}],["$","$L4",null,{}],["$","$L5",null,{}]]}],null,["$","$L6",null,{"children":["$","$7",null,{"name":"Next.MetadataOutlet","children":"$@8"}]}]]}],"isPartial":false,"staleTime":300,"varyParams":null,"buildId":"oUVdFUFALgA6oejJJ7FIG"}
+0:{"rsc":["$","$1","c",{"children":[["$","main",null,{"className":"flex grow flex-col gap-6 py-8","children":[["$","$L2",null,{"email":"katie.miller6572@gmail.com"}],["$","$L3",null,{}],["$","$L4",null,{}],["$","$L5",null,{}]]}],null,["$","$L6",null,{"children":["$","$7",null,{"name":"Next.MetadataOutlet","children":"$@8"}]}]]}],"isPartial":false,"staleTime":300,"varyParams":null,"buildId":"_Q8DTrRRCBKseZrlzkNVu"}
 8:null
