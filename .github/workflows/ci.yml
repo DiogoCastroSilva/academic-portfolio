@@ -50,15 +50,14 @@ jobs:
   # 2️⃣ Performance audit – reusable Lighthouse CI workflow (report-only budgets)
   perf-audit:
     needs: ci
-    runs-on: ubuntu-latest
     if: github.event_name == 'push' || github.event_name == 'pull_request'
-    steps:
-      - name: Run Lighthouse CI audit
-        uses: DiogoCastroSilva/frontend-tooling/.github/workflows/performance-audit.yml@de74d79f536c1956887eb74db971e2579823faff
-        with:
-          urls: "/, /about/, /projects/first-project/"
-          artifact-name: static-site-output
-          output-dir: public
+    permissions:
+      contents: read
+    uses: DiogoCastroSilva/frontend-tooling/.github/workflows/performance-audit.yml@c291634cc6ebe0a309b58d525bcdc4a5c73195b2
+    with:
+      urls: "/, /about/, /projects/first-project/"
+      artifact-name: static-site-output
+      output-dir: public
 
   # 3️⃣ Deploy job – runs only if CI passes
   deploy:

@@ -2,33 +2,34 @@
 
 ## Overview
 
-This document records the measured before/after of the Lighthouse CI (LHCI)
-performance audit, performed against the `main` branch **before** (`07e9e2d`)
-and **after** (`55f6d0c` + HEAD) the WebP image-optimization work.
+This document records the before/after of the Lighthouse CI (LHCI) performance
+audit for the WebP image-optimization work, comparing the baseline commit
+(`07e9e2d`) against the optimized commit (`55f6d0c`) + HEAD.
 
-The audit is run automatically by the reusable workflow
-`frontend-tooling/.github/workflows/performance-audit.yml`, invoked from
-`academic-portfolio/.github/workflows/ci.yml` via the `perf-audit` job (pinned
-to commit `de74d79f536c1956887eb74db971e2579823faff`).
+> Scope: the figures below come from a measurement taken against the baseline
+> (`07e9e2d`) and optimized (`55f6d0c`) commits at the time of the optimization
+> work. They are presented from that measurement and are **not** reproduced here.
+> The continuous `perf-audit` job in `.github/workflows/ci.yml` re-runs the audit
+> on every push/PR to `main`; its live output is uploaded as the
+> `lighthouse-reports` artifact and is the authoritative evidence for HEAD.
 
 ## Methodology
 
-- Tool: `@lhci/cli@0.15.1` (Lighthouse 11).
+- Continuous audit tool (as wired in the reusable workflow
+  `frontend-tooling/.github/workflows/performance-audit.yml`): `@lhci/cli@0.15.1`.
 - Runner: `ubuntu-latest`. Chrome is preinstalled on the runner, so no separate
-  browser action (e.g. `chromatic-actions/chrome` or `browser-actions/chrome`)
-  is required.
+  browser action is required.
 - Runs per route: 3 (LHCI keeps the median to reduce noise).
 - Routes audited: `/`, `/about/`, `/projects/first-project/`.
-- Static source: the production build output (`public/`) uploaded by the `ci`
-  job as the `static-site-output` artifact (artifact mode - no duplicate build).
 - Commit points:
   - baseline = `07e9e2d` ("feat: add SEO metadata, sitemap, robots.txt, and favicon")
   - optimized = `55f6d0c` ("perf: WebP image conversion, lazy loading, and ContentImage component") + HEAD.
 
-## Measured results (per-route medians)
+## Measured results (per-route medians, baseline vs. optimized)
 
-9 reports were collected per commit point (3 runs x 3 routes); the medians below
-are the per-route values reported by LHCI.
+3 reports were collected per commit point (3 runs x 3 routes); the values below
+are the per-route medians from that measurement (baseline `07e9e2d` vs optimized
+`55f6d0c`).
 
 | Route | Metric | Before (`07e9e2d`) | After (`55f6d0c`) | Change |
 | --- | --- | ---: | ---: | ---: |
@@ -62,19 +63,26 @@ The `modern-image-formats` assertion is set to `warn` level (report-only), so it
 surfaces in the report without failing CI, and can be flipped to `error` to gate
 merges.
 
-This was verified locally: a deliberate `error`-level `largest-contentful-paint`
-budget fails the run (`lhci assert` exits 1), while the default `warn` budgets
-pass (`lhci assert` exits 0). See `perf-budgets.json` in `frontend-tooling`.
+The default budgets are `warn` (report-only), so `lhci assert` exits 0 and never
+blocks CI. A deliberate `error`-level `largest-contentful-paint` budget was
+verified to fail the run (`lhci assert` exits 1) during the reusable workflow's
+development; see `perf-budgets.json` in `frontend-tooling`.
 
 ## CI integration
 
-- The reusable workflow lives in `frontend-tooling` and is consumed by this repo's
-  `ci.yml` (`perf-audit` job). It is pinned to a commit SHA (`de74d79f...`) rather
-  than a moving tag to prevent drift.
+- The reusable workflow lives in `frontend-tooling`
+  (`.github/workflows/performance-audit.yml`, commit `c291634`) and is consumed
+  by this repo's `ci.yml` via the `perf-audit` job, which calls it at the **job
+  level** (`jobs.perf-audit.uses:`) and is pinned to commit
+  `c291634cc6ebe0a309b58d525bcdc4a5c73195b2` (not a moving tag) to prevent drift.
 - `perf-audit` runs in **artifact mode**: it downloads the `static-site-output`
   artifact produced by the `ci` job and audits it - no second build.
+- Permissions (least privilege): the `perf-audit` job and the reusable workflow
+  both declare `permissions: contents: read`. `actions/upload-artifact`
+  authenticates via the GitHub Actions runtime token (not `GITHUB_TOKEN`) and
+  needs only `contents: read`; no `actions: write` is granted.
 - `perf-audit` runs on `push` and `pull_request` to `main` only - it does NOT run
-  on `workflow_dispatch` (and is not part of the `deploy` job).
+  on `workflow_dispatch` and is not part of the `deploy` job.
 - Budgets are **report-only** (`warn`) by default (see `perf-budgets.json` in
   `frontend-tooling`), so the audit never blocks CI until a consumer opts into
   `error` thresholds.
