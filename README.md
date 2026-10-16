@@ -1,192 +1,137 @@
-# Portfolio monorepo
+# Academic Portfolio
 
-Nx workspace with a **Next.js** portfolio site. Content (projects and publications) lives in markdown files; the app is exported as static HTML for **GitHub Pages**.
+A personal academic portfolio website I'm building for my wife. It brings her research projects, publications, and professional background together in one place, with the content kept in Markdown so updates don't require changing the app itself.
 
-**Live example:** [katie-portofolio](https://diogocastrosilva.github.io/katie-portofolio/) (adjust after you fork and deploy your own copy).
+**Live site:** [Kathleen Miller's portfolio](https://diogocastrosilva.github.io/academic-portfolio/)
 
----
+This repository currently powers that site. It's not a general-purpose portfolio template at the moment; I may explore making the structure reusable later.
 
-## Prerequisites
+## Built with
 
-| Requirement | Version |
-|-------------|---------|
-| Node.js | 22.x (see `.nvmrc`) |
-| npm | 10+ |
+- **Next.js and React** for the website
+- **Nx** to organize the app and shared libraries in a monorepo
+- **TypeScript** for application code
+- **Markdown** for project and publication content
+- **Tailwind CSS** for styling
+- **GitHub Actions and GitHub Pages** for checks and deployment
+
+## Get started
+
+### Requirements
+
+- Node.js 22 (see `.nvmrc`)
+- npm 10 or newer
+
+If you use nvm, switch to the project's Node version first:
 
 ```bash
-nvm use   # if you use nvm
-node -v   # should match .nvmrc
+nvm use
 ```
 
----
-
-## Quick start (local)
+### Install and run locally
 
 ```bash
-git clone https://github.com/<you>/<your-repo>.git
-cd <your-repo>
 npm install
 npx nx run main:dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000).
 
-**Production build locally:**
+### Build the site
 
 ```bash
 npx nx build main
-# Static export is written to ./public (repo root)
 ```
 
----
+The static site output is written to the repository's `public/` directory.
 
-## Repository layout
+## Project structure
 
+```text
+apps/main/                 Next.js application and page UI
+libs/content/              Shared Markdown loading and URL helpers
+libs/projects/              Project content and cover images
+libs/publications/          Publication content and cover images
+libs/navigation/            Navigation configuration
+libs/utils/                 Shared utilities
+tools/sync-content-assets.mjs
+                            Copies content images into the public output
+.github/workflows/ci.yml   CI checks and GitHub Pages deployment
 ```
-apps/main/                 Next.js app (pages, UI, site config)
-libs/content/              Shared markdown loader + URL helpers
-libs/projects/             Project markdown + images
-libs/publications/         Publication markdown + images (TBD content)
-libs/navigation/           Header / nav links
-libs/utils/                Shared utilities (dates, etc.)
-tools/sync-content-assets.mjs   Copies cover images into the Next public folder
-.github/workflows/ci.yml   CI + GitHub Pages deploy
-```
 
-### Where to edit what
+## Updating portfolio content
 
-| What | Where |
-|------|--------|
-| Name, email, social links | `apps/main/src/configs/site-config.ts` |
+Most portfolio updates should be possible without changing the application code.
+
+| What you want to change | Where to look |
+| --- | --- |
+| Name, email, social links, and analytics settings | `apps/main/src/configs/site-config.ts` |
 | Profile photo | `apps/main/src/assets/profile.jpeg` |
-| Nav labels / routes | `libs/navigation/src/lib/feature/config.ts` |
-| Projects | `libs/projects/src/md/*.md` + images in the same folder |
-| Publications | `libs/publications/src/md/*.md` + images in the same folder |
-| About text | `apps/main/src/app/ui/AboutSection.tsx` |
+| About section text | `apps/main/src/app/ui/AboutSection.tsx` |
+| Navigation labels and routes | `libs/navigation/src/lib/feature/config.ts` |
+| Projects | `libs/projects/src/md/` |
+| Publications | `libs/publications/src/md/` |
 
-### Project / publication markdown
+### Add a project or publication
 
-Create a `.md` file in the matching `libs/*/src/md/` folder:
+Create a Markdown file in the relevant `libs/*/src/md/` directory. Use frontmatter to provide the information shown in cards:
 
 ```yaml
 ---
 title: 'Project title'
 date: '2026-02-12'
 tags: ['research']
-excerpt: 'One-line summary for cards.'
+excerpt: 'A short summary for the project card.'
 image: cover.jpg
 ---
 
-Body content here.
+Write the project or publication details here.
 ```
 
-Put `cover.jpg` in the **same folder** as the `.md` file. If there is no image, a placeholder SVG is used.
-
-After adding or changing images:
+Put the image named in `image` in the same directory as the Markdown file. If you add or change images, you can sync them manually:
 
 ```bash
 npx nx run main:sync-content-assets
 ```
 
-`main:dev` and `main:build` run this automatically.
+The development and build targets run the asset sync as part of their workflow.
 
-More detail: `libs/projects/README.md`, `libs/publications/README.md`.
+More specific notes are available in [the projects library README](libs/projects/README.md) and [the publications library README](libs/publications/README.md).
 
----
+## Checks
 
-## Environment variables
-
-No secrets are required for local dev or the default GitHub Pages pipeline.
-
-Copy `.env.example` to `apps/main/.env.local` when you need overrides.
-
-| Variable | Required | Set by | Purpose |
-|----------|----------|--------|---------|
-| `NEXT_PUBLIC_BASE_PATH` | No | You (local) or CI (deploy) | Path prefix for GitHub **project** sites, e.g. `/my-repo`. Empty for `username.github.io` repos and local dev. |
-| `NEXT_PUBLIC_DEPLOYMENT_URL` | No | CI on deploy | Canonical site URL, e.g. `https://user.github.io/my-repo`. |
-| `NEXT_PUBLIC_CLOUDFLARE_ANALYTICS_TOKEN` | No | You | Cloudflare Web Analytics token. |
-| `NEXT_PUBLIC_CLOUDFLARE_ANALYTICS_DISABLED` | No | You | Set to `true` to turn off analytics. |
-| `NX_NO_CLOUD` | No | CI workflow | Disables Nx Cloud in Actions (`true` in workflow). |
-
-**GitHub Actions secrets:** none required. Deploy uses the built-in `GITHUB_TOKEN`.
-
-**Repository variables:** none required.
-
----
-
-## GitHub Pages deployment
-
-### First-time setup (after cloning or forking)
-
-1. **Push** this repo to GitHub (default branch `main`).
-
-2. **Enable GitHub Pages**
-   - Repo → **Settings** → **Pages**
-   - **Build and deployment** → **Source**: **Deploy from a branch**
-   - **Branch**: `gh-pages` / **/(root)**
-   - Save
-
-   The deploy workflow pushes the built site to the `gh-pages` branch (`peaceiris/actions-gh-pages`).
-
-3. **Actions permissions** (usually already correct on public repos)
-   - Settings → **Actions** → **General**
-   - **Workflow permissions**: **Read and write permissions**
-
-4. **Push to `main`** (or merge a PR). The workflow runs:
-   - **CI job:** `lint`, `test`, `typecheck`, `build`
-   - **Deploy job** (only on push to `main`): builds the site and publishes to `gh-pages`
-
-5. **Open your site**
-   - Project repo: `https://<github-user>.github.io/<repo-name>/`
-   - User site repo (`<user>.github.io`): `https://<github-user>.github.io/`
-
-CI computes `NEXT_PUBLIC_BASE_PATH` and `NEXT_PUBLIC_DEPLOYMENT_URL` from the repository name so forks do not need to edit hardcoded paths.
-
-### Test GitHub Pages paths locally
+The GitHub Actions workflow runs these targets for pushes and pull requests:
 
 ```bash
-NEXT_PUBLIC_BASE_PATH=/your-repo-name npx nx build main
-# Serve ./public with any static server if needed
+npx nx run-many -t lint test typecheck build
 ```
 
-### CI workflow overview
+Deployment runs after a successful workflow on pushes to `main` (and can also be started manually). The workflow derives the GitHub Pages base path and deployment URL from the repository name, so a fork should not need those values hardcoded.
 
-File: `.github/workflows/ci.yml`
+## Environment and deployment
 
-| Job | When | What |
-|-----|------|------|
-| `ci` | Every push and PR | `npm ci` → `nx run-many -t lint test typecheck build` |
-| `deploy` | Push to `main` only | Build + publish `public/` to `gh-pages` |
+The default local setup and deployment workflow do not require secrets or repository variables. Optional settings are documented in [`.env.example`](.env.example):
 
-Workflow-level env: `NX_NO_CLOUD=true`.
+- `NEXT_PUBLIC_BASE_PATH` — path prefix for a GitHub Pages project site
+- `NEXT_PUBLIC_DEPLOYMENT_URL` — canonical deployed site URL
+- `NEXT_PUBLIC_CLOUDFLARE_ANALYTICS_TOKEN` — optional Cloudflare Web Analytics configuration
+- `NEXT_PUBLIC_CLOUDFLARE_ANALYTICS_DISABLED` — set to `true` to disable analytics
 
----
+To deploy with GitHub Pages, make sure the repository's Pages settings use the `gh-pages` branch and the workflow has permission to publish repository contents. Push or merge to `main` to trigger a deployment.
 
 ## Common commands
 
 ```bash
-npx nx run main:dev              # Dev server
-npx nx build main                # Static export → ./public
-npx nx run main:sync-content-assets
-npx nx run-many -t lint          # Lint all projects
-npx nx test                      # Tests
-npx nx format:write              # Prettier
+npx nx run main:dev                  # Start the development server
+npx nx build main                    # Build and export the site
+npx nx run main:sync-content-assets  # Copy content images
+npx nx run-many -t lint              # Lint workspace projects
+npx nx test                          # Run tests
+npx nx format:write                  # Format files
 ```
 
----
+## Notes
 
-## Troubleshooting
-
-| Problem | Fix |
-|---------|-----|
-| Cover image 404 | Run `npx nx run main:sync-content-assets` |
-| Broken links on GitHub Pages | Ensure Pages uses `gh-pages` branch; CI must set `NEXT_PUBLIC_BASE_PATH` (automatic on push to `main`) |
-| `@katie-portofolio/*` import errors | Run `npm install`; check `tsconfig.base.json` paths |
-| Deploy job skipped | Deploy only runs on **push to `main`**, not on PRs |
-| Node version errors | Use Node 22 (`nvm use`) |
-
----
-
-## License
-
-MIT — see [LICENSE](LICENSE). Site content may use separate terms; see `site-config.ts` and `TEMPLATE_USAGE.md`.
+- The source code is licensed under the [MIT License](LICENSE).
+- Portfolio content may have different reuse terms. Check the content licensing settings in `apps/main/src/configs/site-config.ts` before reusing text or images.
+- The repository name has changed to `academic-portfolio`. GitHub redirects the repository URL, but project GitHub Pages URLs are not automatically redirected when a repository is renamed; use the live-site link above for the current path. See [GitHub's repository renaming documentation](https://docs.github.com/en/repositories/creating-and-managing-repositories/renaming-a-repository).
