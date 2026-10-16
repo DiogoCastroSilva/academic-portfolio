@@ -1,4 +1,5 @@
 name: CI & Deploy
+
 on:
   workflow_dispatch:
   push:
@@ -6,7 +7,7 @@ on:
       - main
   pull_request:
 
-    # Workflow level: Available to all jobs and steps
+  # Workflow level: Available to all jobs and steps
 env:
   NX_NO_CLOUD: true
 
@@ -32,7 +33,7 @@ jobs:
       - name: Verify Nx workspace
         run: npx nx --version
 
-            - name: Run CI Tasks
+      - name: Run CI Tasks
         run: npx nx run-many -t lint test typecheck build
 
       - name: Upload build output
@@ -46,7 +47,20 @@ jobs:
         if: always()
         run: npx nx fix-ci
 
-  # 2️⃣ Deploy job – runs only if CI passes
+  # 2️⃣ Performance audit – reusable Lighthouse CI workflow (report-only budgets)
+  perf-audit:
+    needs: ci
+    runs-on: ubuntu-latest
+    if: github.event_name == 'push' || github.event_name == 'pull_request'
+    steps:
+      - name: Run Lighthouse CI audit
+        uses: DiogoCastroSilva/frontend-tooling/.github/workflows/performance-audit.yml@de74d79f536c1956887eb74db971e2579823faff
+        with:
+          urls: "/, /about/, /projects/first-project/"
+          artifact-name: static-site-output
+          output-dir: public
+
+  # 3️⃣ Deploy job – runs only if CI passes
   deploy:
     if: github.event_name == 'workflow_dispatch' || (github.event_name == 'push' && github.ref == 'refs/heads/main')
     runs-on: ubuntu-latest
@@ -98,7 +112,7 @@ jobs:
       - name: Show exported output
         run: ls -R public
 
-      # ✅ Deploy to GitHub Pages
+        # ✅ Deploy to GitHub Pages
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:

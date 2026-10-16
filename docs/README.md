@@ -13,6 +13,7 @@ Start with the document that matches your goal:
 | Deploy or reconfigure deployment                         | [operations/deployment.md](operations/deployment.md)                         |
 | Update dependencies                                      | [operations/dependency-maintenance.md](operations/dependency-maintenance.md) |
 | Troubleshoot common issues                               | [operations/troubleshooting.md](operations/troubleshooting.md)               |
+| Review Lighthouse CI performance audit results           | [performance/before-after.md](performance/before-after.md)                   |
 
 ## Architecture Decision Records
 
