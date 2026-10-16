@@ -53,7 +53,7 @@ jobs:
     if: github.event_name == 'push' || github.event_name == 'pull_request'
     permissions:
       contents: read
-    uses: DiogoCastroSilva/frontend-tooling/.github/workflows/performance-audit.yml@c291634cc6ebe0a309b58d525bcdc4a5c73195b2
+    uses: DiogoCastroSilva/frontend-tooling/.github/workflows/performance-audit.yml@3e7274ad6c4e966948e4d138a9d8713d503d0e12
     with:
       urls: "/, /about/, /projects/first-project/"
       artifact-name: static-site-output
