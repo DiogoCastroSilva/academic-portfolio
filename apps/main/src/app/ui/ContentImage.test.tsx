@@ -2,8 +2,11 @@
  * @vitest-environment happy-dom
  */
 
+import "@testing-library/jest-dom";
+
 import { cleanup, render, screen } from "@testing-library/react";
 import { afterEach, describe, expect, it } from "vitest";
+import { axe } from "vitest-axe";
 
 import type { StaticImageData } from "next/image";
 
@@ -111,6 +114,48 @@ describe("ContentImage", () => {
       render(<ContentImage src="/projects/photo.jpg" alt="" />);
       const img = screen.getByRole("presentation");
       expect(img).toHaveAttribute("alt", "");
+    });
+  });
+
+  describe("axe accessibility", () => {
+    it("has no violations with WebP picture element", async () => {
+      const { container } = render(
+        <ContentImage src="/projects/photo.jpg" alt="Project screenshot" />,
+      );
+      const results = await axe(container);
+      expect(results.violations).toHaveLength(0);
+    });
+
+    it("has no violations with SVG image", async () => {
+      const { container } = render(
+        <ContentImage src="/icons/logo.svg" alt="Company logo" />,
+      );
+      const results = await axe(container);
+      expect(results.violations).toHaveLength(0);
+    });
+
+    it("has no violations with GIF image", async () => {
+      const { container } = render(
+        <ContentImage src="/animations/demo.gif" alt="Animation demo" />,
+      );
+      const results = await axe(container);
+      expect(results.violations).toHaveLength(0);
+    });
+
+    it("has no violations with StaticImageData", async () => {
+      const staticImage: StaticImageData = {
+        src: "/images/profile.jpeg",
+        height: 200,
+        width: 200,
+        blurDataURL: "",
+        blurWidth: 0,
+        blurHeight: 0,
+      };
+      const { container } = render(
+        <ContentImage src={staticImage} alt="Profile photo" />,
+      );
+      const results = await axe(container);
+      expect(results.violations).toHaveLength(0);
     });
   });
 

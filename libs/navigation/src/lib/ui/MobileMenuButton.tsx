@@ -1,3 +1,5 @@
+"use client";
+
 type MobileMenuButtonProps = {
   isMenuOpen: boolean;
   onToggleMenu: () => void;
