@@ -1,7 +1,37 @@
-# navigation
+# @katie-portfolio/navigation
 
-This library was generated with [Nx](https://nx.dev).
+Navigation configuration and NavBar component for the portfolio site.
 
-## Running unit tests
+## Exports
 
-Run `nx test navigation` to execute the unit tests via [Vitest](https://vitest.dev/).
+- `navigation` — Array of navigation items (`{ name, href }`)
+- `NavBar` — Client-side navigation bar with mobile menu
+
+## Usage
+
+```tsx
+import { NavBar, navigation } from "@katie-portfolio/navigation";
+```
+
+The NavBar component is a client component (uses `usePathname` and `useState` hooks).
+MobileMenuButton and MobileNavLinks are client components for mobile navigation.
+
+## Configuration
+
+Navigation items are defined in `src/lib/feature/config.ts`:
+
+| Name         | Href            |
+| ------------ | --------------- |
+| Projects     | `/projects`     |
+| Publications | `/publications` |
+| About        | `/about`        |
+
+To add a new navigation item, add an entry to the `navigation` array.
+
+## Tests
+
+```bash
+npx nx run @katie-portfolio/navigation:test
+```
+
+Runs Vitest tests validating the navigation configuration structure.
