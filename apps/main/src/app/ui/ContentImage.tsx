@@ -60,15 +60,13 @@ export function ContentImage({
   // WebP variants since they're bundled by webpack. Use a plain img tag.
   if (isStaticImageData(src)) {
     return (
-      <span className={className}>
-        <img
-          src={src.src}
-          alt={alt}
-          className="h-full w-full object-cover"
-          loading={priority ? "eager" : loading}
-          sizes={sizes}
-        />
-      </span>
+      <img
+        src={src.src}
+        alt={alt}
+        className={className}
+        loading={priority ? "eager" : loading}
+        sizes={sizes}
+      />
     );
   }
 

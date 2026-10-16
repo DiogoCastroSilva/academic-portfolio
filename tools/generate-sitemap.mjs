@@ -76,7 +76,7 @@ function generateSitemap(routes) {
   const today = new Date().toISOString().split("T")[0];
   const urls = routes
     .map((route) => {
-                  const fullUrl = toFullUrl(route);
+      const fullUrl = toFullUrl(route);
       return `  <url>
     <loc>${fullUrl}</loc>
     <lastmod>${today}</lastmod>
