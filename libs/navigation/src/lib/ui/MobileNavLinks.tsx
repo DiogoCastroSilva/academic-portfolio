@@ -25,7 +25,7 @@ export function MobileNavLinks({
           key={item.name}
           href={item.href}
           aria-current={currentPath === item.href ? "page" : undefined}
-          className="block px-3 py-2 text-base font-medium hover:bg-white/5 hover:text-cyan-200 dark:text-white"
+          className="block px-3 py-2 text-base font-medium hover:bg-white/5 hover:text-cyan-200 focus-visible:bg-white/5 focus-visible:text-cyan-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cyan-500 dark:text-white"
           onClick={onNavigate}
         >
           {item.name}

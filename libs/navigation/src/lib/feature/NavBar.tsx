@@ -34,7 +34,7 @@ export function NavBar({ currentPath }: NavBarProps) {
               <Link
                 href="/"
                 aria-current={isHome ? "page" : undefined}
-                className="hover:text-cyan-200 dark:text-white"
+                className="hover:text-cyan-200 focus-visible:text-cyan-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cyan-500 dark:text-white"
               >
                 Kathleen Miller
               </Link>
@@ -47,7 +47,7 @@ export function NavBar({ currentPath }: NavBarProps) {
                   key={item.name}
                   href={item.href}
                   aria-current={activePath === item.href ? "page" : undefined}
-                  className="hover:text-cyan-200 dark:text-white"
+                  className="hover:text-cyan-200 focus-visible:text-cyan-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cyan-500 dark:text-white"
                 >
                   {item.name}
                 </Link>
