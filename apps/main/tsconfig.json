@@ -24,7 +24,8 @@
       "@katie-portfolio/projects/*": ["../../libs/projects/src/*"],
       "@katie-portfolio/publications": ["../../libs/publications/src/index.ts"],
       "@katie-portfolio/publications/*": ["../../libs/publications/src/*"],
-      "@katie-portfolio/navigation": ["../../libs/navigation/src/index.ts"]
+      "@katie-portfolio/navigation": ["../../libs/navigation/src/index.ts"],
+      "@katie-portfolio/utils": ["../../libs/utils/src/index.ts"]
     },
     "outDir": "dist",
     "tsBuildInfoFile": "dist/tsconfig.tsbuildinfo"
@@ -45,6 +46,11 @@
     "dist",
     "node_modules",
     ".next",
+    "src/**/*.test.ts",
+    "src/**/*.test.tsx",
+    "src/**/*.spec.ts",
+    "src/**/*.spec.tsx",
+    "__tests__",
     "eslint.config.js",
     "eslint.config.cjs",
     "eslint.config.mjs"

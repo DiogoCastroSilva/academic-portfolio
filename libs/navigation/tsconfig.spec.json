@@ -1,21 +1,24 @@
 {
   "extends": "../../tsconfig.base.json",
   "compilerOptions": {
+    "jsx": "preserve",
     "outDir": "./out-tsc/vitest",
     "types": [
       "vitest/globals",
       "vitest/importMeta",
       "vite/client",
       "node",
-      "vitest"
+      "vitest",
+      "react"
     ],
     "module": "nodenext",
     "moduleResolution": "nodenext",
-    "forceConsistentCasingInFileNames": true
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "noEmit": false,
+    "emitDeclarationOnly": false
   },
-  "include": [
-    "vite.config.ts",
-    "vite.config.mts",
+    "include": [
     "vitest.config.ts",
     "vitest.config.mts",
     "src/**/*.test.ts",

@@ -1,3 +1,4 @@
+import { fileURLToPath } from "node:url";
 import { defineConfig } from "vitest/config";
 
 export default defineConfig(() => ({
@@ -13,6 +14,13 @@ export default defineConfig(() => ({
     coverage: {
       reportsDirectory: "./test-output/vitest/coverage",
       provider: "v8" as const,
+    },
+  },
+  resolve: {
+    alias: {
+      "server-only": fileURLToPath(
+        new URL("../../libs/content/test/server-only-shim.ts", import.meta.url),
+      ),
     },
   },
 }));

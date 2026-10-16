@@ -17,8 +17,8 @@ export function MobileNavLinks({
   return (
     <div
       id="mobile-navigation"
-      className={`space-y-1 px-2 pt-2 pb-3 sm:px-3 ${isMenuOpen ? "block" : "hidden"} md:hidden`}
-      aria-hidden={!isMenuOpen}
+      className="space-y-1 px-2 pt-2 pb-3 sm:px-3 md:hidden"
+      hidden={!isMenuOpen}
     >
       {navigation.map((item) => (
         <Link

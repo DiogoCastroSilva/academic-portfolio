@@ -34,6 +34,16 @@
           "cwd": "{workspaceRoot}"
         }
       },
+      "test": {
+        "executor": "nx:run-commands",
+        "options": {
+          "command": "vitest run --root apps/main",
+          "cwd": "{workspaceRoot}"
+        },
+        "dependsOn": [
+          "sync-content-assets"
+        ]
+      },
       "dev": {
         "dependsOn": [
           "sync-content-assets-dev"
