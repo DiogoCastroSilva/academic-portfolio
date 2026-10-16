@@ -1,11 +1,11 @@
 import {
   getAllProjects,
   getProjectContentBySlug,
-} from '@katie-portfolio/projects';
-import { notFound } from 'next/navigation';
-import { ContentDetail } from '../../ui/ContentDetail';
+} from "@katie-portfolio/projects";
+import { notFound } from "next/navigation";
+import { ContentDetail } from "../../ui/ContentDetail";
 
-const EMPTY_SLUG = 'NON-EXISTENT-SLUG';
+const EMPTY_SLUG = "NON-EXISTENT-SLUG";
 
 interface ProjectPageProps {
   params: Promise<{ slug: string }>;
@@ -31,7 +31,7 @@ export async function generateMetadata({ params }: ProjectPageProps) {
 
   if (!project) {
     return {
-      title: 'Project Not Found | Kathleen Miller',
+      title: "Project Not Found | Kathleen Miller",
     };
   }
 

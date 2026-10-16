@@ -1,8 +1,8 @@
-'use client';
-import { motion } from 'motion/react';
-import Image from 'next/image';
+"use client";
+import { motion } from "motion/react";
+import Image from "next/image";
 
-import profileImage from '../../assets/profile.jpeg';
+import profileImage from "../../assets/profile.jpeg";
 
 const PROFILE_PIC_SIZE = 500;
 

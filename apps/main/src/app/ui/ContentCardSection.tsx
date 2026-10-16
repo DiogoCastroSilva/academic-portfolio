@@ -1,9 +1,9 @@
-'use client';
-import type { ContentMeta } from '@katie-portfolio/content';
-import { dates } from '@katie-portfolio/utils';
-import { AnimatePresence, motion } from 'motion/react';
-import Image from 'next/image';
-import Link from 'next/link';
+"use client";
+import type { ContentMeta } from "@katie-portfolio/content";
+import { dates } from "@katie-portfolio/utils";
+import { AnimatePresence, motion } from "motion/react";
+import Image from "next/image";
+import Link from "next/link";
 
 type ContentCardSectionProps = {
   heading: string;
@@ -26,7 +26,7 @@ export function ContentCardSection({
   hrefPrefix,
   limit = 6,
   tagsLimit = 2,
-  emptyMessage = 'No items to display at this time.',
+  emptyMessage = "No items to display at this time.",
 }: ContentCardSectionProps) {
   const visibleItems = items.slice(0, limit);
 

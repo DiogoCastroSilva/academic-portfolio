@@ -2,7 +2,7 @@ Template / Content reuse guidance
 
 Goal
 
-If you want others to reuse the *file and folder organization* (the project skeleton) but not the actual content (text, images, posts, etc.), there are a few pragmatic ways to express and enforce that intent.
+If you want others to reuse the _file and folder organization_ (the project skeleton) but not the actual content (text, images, posts, etc.), there are a few pragmatic ways to express and enforce that intent.
 
 Recommended approach (clean and unambiguous)
 
@@ -46,6 +46,7 @@ If you want, I can:
 - Change the repository license to a different standard license if you prefer (I can add `LICENSE` accordingly).
 
 Which would you like me to do next?
+
 - Create a `template/` folder with placeholders and an MIT license for that skeleton
 - Add header comments to content files marking them proprietary
 - Change the project license to a different standard (name the license)

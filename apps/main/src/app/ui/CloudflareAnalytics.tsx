@@ -1,8 +1,8 @@
-import Script from 'next/script';
-import { siteConfig } from '../../configs/site-config';
+import Script from "next/script";
+import { siteConfig } from "../../configs/site-config";
 
 const CLOUDFLARE_BEACON_SRC =
-  'https://static.cloudflareinsights.com/beacon.min.js';
+  "https://static.cloudflareinsights.com/beacon.min.js";
 
 function isValidCloudflareToken(token: string): boolean {
   return /^[a-f0-9]{32}$/i.test(token);

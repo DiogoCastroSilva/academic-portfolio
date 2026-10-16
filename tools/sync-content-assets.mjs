@@ -1,27 +1,27 @@
-import fs from 'fs';
-import path from 'path';
-import { fileURLToPath } from 'url';
+import fs from "fs";
+import path from "path";
+import { fileURLToPath } from "url";
 
-const root = path.join(path.dirname(fileURLToPath(import.meta.url)), '..');
+const root = path.join(path.dirname(fileURLToPath(import.meta.url)), "..");
 
 const CONTENT_SOURCES = [
   {
-    src: 'libs/projects/src/md',
-    dest: 'apps/main/public/projects',
+    src: "libs/projects/src/md",
+    dest: "apps/main/public/projects",
   },
   {
-    src: 'libs/publications/src/md',
-    dest: 'apps/main/public/publications',
+    src: "libs/publications/src/md",
+    dest: "apps/main/public/publications",
   },
 ];
 
 const IMAGE_EXTENSIONS = new Set([
-  '.jpg',
-  '.jpeg',
-  '.png',
-  '.webp',
-  '.gif',
-  '.svg',
+  ".jpg",
+  ".jpeg",
+  ".png",
+  ".webp",
+  ".gif",
+  ".svg",
 ]);
 
 function isContentImage(filename) {
@@ -49,7 +49,7 @@ for (const { src, dest } of CONTENT_SOURCES) {
   }
 
   for (const file of fs.readdirSync(destDir)) {
-    if (file === '.gitkeep' || !isContentImage(file)) {
+    if (file === ".gitkeep" || !isContentImage(file)) {
       continue;
     }
     if (!copied.has(file)) {
@@ -57,6 +57,6 @@ for (const { src, dest } of CONTENT_SOURCES) {
     }
   }
 
-  const names = [...copied].sort().join(', ') || '(none)';
+  const names = [...copied].sort().join(", ") || "(none)";
   console.log(`Synced ${path.relative(root, destDir)}: ${names}`);
 }

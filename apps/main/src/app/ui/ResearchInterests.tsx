@@ -1,42 +1,42 @@
-'use client';
-import { motion } from 'motion/react';
+"use client";
+import { motion } from "motion/react";
 
 const RESEARCH_AREAS = [
   {
-    title: 'Remote Sensing & Earth Observation',
+    title: "Remote Sensing & Earth Observation",
     description:
-      'Hyperspectral and multispectral imagery analysis for environmental monitoring and agricultural applications.',
-    icon: '🛰️',
+      "Hyperspectral and multispectral imagery analysis for environmental monitoring and agricultural applications.",
+    icon: "🛰️",
   },
   {
-    title: 'Machine Learning Applications',
+    title: "Machine Learning Applications",
     description:
-      'Developing and implementing ML models (random forests, neural networks) for classification and predictive analysis of geospatial data.',
-    icon: '🤖',
+      "Developing and implementing ML models (random forests, neural networks) for classification and predictive analysis of geospatial data.",
+    icon: "🤖",
   },
   {
-    title: 'Climate Change Mitigation',
+    title: "Climate Change Mitigation",
     description:
-      'Nature-based solutions and sustainable strategies for addressing climate change through data-driven environmental assessment.',
-    icon: '🌍',
+      "Nature-based solutions and sustainable strategies for addressing climate change through data-driven environmental assessment.",
+    icon: "🌍",
   },
   {
-    title: 'Agricultural Innovation',
+    title: "Agricultural Innovation",
     description:
-      'Using spectral analysis and EO data to improve crop monitoring, disease detection, and agricultural productivity.',
-    icon: '🌾',
+      "Using spectral analysis and EO data to improve crop monitoring, disease detection, and agricultural productivity.",
+    icon: "🌾",
   },
   {
-    title: 'Data Visualization',
+    title: "Data Visualization",
     description:
-      'Transforming complex geospatial data into compelling visual insights for stakeholder communication and decision support.',
-    icon: '📊',
+      "Transforming complex geospatial data into compelling visual insights for stakeholder communication and decision support.",
+    icon: "📊",
   },
   {
-    title: 'Interdisciplinary Collaboration',
+    title: "Interdisciplinary Collaboration",
     description:
-      'Working with agronomists, climatologists, and policy makers to bridge science and practical environmental solutions.',
-    icon: '🤝',
+      "Working with agronomists, climatologists, and policy makers to bridge science and practical environmental solutions.",
+    icon: "🤝",
   },
 ];
 

@@ -1,11 +1,11 @@
 import {
   getAllPublications,
   getPublicationContentBySlug,
-} from '@katie-portfolio/publications';
-import { notFound } from 'next/navigation';
-import { ContentDetail } from '../../ui/ContentDetail';
+} from "@katie-portfolio/publications";
+import { notFound } from "next/navigation";
+import { ContentDetail } from "../../ui/ContentDetail";
 
-const EMPTY_SLUG = 'NON-EXISTENT-SLUG';
+const EMPTY_SLUG = "NON-EXISTENT-SLUG";
 
 interface PublicationPageProps {
   params: Promise<{ slug: string }>;
@@ -31,7 +31,7 @@ export async function generateMetadata({ params }: PublicationPageProps) {
 
   if (!publication) {
     return {
-      title: 'Publication Not Found | Kathleen Miller',
+      title: "Publication Not Found | Kathleen Miller",
     };
   }
 

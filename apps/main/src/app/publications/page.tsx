@@ -1,10 +1,10 @@
-import { getAllPublications } from '@katie-portfolio/publications';
+import { getAllPublications } from "@katie-portfolio/publications";
 
-import { ContentCardSection } from '../ui/ContentCardSection';
+import { ContentCardSection } from "../ui/ContentCardSection";
 
 export const metadata = {
-  title: 'Publications | Kathleen Miller',
-  description: 'Research publications by Kathleen Miller.',
+  title: "Publications | Kathleen Miller",
+  description: "Research publications by Kathleen Miller.",
 };
 
 export default function PublicationsPage() {

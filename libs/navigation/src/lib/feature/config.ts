@@ -4,7 +4,7 @@ type NavigationItem = {
 };
 
 export const navigation: NavigationItem[] = [
-  { name: 'Projects', href: '/projects' },
-  { name: 'Publications', href: '/publications' },
-  { name: 'About', href: '/about' },
+  { name: "Projects", href: "/projects" },
+  { name: "Publications", href: "/publications" },
+  { name: "About", href: "/about" },
 ];

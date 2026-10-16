@@ -1,27 +1,27 @@
-'use client';
-import { motion } from 'motion/react';
+"use client";
+import { motion } from "motion/react";
 
 const EDUCATION = [
   {
-    degree: 'PhD in Earth & Atmospheric Sciences',
-    institution: 'Cornell University',
-    period: '2024 - Present',
-    focus: 'Remote sensing and environmental analysis',
+    degree: "PhD in Earth & Atmospheric Sciences",
+    institution: "Cornell University",
+    period: "2024 - Present",
+    focus: "Remote sensing and environmental analysis",
     details: [
-      'Focus on Earth observation applications for agricultural monitoring and climate solutions',
-      'Working with hyperspectral and multispectral satellite imagery',
-      'Collaboration with NASA DEVELOP program',
+      "Focus on Earth observation applications for agricultural monitoring and climate solutions",
+      "Working with hyperspectral and multispectral satellite imagery",
+      "Collaboration with NASA DEVELOP program",
     ],
   },
   {
-    degree: 'BSc in Science',
-    institution: 'University',
-    period: 'Completed',
-    focus: 'Foundation in environmental science and quantitative methods',
+    degree: "BSc in Science",
+    institution: "University",
+    period: "Completed",
+    focus: "Foundation in environmental science and quantitative methods",
     details: [
-      'Strong background in analytical methods and data analysis',
-      'Development of research and communication skills',
-      'Interdisciplinary approach to environmental challenges',
+      "Strong background in analytical methods and data analysis",
+      "Development of research and communication skills",
+      "Interdisciplinary approach to environmental challenges",
     ],
   },
 ];

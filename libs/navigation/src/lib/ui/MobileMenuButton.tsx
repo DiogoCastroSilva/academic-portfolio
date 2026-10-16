@@ -18,7 +18,7 @@ export function MobileMenuButton({
       >
         <span className="absolute -inset-0.5"></span>
         <span className="sr-only">
-          {isMenuOpen ? 'Close main menu' : 'Open main menu'}
+          {isMenuOpen ? "Close main menu" : "Open main menu"}
         </span>
         <svg
           viewBox="0 0 24 24"
@@ -27,7 +27,7 @@ export function MobileMenuButton({
           strokeWidth="1.5"
           data-slot="icon"
           aria-hidden="true"
-          className={`size-6 ${isMenuOpen ? 'hidden' : 'block'}`}
+          className={`size-6 ${isMenuOpen ? "hidden" : "block"}`}
         >
           <path
             d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"
@@ -42,7 +42,7 @@ export function MobileMenuButton({
           strokeWidth="1.5"
           data-slot="icon"
           aria-hidden="true"
-          className={`size-6 ${isMenuOpen ? 'block' : 'hidden'}`}
+          className={`size-6 ${isMenuOpen ? "block" : "hidden"}`}
         >
           <path
             d="M6 18 18 6M6 6l12 12"

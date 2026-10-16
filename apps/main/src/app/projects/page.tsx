@@ -1,9 +1,9 @@
-import { getAllProjects } from '@katie-portfolio/projects';
-import { ContentCardSection } from '../ui/ContentCardSection';
+import { getAllProjects } from "@katie-portfolio/projects";
+import { ContentCardSection } from "../ui/ContentCardSection";
 
 export const metadata = {
-  title: 'Projects | Kathleen Miller',
-  description: 'Projects by Kathleen Miller.',
+  title: "Projects | Kathleen Miller",
+  description: "Projects by Kathleen Miller.",
 };
 
 export default function ProjectsPage() {

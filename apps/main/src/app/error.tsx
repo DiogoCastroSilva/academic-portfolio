@@ -1,6 +1,6 @@
-'use client';
+"use client";
 
-import Link from 'next/link';
+import Link from "next/link";
 
 export default function Error({
   error,
@@ -22,6 +22,11 @@ export default function Error({
           Sorry, we couldn’t load this page. Please try again or return to the
           homepage.
         </p>
+        {process.env.NODE_ENV === "development" && error instanceof Error && (
+          <pre className="mt-4 max-w-xl text-left text-xs text-red-500">
+            {error.stack}
+          </pre>
+        )}
         <div className="mt-8 flex flex-col items-center gap-4 sm:flex-row sm:justify-center">
           <button
             type="button"

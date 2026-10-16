@@ -8,10 +8,10 @@ Create a file in `src/md/` with frontmatter:
 
 ```yaml
 ---
-title: 'Project title'
-date: '2025-11-01'
-tags: ['tag']
-excerpt: 'Short summary for cards.'
+title: "Project title"
+date: "2025-11-01"
+tags: ["tag"]
+excerpt: "Short summary for cards."
 image: my-project.jpg
 ---
 ```

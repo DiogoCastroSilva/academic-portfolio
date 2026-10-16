@@ -1,49 +1,49 @@
-'use client';
-import { motion } from 'motion/react';
+"use client";
+import { motion } from "motion/react";
 
 const SKILL_CATEGORIES = [
   {
-    category: 'Geospatial & Remote Sensing',
+    category: "Geospatial & Remote Sensing",
     skills: [
-      'ENVI/IDL',
-      'ArcGIS',
-      'Google Earth Engine',
-      'QGIS',
-      'Hyperspectral Analysis',
-      'Sentinel-2 & Landsat',
+      "ENVI/IDL",
+      "ArcGIS",
+      "Google Earth Engine",
+      "QGIS",
+      "Hyperspectral Analysis",
+      "Sentinel-2 & Landsat",
     ],
   },
   {
-    category: 'Data Science & Analysis',
+    category: "Data Science & Analysis",
     skills: [
-      'Python',
-      'R',
-      'Machine Learning',
-      'Random Forests',
-      'Statistical Analysis',
-      'Geospatial Data Processing',
+      "Python",
+      "R",
+      "Machine Learning",
+      "Random Forests",
+      "Statistical Analysis",
+      "Geospatial Data Processing",
     ],
   },
   {
-    category: 'Scientific Communication',
+    category: "Scientific Communication",
     skills: [
-      'Scientific Writing',
-      'Data Visualization',
-      'Presentations',
-      'Technical Documentation',
-      'Stakeholder Communication',
-      'Academic Publishing',
+      "Scientific Writing",
+      "Data Visualization",
+      "Presentations",
+      "Technical Documentation",
+      "Stakeholder Communication",
+      "Academic Publishing",
     ],
   },
   {
-    category: 'Soft Skills',
+    category: "Soft Skills",
     skills: [
-      'Project Management',
-      'Team Collaboration',
-      'Problem Solving',
-      'Critical Thinking',
-      'Interdisciplinary Research',
-      'Mentorship',
+      "Project Management",
+      "Team Collaboration",
+      "Problem Solving",
+      "Critical Thinking",
+      "Interdisciplinary Research",
+      "Mentorship",
     ],
   },
 ];
@@ -90,7 +90,7 @@ export const SkillsGrid = () => {
                       delay: catIndex * 0.1 + skillIndex * 0.03,
                     }}
                     viewport={{ once: true }}
-                    whileHover={{ scale: 1.05, backgroundColor: '#e0f2fe' }}
+                    whileHover={{ scale: 1.05, backgroundColor: "#e0f2fe" }}
                   >
                     {skill}
                   </motion.span>

@@ -1,8 +1,8 @@
-import Link from 'next/link';
+import Link from "next/link";
 
 export const metadata = {
-  title: 'Page Not Found | Kathleen Miller',
-  description: 'The page you are looking for does not exist.',
+  title: "Page Not Found | Kathleen Miller",
+  description: "The page you are looking for does not exist.",
 };
 
 export default function NotFound() {

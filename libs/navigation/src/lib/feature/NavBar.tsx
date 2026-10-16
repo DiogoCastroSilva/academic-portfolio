@@ -1,11 +1,11 @@
-'use client';
+"use client";
 
-import Link from 'next/link';
-import { usePathname } from 'next/navigation';
-import { useState } from 'react';
-import { MobileMenuButton } from '../ui/MobileMenuButton.js';
-import { MobileNavLinks } from '../ui/MobileNavLinks.js';
-import { navigation } from './config.js';
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { useState } from "react";
+import { MobileMenuButton } from "../ui/MobileMenuButton.js";
+import { MobileNavLinks } from "../ui/MobileNavLinks.js";
+import { navigation } from "./config.js";
 
 type NavBarProps = {
   currentPath?: string;
@@ -20,7 +20,7 @@ export function NavBar({ currentPath }: NavBarProps) {
     setIsMenuOpen((prev) => !prev);
   };
 
-  const isHome = activePath === '/' || activePath === '';
+  const isHome = activePath === "/" || activePath === "";
 
   return (
     <nav
@@ -33,7 +33,7 @@ export function NavBar({ currentPath }: NavBarProps) {
             <div className="flex shrink-0 items-center">
               <Link
                 href="/"
-                aria-current={isHome ? 'page' : undefined}
+                aria-current={isHome ? "page" : undefined}
                 className="hover:text-cyan-200 dark:text-white"
               >
                 Kathleen Miller
@@ -46,7 +46,7 @@ export function NavBar({ currentPath }: NavBarProps) {
                 <Link
                   key={item.name}
                   href={item.href}
-                  aria-current={activePath === item.href ? 'page' : undefined}
+                  aria-current={activePath === item.href ? "page" : undefined}
                   className="hover:text-cyan-200 dark:text-white"
                 >
                   {item.name}

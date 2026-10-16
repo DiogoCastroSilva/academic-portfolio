@@ -1,12 +1,12 @@
-import { NavBar } from '@katie-portfolio/navigation';
-import './global.css';
-import { CloudflareAnalytics } from './ui/CloudflareAnalytics';
-import { Footer } from './ui/Footer';
+import { NavBar } from "@katie-portfolio/navigation";
+import "./global.css";
+import { CloudflareAnalytics } from "./ui/CloudflareAnalytics";
+import { Footer } from "./ui/Footer";
 
 export const metadata = {
-  title: 'Kathleen Miller',
+  title: "Kathleen Miller",
   description:
-    'Portfolio of Kathleen Miller — science, nature-based solutions, projects, and publications.',
+    "Portfolio of Kathleen Miller — science, nature-based solutions, projects, and publications.",
 };
 
 export default function RootLayout({

@@ -1,11 +1,11 @@
-export const DEPLOYMENT_PLACEHOLDER = 'DEPLOYMENT_URL';
+export const DEPLOYMENT_PLACEHOLDER = "DEPLOYMENT_URL";
 
 function normalizeBasePath(basePath?: string): string {
-  if (!basePath?.trim() || basePath === '/') {
-    return '';
+  if (!basePath?.trim() || basePath === "/") {
+    return "";
   }
 
-  return `/${basePath.trim().replace(/^\/+|\/+$/g, '')}`;
+  return `/${basePath.trim().replace(/^\/+|\/+$/g, "")}`;
 }
 
 export function getPublicBasePath(): string {
@@ -13,7 +13,7 @@ export function getPublicBasePath(): string {
 }
 
 export function withPublicBasePath(publicPath: string): string {
-  if (!publicPath.startsWith('/')) {
+  if (!publicPath.startsWith("/")) {
     return publicPath;
   }
 

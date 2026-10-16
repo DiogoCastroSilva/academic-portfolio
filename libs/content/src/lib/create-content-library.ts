@@ -1,20 +1,20 @@
-import fs from 'fs';
-import matter from 'gray-matter';
-import { marked } from 'marked';
-import path from 'path';
-import 'server-only';
+import fs from "fs";
+import matter from "gray-matter";
+import { marked } from "marked";
+import path from "path";
+import "server-only";
 import {
   DEPLOYMENT_PLACEHOLDER,
   getDeploymentUrl,
   withPublicBasePath,
-} from './constants';
+} from "./constants";
 
 import {
   ContentItemMeta,
   ContentLibrary,
   ContentLibraryConfig,
   ContentMeta,
-} from './types';
+} from "./types";
 
 // Re-export shared types so consumers (and tests) can import them
 // from this module without knowing about the internal ./types file.
@@ -23,19 +23,19 @@ export type {
   ContentLibrary,
   ContentLibraryConfig,
   ContentMeta,
-} from './types';
+} from "./types";
 
 const IMAGE_EXTENSIONS = [
-  '.jpg',
-  '.jpeg',
-  '.png',
-  '.webp',
-  '.gif',
-  '.svg',
+  ".jpg",
+  ".jpeg",
+  ".png",
+  ".webp",
+  ".gif",
+  ".svg",
 ] as const;
 
 function resolveContentPath(mdDir: string): string {
-  return path.join(process.cwd(), '../../', mdDir);
+  return path.join(process.cwd(), "../../", mdDir);
 }
 
 function fileExistsInDir(contentPath: string, filename: string): boolean {
@@ -80,26 +80,26 @@ function validateFrontmatter(
   const errors: string[] = [];
 
   if (data.title === undefined) {
-    errors.push('`title` is required');
-  } else if (typeof data.title !== 'string') {
+    errors.push("`title` is required");
+  } else if (typeof data.title !== "string") {
     errors.push(`\`title\` must be a string, got ${typeof data.title}`);
   }
 
   if (data.date === undefined) {
-    errors.push('`date` is required');
-  } else if (typeof data.date !== 'string') {
+    errors.push("`date` is required");
+  } else if (typeof data.date !== "string") {
     errors.push(`\`date\` must be a string, got ${typeof data.date}`);
   } else if (!/^\d{4}-\d{2}-\d{2}$/.test(data.date)) {
     errors.push(`\`date\` must be in YYYY-MM-DD format, got "${data.date}"`);
   }
 
-  if (data.slug !== undefined && typeof data.slug !== 'string') {
+  if (data.slug !== undefined && typeof data.slug !== "string") {
     errors.push(`\`slug\` must be a string, got ${typeof data.slug}`);
   }
 
   if (errors.length > 0) {
     throw new Error(
-      `Invalid frontmatter in "${file}":\n  ${errors.join('\n  ')}`,
+      `Invalid frontmatter in "${file}":\n  ${errors.join("\n  ")}`,
     );
   }
 }
@@ -114,24 +114,24 @@ function toContentMeta(
   validateFrontmatter(file, data);
 
   const slug =
-    typeof data.slug === 'string' && data.slug.trim() !== ''
+    typeof data.slug === "string" && data.slug.trim() !== ""
       ? data.slug
-      : file.replace(/\.mdx?$/, '');
+      : file.replace(/\.mdx?$/, "");
 
   const image =
-    typeof data.image === 'string'
+    typeof data.image === "string"
       ? data.image
-      : typeof data.imageUrl === 'string'
+      : typeof data.imageUrl === "string"
         ? data.imageUrl
         : undefined;
 
   const tags = Array.isArray(data.tags)
-    ? data.tags.filter((t): t is string => typeof t === 'string')
+    ? data.tags.filter((t): t is string => typeof t === "string")
     : undefined;
-  const excerpt = typeof data.excerpt === 'string' ? data.excerpt : undefined;
-  const team = typeof data.team === 'string' ? data.team : undefined;
+  const excerpt = typeof data.excerpt === "string" ? data.excerpt : undefined;
+  const team = typeof data.team === "string" ? data.team : undefined;
   const links = Array.isArray(data.links)
-    ? data.links.filter((l): l is string => typeof l === 'string')
+    ? data.links.filter((l): l is string => typeof l === "string")
     : undefined;
 
   return {
@@ -165,10 +165,10 @@ export function createContentLibrary(
 
     return fs
       .readdirSync(contentPath)
-      .filter((file) => file.endsWith('.md') || file.endsWith('.mdx'))
+      .filter((file) => file.endsWith(".md") || file.endsWith(".mdx"))
       .map((file) => {
         const filePath = path.join(contentPath, file);
-        const content = fs.readFileSync(filePath, 'utf-8');
+        const content = fs.readFileSync(filePath, "utf-8");
         const { data } = matter(content);
 
         return toContentMeta(
@@ -183,17 +183,17 @@ export function createContentLibrary(
   }
 
   function getBySlug(slug: string): ContentMeta | undefined {
-    if (!slug?.trim() || typeof slug !== 'string') {
+    if (!slug?.trim() || typeof slug !== "string") {
       return undefined;
     }
 
-    for (const ext of ['.md', '.mdx'] as const) {
+    for (const ext of [".md", ".mdx"] as const) {
       const fileName = `${slug}${ext}`;
       const filePath = path.join(contentPath, fileName);
       if (!fs.existsSync(filePath)) {
         continue;
       }
-      const content = fs.readFileSync(filePath, 'utf-8');
+      const content = fs.readFileSync(filePath, "utf-8");
       const { data } = matter(content);
       return toContentMeta(
         contentPath,
@@ -210,17 +210,17 @@ export function createContentLibrary(
     slug: string,
   ): Promise<ContentItemMeta | undefined> {
     return (async () => {
-      if (!slug?.trimEnd() || typeof slug !== 'string') {
+      if (!slug?.trimEnd() || typeof slug !== "string") {
         return undefined;
       }
 
-      for (const ext of ['.md', '.mdx'] as const) {
+      for (const ext of [".md", ".mdx"] as const) {
         const fileName = `${slug}${ext}`;
         const filePath = path.join(contentPath, fileName);
         if (!fs.existsSync(filePath)) {
           continue;
         }
-        const content = fs.readFileSync(filePath, 'utf-8');
+        const content = fs.readFileSync(filePath, "utf-8");
         const { data, content: body } = matter(content);
         const meta = toContentMeta(
           contentPath,
@@ -241,7 +241,7 @@ export function createContentLibrary(
         if (deploymentUrl) {
           const ph = DEPLOYMENT_PLACEHOLDER;
           htmlBody = htmlBody.replace(
-            new RegExp(`href=("|')${ph}\\1`, 'g'),
+            new RegExp(`href=("|')${ph}\\1`, "g"),
             `href="${deploymentUrl}"`,
           );
           htmlBody = htmlBody.replace(
@@ -264,7 +264,7 @@ export function createContentLibrary(
         htmlBody = htmlBody.replace(
           /href=["'](?!https?:|mailto:|#)([^"']+)["']/g,
           (match, linkPath) =>
-            `href="${withPublicBasePath(`${config.publicPrefix}/${linkPath.replace(/^\//, '')}`)}"`,
+            `href="${withPublicBasePath(`${config.publicPrefix}/${linkPath.replace(/^\//, "")}`)}"`,
         );
 
         // Ensure external links open safely in a new tab and mark them

@@ -1,8 +1,8 @@
-import { getAllProjects } from '@katie-portfolio/projects';
-import { getAllPublications } from '@katie-portfolio/publications';
+import { getAllProjects } from "@katie-portfolio/projects";
+import { getAllPublications } from "@katie-portfolio/publications";
 
-import { AboutSection } from './ui/AboutSection';
-import { ContentCardSection } from './ui/ContentCardSection';
+import { AboutSection } from "./ui/AboutSection";
+import { ContentCardSection } from "./ui/ContentCardSection";
 
 export default function Index() {
   const projects = getAllProjects();

@@ -1,8 +1,8 @@
-'use client';
-import { motion } from 'motion/react';
-import Image from 'next/image';
+"use client";
+import { motion } from "motion/react";
+import Image from "next/image";
 
-import profileImage from '../../assets/profile.jpeg';
+import profileImage from "../../assets/profile.jpeg";
 
 const PROFILE_PIC_SIZE = 400;
 const ABOUT_CONTENT = `Highly analytical and results-oriented professional with extensive experience in optimization and network modelling, strategy development, and data analysis. Demonstrated ability to define and implement innovative processes and solutions, collaborate with diverse stakeholders, and manage complex analytical models. Passionate about developing data-driven solutions to support climate change mitigation and adaptation strategies.`;

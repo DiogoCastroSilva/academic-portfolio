@@ -63,14 +63,14 @@ tools/sync-content-assets.mjs
 
 Most portfolio updates should be possible without changing the application code.
 
-| What you want to change | Where to look |
-| --- | --- |
-| Name, email, social links, and analytics settings | `apps/main/src/configs/site-config.ts` |
-| Profile photo | `apps/main/src/assets/profile.jpeg` |
-| About section text | `apps/main/src/app/ui/AboutSection.tsx` |
-| Navigation labels and routes | `libs/navigation/src/lib/feature/config.ts` |
-| Projects | `libs/projects/src/md/` |
-| Publications | `libs/publications/src/md/` |
+| What you want to change                           | Where to look                               |
+| ------------------------------------------------- | ------------------------------------------- |
+| Name, email, social links, and analytics settings | `apps/main/src/configs/site-config.ts`      |
+| Profile photo                                     | `apps/main/src/assets/profile.jpeg`         |
+| About section text                                | `apps/main/src/app/ui/AboutSection.tsx`     |
+| Navigation labels and routes                      | `libs/navigation/src/lib/feature/config.ts` |
+| Projects                                          | `libs/projects/src/md/`                     |
+| Publications                                      | `libs/publications/src/md/`                 |
 
 ### Add a project or publication
 
@@ -78,13 +78,12 @@ Create a Markdown file in the relevant `libs/*/src/md/` directory. Use frontmatt
 
 ```yaml
 ---
-title: 'Project title'
-date: '2026-02-12'
-tags: ['research']
-excerpt: 'A short summary for the project card.'
+title: "Project title"
+date: "2026-02-12"
+tags: ["research"]
+excerpt: "A short summary for the project card."
 image: cover.jpg
 ---
-
 Write the project or publication details here.
 ```
 
