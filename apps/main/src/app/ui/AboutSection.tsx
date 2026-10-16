@@ -1,10 +1,9 @@
 "use client";
 import { motion } from "motion/react";
-import Image from "next/image";
 
 import profileImage from "../../assets/profile.jpeg";
+import { ContentImage } from "./ContentImage";
 
-const PROFILE_PIC_SIZE = 400;
 const ABOUT_CONTENT = `Highly analytical and results-oriented professional with extensive experience in optimization and network modelling, strategy development, and data analysis. Demonstrated ability to define and implement innovative processes and solutions, collaborate with diverse stakeholders, and manage complex analytical models. Passionate about developing data-driven solutions to support climate change mitigation and adaptation strategies.`;
 
 export const AboutSection = () => {
@@ -17,13 +16,12 @@ export const AboutSection = () => {
         transition={{ duration: 0.8 }}
       >
         <div className="flex flex-4 flex-col items-center gap-2 md:flex-6">
-          <Image
+          <ContentImage
             src={profileImage}
             alt="Profile picture of Kathleen Miller"
-            width={PROFILE_PIC_SIZE}
-            height={PROFILE_PIC_SIZE}
-            loading="eager"
             className="h-42 w-42 rounded-full sm:h-62 sm:w-62 md:h-30 md:w-30 lg:h-62 lg:w-62"
+            sizes="(max-width: 640px) 160px, 120px"
+            priority
           />
           <div className="flex flex-col items-center justify-center text-wrap">
             <h1 className="text-2xl font-bold lg:text-3xl">Kathleen Miller</h1>

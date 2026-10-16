@@ -2,8 +2,9 @@
 import type { ContentMeta } from "@katie-portfolio/content";
 import { dates } from "@katie-portfolio/utils";
 import { AnimatePresence, motion } from "motion/react";
-import Image from "next/image";
 import Link from "next/link";
+
+import { ContentImage } from "./ContentImage";
 
 type ContentCardSectionProps = {
   heading: string;
@@ -64,15 +65,13 @@ export function ContentCardSection({
                   className="group block rounded-lg focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-600"
                   aria-label={`Read more: ${item.title}`}
                 >
-                  <div className="relative aspect-[16/9] w-full overflow-hidden bg-stone-200 dark:bg-stone-700">
-                    <Image
+                  <div className="aspect-[16/9] w-full overflow-hidden bg-stone-200 dark:bg-stone-700">
+                    <ContentImage
                       src={item.imageSrc}
-                      alt=""
-                      loading="eager"
-                      fill
-                      aria-hidden
-                      className="object-cover transition-transform duration-500 group-hover:scale-105"
+                      alt={item.title}
+                      className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
                       sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                      priority={index < 3}
                     />
                   </div>
                   <div className="p-4">

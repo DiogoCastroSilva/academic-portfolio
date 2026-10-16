@@ -1,6 +1,6 @@
 import type { ContentItemMeta } from "@katie-portfolio/content";
 import { dates } from "@katie-portfolio/utils";
-import Image from "next/image";
+import { ContentImage } from "./ContentImage";
 
 interface ContentDetailProps {
   content: ContentItemMeta;
@@ -9,13 +9,11 @@ interface ContentDetailProps {
 export function ContentDetail({ content }: ContentDetailProps) {
   return (
     <article className="mx-auto flex w-full max-w-3xl grow flex-col gap-8 px-4 py-8">
-      <div className="relative aspect-[16/9] w-full overflow-hidden rounded-xl bg-stone-200 dark:bg-stone-700">
-        <Image
+      <div className="aspect-[16/9] w-full overflow-hidden rounded-xl bg-stone-200 dark:bg-stone-700">
+        <ContentImage
           src={content.imageSrc}
           alt={content.title}
-          fill
-          className="object-cover"
-          priority
+          className="h-full w-full object-cover"
           sizes="(max-width: 640px) 100vw, (max-width: 1024px) 90vw, 768px"
         />
       </div>

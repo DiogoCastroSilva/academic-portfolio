@@ -1,0 +1,121 @@
+import type { StaticImageData } from "next/image";
+
+/**
+ * ContentImage component.
+ *
+ * Renders images with WebP support for static-export sites.
+ * Uses <picture> element with WebP <source> and JPEG/PNG fallback.
+ * Designed for use with the `unoptimized: true` Next.js config.
+ *
+ * If a `.webp` version of the image exists alongside the original,
+ * it will be used automatically. Otherwise, falls back to the original format.
+ *
+ * Supports both string URLs (for static exports) and webpack-imported images.
+ */
+
+interface ContentImageProps {
+  src: string | StaticImageData;
+  alt: string;
+  sizes?: string;
+  className?: string;
+  priority?: boolean;
+  loading?: "lazy" | "eager";
+}
+
+/**
+ * Derive the WebP source URL from the original image path.
+ * e.g., "/projects/photo.jpeg" -> "/projects/photo.webp"
+ */
+function getWebpSrc(src: string): string | null {
+  const ext = src.substring(src.lastIndexOf("."));
+  const baseWithoutExt = src.substring(0, src.lastIndexOf("."));
+  const webpSrc = `${baseWithoutExt}.webp`;
+
+  if ([".jpg", ".jpeg", ".png"].includes(ext.toLowerCase())) {
+    return webpSrc;
+  }
+
+  // SVG and other formats already have good compression
+  return null;
+}
+
+/**
+ * Check if the src is a webpack-imported image (StaticImageData).
+ */
+function isStaticImageData(
+  src: string | StaticImageData,
+): src is StaticImageData {
+  return typeof src === "object" && src !== null;
+}
+
+export function ContentImage({
+  src,
+  alt,
+  sizes,
+  className,
+  priority = false,
+  loading = "lazy",
+}: ContentImageProps) {
+  // For webpack-imported images (like profile picture), we can't generate
+  // WebP variants since they're bundled by webpack. Use a plain img tag.
+  if (isStaticImageData(src)) {
+    return (
+      <span className={className}>
+        <img
+          src={src.src}
+          alt={alt}
+          className="h-full w-full object-cover"
+          loading={priority ? "eager" : loading}
+          sizes={sizes}
+        />
+      </span>
+    );
+  }
+
+  const webpSrc = getWebpSrc(src);
+
+  // For SVG images (already optimized), use a plain img tag
+  if (src.endsWith(".svg")) {
+    return (
+      <img
+        src={src}
+        alt={alt}
+        className={className}
+        sizes={sizes}
+        loading={priority ? "eager" : loading}
+      />
+    );
+  }
+
+  // For images with WebP variants, use <picture>
+  if (webpSrc) {
+    return (
+      <picture>
+        <source
+          srcSet={webpSrc}
+          type="image/webp"
+          // Provide sizes hint for responsive optimization
+          {...(sizes && { sizes })}
+        />
+        <img
+          src={src}
+          alt={alt}
+          className={className}
+          loading={priority ? "eager" : loading}
+          sizes={sizes}
+        />
+      </picture>
+    );
+  }
+
+  // For other formats (gif, etc.), use plain img
+  return (
+    <img
+      src={src}
+      alt={alt}
+      className={className}
+      sizes={sizes}
+      loading={priority ? "eager" : loading}
+    />
+  );
+}

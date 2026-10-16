@@ -1,10 +1,8 @@
 "use client";
 import { motion } from "motion/react";
-import Image from "next/image";
 
 import profileImage from "../../assets/profile.jpeg";
-
-const PROFILE_PIC_SIZE = 500;
+import { ContentImage } from "./ContentImage";
 
 type AboutHeroProps = {
   email: string;
@@ -27,13 +25,12 @@ export const AboutHero = ({ email }: AboutHeroProps) => {
               animate={{ scale: 1, opacity: 1 }}
               transition={{ duration: 0.6, delay: 0.2 }}
             >
-              <Image
+              <ContentImage
                 src={profileImage}
                 alt="Profile picture of Kathleen Miller"
-                width={PROFILE_PIC_SIZE}
-                height={PROFILE_PIC_SIZE}
-                loading="eager"
                 className="h-48 w-48 rounded-full sm:h-64 sm:w-64 md:h-56 md:w-56"
+                sizes="(max-width: 640px) 200px, 240px"
+                priority
               />
             </motion.div>
             <motion.div

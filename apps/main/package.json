@@ -11,7 +11,14 @@
           "cwd": "{workspaceRoot}"
         }
       },
-                                    "build": {
+      "sync-content-assets-dev": {
+        "executor": "nx:run-commands",
+        "options": {
+          "command": "SKIP_WEBP_CONVERSION=true node tools/sync-content-assets.mjs",
+          "cwd": "{workspaceRoot}"
+        }
+      },
+      "build": {
         "dependsOn": [
           "sync-content-assets",
           "^typecheck"
@@ -29,7 +36,7 @@
       },
       "dev": {
         "dependsOn": [
-          "sync-content-assets"
+          "sync-content-assets-dev"
         ],
         "options": {
           "command": "next dev --webpack"
