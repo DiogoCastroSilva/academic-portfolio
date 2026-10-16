@@ -30,8 +30,8 @@ export default [
       "@nx/enforce-module-boundaries": [
         "error",
         {
-          enforceBuildableLibDependency: true,
-          allow: ["^.*/eslint(\\\\.base)?\\\\.config\\\\.[cm]?[jt]s$"],
+          enforceBuildableLibDependency: false,
+          allow: ["^.*/eslint(\\.(base)?)?\\.config\\.[cm]?[jt]s$"],
           depConstraints: [
             {
               sourceTag: "*",

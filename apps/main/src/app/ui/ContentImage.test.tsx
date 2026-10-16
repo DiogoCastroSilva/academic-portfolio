@@ -122,20 +122,14 @@ describe("ContentImage", () => {
     });
 
     it("uses eager loading when priority is true", () => {
-      render(
-        <ContentImage src="/projects/photo.jpg" alt="Photo" priority />,
-      );
+      render(<ContentImage src="/projects/photo.jpg" alt="Photo" priority />);
       const img = screen.getByRole("img");
       expect(img).toHaveAttribute("loading", "eager");
     });
 
     it("respects custom loading attribute", () => {
       render(
-        <ContentImage
-          src="/projects/photo.jpg"
-          alt="Photo"
-          loading="eager"
-        />,
+        <ContentImage src="/projects/photo.jpg" alt="Photo" loading="eager" />,
       );
       const img = screen.getByRole("img");
       expect(img).toHaveAttribute("loading", "eager");
@@ -154,10 +148,7 @@ describe("ContentImage", () => {
 
       const picture = screen.getByRole("img").closest("picture");
       const source = picture?.querySelector("source");
-      expect(source).toHaveAttribute(
-        "sizes",
-        "(max-width: 768px) 100vw, 50vw",
-      );
+      expect(source).toHaveAttribute("sizes", "(max-width: 768px) 100vw, 50vw");
 
       const img = screen.getByRole("img");
       expect(img).toHaveAttribute("sizes", "(max-width: 768px) 100vw, 50vw");
