@@ -47,7 +47,7 @@ export default async function PublicationPage({
   const { slug } = await params;
   const publication = await getPublicationContentBySlug(slug);
 
-  if (!publication || publication.slug === EMPTY_SLUG) {
+  if (!publication) {
     notFound();
   }
 

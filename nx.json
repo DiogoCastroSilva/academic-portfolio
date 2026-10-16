@@ -6,7 +6,7 @@
       "default",
       "!{projectRoot}/**/?(*.)+(spec|test).[jt]s?(x)?(.snap)",
       "!{projectRoot}/tsconfig.spec.json",
-      "!{projectRoot}/jest.config.[jt]s",
+      "!{projectRoot}/vitest.config.[jt]s",
       "!{projectRoot}/src/test-setup.[jt]s",
       "!{projectRoot}/test-setup.[jt]s",
       "!{projectRoot}/.eslintrc.json",
@@ -42,12 +42,6 @@
       }
     },
     {
-      "plugin": "@nx/jest/plugin",
-      "options": {
-        "targetName": "test"
-      }
-    },
-    {
       "plugin": "@nx/eslint/plugin",
       "options": {
         "targetName": "lint"
@@ -73,14 +67,6 @@
       }
     }
   ],
-  "targetDefaults": {
-    "test": {
-      "dependsOn": ["^build"],
-      "options": {
-        "passWithNoTests": true
-      }
-    }
-  },
   "generators": {
     "@nx/next": {
       "application": {
@@ -90,7 +76,7 @@
     },
     "@nx/react": {
       "library": {
-        "unitTestRunner": "jest"
+        "unitTestRunner": "vitest"
       }
     }
   },

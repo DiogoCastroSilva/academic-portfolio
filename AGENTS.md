@@ -27,7 +27,7 @@ If the user wants help with fixing an error in their CI pipeline, use the follow
 
 ## Project Overview
 
-**Katie Portfolio** is a personal portfolio website built as an Nx monorepo using Next.js (App Router) with MDX support for content. The site showcases projects and publications with markdown-based content.
+**Katie Portfolio** is a personal portfolio website built as an Nx monorepo using Next.js (App Router) with markdown-based content powered by `marked`.
 
 ### Environment Requirements
 
@@ -51,12 +51,12 @@ If the user wants help with fixing an error in their CI pipeline, use the follow
 
 ## Technology Stack
 
-- **Framework**: Next.js 16.2.3 (App Router, static export for GitHub Pages)
+- **Framework**: Next.js 16.4.2 (App Router, static export for GitHub Pages)
 - **UI**: React 19, Motion (animations)
-- **Content**: MDX (@next/mdx), markdown with JSX support, frontmatter parsing
+- **Content**: Markdown with JSX support (via `marked`), frontmatter parsing
 - **Styling**: Tailwind CSS 4.2, PostCSS, Autoprefixer
-- **Build System**: Nx 22.6.5 with plugins (@nx/next, @nx/js, @nx/jest, @nx/react, @nx/vite, @nx/vitest)
-- **Testing**: Jest 30, Vitest 4.1 (vitest workspace)
+- **Build System**: Nx 22.6.5 with plugins (@nx/js, @nx/next, @nx/react, @nx/vite, @nx/vitest)
+- **Testing**: Vitest 4.1 (vitest workspace)
 - **Linting**: ESLint 9 with TypeScript, Next.js, import, and jsx-a11y plugins
 - **Code Formatting**: Prettier 3 with Tailwind CSS plugin
 
@@ -153,12 +153,11 @@ npx nx graph
 
 - **Output Mode**: Static export (`output: 'export'`) for GitHub Pages
 - **Build Output**: `distDir: '../../public'` (relative to app root)
-- **MDX Compiler**: Rust-based (`mdxRs: true`) for faster builds
 - **Transpile Packages**: Content libraries are transpiled from source
   ```javascript
-  transpilePackages: ['@katie-portofolio/content', '@katie-portofolio/projects', '@katie-portofolio/publications', '@katie-portofolio/navigation'];
+    transpilePackages: ['@katie-portofolio/content', '@katie-portofolio/projects', '@katie-portofolio/publications', '@katie-portofolio/navigation'];
   ```
-- **Page Extensions**: Supports `.ts`, `.tsx`, `.md`, `.mdx`
+- **Page Extensions**: Supports `.ts`, `.tsx`, `.md`
 - **Images**: Unoptimized (GitHub Pages compatible), SVG support enabled
 - **Routing**: Trailing slashes enabled for GitHub Pages compatibility
 - **Turbopack**: Configured with workspace root

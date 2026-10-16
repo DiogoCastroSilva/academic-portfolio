@@ -3,7 +3,6 @@
 const path = require('path');
 const { PHASE_DEVELOPMENT_SERVER } = require('next/constants');
 const { composePlugins, withNx } = require('@nx/next');
-const createMDX = require('@next/mdx');
 
 const basePath = process.env.NEXT_PUBLIC_BASE_PATH ?? '';
 const assetPrefix = basePath ? `${basePath.replace(/\/$/, '')}/` : '';
@@ -23,10 +22,7 @@ const createNextConfig = (phase) => ({
     '@katie-portofolio/publications',
     '@katie-portofolio/navigation',
   ],
-  pageExtensions: ['ts', 'tsx', 'md', 'mdx'],
-  experimental: {
-    mdxRs: true, // use Rust-based MDX compiler (faster)
-  },
+  pageExtensions: ['ts', 'tsx', 'md'],
   images: {
     unoptimized: true,
     dangerouslyAllowSVG: true,
@@ -42,17 +38,9 @@ const createNextConfig = (phase) => ({
   nx: {},
 });
 
-const withMDX = createMDX({
-  options: {
-    remarkPlugins: [],
-    rehypePlugins: [],
-  },
-});
-
 const plugins = [
   // Add more Next.js plugins to this list if needed.
   withNx,
-  withMDX,
 ];
 
 /**

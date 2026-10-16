@@ -29,7 +29,7 @@ export async function generateMetadata({ params }: ProjectPageProps) {
   const { slug } = await params;
   const project = await getProjectContentBySlug(slug);
 
-  if (!project || project.slug === EMPTY_SLUG) {
+  if (!project) {
     return {
       title: 'Project Not Found | Kathleen Miller',
     };
@@ -45,7 +45,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
   const { slug } = await params;
   const project = await getProjectContentBySlug(slug);
 
-  if (!project || project.slug === EMPTY_SLUG) {
+  if (!project) {
     notFound();
   }
 

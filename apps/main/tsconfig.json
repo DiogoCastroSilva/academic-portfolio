@@ -16,6 +16,7 @@
         "name": "next"
       }
     ],
+    "types": ["node"],
     "paths": {
       "@/*": ["./src/*"],
       "@katie-portofolio/content": ["../../libs/content/src/index.ts"],
@@ -27,7 +28,6 @@
       "@katie-portofolio/publications/*": ["../../libs/publications/src/*"],
       "@katie-portofolio/navigation": ["../../libs/navigation/src/index.ts"]
     },
-    "types": ["jest", "node"],
     "outDir": "dist",
     "tsBuildInfoFile": "dist/tsconfig.tsbuildinfo"
   },
@@ -46,9 +46,6 @@
     "out-tsc",
     "dist",
     "node_modules",
-    "jest.config.ts",
-    "src/**/*.spec.ts",
-    "src/**/*.test.ts",
     ".next",
     "eslint.config.js",
     "eslint.config.cjs",
