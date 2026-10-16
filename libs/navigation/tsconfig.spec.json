@@ -16,7 +16,8 @@
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
     "noEmit": false,
-    "emitDeclarationOnly": false
+        "emitDeclarationOnly": false,
+    "lib": ["dom", "es2022"]
   },
     "include": [
     "vitest.config.ts",

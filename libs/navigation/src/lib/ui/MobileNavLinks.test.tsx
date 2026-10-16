@@ -27,7 +27,15 @@ vi.mock("next/link", () => ({
   }: {
     children: React.ReactNode;
     href: string;
-    "aria-current"?: string;
+    "aria-current"?:
+      | "page"
+      | "step"
+      | "location"
+      | "date"
+      | "time"
+      | "true"
+      | "false"
+      | boolean;
     className?: string;
     onClick?: () => void;
   }) {
