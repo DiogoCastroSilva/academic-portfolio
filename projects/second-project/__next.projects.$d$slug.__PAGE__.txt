@@ -1,6 +1,0 @@
-1:"$Sreact.fragment"
-2:I[4530,["175","static/chunks/175-4f3cfb935e52b808.js","419","static/chunks/app/projects/%5Bslug%5D/page-bf2e6410ed53e467.js"],"ContentDetail"]
-3:I[887,[],"OutletBoundary"]
-4:"$Sreact.suspense"
-0:{"rsc":["$","$1","c",{"children":[["$","main",null,{"className":"mx-4 flex grow flex-col rounded-2xl dark:bg-sky-50","children":["$","$L2",null,{"content":{"slug":"second-project","title":"Monitoring harmful algal blooms on the South Florida Coast","date":"2026-06-01","tags":[],"excerpt":"Coastal monitoring and analysis of harmful algal bloom events.","imageSrc":"/academic-portfolio/projects/project-placeholder.svg","body":"<p>Welcome to my <strong>portfolio</strong>! This project is written in Markdown.</p>\n"}}]}],null,["$","$L3",null,{"children":["$","$4",null,{"name":"Next.MetadataOutlet","children":"$@5"}]}]]}],"isPartial":false,"staleTime":300,"varyParams":null,"buildId":"_Q8DTrRRCBKseZrlzkNVu"}
-5:null

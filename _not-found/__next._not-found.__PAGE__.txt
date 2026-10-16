@@ -1,6 +1,60 @@
 1:"$Sreact.fragment"
-2:I[5587,["825","static/chunks/825-b044cae44aaa2fc2.js","345","static/chunks/app/not-found-269dd47aebc62934.js"],""]
-3:I[887,[],"OutletBoundary"]
-4:"$Sreact.suspense"
-0:{"rsc":["$","$1","c",{"children":[["$","main",null,{"className":"mx-auto flex min-h-[calc(100vh-6rem)] flex-col items-center justify-center px-4 py-16 text-center","children":["$","div",null,{"className":"rounded-3xl bg-white p-10 shadow-sm ring-1 ring-slate-200 dark:bg-slate-900 dark:ring-slate-700","children":[["$","p",null,{"className":"text-sm font-semibold tracking-[0.3em] text-sky-600 uppercase","children":"404"}],["$","h1",null,{"className":"mt-4 text-4xl font-bold tracking-tight text-slate-900 dark:text-white","children":"Page not found"}],["$","p",null,{"className":"mt-4 max-w-xl text-base leading-7 text-slate-600 dark:text-slate-300","children":"The page you are looking for does not exist or has been moved. Please check the URL or return to the homepage."}],["$","$L2",null,{"href":"/","className":"mt-8 inline-flex rounded-full bg-slate-900 px-6 py-3 text-sm font-semibold text-white transition hover:bg-slate-700 dark:bg-slate-100 dark:text-slate-900 dark:hover:bg-slate-200","children":"Return home"}]]}]}],null,["$","$L3",null,{"children":["$","$4",null,{"name":"Next.MetadataOutlet","children":"$@5"}]}]]}],"isPartial":false,"staleTime":300,"varyParams":null,"buildId":"_Q8DTrRRCBKseZrlzkNVu"}
-5:null
+2:"static/chunks/825-a3f277ac8b65eed1.js"
+3:"static/chunks/app/layout-a5c02f477f7a848d.js"
+4:I[1128,["825","$2","177","$3"],"NavBar"]
+5:I[9630,[],""]
+6:"static/chunks/app/error-3c0470826599f6b7.js"
+7:I[6009,["825","$2","39","$6"],"default"]
+8:I[1380,[],""]
+9:"static/chunks/app/not-found-269dd47aebc62934.js"
+a:I[5587,["825","$2","345","$9"],""]
+b:I[594,["825","$2","177","$3"],""]
+17:"ViewportBoundary"
+18:I[887,[],"$17"]
+19:"MetadataBoundary"
+1a:I[887,[],"$19"]
+1b:"$Sreact.suspense"
+:HL["/academic-portfolio/_next/static/css/f6710fb65ac84c07.css","style"]
+d:X
+10:X
+10:C
+11:[["children",{"s":"__PAGE__","h":160,"d":{"r":["$","$1","c",{"children":[["$","main",null,{"className":"mx-auto flex min-h-[calc(100vh-6rem)] flex-col items-center justify-center px-4 py-16 text-center","children":["$","div",null,{"className":"rounded-3xl bg-white p-10 shadow-sm ring-1 ring-slate-200 dark:bg-slate-900 dark:ring-slate-700","children":[["$","p",null,{"className":"text-sm font-semibold tracking-[0.3em] text-sky-600 uppercase","children":"404"}],"$L12","$L13","$L14"]}]}],null,"$L15"]}],"p":"$@16","v":null,"s":"$d"}}]]
+e:[["children",{"s":"_not-found","h":96,"d":{"r":["$","$1","c",{"children":[null,["$","$L5",null,{"parallelRouterKey":"children","template":["$","$L8",null,{}]}]]}],"p":"$@f","v":"$10","s":"$d"},"c":"$Q11"}]]
+0:{"t":{"t":{"s":"","h":80,"d":{"r":["$","$1","c",{"children":[[["$","link","0",{"rel":"stylesheet","href":"/academic-portfolio/_next/static/css/f6710fb65ac84c07.css","precedence":"next"}]],["$","html",null,{"lang":"en","suppressHydrationWarning":true,"children":["$","body",null,{"suppressHydrationWarning":true,"className":"min-h-full bg-stone-100 dark:bg-slate-800","children":[["$","div",null,{"className":"flex min-h-full flex-col","children":[["$","$L4",null,{}],["$","main",null,{"className":"flex-1","children":["$","$L5",null,{"parallelRouterKey":"children","error":"$7","errorStyles":[],"errorScripts":null,"template":["$","$L8",null,{}],"notFound":[["$","main",null,{"className":"mx-auto flex min-h-[calc(100vh-6rem)] flex-col items-center justify-center px-4 py-16 text-center","children":["$","div",null,{"className":"rounded-3xl bg-white p-10 shadow-sm ring-1 ring-slate-200 dark:bg-slate-900 dark:ring-slate-700","children":[["$","p",null,{"className":"text-sm font-semibold tracking-[0.3em] text-sky-600 uppercase","children":"404"}],["$","h1",null,{"className":"mt-4 text-4xl font-bold tracking-tight text-slate-900 dark:text-white","children":"Page not found"}],["$","p",null,{"className":"mt-4 max-w-xl text-base leading-7 text-slate-600 dark:text-slate-300","children":"The page you are looking for does not exist or has been moved. Please check the URL or return to the homepage."}],["$","$La",null,{"href":"/","className":"mt-8 inline-flex rounded-full bg-slate-900 px-6 py-3 text-sm font-semibold text-white transition hover:bg-slate-700 dark:bg-slate-100 dark:text-slate-900 dark:hover:bg-slate-200","children":"Return home"}]]}]}],[]]}]}],["$","footer",null,{"className":"py-4","children":["$","div",null,{"className":"mx-auto flex w-full max-w-6xl flex-col gap-4 px-4 sm:px-6 dark:text-white","children":["$","div",null,{"className":"flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between","children":[["$","p",null,{"className":"text-sm leading-6","children":["© ",2026," ","Kathleen Miller",". Licensed under"," ",["$","a",null,{"href":"https://creativecommons.org/licenses/by-nc-nd/4.0/","target":"_blank","rel":"noopener noreferrer","className":"underline transition-colors duration-200 hover:text-slate-900 dark:hover:text-slate-100","children":"CC BY-NC-ND 4.0"}],". Code licensed under"," ",["$","a",null,{"href":"https://opensource.org/licenses/MIT","target":"_blank","rel":"noopener noreferrer","className":"underline transition-colors duration-200 hover:text-slate-900 dark:hover:text-slate-100","children":"MIT"}],"."]}],["$","div",null,{"className":"flex flex-wrap gap-4 text-sm","children":[["$","a",null,{"href":"https://www.linkedin.com/in/kathleen-rose-miller/","target":"_blank","rel":"noopener noreferrer","className":"underline transition-colors duration-200 hover:text-slate-900 dark:hover:text-slate-100","children":"LinkedIn"}],["$","a",null,{"href":"https://github.com/kathleen-miller","target":"_blank","rel":"noopener noreferrer","className":"underline transition-colors duration-200 hover:text-slate-900 dark:hover:text-slate-100","children":"GitHub"}],["$","a",null,{"href":"mailto:katie.miller6572@gmail.com","className":"underline transition-colors duration-200 hover:text-slate-900 dark:hover:text-slate-100","children":"Email"}]]}]]}]}]}]]}],["$","$Lb",null,{"id":"cloudflare-web-analytics","src":"https://static.cloudflareinsights.com/beacon.min.js","strategy":"afterInteractive","data-cf-beacon":"{\"token\":\"613324dfdf5043a19a5a8f040a7b180b\"}"}]]}]}]]}],"p":"$@c","v":null,"s":"$d"},"c":"$Qe"},"h":{"r":["$","$1","h",{"children":[["$","meta",null,{"name":"robots","content":"noindex"}],["$","$L18",null,{"children":[["$","meta","0",{"charSet":"utf-8"}],["$","meta","1",{"name":"viewport","content":"width=device-width, initial-scale=1"}]]}],["$","$L1a",null,{"children":[["$","div",null,{"hidden":true,"children":["$","$1b",null,{"name":"Next.Metadata","children":[["$","title","0",{"children":"Page Not Found | Kathleen Miller | Kathleen Miller"}],["$","meta","1",{"name":"description","content":"The page you are looking for does not exist."}],["$","meta","2",{"name":"robots","content":"index, follow"}],["$","meta","3",{"name":"googlebot","content":"index, follow"}],"$L1c","$L1d","$L1e","$L1f","$L20","$L21","$L22","$L23","$L24","$L25","$L26","$L27","$L28","$L29","$L2a","$L2b","$L2c","$L2d","$L2e","$L2f","$L30","$L31"]}]}],null]}],null]}],"p":"$@32","v":null,"s":"$d"}},"a":"$@33","u":"$@34","b":"ghv1vX8VWSScQwDOthem5"}
+35:I[887,[],"OutletBoundary"]
+37:I[214,[],"IconMark"]
+12:["$","h1",null,{"className":"mt-4 text-4xl font-bold tracking-tight text-slate-900 dark:text-white","children":"Page not found"}]
+13:["$","p",null,{"className":"mt-4 max-w-xl text-base leading-7 text-slate-600 dark:text-slate-300","children":"The page you are looking for does not exist or has been moved. Please check the URL or return to the homepage."}]
+14:["$","$La",null,{"href":"/","className":"mt-8 inline-flex rounded-full bg-slate-900 px-6 py-3 text-sm font-semibold text-white transition hover:bg-slate-700 dark:bg-slate-100 dark:text-slate-900 dark:hover:bg-slate-200","children":"Return home"}]
+15:["$","$L35",null,{"children":["$","$1b",null,{"name":"Next.MetadataOutlet","children":"$@36"}]}]
+1c:["$","link","4",{"rel":"canonical","href":"https://DiogoCastroSilva.github.io/academic-portfolio/"}]
+1d:["$","meta","5",{"property":"og:title","content":"Kathleen Miller"}]
+1e:["$","meta","6",{"property":"og:description","content":"Portfolio of Kathleen Miller — science, nature-based solutions, projects, and publications."}]
+1f:["$","meta","7",{"property":"og:url","content":"https://DiogoCastroSilva.github.io/academic-portfolio/"}]
+20:["$","meta","8",{"property":"og:site_name","content":"Kathleen Miller"}]
+21:["$","meta","9",{"property":"og:locale","content":"en_US"}]
+22:["$","meta","10",{"property":"og:image","content":"https://diogocastrosilva.github.io/academic-portfolio/images/og-image.svg"}]
+23:["$","meta","11",{"property":"og:image:width","content":"1200"}]
+24:["$","meta","12",{"property":"og:image:height","content":"630"}]
+25:["$","meta","13",{"property":"og:image:alt","content":"Kathleen Miller — Portfolio"}]
+26:["$","meta","14",{"property":"og:type","content":"website"}]
+27:["$","meta","15",{"name":"twitter:card","content":"summary_large_image"}]
+28:["$","meta","16",{"name":"twitter:title","content":"Kathleen Miller"}]
+29:["$","meta","17",{"name":"twitter:description","content":"Portfolio of Kathleen Miller — science, nature-based solutions, projects, and publications."}]
+2a:["$","meta","18",{"name":"twitter:image","content":"https://diogocastrosilva.github.io/academic-portfolio/images/og-image.svg"}]
+2b:["$","meta","19",{"name":"twitter:image:alt","content":"Kathleen Miller — Portfolio"}]
+2c:["$","meta","20",{"name":"twitter:image:width","content":"1200"}]
+2d:["$","meta","21",{"name":"twitter:image:height","content":"630"}]
+2e:["$","link","22",{"rel":"icon","href":"/favicon.ico"}]
+2f:["$","link","23",{"rel":"icon","href":"/favicon.svg","type":"image/svg+xml"}]
+30:["$","link","24",{"rel":"apple-touch-icon","href":"/favicon.svg","type":"image/svg+xml"}]
+31:["$","$L37","25",{}]
+d:300
+36:null
+34:true
+d:C
+33:0
+f:"$undefined"
+c:"$undefined"
+32:"$undefined"
+16:"$undefined"

@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://DiogoCastroSilva.github.io/academic-portfolio/sitemap.xml

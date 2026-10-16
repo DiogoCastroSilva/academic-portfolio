@@ -1,2 +1,5 @@
-:HL["/academic-portfolio/_next/static/css/9957a1518a9ff741.css","style"]
-0:{"tree":{"name":"","param":null,"prefetchHints":16,"slots":{"children":{"name":"projects","param":null,"prefetchHints":0,"slots":{"children":{"name":"slug","param":{"type":"d","key":"first-project","siblings":null},"prefetchHints":0,"slots":{"children":{"name":"__PAGE__","param":null,"prefetchHints":0,"slots":null}}}}}}},"staleTime":300,"buildId":"_Q8DTrRRCBKseZrlzkNVu"}
+:HL["/academic-portfolio/_next/static/css/f6710fb65ac84c07.css","style"]
+3:[["children",{"s":"__PAGE__","h":160}]]
+2:[["children",{"s":{"n":"slug","t":"d","k":"first-project","s":[]},"h":65632,"c":"$Q3"}]]
+1:[["children",{"s":"projects","h":131168,"c":"$Q2"}]]
+0:{"b":"ghv1vX8VWSScQwDOthem5","t":{"t":{"s":"","h":131152,"c":"$Q1"}}}
