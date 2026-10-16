@@ -7,14 +7,10 @@ import "@testing-library/jest-dom";
 import React from "react";
 import { cleanup, render, screen } from "@testing-library/react";
 import { afterEach, describe, expect, it, vi } from "vitest";
-import { axe } from "vitest-axe";
+
+import { expectNoA11yViolations } from "../test-utils/index.js";
 
 import { MobileNavLinks } from "./MobileNavLinks.js";
-
-// Mock next/navigation
-vi.mock("next/navigation", () => ({
-  usePathname: () => "/",
-}));
 
 // Mock next/link for happy-dom environment
 vi.mock("next/link", () => ({
@@ -61,24 +57,21 @@ describe("MobileNavLinks accessibility", () => {
     const { container } = render(
       <MobileNavLinks isMenuOpen={true} currentPath="/" />,
     );
-    const results = await axe(container);
-    expect(results.violations).toHaveLength(0);
+    await expectNoA11yViolations(container);
   });
 
   it("has no accessibility violations when menu is closed", async () => {
     const { container } = render(
       <MobileNavLinks isMenuOpen={false} currentPath="/" />,
     );
-    const results = await axe(container);
-    expect(results.violations).toHaveLength(0);
+    await expectNoA11yViolations(container);
   });
 
   it("has no violations with active path", async () => {
     const { container } = render(
       <MobileNavLinks isMenuOpen={true} currentPath="/projects" />,
     );
-    const results = await axe(container);
-    expect(results.violations).toHaveLength(0);
+    await expectNoA11yViolations(container);
   });
 
   it("has no violations when onNavigate is provided", async () => {
@@ -90,8 +83,7 @@ describe("MobileNavLinks accessibility", () => {
         onNavigate={onNavigate}
       />,
     );
-    const results = await axe(container);
-    expect(results.violations).toHaveLength(0);
+    await expectNoA11yViolations(container);
   });
 
   it("renders all navigation items when menu is open", () => {

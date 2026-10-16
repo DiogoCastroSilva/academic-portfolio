@@ -7,14 +7,10 @@ import "@testing-library/jest-dom";
 import React from "react";
 import { cleanup, render, screen } from "@testing-library/react";
 import { afterEach, describe, expect, it, vi } from "vitest";
-import { axe } from "vitest-axe";
+
+import { expectNoA11yViolations } from "../test-utils/index.js";
 
 import { MobileMenuButton } from "./MobileMenuButton.js";
-
-// Mock next/navigation
-vi.mock("next/navigation", () => ({
-  usePathname: () => "/",
-}));
 
 describe("MobileMenuButton accessibility", () => {
   afterEach(() => {
@@ -26,8 +22,7 @@ describe("MobileMenuButton accessibility", () => {
     const { container } = render(
       <MobileMenuButton isMenuOpen={false} onToggleMenu={onToggleMenu} />,
     );
-    const results = await axe(container);
-    expect(results.violations).toHaveLength(0);
+    await expectNoA11yViolations(container);
   });
 
   it("has no accessibility violations when menu is open", async () => {
@@ -41,8 +36,7 @@ describe("MobileMenuButton accessibility", () => {
         <MobileMenuButton isMenuOpen={true} onToggleMenu={onToggleMenu} />
       </div>,
     );
-    const results = await axe(container);
-    expect(results.violations).toHaveLength(0);
+    await expectNoA11yViolations(container);
   });
 
   it("has correct aria-expanded and aria-controls attributes", () => {
