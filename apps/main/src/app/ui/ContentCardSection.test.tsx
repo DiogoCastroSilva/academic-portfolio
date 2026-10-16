@@ -6,43 +6,12 @@ import "@testing-library/jest-dom";
 
 import React from "react";
 import { render, screen } from "@testing-library/react";
-import { describe, expect, it, vi } from "vitest";
+import { describe, expect, it } from "vitest";
 
 import { expectNoA11yViolations } from "@katie-portfolio/utils/test-helpers/a11y";
 import type { ContentMeta } from "@katie-portfolio/content";
 
 import { ContentCardSection } from "./ContentCardSection.js";
-
-// Mock next/link for happy-dom environment
-vi.mock("next/link", () => ({
-  default: function MockLink({
-    children,
-    href,
-    className,
-    onClick,
-    "aria-current": ariaCurrent,
-    "aria-label": ariaLabel,
-  }: {
-    children: React.ReactNode;
-    href: string;
-    className?: string;
-    onClick?: () => void;
-    "aria-current"?: string;
-    "aria-label"?: string;
-  }) {
-    return (
-      <a
-        href={href}
-        className={className}
-        onClick={onClick}
-        aria-current={ariaCurrent}
-        aria-label={ariaLabel}
-      >
-        {children}
-      </a>
-    );
-  },
-}));
 
 const mockItems: ContentMeta[] = [
   {

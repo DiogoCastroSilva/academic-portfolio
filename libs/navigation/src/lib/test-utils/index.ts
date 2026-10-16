@@ -1,4 +1,9 @@
 /**
+ * Shared test utilities for the navigation library.
+ * Includes a11y testing helpers for use across navigation component tests.
+ */
+
+/**
  * Asserts that axe finds no accessibility violations in the given container.
  * Throws a descriptive error with details if violations are found.
  *

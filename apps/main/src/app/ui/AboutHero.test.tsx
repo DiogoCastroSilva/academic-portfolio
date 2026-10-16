@@ -12,27 +12,6 @@ import { expectNoA11yViolations } from "@katie-portfolio/utils/test-helpers/a11y
 
 import { AboutHero } from "./AboutHero.js";
 
-// Mock next/link for happy-dom environment
-vi.mock("next/link", () => ({
-  default: function MockLink({
-    children,
-    href,
-    className,
-    onClick,
-  }: {
-    children: React.ReactNode;
-    href: string;
-    className?: string;
-    onClick?: () => void;
-  }) {
-    return (
-      <a href={href} className={className} onClick={onClick}>
-        {children}
-      </a>
-    );
-  },
-}));
-
 // Mock the profile image
 vi.mock("../../assets/profile.jpeg", () => ({
   default: "/assets/profile.jpeg",
