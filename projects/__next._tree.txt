@@ -1,4 +1,4 @@
 :HL["/academic-portfolio/_next/static/css/60c847087a7becc5.css","style"]
 2:[["children",{"s":"__PAGE__","h":160}]]
 1:[["children",{"s":"projects","h":96,"c":"$Q2"}]]
-0:{"b":"b6SugZWngekLQyZkEpUX4","t":{"t":{"s":"","h":80,"c":"$Q1"}}}
+0:{"b":"l7vv6LZdZVd1S5nJ5Gt9O","t":{"t":{"s":"","h":80,"c":"$Q1"}}}
