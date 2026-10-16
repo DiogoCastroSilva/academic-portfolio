@@ -73,6 +73,37 @@ function resolveImage(
   return withPublicBasePath(`${publicPrefix}/${placeholderFilename}`);
 }
 
+function validateFrontmatter(
+  file: string,
+  data: Record<string, unknown>,
+): void {
+  const errors: string[] = [];
+
+  if (data.title === undefined) {
+    errors.push('`title` is required');
+  } else if (typeof data.title !== 'string') {
+    errors.push(`\`title\` must be a string, got ${typeof data.title}`);
+  }
+
+  if (data.date === undefined) {
+    errors.push('`date` is required');
+  } else if (typeof data.date !== 'string') {
+    errors.push(`\`date\` must be a string, got ${typeof data.date}`);
+  } else if (!/^\d{4}-\d{2}-\d{2}$/.test(data.date)) {
+    errors.push(`\`date\` must be in YYYY-MM-DD format, got "${data.date}"`);
+  }
+
+  if (data.slug !== undefined && typeof data.slug !== 'string') {
+    errors.push(`\`slug\` must be a string, got ${typeof data.slug}`);
+  }
+
+  if (errors.length > 0) {
+    throw new Error(
+      `Invalid frontmatter in "${file}":\n  ${errors.join('\n  ')}`,
+    );
+  }
+}
+
 function toContentMeta(
   contentPath: string,
   publicPrefix: string,
@@ -80,7 +111,13 @@ function toContentMeta(
   file: string,
   data: Record<string, unknown>,
 ): ContentMeta {
-  const slug = file.replace(/\.mdx?$/, '');
+  validateFrontmatter(file, data);
+
+  const slug =
+    typeof data.slug === 'string' && data.slug.trim() !== ''
+      ? data.slug
+      : file.replace(/\.mdx?$/, '');
+
   const image =
     typeof data.image === 'string'
       ? data.image
@@ -88,12 +125,24 @@ function toContentMeta(
         ? data.imageUrl
         : undefined;
 
-  const { image: _image, imageUrl: _imageUrl, ...rest } = data;
+  const tags = Array.isArray(data.tags)
+    ? data.tags.filter((t): t is string => typeof t === 'string')
+    : undefined;
+  const excerpt = typeof data.excerpt === 'string' ? data.excerpt : undefined;
+  const team = typeof data.team === 'string' ? data.team : undefined;
+  const links = Array.isArray(data.links)
+    ? data.links.filter((l): l is string => typeof l === 'string')
+    : undefined;
 
   return {
     slug,
-    ...rest,
-    image,
+    title: data.title as string,
+    date: data.date as string,
+    ...(tags && tags.length > 0 && { tags }),
+    ...(excerpt && { excerpt }),
+    ...(team && { team }),
+    ...(links && links.length > 0 && { links }),
+    ...(image && { image }),
     imageSrc: resolveImage(
       contentPath,
       publicPrefix,
@@ -101,7 +150,7 @@ function toContentMeta(
       slug,
       image,
     ),
-  } as ContentMeta;
+  };
 }
 
 export function createContentLibrary(

@@ -615,4 +615,147 @@ describe('createContentLibrary', () => {
       cleanup();
     });
   });
+
+  // ---------------------------------------------------------------------------
+  // Frontmatter validation
+  // ---------------------------------------------------------------------------
+
+  describe('frontmatter validation', () => {
+    it('accepts valid frontmatter with all required fields', () => {
+      const { lib, cleanup } = makeLibrary({
+        _files: { 'post.md': VALID_META },
+      });
+
+      const all = lib.getAll();
+      expect(all).toHaveLength(1);
+      expect(all[0].title).toBe('Test Project');
+      expect(all[0].date).toBe('2024-06-10');
+
+      cleanup();
+    });
+
+    it('accepts valid frontmatter with slug in frontmatter', () => {
+      const { lib, cleanup } = makeLibrary({
+        _files: {
+          'my-slug.md': `---\ntitle: 'With Slug'\ndate: '2024-06-10'\nslug: custom-slug\n---\nContent`,
+        },
+      });
+
+      const all = lib.getAll();
+      expect(all[0].slug).toBe('custom-slug');
+
+      cleanup();
+    });
+
+    it('uses filename when slug is absent in frontmatter', () => {
+      const { lib, cleanup } = makeLibrary({
+        _files: {
+          'filename-slug.md': `---\ntitle: 'No Slug Field'\ndate: '2024-06-10'\n---\nContent`,
+        },
+      });
+
+      const all = lib.getAll();
+      expect(all[0].slug).toBe('filename-slug');
+
+      cleanup();
+    });
+
+    it('rejects empty frontmatter (missing title)', () => {
+      const { lib, cleanup } = makeLibrary({
+        _files: {
+          'post.md': `---\ndate: '2024-06-10'\n---\nContent`,
+        },
+      });
+
+      expect(() => lib.getAll()).toThrow(/Invalid frontmatter in "post\.md"/);
+      expect(() => lib.getAll()).toThrow(/`title` is required/);
+
+      cleanup();
+    });
+
+    it('rejects frontmatter missing date', () => {
+      const { lib, cleanup } = makeLibrary({
+        _files: {
+          'post.md': `---\ntitle: 'No Date'\n---\nContent`,
+        },
+      });
+
+      expect(() => lib.getAll()).toThrow(/`date` is required/);
+
+      cleanup();
+    });
+
+    it('rejects frontmatter with invalid date format', () => {
+      const { lib, cleanup } = makeLibrary({
+        _files: {
+          'post.md': `---\ntitle: 'Bad Date'\ndate: 'not-a-date'\n---\nContent`,
+        },
+      });
+
+      expect(() => lib.getAll()).toThrow(/`date` must be in YYYY-MM-DD format/);
+
+      cleanup();
+    });
+
+    it('rejects frontmatter with non-string title', () => {
+      const { lib, cleanup } = makeLibrary({
+        _files: {
+          'post.md': `---\ntitle: 12345\ndate: '2024-06-10'\n---\nContent`,
+        },
+      });
+
+      expect(() => lib.getAll()).toThrow(/`title` must be a string/);
+
+      cleanup();
+    });
+
+    it('rejects frontmatter with non-string date', () => {
+      const { lib, cleanup } = makeLibrary({
+        _files: {
+          'post.md': `---\ntitle: 'Test'\ndate: 12345\n---\nContent`,
+        },
+      });
+
+      expect(() => lib.getAll()).toThrow(/`date` must be a string/);
+
+      cleanup();
+    });
+
+    it('rejects frontmatter with non-string slug', () => {
+      const { lib, cleanup } = makeLibrary({
+        _files: {
+          'post.md': `---\ntitle: 'Test'\ndate: '2024-06-10'\nslug: 12345\n---\nContent`,
+        },
+      });
+
+      expect(() => lib.getAll()).toThrow(/`slug` must be a string/);
+
+      cleanup();
+    });
+
+    it('aggregates multiple validation errors', () => {
+      const { lib, cleanup } = makeLibrary({
+        _files: {
+          'post.md': `---\ndate: 'bad-format'\n---\nContent`,
+        },
+      });
+
+      expect(() => lib.getAll()).toThrow(/`title` is required/);
+      expect(() => lib.getAll()).toThrow(/`date` must be in YYYY-MM-DD format/);
+
+      cleanup();
+    });
+
+    it('validation errors include the filename', () => {
+      const { lib, cleanup } = makeLibrary({
+        _files: {
+          'specific-file.md': `---\ndate: '2024-06-10'\n---\nContent`,
+        },
+      });
+
+      expect(() => lib.getAll()).toThrow(/specific-file\.md/);
+
+      cleanup();
+    });
+  });
 });
