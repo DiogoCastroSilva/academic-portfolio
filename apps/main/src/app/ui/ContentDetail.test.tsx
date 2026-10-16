@@ -7,16 +7,11 @@ import "@testing-library/jest-dom";
 import React from "react";
 import { render, screen } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
-import { axe } from "vitest-axe";
 
+import { expectNoA11yViolations } from "@katie-portfolio/utils/test-helpers/a11y";
 import type { ContentItemMeta } from "@katie-portfolio/content";
 
 import { ContentDetail } from "./ContentDetail.js";
-
-// Helper to assert no accessibility violations
-function expectNoViolations(results: { violations: unknown[] }) {
-  expect(results.violations).toHaveLength(0);
-}
 
 const mockContent: ContentItemMeta = {
   slug: "my-project",
@@ -31,8 +26,7 @@ const mockContent: ContentItemMeta = {
 describe("ContentDetail accessibility", () => {
   it("has no accessibility violations with standard content", async () => {
     const { container } = render(<ContentDetail content={mockContent} />);
-    const results = await axe(container);
-    expectNoViolations(results);
+    await expectNoA11yViolations(container);
   });
 
   it("has no violations with content that has no tags", async () => {
@@ -41,8 +35,7 @@ describe("ContentDetail accessibility", () => {
       tags: undefined,
     };
     const { container } = render(<ContentDetail content={content} />);
-    const results = await axe(container);
-    expectNoViolations(results);
+    await expectNoA11yViolations(container);
   });
 
   it("has no violations with content that has no excerpt", async () => {
@@ -51,8 +44,7 @@ describe("ContentDetail accessibility", () => {
       excerpt: undefined,
     };
     const { container } = render(<ContentDetail content={content} />);
-    const results = await axe(container);
-    expectNoViolations(results);
+    await expectNoA11yViolations(container);
   });
 
   it("has no violations with empty body", async () => {
@@ -61,8 +53,7 @@ describe("ContentDetail accessibility", () => {
       body: "",
     };
     const { container } = render(<ContentDetail content={content} />);
-    const results = await axe(container);
-    expectNoViolations(results);
+    await expectNoA11yViolations(container);
   });
 
   it("has no violations with HTML body containing headings and links", async () => {
@@ -75,8 +66,7 @@ describe("ContentDetail accessibility", () => {
       `,
     };
     const { container } = render(<ContentDetail content={content} />);
-    const results = await axe(container);
-    expectNoViolations(results);
+    await expectNoA11yViolations(container);
   });
 
   it("uses h1 for the content title", () => {

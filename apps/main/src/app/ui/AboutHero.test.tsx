@@ -7,7 +7,8 @@ import "@testing-library/jest-dom";
 import React from "react";
 import { render, screen } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
-import { axe } from "vitest-axe";
+
+import { expectNoA11yViolations } from "@katie-portfolio/utils/test-helpers/a11y";
 
 import { AboutHero } from "./AboutHero.js";
 
@@ -37,15 +38,10 @@ vi.mock("../../assets/profile.jpeg", () => ({
   default: "/assets/profile.jpeg",
 }));
 
-function expectNoViolations(results: { violations: unknown[] }) {
-  expect(results.violations).toHaveLength(0);
-}
-
 describe("AboutHero accessibility", () => {
   it("has no accessibility violations", async () => {
     const { container } = render(<AboutHero email="test@example.com" />);
-    const results = await axe(container);
-    expectNoViolations(results);
+    await expectNoA11yViolations(container);
   });
 
   it("has h1 with person name", () => {

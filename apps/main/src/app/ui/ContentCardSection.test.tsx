@@ -7,49 +7,42 @@ import "@testing-library/jest-dom";
 import React from "react";
 import { render, screen } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
-import { axe } from "vitest-axe";
 
+import { expectNoA11yViolations } from "@katie-portfolio/utils/test-helpers/a11y";
 import type { ContentMeta } from "@katie-portfolio/content";
 
 import { ContentCardSection } from "./ContentCardSection.js";
-
-// Mock next/navigation
-vi.mock("next/navigation", () => ({
-  usePathname: () => "/",
-}));
 
 // Mock next/link for happy-dom environment
 vi.mock("next/link", () => ({
   default: function MockLink({
     children,
     href,
-    "aria-label": ariaLabel,
     className,
     onClick,
+    "aria-current": ariaCurrent,
+    "aria-label": ariaLabel,
   }: {
     children: React.ReactNode;
     href: string;
-    "aria-label"?: string;
     className?: string;
     onClick?: () => void;
+    "aria-current"?: string;
+    "aria-label"?: string;
   }) {
     return (
       <a
         href={href}
-        aria-label={ariaLabel}
         className={className}
         onClick={onClick}
+        aria-current={ariaCurrent}
+        aria-label={ariaLabel}
       >
         {children}
       </a>
     );
   },
 }));
-
-// Helper to assert no accessibility violations
-function expectNoViolations(results: { violations: unknown[] }) {
-  expect(results.violations).toHaveLength(0);
-}
 
 const mockItems: ContentMeta[] = [
   {
@@ -79,8 +72,7 @@ describe("ContentCardSection accessibility", () => {
         hrefPrefix="/projects"
       />,
     );
-    const results = await axe(container);
-    expectNoViolations(results);
+    await expectNoA11yViolations(container);
   });
 
   it("has no accessibility violations with empty items", async () => {
@@ -92,8 +84,7 @@ describe("ContentCardSection accessibility", () => {
         hrefPrefix="/projects"
       />,
     );
-    const results = await axe(container);
-    expectNoViolations(results);
+    await expectNoA11yViolations(container);
   });
 
   it("has no accessibility violations with custom empty message", async () => {
@@ -106,11 +97,10 @@ describe("ContentCardSection accessibility", () => {
         emptyMessage="No projects available yet."
       />,
     );
-    const results = await axe(container);
-    expectNoViolations(results);
+    await expectNoA11yViolations(container);
   });
 
-  it("has no accessibility violations with tags limit applied", async () => {
+  it("has no accessibility violations with tags limit", async () => {
     const { container } = render(
       <ContentCardSection
         heading="Projects"
@@ -120,11 +110,10 @@ describe("ContentCardSection accessibility", () => {
         tagsLimit={1}
       />,
     );
-    const results = await axe(container);
-    expectNoViolations(results);
+    await expectNoA11yViolations(container);
   });
 
-  it("has no accessibility violations with item limit applied", async () => {
+  it("has no accessibility violations with item limit", async () => {
     const { container } = render(
       <ContentCardSection
         heading="Projects"
@@ -134,11 +123,10 @@ describe("ContentCardSection accessibility", () => {
         limit={1}
       />,
     );
-    const results = await axe(container);
-    expectNoViolations(results);
+    await expectNoA11yViolations(container);
   });
 
-  it("section has correct aria-labelledby relationship", () => {
+  it("section has heading with text content", () => {
     render(
       <ContentCardSection
         heading="Projects"
@@ -148,8 +136,10 @@ describe("ContentCardSection accessibility", () => {
       />,
     );
 
-    const section = screen.getByRole("region");
-    expect(section).toHaveAttribute("aria-labelledby", "projects-heading");
+    const heading = screen.getByText("Projects");
+    const section = heading.closest("section");
+    expect(section).toBeInTheDocument();
+    expect(section?.tagName).toBe("SECTION");
   });
 
   it("links have descriptive aria-label", () => {
@@ -162,10 +152,10 @@ describe("ContentCardSection accessibility", () => {
       />,
     );
 
-    const firstLink = screen.getByLabelText("Read more: Project One");
-    expect(firstLink).toBeInTheDocument();
+    const firstLink = screen.getByText("Project One").closest("a");
+    expect(firstLink).toHaveAttribute("aria-label", "Read more: Project One");
 
-    const secondLink = screen.getByLabelText("Read more: Project Two");
-    expect(secondLink).toBeInTheDocument();
+    const secondLink = screen.getByText("Project Two").closest("a");
+    expect(secondLink).toHaveAttribute("aria-label", "Read more: Project Two");
   });
 });

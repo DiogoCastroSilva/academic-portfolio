@@ -11,6 +11,11 @@
       "import": "./src/index.ts",
       "default": "./src/index.ts"
     },
+    "./test-helpers/a11y": {
+      "types": "./src/test-helpers/a11y/index.ts",
+      "import": "./src/test-helpers/a11y/index.ts",
+      "default": "./src/test-helpers/a11y/index.ts"
+    },
     "./package.json": "./package.json"
   },
   "dependencies": {}

@@ -6,7 +6,8 @@ import "@testing-library/jest-dom";
 
 import { render, screen } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
-import { axe } from "vitest-axe";
+
+import { expectNoA11yViolations } from "@katie-portfolio/utils/test-helpers/a11y";
 
 import { Footer } from "./Footer.js";
 
@@ -31,15 +32,10 @@ vi.mock("../../configs/site-config", () => ({
   },
 }));
 
-function expectNoViolations(results: { violations: unknown[] }) {
-  expect(results.violations).toHaveLength(0);
-}
-
 describe("Footer accessibility", () => {
   it("has no accessibility violations", async () => {
     const { container } = render(<Footer />);
-    const results = await axe(container);
-    expectNoViolations(results);
+    await expectNoA11yViolations(container);
   });
 
   it("has a footer role", () => {

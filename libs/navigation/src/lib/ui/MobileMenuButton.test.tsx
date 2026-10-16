@@ -16,11 +16,6 @@ vi.mock("next/navigation", () => ({
   usePathname: () => "/",
 }));
 
-// Custom matcher assertion helper
-function expectNoViolations(results: { violations: unknown[] }) {
-  expect(results.violations).toHaveLength(0);
-}
-
 describe("MobileMenuButton accessibility", () => {
   afterEach(() => {
     cleanup();
@@ -32,21 +27,22 @@ describe("MobileMenuButton accessibility", () => {
       <MobileMenuButton isMenuOpen={false} onToggleMenu={onToggleMenu} />,
     );
     const results = await axe(container);
-    expectNoViolations(results);
+    expect(results.violations).toHaveLength(0);
   });
 
-  it("has no violations when menu is open", async () => {
+  it("has no accessibility violations when menu is open", async () => {
+    const onToggleMenu = vi.fn();
     // The MobileMenuButton references aria-controls="mobile-navigation"
     // which is rendered by the parent NavBar component.
     // In isolation, we provide the target element so axe doesn't flag it.
     const { container } = render(
       <div>
         <div id="mobile-navigation" hidden={false} />
-        <MobileMenuButton isMenuOpen={true} onToggleMenu={vi.fn()} />
+        <MobileMenuButton isMenuOpen={true} onToggleMenu={onToggleMenu} />
       </div>,
     );
     const results = await axe(container);
-    expectNoViolations(results);
+    expect(results.violations).toHaveLength(0);
   });
 
   it("has correct aria-expanded and aria-controls attributes", () => {

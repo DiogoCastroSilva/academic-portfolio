@@ -44,11 +44,6 @@ vi.mock("next/link", () => ({
   },
 }));
 
-// Helper to assert no accessibility violations
-function expectNoViolations(results: { violations: unknown[] }) {
-  expect(results.violations).toHaveLength(0);
-}
-
 describe("MobileNavLinks accessibility", () => {
   afterEach(() => {
     cleanup();
@@ -59,7 +54,7 @@ describe("MobileNavLinks accessibility", () => {
       <MobileNavLinks isMenuOpen={true} currentPath="/" />,
     );
     const results = await axe(container);
-    expectNoViolations(results);
+    expect(results.violations).toHaveLength(0);
   });
 
   it("has no accessibility violations when menu is closed", async () => {
@@ -67,7 +62,7 @@ describe("MobileNavLinks accessibility", () => {
       <MobileNavLinks isMenuOpen={false} currentPath="/" />,
     );
     const results = await axe(container);
-    expectNoViolations(results);
+    expect(results.violations).toHaveLength(0);
   });
 
   it("has no violations with active path", async () => {
@@ -75,7 +70,7 @@ describe("MobileNavLinks accessibility", () => {
       <MobileNavLinks isMenuOpen={true} currentPath="/projects" />,
     );
     const results = await axe(container);
-    expectNoViolations(results);
+    expect(results.violations).toHaveLength(0);
   });
 
   it("has no violations when onNavigate is provided", async () => {
@@ -88,7 +83,7 @@ describe("MobileNavLinks accessibility", () => {
       />,
     );
     const results = await axe(container);
-    expectNoViolations(results);
+    expect(results.violations).toHaveLength(0);
   });
 
   it("renders all navigation items when menu is open", () => {
@@ -102,7 +97,6 @@ describe("MobileNavLinks accessibility", () => {
   it("hides all navigation items when menu is closed", () => {
     render(<MobileNavLinks isMenuOpen={false} currentPath="/" />);
 
-    // When menu is closed, the container has the hidden attribute
     const navContainer = document.getElementById("mobile-navigation");
     expect(navContainer).toHaveAttribute("hidden");
   });

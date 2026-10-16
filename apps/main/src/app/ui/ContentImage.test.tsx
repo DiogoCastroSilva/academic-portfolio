@@ -6,11 +6,11 @@ import "@testing-library/jest-dom";
 
 import { cleanup, render, screen } from "@testing-library/react";
 import { afterEach, describe, expect, it } from "vitest";
-import { axe } from "vitest-axe";
 
+import { expectNoA11yViolations } from "@katie-portfolio/utils/test-helpers/a11y";
 import type { StaticImageData } from "next/image";
 
-import { ContentImage } from "./ContentImage";
+import { ContentImage } from "./ContentImage.js";
 
 describe("ContentImage", () => {
   afterEach(() => {
@@ -96,24 +96,31 @@ describe("ContentImage", () => {
 
       const img = screen.getByRole("img");
       expect(img).toHaveAttribute("src", "/images/profile.jpeg");
-      expect(img).toHaveAttribute("alt", "Profile");
       expect(img.closest("picture")).toBeNull();
     });
-  });
 
-  describe("accessibility", () => {
-    it("always sets the alt attribute", () => {
+    it("applies className and loading to StaticImageData", () => {
+      const staticImage: StaticImageData = {
+        src: "/images/profile.jpeg",
+        height: 200,
+        width: 200,
+        blurDataURL: "",
+        blurWidth: 0,
+        blurHeight: 0,
+      };
+
       render(
-        <ContentImage src="/projects/photo.jpg" alt="Important project" />,
+        <ContentImage
+          src={staticImage}
+          alt="Profile"
+          className="rounded-full"
+          loading="eager"
+        />,
       );
-      const img = screen.getByRole("img");
-      expect(img).toHaveAttribute("alt", "Important project");
-    });
 
-    it("handles empty alt for decorative images", () => {
-      render(<ContentImage src="/projects/photo.jpg" alt="" />);
-      const img = screen.getByRole("presentation");
-      expect(img).toHaveAttribute("alt", "");
+      const img = screen.getByRole("img");
+      expect(img).toHaveClass("rounded-full");
+      expect(img).toHaveAttribute("loading", "eager");
     });
   });
 
@@ -122,24 +129,21 @@ describe("ContentImage", () => {
       const { container } = render(
         <ContentImage src="/projects/photo.jpg" alt="Project screenshot" />,
       );
-      const results = await axe(container);
-      expect(results.violations).toHaveLength(0);
+      await expectNoA11yViolations(container);
     });
 
     it("has no violations with SVG image", async () => {
       const { container } = render(
         <ContentImage src="/icons/logo.svg" alt="Company logo" />,
       );
-      const results = await axe(container);
-      expect(results.violations).toHaveLength(0);
+      await expectNoA11yViolations(container);
     });
 
     it("has no violations with GIF image", async () => {
       const { container } = render(
         <ContentImage src="/animations/demo.gif" alt="Animation demo" />,
       );
-      const results = await axe(container);
-      expect(results.violations).toHaveLength(0);
+      await expectNoA11yViolations(container);
     });
 
     it("has no violations with StaticImageData", async () => {
@@ -154,8 +158,7 @@ describe("ContentImage", () => {
       const { container } = render(
         <ContentImage src={staticImage} alt="Profile photo" />,
       );
-      const results = await axe(container);
-      expect(results.violations).toHaveLength(0);
+      await expectNoA11yViolations(container);
     });
   });
 

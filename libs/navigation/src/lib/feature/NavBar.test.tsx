@@ -6,8 +6,7 @@ import "@testing-library/jest-dom";
 
 import React from "react";
 import { cleanup, fireEvent, render, screen } from "@testing-library/react";
-import { afterEach, describe, expect, it, vi } from "vitest";
-
+import { afterEach, describe, it, vi } from "vitest";
 import { axe } from "vitest-axe";
 
 import { NavBar } from "./NavBar.js";
@@ -55,11 +54,6 @@ vi.mock("next/link", () => ({
   },
 }));
 
-// Custom matcher assertion helper
-function expectNoViolations(results: { violations: unknown[] }) {
-  expect(results.violations).toHaveLength(0);
-}
-
 describe("NavBar accessibility", () => {
   afterEach(() => {
     cleanup();
@@ -68,13 +62,13 @@ describe("NavBar accessibility", () => {
   it("has no accessibility violations", async () => {
     const { container } = render(<NavBar currentPath="/" />);
     const results = await axe(container);
-    expectNoViolations(results);
+    expect(results.violations).toHaveLength(0);
   });
 
   it("has no violations with active /projects path", async () => {
     const { container } = render(<NavBar currentPath="/projects" />);
     const results = await axe(container);
-    expectNoViolations(results);
+    expect(results.violations).toHaveLength(0);
   });
 
   it("has no violations when mobile menu is open", async () => {
@@ -83,6 +77,6 @@ describe("NavBar accessibility", () => {
     fireEvent.click(menuButton);
 
     const results = await axe(container);
-    expectNoViolations(results);
+    expect(results.violations).toHaveLength(0);
   });
 });

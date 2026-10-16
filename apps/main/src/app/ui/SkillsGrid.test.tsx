@@ -4,22 +4,17 @@
 
 import "@testing-library/jest-dom";
 
-import React from "react";
 import { render, screen } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
-import { axe } from "vitest-axe";
+
+import { expectNoA11yViolations } from "@katie-portfolio/utils/test-helpers/a11y";
 
 import { SkillsGrid } from "./SkillsGrid.js";
-
-function expectNoViolations(results: { violations: unknown[] }) {
-  expect(results.violations).toHaveLength(0);
-}
 
 describe("SkillsGrid accessibility", () => {
   it("has no accessibility violations", async () => {
     const { container } = render(<SkillsGrid />);
-    const results = await axe(container);
-    expectNoViolations(results);
+    await expectNoA11yViolations(container);
   });
 
   it("has section with heading", () => {
