@@ -1,5 +1,5 @@
 {
-  "name": "@katie-portofolio/main",
+  "name": "@katie-portfolio/main",
   "version": "0.0.1",
   "private": true,
   "nx": {
@@ -30,11 +30,11 @@
     }
   },
   "dependencies": {
-    "@katie-portofolio/content": "*",
-    "@katie-portofolio/navigation": "*",
-    "@katie-portofolio/projects": "*",
-    "@katie-portofolio/publications": "*",
-    "@katie-portofolio/utils": "*",
+    "@katie-portfolio/content": "*",
+    "@katie-portfolio/navigation": "*",
+    "@katie-portfolio/projects": "*",
+    "@katie-portfolio/publications": "*",
+    "@katie-portfolio/utils": "*",
     "next": "16.4.2",
     "react": "^19.2.5",
     "react-dom": "^19.2.5"

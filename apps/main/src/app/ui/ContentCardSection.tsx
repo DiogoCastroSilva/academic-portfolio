@@ -1,6 +1,6 @@
 'use client';
-import type { ContentMeta } from '@katie-portofolio/content';
-import { dates } from '@katie-portofolio/utils';
+import type { ContentMeta } from '@katie-portfolio/content';
+import { dates } from '@katie-portfolio/utils';
 import { AnimatePresence, motion } from 'motion/react';
 import Image from 'next/image';
 import Link from 'next/link';

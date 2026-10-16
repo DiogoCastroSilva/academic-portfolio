@@ -1,7 +1,7 @@
 'use client';
 
-import type { ContentItemMeta } from '@katie-portofolio/content';
-import { dates } from '@katie-portofolio/utils';
+import type { ContentItemMeta } from '@katie-portfolio/content';
+import { dates } from '@katie-portfolio/utils';
 import Image from 'next/image';
 
 interface ContentDetailProps {

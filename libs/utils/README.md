@@ -1,3 +1,3 @@
-# @katie-portofolio/utils
+# @katie-portfolio/utils
 
 Utils library (TBD).

@@ -1,5 +1,5 @@
-import { getAllProjects } from '@katie-portofolio/projects';
-import { getAllPublications } from '@katie-portofolio/publications';
+import { getAllProjects } from '@katie-portfolio/projects';
+import { getAllPublications } from '@katie-portfolio/publications';
 
 import { AboutSection } from './ui/AboutSection';
 import { ContentCardSection } from './ui/ContentCardSection';

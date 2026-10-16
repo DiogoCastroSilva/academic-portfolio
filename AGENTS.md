@@ -155,7 +155,7 @@ npx nx graph
 - **Build Output**: `distDir: '../../public'` (relative to app root)
 - **Transpile Packages**: Content libraries are transpiled from source
   ```javascript
-    transpilePackages: ['@katie-portofolio/content', '@katie-portofolio/projects', '@katie-portofolio/publications', '@katie-portofolio/navigation'];
+  transpilePackages: ['@katie-portfolio/content', '@katie-portfolio/projects', '@katie-portfolio/publications', '@katie-portfolio/navigation'];
   ```
 - **Page Extensions**: Supports `.ts`, `.tsx`, `.md`
 - **Images**: Unoptimized (GitHub Pages compatible), SVG support enabled
@@ -175,9 +175,9 @@ Defined in `libs/navigation/src/lib/feature/config.ts`:
 Imports use Nx path aliases (configured in `tsconfig.base.json`):
 
 ```typescript
-import { createContentLibrary } from '@katie-portofolio/content';
-import { getAllProjects } from '@katie-portofolio/projects';
-import { NavBar } from '@katie-portofolio/navigation';
+import { createContentLibrary } from '@katie-portfolio/content';
+import { getAllProjects } from '@katie-portfolio/projects';
+import { NavBar } from '@katie-portfolio/navigation';
 ```
 
 Ensure all library exports point to `src/index.ts` files for proper resolution.

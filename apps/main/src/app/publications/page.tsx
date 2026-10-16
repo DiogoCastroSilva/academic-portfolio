@@ -1,4 +1,4 @@
-import { getAllPublications } from '@katie-portofolio/publications';
+import { getAllPublications } from '@katie-portfolio/publications';
 
 import { ContentCardSection } from '../ui/ContentCardSection';
 

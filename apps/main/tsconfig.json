@@ -19,14 +19,12 @@
     "types": ["node"],
     "paths": {
       "@/*": ["./src/*"],
-      "@katie-portofolio/content": ["../../libs/content/src/index.ts"],
-      "@katie-portofolio/projects": ["../../libs/projects/src/index.ts"],
-      "@katie-portofolio/projects/*": ["../../libs/projects/src/*"],
-      "@katie-portofolio/publications": [
-        "../../libs/publications/src/index.ts"
-      ],
-      "@katie-portofolio/publications/*": ["../../libs/publications/src/*"],
-      "@katie-portofolio/navigation": ["../../libs/navigation/src/index.ts"]
+      "@katie-portfolio/content": ["../../libs/content/src/index.ts"],
+      "@katie-portfolio/projects": ["../../libs/projects/src/index.ts"],
+      "@katie-portfolio/projects/*": ["../../libs/projects/src/*"],
+      "@katie-portfolio/publications": ["../../libs/publications/src/index.ts"],
+      "@katie-portfolio/publications/*": ["../../libs/publications/src/*"],
+      "@katie-portfolio/navigation": ["../../libs/navigation/src/index.ts"]
     },
     "outDir": "dist",
     "tsBuildInfoFile": "dist/tsconfig.tsbuildinfo"

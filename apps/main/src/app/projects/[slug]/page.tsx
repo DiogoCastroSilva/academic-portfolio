@@ -1,7 +1,7 @@
 import {
   getAllProjects,
   getProjectContentBySlug,
-} from '@katie-portofolio/projects';
+} from '@katie-portfolio/projects';
 import { notFound } from 'next/navigation';
 import { ContentDetail } from '../../ui/ContentDetail';
 

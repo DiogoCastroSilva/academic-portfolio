@@ -1,7 +1,7 @@
 import {
   getAllPublications,
   getPublicationContentBySlug,
-} from '@katie-portofolio/publications';
+} from '@katie-portfolio/publications';
 import { notFound } from 'next/navigation';
 import { ContentDetail } from '../../ui/ContentDetail';
 

@@ -1,4 +1,4 @@
-import { NavBar } from '@katie-portofolio/navigation';
+import { NavBar } from '@katie-portfolio/navigation';
 import './global.css';
 import { CloudflareAnalytics } from './ui/CloudflareAnalytics';
 import { Footer } from './ui/Footer';

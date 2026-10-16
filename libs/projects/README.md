@@ -1,4 +1,4 @@
-# @katie-portofolio/projects
+# @katie-portfolio/projects
 
 Markdown-backed portfolio projects shown on the home page.
 

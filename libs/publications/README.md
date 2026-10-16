@@ -1,4 +1,4 @@
-# @katie-portofolio/publications
+# @katie-portfolio/publications
 
 Publications content library (TBD).
 

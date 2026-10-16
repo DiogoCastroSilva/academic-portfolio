@@ -1,5 +1,5 @@
 {
-  "name": "@katie-portofolio/projects",
+  "name": "@katie-portfolio/projects",
   "version": "0.0.1",
   "private": true,
   "type": "module",
@@ -14,6 +14,6 @@
     "./package.json": "./package.json"
   },
   "dependencies": {
-    "@katie-portofolio/content": "*"
+    "@katie-portfolio/content": "*"
   }
 }

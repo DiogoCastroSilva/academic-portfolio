@@ -1,4 +1,4 @@
-import { getAllProjects } from '@katie-portofolio/projects';
+import { getAllProjects } from '@katie-portfolio/projects';
 import { ContentCardSection } from '../ui/ContentCardSection';
 
 export const metadata = {

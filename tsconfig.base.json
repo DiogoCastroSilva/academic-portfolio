@@ -16,12 +16,12 @@
     "skipLibCheck": true,
     "strict": true,
     "target": "es2022",
-    "customConditions": ["@katie-portofolio/source"],
+    "customConditions": ["@katie-portfolio/source"],
     "paths": {
-      "@katie-portofolio/content": ["./libs/content/src/index.ts"],
-      "@katie-portofolio/projects": ["./libs/projects/src/index.ts"],
-      "@katie-portofolio/publications": ["./libs/publications/src/index.ts"],
-      "@katie-portofolio/navigation": ["./libs/navigation/src/index.ts"]
+      "@katie-portfolio/content": ["./libs/content/src/index.ts"],
+      "@katie-portfolio/projects": ["./libs/projects/src/index.ts"],
+      "@katie-portfolio/publications": ["./libs/publications/src/index.ts"],
+      "@katie-portfolio/navigation": ["./libs/navigation/src/index.ts"]
     }
   }
 }
