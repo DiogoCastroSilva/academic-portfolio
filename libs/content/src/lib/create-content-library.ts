@@ -133,6 +133,7 @@ function toContentMeta(
   const links = Array.isArray(data.links)
     ? data.links.filter((l): l is string => typeof l === "string")
     : undefined;
+  const draft = data.draft === true;
 
   return {
     slug,
@@ -143,6 +144,7 @@ function toContentMeta(
     ...(team && { team }),
     ...(links && links.length > 0 && { links }),
     ...(image && { image }),
+    ...(draft && { draft }),
     imageSrc: resolveImage(
       contentPath,
       publicPrefix,
@@ -179,6 +181,7 @@ export function createContentLibrary(
           data as Record<string, unknown>,
         );
       })
+      .filter((item) => !item.draft)
       .sort((a, b) => +new Date(b.date) - +new Date(a.date));
   }
 

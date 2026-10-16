@@ -12,6 +12,8 @@ export interface ContentMeta {
   image?: string;
   /** URL served by the Next app, set when content is loaded. */
   imageSrc: string;
+  /** Internal flag — true if this item is a draft (excluded from `getAll`). */
+  draft?: boolean;
 }
 
 export interface ContentItemMeta extends ContentMeta {

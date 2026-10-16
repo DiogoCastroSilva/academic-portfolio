@@ -210,6 +210,24 @@ describe("createContentLibrary", () => {
 
       cleanup();
     });
+
+    it("excludes items with draft: true from getAll()", () => {
+      const { lib, cleanup } = makeLibrary({
+        _files: {
+          "published.md": VALID_META,
+          "draft.md": VALID_META.replace(
+            "title: 'Test Project'",
+            "title: 'Draft Project'\ndraft: true",
+          ),
+        },
+      });
+
+      const all = lib.getAll();
+      expect(all).toHaveLength(1);
+      expect(all[0].slug).toBe("published");
+
+      cleanup();
+    });
   });
 
   // ---------------------------------------------------------------------------
