@@ -9,8 +9,9 @@ const basePath = process.env.NEXT_PUBLIC_BASE_PATH ?? '';
 const assetPrefix = basePath ? `${basePath.replace(/\/$/, '')}/` : '';
 
 /**
- * @type {import('@nx/next/plugins/with-nx').WithNxOptions}
- **/
+ * @param {string} phase
+ * @returns {import('@nx/next/plugins/with-nx').WithNxOptions}
+ */
 const createNextConfig = (phase) => ({
   output: 'export', // For GitHub Pages
   distDir: phase === PHASE_DEVELOPMENT_SERVER ? '.next' : '../../public',
@@ -54,5 +55,9 @@ const plugins = [
   withMDX,
 ];
 
+/**
+ * @param {string} phase
+ * @param {object} context
+ */
 module.exports = async (phase, context) =>
   composePlugins(...plugins)(createNextConfig(phase))(phase, context);

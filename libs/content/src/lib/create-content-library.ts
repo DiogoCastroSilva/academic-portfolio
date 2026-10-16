@@ -16,6 +16,15 @@ import {
   ContentMeta,
 } from './types';
 
+// Re-export shared types so consumers (and tests) can import them
+// from this module without knowing about the internal ./types file.
+export type {
+  ContentItemMeta,
+  ContentLibrary,
+  ContentLibraryConfig,
+  ContentMeta,
+} from './types';
+
 const IMAGE_EXTENSIONS = [
   '.jpg',
   '.jpeg',
@@ -174,26 +183,12 @@ export function createContentLibrary(
 
         let htmlBody = await marked(body);
 
-        // Post-process: rewrite relative image paths to absolute URLs
-        // Matches: src="filename.ext" or src='filename.ext' (not starting with / or http)
-        htmlBody = htmlBody.replace(
-          /src=["'](?!\/|https?:)([^"']+)["']/g,
-          (match, imagePath) =>
-            `src="${withPublicBasePath(`${config.publicPrefix}/${imagePath}`)}"`,
-        );
-
-        // Post-process: rewrite relative link hrefs to use the publicPrefix
-        // Skip absolute URLs (http/https), anchors (#), and mailto links
-        htmlBody = htmlBody.replace(
-          /href=["'](?!\/|https?:|mailto:|#)([^"']+)["']/g,
-          (match, linkPath) =>
-            `href="${withPublicBasePath(`${config.publicPrefix}/${linkPath}`)}"`,
-        );
-
         // Determine deployment URL using shared helper
         const deploymentUrl = getDeploymentUrl();
 
-        // Replace placeholder hrefs (e.g. [Name](DEPLOYMENT_URL)) or empty hrefs with the deployment URL when available
+        // Replace DEPLOYMENT_URL placeholder and empty hrefs BEFORE relative-link
+        // rewriting. Otherwise the placeholder gets prefixed with the public path
+        // and the later replacement no longer matches.
         if (deploymentUrl) {
           const ph = DEPLOYMENT_PLACEHOLDER;
           htmlBody = htmlBody.replace(
@@ -205,6 +200,23 @@ export function createContentLibrary(
             `href="${deploymentUrl}"`,
           );
         }
+
+        // Post-process: rewrite relative image paths to absolute URLs
+        // Matches: src="filename.ext" or src='filename.ext' (not starting with / or http)
+        htmlBody = htmlBody.replace(
+          /src=["'](?!\/|https?:)([^"']+)["']/g,
+          (match, imagePath) =>
+            `src="${withPublicBasePath(`${config.publicPrefix}/${imagePath}`)}"`,
+        );
+
+        // Rewrite relative link hrefs to use the publicPrefix.
+        // DEPLOYMENT_URL placeholders and empty hrefs were already replaced above.
+        // Skip absolute URLs (http/https), anchors (#), and mailto links.
+        htmlBody = htmlBody.replace(
+          /href=["'](?!https?:|mailto:|#)([^"']+)["']/g,
+          (match, linkPath) =>
+            `href="${withPublicBasePath(`${config.publicPrefix}/${linkPath.replace(/^\//, '')}`)}"`,
+        );
 
         // Ensure external links open safely in a new tab and mark them
         htmlBody = htmlBody.replace(

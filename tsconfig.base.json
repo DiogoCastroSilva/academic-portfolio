@@ -1,6 +1,5 @@
 {
   "compilerOptions": {
-    "baseUrl": ".",
     "composite": true,
     "declarationMap": true,
     "emitDeclarationOnly": true,
@@ -19,10 +18,10 @@
     "target": "es2022",
     "customConditions": ["@katie-portofolio/source"],
     "paths": {
-      "@katie-portofolio/content": ["libs/content/src/index.ts"],
-      "@katie-portofolio/projects": ["libs/projects/src/index.ts"],
-      "@katie-portofolio/publications": ["libs/publications/src/index.ts"],
-      "@katie-portofolio/navigation": ["libs/navigation/src/index.ts"]
+      "@katie-portofolio/content": ["./libs/content/src/index.ts"],
+      "@katie-portofolio/projects": ["./libs/projects/src/index.ts"],
+      "@katie-portofolio/publications": ["./libs/publications/src/index.ts"],
+      "@katie-portofolio/navigation": ["./libs/navigation/src/index.ts"]
     }
   }
 }
