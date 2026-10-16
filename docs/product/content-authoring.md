@@ -37,6 +37,11 @@ Each item is a single `.md` file with YAML frontmatter at the top. The filename 
 | `team`    | string           | Author or team name(s)                                      |
 | `image`   | string           | Cover image filename (same directory as the `.md` file)     |
 | `links`   | array of URLs    | External links (GitHub, paper, demo, etc.)                  |
+| `draft`   | boolean          | Set to `true` to exclude from the listing and build         |
+
+### Draft items
+
+Set `draft: true` to create a placeholder project that will not appear on the live site. This is useful for work-in-progress entries. The `draft` field is optional; items without it are published by default.
 
 ### Validation
 
