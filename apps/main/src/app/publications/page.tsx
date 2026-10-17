@@ -16,7 +16,7 @@ export default function PublicationsPage() {
   const publications = getAllPublications();
 
   return (
-    <main className="flex grow flex-col gap-4 py-8">
+    <div className="flex grow flex-col gap-4 py-8">
       <ContentCardSection
         heading="Publications"
         headingId="publications-heading"
@@ -24,6 +24,6 @@ export default function PublicationsPage() {
         hrefPrefix="/publications"
         emptyMessage="Publications are coming soon."
       />
-    </main>
+    </div>
   );
 }

@@ -11,7 +11,7 @@ export default function Index() {
   const profile = getProfile();
 
   return (
-    <main className="flex grow flex-col gap-4">
+    <div className="flex grow flex-col gap-4">
       <AboutSection profile={profile} />
       <ContentCardSection
         heading="Projects"
@@ -25,6 +25,6 @@ export default function Index() {
         items={publications}
         hrefPrefix="/publications"
       />
-    </main>
+    </div>
   );
 }

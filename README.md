@@ -60,14 +60,14 @@ docs/                       Full documentation
 
 ## Content authoring
 
-To add a project or publication, create a Markdown file in the relevant directory:
+To add a project or publication, create a directory with a `README.md` file in the relevant directory:
 
 ```bash
-libs/projects/src/md/my-project.md
-libs/publications/src/md/my-paper.md
+libs/projects/src/md/my-project/README.md
+libs/publications/src/md/my-paper/README.md
 ```
 
-See the [Content Authoring Guide](docs/product/content-authoring.md) for templates, field reference, and validation rules. Starter templates live at `libs/projects/src/md/_template.md` and `libs/publications/src/md/_template.md` — copy them and remove the `draft: true` line. Quick reference:
+See the [Content Authoring Guide](docs/product/content-authoring.md) for templates, field reference, and validation rules. Starter templates live at `libs/projects/src/md/_template.md` and `libs/publications/src/md/_template.md` — copy them to a new `{slug}/README.md` directory and remove the `draft: true` line. Quick reference:
 
 ```yaml
 ---

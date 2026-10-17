@@ -50,10 +50,11 @@ npx nx run @katie-portfolio/content:test     # Run a specific project's tests
 To add a project or publication:
 
 1. Copy the starter template: `libs/projects/src/md/_template.md` or `libs/publications/src/md/_template.md`
-2. Rename it to `libs/projects/src/md/{slug}.md` (or `libs/publications/src/md/{slug}.md`)
-3. Remove the `draft: true` line from the frontmatter
-4. Replace the placeholder content with your own
-5. Run `npx nx run main:sync-content-assets` (or `npx nx run main:dev` which does it automatically)
+2. Create a directory: `libs/projects/src/md/{slug}/` (or `libs/publications/src/md/{slug}/`)
+3. Paste the template as `libs/projects/src/md/{slug}/README.md`
+4. Remove the `draft: true` line from the frontmatter
+5. Replace the placeholder content with your own
+6. Run `npx nx run main:sync-content-assets` (or `npx nx run main:dev` which does it automatically)
 
 Templates use `draft: true` so they won't appear on the live site until published.
 
@@ -74,7 +75,7 @@ See [docs/architecture/decisions/](docs/architecture/decisions/) for ADRs on:
 
 - **next.config.mjs** — static export, base path, transpile packages. Converted from CommonJS to ESM.
 - **eslint.config.mjs** — composes `@diogozx-org/eslint-config/next` with `@nx/enforce-module-boundaries`
-- **prettier.config.mjs** — extends `@diogox-org/prettier-config`, adds Tailwind CSS plugin
+- **prettier.config.mjs** — extends `@diogozx-org/prettier-config`, adds Tailwind CSS plugin
 - **global.css** — semantic CSS tokens (`:root`), dark-mode overrides, `prefers-reduced-motion` global reset
 - **ContentDetail** — server component (no `'use client'`), uses `dangerouslySetInnerHTML`
 - **ContentCardSection** — client component with `motion/react` animations, respects `prefers-reduced-motion` via `useReducedMotion()`

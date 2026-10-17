@@ -16,7 +16,7 @@ export default function ProjectsPage() {
   const projects = getAllProjects();
 
   return (
-    <main className="flex grow flex-col gap-4 py-8">
+    <div className="flex grow flex-col gap-4 py-8">
       <ContentCardSection
         heading="Projects"
         headingId="projects-heading"
@@ -24,6 +24,6 @@ export default function ProjectsPage() {
         hrefPrefix="/projects"
         emptyMessage="Projects are coming soon."
       />
-    </main>
+    </div>
   );
 }

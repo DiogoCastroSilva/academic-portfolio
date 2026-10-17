@@ -20,11 +20,11 @@ export default function AboutPage() {
   const profile = getProfile();
 
   return (
-    <main className="flex grow flex-col gap-6 py-8">
+    <div className="flex grow flex-col gap-6 py-8">
       <AboutHero profile={profile} />
       <ResearchInterests items={profile.researchInterests} />
       <EducationTimeline items={profile.education} />
       <SkillsGrid categories={profile.skills} />
-    </main>
+    </div>
   );
 }
