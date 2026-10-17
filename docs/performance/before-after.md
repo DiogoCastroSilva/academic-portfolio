@@ -31,17 +31,17 @@ audit for the WebP image-optimization work, comparing the baseline commit
 are the per-route medians from that measurement (baseline `07e9e2d` vs optimized
 `55f6d0c`).
 
-| Route | Metric | Before (`07e9e2d`) | After (`55f6d0c`) | Change |
-| --- | --- | ---: | ---: | ---: |
-| Homepage `/` | Performance score | 97 | 98 | +1 |
-| Homepage `/` | Total bytes (KB) | 1056 | 770 | -27% |
-| Homepage `/` | Image bytes (KB) | 815 | 536 | -34% |
-| Homepage `/` | WebP savings (KB) | 418 | 61 | -85% |
-| Homepage `/` | Largest Contentful Paint (ms) | 1304 | 1082 | -17% |
-| Project detail `/projects/first-project/` | Performance score | 100 | 99 | -1 |
-| Project detail | Total bytes (KB) | 1193 | 906 | -24% |
-| Project detail | Image bytes (KB) | 956 | 677 | -29% |
-| About `/about/` | Performance score | (no material change) | (no material change) | ~ |
+| Route                                     | Metric                        |   Before (`07e9e2d`) |    After (`55f6d0c`) | Change |
+| ----------------------------------------- | ----------------------------- | -------------------: | -------------------: | -----: |
+| Homepage `/`                              | Performance score             |                   97 |                   98 |     +1 |
+| Homepage `/`                              | Total bytes (KB)              |                 1056 |                  770 |   -27% |
+| Homepage `/`                              | Image bytes (KB)              |                  815 |                  536 |   -34% |
+| Homepage `/`                              | WebP savings (KB)             |                  418 |                   61 |   -85% |
+| Homepage `/`                              | Largest Contentful Paint (ms) |                 1304 |                 1082 |   -17% |
+| Project detail `/projects/first-project/` | Performance score             |                  100 |                   99 |     -1 |
+| Project detail                            | Total bytes (KB)              |                 1193 |                  906 |   -24% |
+| Project detail                            | Image bytes (KB)              |                  956 |                  677 |   -29% |
+| About `/about/`                           | Performance score             | (no material change) | (no material change) |      ~ |
 
 ## WebP audit findings
 
