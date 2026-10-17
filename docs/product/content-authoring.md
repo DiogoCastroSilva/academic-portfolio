@@ -201,18 +201,18 @@ Publications are academic papers, preprints, presentations, and similar works. T
 
 ### Optional Fields (Publications)
 
-| Field      | Type             | Description                                    |
-| ---------- | ---------------- | ---------------------------------------------- |
-| `slug`     | string           | URL-friendly identifier; defaults to directory name  |
-| `tags`     | array of strings | Tags shown on cards (e.g., research areas)     |
-| `excerpt`  | string           | Brief abstract for the publication card        |
-| `authors`  | array of strings | List of author names                           |
-| `venue`    | string           | Journal, conference, or preprint server name   |
-| `doi`      | string           | Digital Object Identifier                      |
-| `paperUrl` | string           | Direct URL to the paper or preprint            |
-| `image`    | string           | Cover image filename (same directory)          |
-| `links`    | array of URLs    | Supplementary links (presentation, code, etc.) |
-| `draft`    | boolean          | Set to `true` to exclude from the listing      |
+| Field      | Type             | Description                                         |
+| ---------- | ---------------- | --------------------------------------------------- |
+| `slug`     | string           | URL-friendly identifier; defaults to directory name |
+| `tags`     | array of strings | Tags shown on cards (e.g., research areas)          |
+| `excerpt`  | string           | Brief abstract for the publication card             |
+| `authors`  | array of strings | List of author names                                |
+| `venue`    | string           | Journal, conference, or preprint server name        |
+| `doi`      | string           | Digital Object Identifier                           |
+| `paperUrl` | string           | Direct URL to the paper or preprint                 |
+| `image`    | string           | Cover image filename (same directory)               |
+| `links`    | array of URLs    | Supplementary links (presentation, code, etc.)      |
+| `draft`    | boolean          | Set to `true` to exclude from the listing           |
 
 ### Publication Template
 
@@ -264,7 +264,7 @@ This renders as:
 
 ```html
 <figure>
-  <img src="/projects/lesion-detail.jpg" alt="Close-up of leaf lesions">
+  <img src="/projects/lesion-detail.jpg" alt="Close-up of leaf lesions" />
   <figcaption>
     Figure 1. Symptoms of GLRaV-3 on grapevine leaves, showing characteristic
     red blotches.
