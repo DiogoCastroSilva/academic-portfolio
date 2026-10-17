@@ -49,17 +49,17 @@ export const EducationTimeline = ({ items }: EducationTimelineProps) => {
                   <p className="text-sm font-medium text-sky-600">
                     {edu.institution}
                   </p>
-                  <p className="text-sm text-slate-600 dark:text-slate-500">
+                  <p className="text-sm text-slate-600 dark:text-slate-700">
                     {edu.period}
                   </p>
-                  <p className="mt-2 text-slate-700 dark:text-gray-400">
+                  <p className="mt-2 text-slate-700 dark:text-gray-700">
                     {edu.focus}
                   </p>
                   <ul className="mt-3 space-y-1">
                     {edu.details.map((detail) => (
                       <li
                         key={detail}
-                        className="flex gap-2 text-sm text-slate-700 dark:text-gray-400"
+                        className="flex gap-2 text-sm text-slate-700 dark:text-gray-700"
                       >
                         <span className="mt-1 text-sky-600">&rarr;</span>
                         <span>{detail}</span>

@@ -24,7 +24,7 @@ export function ContentDetail({ content }: ContentDetailProps) {
         <div className="flex flex-wrap items-center gap-4">
           <time
             dateTime={content.date}
-            className="text-sm text-gray-600 dark:text-gray-400"
+            className="text-sm text-gray-600 dark:text-gray-700"
           >
             {dates.formatISODate(content.date)}
           </time>
@@ -33,7 +33,7 @@ export function ContentDetail({ content }: ContentDetailProps) {
               {content.tags.map((tag) => (
                 <li
                   key={tag}
-                  className="rounded-full border border-zinc-200 px-3 py-1 text-sm font-medium text-zinc-600 dark:border-zinc-700 dark:text-zinc-400"
+                  className="rounded-full border border-zinc-200 px-3 py-1 text-sm font-medium text-zinc-600 dark:border-zinc-700 dark:text-zinc-700"
                 >
                   {tag}
                 </li>
