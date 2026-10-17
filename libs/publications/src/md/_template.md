@@ -1,7 +1,7 @@
 ---
-# This is a TEMPLATE for a publication entry. Copy the entire directory
-# `libs/publications/src/md/_template/` to a new folder named after your
-# publication slug, then edit the README.md inside it.
+# This is a TEMPLATE for a publication entry. Create a new directory
+# `libs/publications/src/md/my-paper-slug/` and copy this file into it as
+# `README.md`.
 #
 # Remove the `draft: true` line from the README.md frontmatter when
 # ready to publish.

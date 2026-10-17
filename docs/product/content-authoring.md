@@ -94,7 +94,7 @@ Starter template files are provided to help you create new content quickly:
 - **Publication template:** `libs/publications/src/md/_template.md`
 - **Profile template:** `libs/content/src/md/_profile-template.md`
 
-Copy the file, rename it (e.g. `_template.md` → `my-new-project.md`), and remove the `draft: true` line when ready to publish. See [File Naming](#file-naming) for slug conventions.
+Copy the file into a new directory as `README.md` (e.g. create `libs/projects/src/md/my-project/README.md`), and remove the `draft: true` line when ready to publish. See [File Naming](#file-naming) for slug conventions.
 
 ## Biography
 

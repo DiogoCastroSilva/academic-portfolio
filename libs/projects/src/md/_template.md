@@ -1,7 +1,7 @@
 ---
-# This is a TEMPLATE for a project entry. Copy the entire directory
-# `libs/projects/src/md/_template/` to a new folder named after your
-# project slug, then edit the README.md inside it.
+# This is a TEMPLATE for a project entry. Create a new directory
+# `libs/projects/src/md/my-project-slug/` and copy this file into it as
+# `README.md`.
 #
 # Remove the `draft: true` line from the README.md frontmatter when
 # ready to publish.
