@@ -1,6 +1,18 @@
 ---
-# Copy this file, rename it to your-publication-slug.md,
-# and remove the `draft: true` line when ready to publish.
+# This is a TEMPLATE for a publication entry. Copy the entire directory
+# `libs/publications/src/md/_template/` to a new folder named after your
+# publication slug, then edit the README.md inside it.
+#
+# Remove the `draft: true` line from the README.md frontmatter when
+# ready to publish.
+#
+# Directory structure:
+#   libs/publications/src/md/my-paper-slug/
+#     README.md          <- this file (frontmatter + body)
+#     cover.jpeg         <- cover image (referenced by `image:` field)
+#     spectrum.png       <- body image (referenced in Markdown)
+#
+# All images live in the same directory as README.md.
 draft: true
 title: "Publication Title"
 date: "2025-01-01"
@@ -13,7 +25,7 @@ venue: "Journal of Environmental Science"
 doi: "10.0000/journal.xxxxx"
 paperUrl: "https://journal.example.com/doi/xxxxx"
 links: []
-image: ""
+image: "cover.jpeg"
 ---
 
 ## Abstract

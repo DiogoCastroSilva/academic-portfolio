@@ -32,6 +32,9 @@ const IMAGE_EXTENSIONS = [
   ".svg",
 ] as const;
 
+/** Entry-point Markdown filename inside each content-entry directory. */
+const ENTRY_FILENAME = "README.md";
+
 function resolveContentPath(mdDir: string): string {
   return path.join(process.cwd(), "../../", mdDir);
 }
@@ -47,32 +50,93 @@ function fileExistsInDir(contentPath: string, filename: string): boolean {
   return fs.existsSync(resolved) && fs.statSync(resolved).isFile();
 }
 
+/**
+ * Resolve a cover-image filename to its public URL.
+ *
+ * The image is looked up relative to `entryDir` (the per-entry directory),
+ * preserving nested paths like `images/cover.jpeg`.  If the image field
+ * is unset or the file is missing, falls back to a file matching
+ * `{slug}{ext}`, then to the shared `placeholderFilename` in `rootDir`.
+ *
+ * @param entryDir            Per-entry directory (e.g. `.../md/first-project/`)
+ * @param rootDir             Root content directory (e.g. `.../md/`) — for placeholder lookup
+ * @param entryPublicPrefix   Public URL prefix for this entry (e.g. `/projects/first-project`)
+ * @param rootPublicPrefix    Public URL prefix for the root (e.g. `/projects`)
+ * @param placeholderFilename Fallback image filename at rootDir level
+ * @param slug                Entry slug
+ * @param image               Cover image path from frontmatter
+ * @returns An object with the resolved `src` URL and an `imageType` of
+ *          `"cover"` or `"placeholder"`.
+ */
 function resolveImage(
-  contentPath: string,
-  publicPrefix: string,
+  entryDir: string,
+  rootDir: string,
+  entryPublicPrefix: string,
+  rootPublicPrefix: string,
   placeholderFilename: string,
   slug: string,
   image?: string,
-): string {
+): { src: string; imageType: "cover" | "placeholder" } {
+  // 1. Explicit image field — resolve relative to the entry directory.
   if (image?.trim()) {
-    const filename = path.basename(image.trim());
-    if (fileExistsInDir(contentPath, filename)) {
-      return withPublicBasePath(`${publicPrefix}/${filename}`);
+    const filename = image.trim();
+    if (fileExistsInDir(entryDir, filename)) {
+      return {
+        src: withPublicBasePath(`${entryPublicPrefix}/${filename}`),
+        imageType: "cover",
+      };
     }
   }
 
+  // 2. Auto-discover cover image by slug (e.g. `first-project.jpeg`).
   for (const ext of IMAGE_EXTENSIONS) {
     const filename = `${slug}${ext}`;
-    if (fileExistsInDir(contentPath, filename)) {
-      return withPublicBasePath(`${publicPrefix}/${filename}`);
+    if (fileExistsInDir(entryDir, filename)) {
+      return {
+        src: withPublicBasePath(`${entryPublicPrefix}/${filename}`),
+        imageType: "cover",
+      };
     }
   }
 
-  return withPublicBasePath(`${publicPrefix}/${placeholderFilename}`);
+  // 3. Shared placeholder at rootDir level — URL lives at the
+  //    publicPrefix root (e.g. /projects/placeholder.svg), not in the
+  //    entry subdirectory, because the placeholder is synced once for
+  //    the whole content type.
+  return {
+    src: withPublicBasePath(`${rootPublicPrefix}/${placeholderFilename}`),
+    imageType: "placeholder",
+  };
 }
 
+/**
+ * Validate that a string is a calendar-valid date in `YYYY-MM-DD` format,
+ * without any timezone-dependent conversions.
+ */
+function isValidCalendarDate(value: string): boolean {
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(value)) return false;
+
+  const [yearStr, monthStr, dayStr] = value.split("-");
+  const year = Number(yearStr);
+  const month = Number(monthStr);
+  const day = Number(dayStr);
+
+  if (month < 1 || month > 12) return false;
+  if (day < 1 || day > 31) return false;
+
+  const daysInMonth = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+  if (month === 2 && isLeapYear(year)) {
+    daysInMonth[1] = 29;
+  }
+
+  return day <= daysInMonth[month - 1];
+}
+
+function isLeapYear(year: number): boolean {
+  return (year % 4 === 0 && year % 100 !== 0) || year % 400 === 0;
+}
 function validateFrontmatter(
-  file: string,
+  slug: string,
   data: Record<string, unknown>,
 ): void {
   const errors: string[] = [];
@@ -87,8 +151,10 @@ function validateFrontmatter(
     errors.push("`date` is required");
   } else if (typeof data.date !== "string") {
     errors.push(`\`date\` must be a string, got ${typeof data.date}`);
-  } else if (!/^\d{4}-\d{2}-\d{2}$/.test(data.date)) {
-    errors.push(`\`date\` must be in YYYY-MM-DD format, got "${data.date}"`);
+  } else if (!isValidCalendarDate(data.date)) {
+    errors.push(
+      `\`date\` must be a valid calendar date in YYYY-MM-DD format, got "${data.date}"`,
+    );
   }
 
   if (data.slug !== undefined && typeof data.slug !== "string") {
@@ -111,8 +177,14 @@ function validateFrontmatter(
     errors.push(`\`links\` must be an array, got ${typeof data.links}`);
   }
 
-  if (data.authors !== undefined && !Array.isArray(data.authors)) {
-    errors.push(`\`authors\` must be an array, got ${typeof data.authors}`);
+  if (
+    data.authors !== undefined &&
+    typeof data.authors !== "string" &&
+    !Array.isArray(data.authors)
+  ) {
+    errors.push(
+      `\`authors\` must be a string or an array, got ${typeof data.authors}`,
+    );
   }
 
   if (data.venue !== undefined && typeof data.venue !== "string") {
@@ -129,24 +201,32 @@ function validateFrontmatter(
 
   if (errors.length > 0) {
     throw new Error(
-      `Invalid frontmatter in "${file}":\n  ${errors.join("\n  ")}`,
+      `Invalid frontmatter in "README.md" (entry slug: "${slug}"):\n  ${errors.join("\n  ")}`,
     );
   }
 }
 
+function normalizeAuthors(data: Record<string, unknown>): string[] | undefined {
+  if (data.authors === undefined) return undefined;
+  if (typeof data.authors === "string") {
+    return [data.authors];
+  }
+  if (Array.isArray(data.authors)) {
+    return data.authors.filter((a): a is string => typeof a === "string");
+  }
+  return undefined;
+}
+
 function toContentMeta(
-  contentPath: string,
-  publicPrefix: string,
+  entryDir: string,
+  rootDir: string,
+  entryPublicPrefix: string,
+  rootPublicPrefix: string,
   placeholderFilename: string,
-  file: string,
+  slug: string,
   data: Record<string, unknown>,
 ): ContentMeta {
-  validateFrontmatter(file, data);
-
-  const slug =
-    typeof data.slug === "string" && data.slug.trim() !== ""
-      ? data.slug
-      : file.replace(/\.mdx?$/, "");
+  validateFrontmatter(slug, data);
 
   const image =
     typeof data.image === "string"
@@ -160,9 +240,7 @@ function toContentMeta(
     : undefined;
   const excerpt = typeof data.excerpt === "string" ? data.excerpt : undefined;
   const team = typeof data.team === "string" ? data.team : undefined;
-  const authors = Array.isArray(data.authors)
-    ? data.authors.filter((a): a is string => typeof a === "string")
-    : undefined;
+  const authors = normalizeAuthors(data);
   const venue = typeof data.venue === "string" ? data.venue : undefined;
   const doi = typeof data.doi === "string" ? data.doi : undefined;
   const paperUrl =
@@ -172,8 +250,19 @@ function toContentMeta(
     : undefined;
   const draft = data.draft === true;
 
+  const resolvedImage = resolveImage(
+    entryDir,
+    rootDir,
+    entryPublicPrefix,
+    rootPublicPrefix,
+    placeholderFilename,
+    slug,
+    image,
+  );
+
   return {
     slug,
+    href: entryPublicPrefix,
     title: data.title as string,
     date: data.date as string,
     ...(tags && tags.length > 0 && { tags }),
@@ -186,13 +275,8 @@ function toContentMeta(
     ...(links && links.length > 0 && { links }),
     ...(image && { image }),
     ...(draft && { draft }),
-    imageSrc: resolveImage(
-      contentPath,
-      publicPrefix,
-      placeholderFilename,
-      slug,
-      image,
-    ),
+    imageSrc: resolvedImage.src,
+    imageType: resolvedImage.imageType,
   };
 }
 
@@ -206,19 +290,48 @@ export function createContentLibrary(
       return [];
     }
 
+    // Per-entry directory structure: each subdirectory is an entry
+    // with its own README.md.  Flat .md files at the root level (such
+    // as _template.md) are ignored.
     return fs
       .readdirSync(contentPath)
-      .filter((file) => file.endsWith(".md") || file.endsWith(".mdx"))
-      .map((file) => {
-        const filePath = path.join(contentPath, file);
+      .filter((entry) => {
+        const fullPath = path.join(contentPath, entry);
+        try {
+          return fs.statSync(fullPath).isDirectory();
+        } catch {
+          return false;
+        }
+      })
+      .filter((dir) => !dir.startsWith("_") && !dir.startsWith("."))
+      .map((dir) => {
+        const entryDir = path.join(contentPath, dir);
+        const candidates = [
+          path.join(entryDir, ENTRY_FILENAME),
+          path.join(entryDir, "README.mdx"),
+        ];
+        const filePath = candidates.find((p) => fs.existsSync(p));
+        if (!filePath) {
+          return null;
+        }
+        return { entryDir, dir, filePath };
+      })
+      .filter((entry): entry is NonNullable<typeof entry> => entry !== null)
+      .map(({ entryDir, dir, filePath }) => {
         const content = fs.readFileSync(filePath, "utf-8");
         const { data } = matter(content);
+        const slug =
+          typeof data.slug === "string" && (data.slug as string).trim() !== ""
+            ? (data.slug as string)
+            : dir;
 
         return toContentMeta(
+          entryDir,
           contentPath,
+          `${config.publicPrefix}/${slug}`,
           config.publicPrefix,
           config.placeholderFilename,
-          file,
+          slug,
           data as Record<string, unknown>,
         );
       })
@@ -231,19 +344,29 @@ export function createContentLibrary(
       return undefined;
     }
 
-    for (const ext of [".md", ".mdx"] as const) {
-      const fileName = `${slug}${ext}`;
-      const filePath = path.join(contentPath, fileName);
-      if (!fs.existsSync(filePath)) {
+    const entryDir = path.join(contentPath, slug);
+    const filePath = path.join(entryDir, ENTRY_FILENAME);
+    const extAlt = ENTRY_FILENAME.replace(/\.md$/, ".mdx");
+    const filePathAlt = path.join(entryDir, extAlt);
+
+    for (const currentPath of [filePath, filePathAlt]) {
+      if (!fs.existsSync(currentPath)) {
         continue;
       }
-      const content = fs.readFileSync(filePath, "utf-8");
+      const content = fs.readFileSync(currentPath, "utf-8");
       const { data } = matter(content);
+      const resolvedSlug =
+        typeof data.slug === "string" && (data.slug as string).trim() !== ""
+          ? (data.slug as string)
+          : slug;
+
       return toContentMeta(
+        entryDir,
         contentPath,
+        `${config.publicPrefix}/${resolvedSlug}`,
         config.publicPrefix,
         config.placeholderFilename,
-        fileName,
+        resolvedSlug,
         data as Record<string, unknown>,
       );
     }
@@ -254,27 +377,40 @@ export function createContentLibrary(
     slug: string,
   ): Promise<ContentItemMeta | undefined> {
     return (async () => {
-      const markedInstance = createMarkedInstance({
-        publicPrefix: config.publicPrefix,
-        deploymentUrl: getDeploymentUrl(),
-      });
       if (!slug?.trimEnd() || typeof slug !== "string") {
         return undefined;
       }
 
-      for (const ext of [".md", ".mdx"] as const) {
-        const fileName = `${slug}${ext}`;
-        const filePath = path.join(contentPath, fileName);
-        if (!fs.existsSync(filePath)) {
+      const entryDir = path.join(contentPath, slug);
+      const filePath = path.join(entryDir, ENTRY_FILENAME);
+      const extAlt = ENTRY_FILENAME.replace(/\.md$/, ".mdx");
+      const filePathAlt = path.join(entryDir, extAlt);
+
+      for (const currentPath of [filePath, filePathAlt]) {
+        if (!fs.existsSync(currentPath)) {
           continue;
         }
-        const content = fs.readFileSync(filePath, "utf-8");
+        const content = fs.readFileSync(currentPath, "utf-8");
         const { data, content: body } = matter(content);
+        const resolvedSlug =
+          typeof data.slug === "string" && (data.slug as string).trim() !== ""
+            ? (data.slug as string)
+            : slug;
+
+        // Use an entry-specific public prefix so body images resolve to
+        // /projects/<slug>/<image> instead of /projects/<image>.
+        const markedInstance = createMarkedInstance({
+          publicPrefix: `${config.publicPrefix}/${resolvedSlug}`,
+          deploymentUrl: getDeploymentUrl(),
+        });
+
         const meta = toContentMeta(
+          entryDir,
           contentPath,
+          `${config.publicPrefix}/${resolvedSlug}`,
           config.publicPrefix,
           config.placeholderFilename,
-          fileName,
+          resolvedSlug,
           data as Record<string, unknown>,
         );
 

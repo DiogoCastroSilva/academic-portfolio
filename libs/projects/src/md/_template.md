@@ -1,12 +1,25 @@
 ---
-# Copy this file, rename it to your-project-slug.md,
-# and remove the `draft: true` line when ready to publish.
+# This is a TEMPLATE for a project entry. Copy the entire directory
+# `libs/projects/src/md/_template/` to a new folder named after your
+# project slug, then edit the README.md inside it.
+#
+# Remove the `draft: true` line from the README.md frontmatter when
+# ready to publish.
+#
+# Directory structure:
+#   libs/projects/src/md/my-project-slug/
+#     README.md          <- this file (frontmatter + body)
+#     cover.jpeg         <- cover image (referenced by `image:` field)
+#     plot-a.png         <- body image (referenced in Markdown)
+#     plot-b.png         <- body image (referenced in Markdown)
+#
+# All images live in the same directory as README.md.
 draft: true
 title: "My New Project"
 date: "2025-01-01"
 tags: ["example-tag"]
 excerpt: "A one-sentence summary of this project."
-image: ""
+image: "cover.jpeg"
 links: []
 ---
 
@@ -28,13 +41,9 @@ matters. Imagine you're explaining it to a colleague from another discipline.
 
 ### Figures and Galleries
 
-Images go in the same directory as this `.md` file. Use relative paths:
+Images go in the same directory as this `README.md` file. Use relative paths:
 
 ![Figure 1. Caption for a single image](image.png "Figure 1. Caption appears here.")
-
-```
-
----
 
 ### Image Galleries
 
@@ -52,5 +61,4 @@ them) to create a responsive gallery:
 
 ## References
 
-1. Author, A. A. (Year). "Title of paper." *Journal Name*, Volume(Issue), pages. DOI:xxxxx
-```
+1. Author, A. A. (Year). "Title of paper." _Journal Name_, Volume(Issue), pages. DOI:xxxxx

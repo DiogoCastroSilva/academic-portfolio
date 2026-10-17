@@ -1,5 +1,7 @@
 export interface ContentMeta {
   slug: string;
+  /** Full public URL for this content entry, e.g. `/projects/first-project`. */
+  href: string;
   title: string;
   date: string;
   tags?: string[];
@@ -18,8 +20,10 @@ export interface ContentMeta {
   links?: string[];
   /** Cover image filename in the content `md` folder (same folder as the `.md` file). */
   image?: string;
-  /** URL served by the Next app, set when content is loaded. */
+  /** Resolved public URL for the cover image or placeholder. */
   imageSrc: string;
+  /** `"cover"` when a real image was found, `"placeholder"` otherwise. */
+  imageType: "cover" | "placeholder";
   /** Internal flag — true if this item is a draft (excluded from `getAll`). */
   draft?: boolean;
 }

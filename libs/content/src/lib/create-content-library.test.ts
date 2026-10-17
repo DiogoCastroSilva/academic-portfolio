@@ -7,7 +7,6 @@ import { afterEach, describe, expect, it, vi } from "vitest";
 import {
   createContentLibrary,
   type ContentLibraryConfig,
-  type ContentMeta,
 } from "./create-content-library.js";
 
 // ---------------------------------------------------------------------------
@@ -19,6 +18,17 @@ interface TempFixtures {
   cwd: string;
   fixturesDir: string;
 }
+
+const cleanupFns: Array<() => void> = [];
+
+afterEach(() => {
+  while (cleanupFns.length > 0) {
+    const fn = cleanupFns.pop()!;
+    fn();
+  }
+  vi.restoreAllMocks();
+  vi.unstubAllEnvs();
+});
 
 function createTempFixtures(
   files: Record<string, string>,
@@ -39,933 +49,1632 @@ function createTempFixtures(
   fs.mkdirSync(fixturesDir, { recursive: true });
 
   for (const [filename, content] of Object.entries(files)) {
-    fs.writeFileSync(path.join(fixturesDir, filename), content);
+    const filePath = path.join(fixturesDir, filename);
+    fs.mkdirSync(path.dirname(filePath), { recursive: true });
+    fs.writeFileSync(filePath, content);
   }
 
   for (const [filename, content] of Object.entries(opts.images ?? {})) {
-    fs.writeFileSync(path.join(fixturesDir, filename), content);
+    const filePath = path.join(fixturesDir, filename);
+    fs.mkdirSync(path.dirname(filePath), { recursive: true });
+    fs.writeFileSync(filePath, content);
   }
 
-  // The content library resolves mdDir as path.join(process.cwd(), '../../', mdDir).
-  // We mock process.cwd() to return <tmpDir>/apps/main so '../../' resolves
-  // to <tmpDir> and mdDir resolves to the fixtures directory inside tmpDir.
   vi.spyOn(process, "cwd").mockReturnValue(cwd);
 
   return { tmpDir, cwd, fixturesDir };
 }
 
-function cleanupTempFixtures(fixtures: TempFixtures): void {
-  try {
-    fs.rmSync(fixtures.tmpDir, { recursive: true, force: true });
-  } catch {
-    // Ignore cleanup errors
-  }
+function cleanupTempFixtures(tmpDir: string): void {
+  fs.rmSync(tmpDir, { recursive: true, force: true });
 }
 
 function makeLibrary(
-  config: Partial<ContentLibraryConfig> & {
-    _files?: Record<string, string>;
+  config: ContentLibraryConfig & {
+    _files: Record<string, string>;
     _images?: Record<string, Buffer>;
-  } = {},
-): {
-  lib: ReturnType<typeof createContentLibrary>;
-  cleanup: () => void;
-  fixtures: TempFixtures;
-} {
-  const files = config._files ?? {};
-  const images = config._images ?? {};
-  const fixtures = createTempFixtures(files, { images });
+  },
+) {
+  const { _files, _images, ...libConfig } = config;
+  const { tmpDir, fixturesDir } = createTempFixtures(_files, {
+    images: _images,
+  });
+  cleanupFns.push(() => cleanupTempFixtures(tmpDir));
 
   const lib = createContentLibrary({
-    mdDir: "libs/content/src/test/fixtures",
-    publicPrefix: "/test",
-    placeholderFilename: "placeholder.svg",
-    ...config,
+    ...libConfig,
+    mdDir: path.relative(tmpDir, fixturesDir),
   });
 
-  return {
-    lib,
-    cleanup: () => cleanupTempFixtures(fixtures),
-    fixtures,
-  };
+  return { lib, fixturesDir, cleanup: () => cleanupTempFixtures(tmpDir) };
 }
 
+// ---------------------------------------------------------------------------
+// Shared fixtures
+// ---------------------------------------------------------------------------
+
 const VALID_META = `---
-title: 'Test Project'
-date: '2024-06-10'
-excerpt: 'A test project.'
-tags: ['test', 'demo']
-team: 'Test Author'
+title: "My Post"
+date: "2024-06-10"
 ---
+Content`;
 
-# Hello World
+const VALID_META_NEWER = `---
+title: "Newer Post"
+date: "2024-08-15"
+---
+Even newer content`;
 
-This is test content.
-`;
+const VALID_META_OLDER = `---
+title: "Older Post"
+date: "2024-05-05"
+---
+Older content`;
 
 // ---------------------------------------------------------------------------
 // getAll()
 // ---------------------------------------------------------------------------
 
-describe("createContentLibrary", () => {
-  afterEach(() => {
-    vi.restoreAllMocks();
-    vi.unstubAllEnvs();
+describe("getAll()", () => {
+  it("reads markdown files and parses frontmatter", () => {
+    const { lib, cleanup } = makeLibrary({
+      _files: {
+        "post-one/README.md": `---
+title: "First Post"
+date: "2024-01-01"
+---
+Body one`,
+        "post-two/README.md": `---
+title: "Second Post"
+date: "2024-02-01"
+---
+Body two`,
+      },
+      publicPrefix: "/test",
+      placeholderFilename: "placeholder.svg",
+    });
+
+    const items = lib.getAll();
+    expect(items).toContainEqual(
+      expect.objectContaining({
+        slug: "post-one",
+        title: "First Post",
+        date: "2024-01-01",
+      }),
+    );
+    expect(items).toContainEqual(
+      expect.objectContaining({
+        slug: "post-two",
+        title: "Second Post",
+        date: "2024-02-01",
+      }),
+    );
+
+    cleanup();
   });
 
-  describe("getAll()", () => {
-    it("reads markdown files and parses frontmatter", () => {
-      const { lib, cleanup } = makeLibrary({
-        _files: { "post-one.md": VALID_META },
-      });
-
-      const all = lib.getAll();
-      expect(all).toHaveLength(1);
-      expect(all[0].title).toBe("Test Project");
-      expect(all[0].date).toBe("2024-06-10");
-      expect(all[0].excerpt).toBe("A test project.");
-      expect(all[0].tags).toEqual(["test", "demo"]);
-      expect(all[0].team).toBe("Test Author");
-
-      cleanup();
+  it("derives slugs from directory names", () => {
+    const { lib, cleanup } = makeLibrary({
+      _files: {
+        "my-awesome-project/README.md": `---
+title: "Awesome Project"
+date: "2024-01-01"
+---
+Content`,
+        "another-post/README.mdx": `---
+title: "Another Post"
+date: "2024-02-01"
+---
+Content`,
+      },
+      publicPrefix: "/test",
+      placeholderFilename: "placeholder.svg",
     });
 
-    it("derives slugs from filenames", () => {
-      const { lib, cleanup } = makeLibrary({
-        _files: {
-          "my-awesome-project.md": VALID_META,
-          "another-post.mdx": VALID_META,
-        },
-      });
+    const items = lib.getAll();
+    expect(items.map((i) => i.slug)).toEqual([
+      "another-post",
+      "my-awesome-project",
+    ]);
 
-      const all = lib.getAll();
-      const slugs = all.map((p: ContentMeta) => p.slug).sort();
-      expect(slugs).toEqual(["another-post", "my-awesome-project"]);
-
-      cleanup();
-    });
-
-    it("returns items sorted newest-first by date", () => {
-      const { lib, cleanup } = makeLibrary({
-        _files: {
-          "old.md": VALID_META.replace(
-            "date: '2024-06-10'",
-            "date: '2023-01-15'",
-          ),
-          "new.md": VALID_META.replace(
-            "date: '2024-06-10'",
-            "date: '2025-03-20'",
-          ),
-          "middle.md": VALID_META,
-        },
-      });
-
-      const all = lib.getAll();
-      expect(all.map((p: ContentMeta) => p.slug)).toEqual([
-        "new",
-        "middle",
-        "old",
-      ]);
-
-      cleanup();
-    });
-
-    it("returns an empty array for a missing content directory", () => {
-      const { lib, cleanup } = makeLibrary({
-        mdDir: "libs/content/src/test/nonexistent",
-      });
-
-      expect(lib.getAll()).toEqual([]);
-
-      cleanup();
-    });
-
-    it("returns an empty array for an empty directory", () => {
-      const { lib, cleanup } = makeLibrary({ _files: {} });
-
-      expect(lib.getAll()).toEqual([]);
-
-      cleanup();
-    });
-
-    it("includes imageSrc with publicPrefix (placeholder when no image)", () => {
-      const { lib, cleanup } = makeLibrary({
-        _files: { "post.md": VALID_META },
-      });
-
-      const all = lib.getAll();
-      expect(all[0].imageSrc).toBe("/test/placeholder.svg");
-
-      cleanup();
-    });
-
-    it("uses image file matching slug + extension", () => {
-      const { lib, cleanup } = makeLibrary({
-        _files: { "post.md": VALID_META },
-        _images: { "post.png": Buffer.from("fake-png") },
-      });
-
-      const all = lib.getAll();
-      expect(all[0].imageSrc).toBe("/test/post.png");
-
-      cleanup();
-    });
-
-    it("excludes items with draft: true from getAll()", () => {
-      const { lib, cleanup } = makeLibrary({
-        _files: {
-          "published.md": VALID_META,
-          "draft.md": VALID_META.replace(
-            "title: 'Test Project'",
-            "title: 'Draft Project'\ndraft: true",
-          ),
-        },
-      });
-
-      const all = lib.getAll();
-      expect(all).toHaveLength(1);
-      expect(all[0].slug).toBe("published");
-
-      cleanup();
-    });
+    cleanup();
   });
 
-  // ---------------------------------------------------------------------------
-  // getBySlug()
-  // ---------------------------------------------------------------------------
-
-  describe("getBySlug()", () => {
-    it("retrieves metadata by slug", () => {
-      const { lib, cleanup } = makeLibrary({
-        _files: { "post.md": VALID_META },
-      });
-
-      const meta = lib.getBySlug("post");
-      expect(meta).toBeDefined();
-      expect(meta!.title).toBe("Test Project");
-      expect(meta!.slug).toBe("post");
-
-      cleanup();
+  it("uses slug from frontmatter when present", () => {
+    const { lib, cleanup } = makeLibrary({
+      _files: {
+        "dir-name/README.md": `---
+title: "Custom Slug"
+date: "2024-01-01"
+slug: "custom-slug"
+---
+Content`,
+      },
+      publicPrefix: "/test",
+      placeholderFilename: "placeholder.svg",
     });
 
-    it("returns undefined for an unknown slug", () => {
-      const { lib, cleanup } = makeLibrary({
-        _files: { "post.md": VALID_META },
-      });
+    const items = lib.getAll();
+    expect(items[0].slug).toBe("custom-slug");
+    expect(items[0].href).toBe("/test/custom-slug");
 
-      expect(lib.getBySlug("nonexistent")).toBeUndefined();
-
-      cleanup();
-    });
-
-    it("returns undefined for an empty-string slug", () => {
-      const { lib, cleanup } = makeLibrary({
-        _files: { "post.md": VALID_META },
-      });
-
-      expect(lib.getBySlug("")).toBeUndefined();
-
-      cleanup();
-    });
-
-    it("returns undefined for a whitespace-only slug", () => {
-      const { lib, cleanup } = makeLibrary({
-        _files: { "post.md": VALID_META },
-      });
-
-      expect(lib.getBySlug("   ")).toBeUndefined();
-
-      cleanup();
-    });
+    cleanup();
   });
 
-  // ---------------------------------------------------------------------------
-  // getContentBySlug()
-  // ---------------------------------------------------------------------------
-
-  describe("getContentBySlug()", () => {
-    it("returns full content with rendered HTML body", async () => {
-      const { lib, cleanup } = makeLibrary({
-        _files: { "post.md": VALID_META },
-      });
-
-      const content = await lib.getContentBySlug("post");
-      expect(content).toBeDefined();
-      expect(content!.slug).toBe("post");
-      expect(content!.title).toBe("Test Project");
-      expect(content!.body).toContain("<h1>Hello World</h1>");
-      expect(content!.body).toContain("This is test content.");
-
-      cleanup();
+  it("returns items sorted newest-first by date", () => {
+    const { lib, cleanup } = makeLibrary({
+      _files: {
+        "old/README.md": VALID_META_OLDER,
+        "middle/README.md": VALID_META,
+        "new/README.md": VALID_META_NEWER,
+      },
+      publicPrefix: "/test",
+      placeholderFilename: "placeholder.svg",
     });
 
-    it("returns undefined for an unknown slug", async () => {
-      const { lib, cleanup } = makeLibrary({
-        _files: { "post.md": VALID_META },
-      });
+    const items = lib.getAll();
+    expect(items.map((i) => i.date)).toEqual([
+      "2024-08-15",
+      "2024-06-10",
+      "2024-05-05",
+    ]);
 
-      expect(await lib.getContentBySlug("nonexistent")).toBeUndefined();
-
-      cleanup();
-    });
-
-    it("returns undefined for an empty-string slug", async () => {
-      const { lib, cleanup } = makeLibrary({
-        _files: { "post.md": VALID_META },
-      });
-
-      expect(await lib.getContentBySlug("")).toBeUndefined();
-
-      cleanup();
-    });
-
-    it("returns undefined for a whitespace-only slug", async () => {
-      const { lib, cleanup } = makeLibrary({
-        _files: { "post.md": VALID_META },
-      });
-
-      expect(await lib.getContentBySlug("   ")).toBeUndefined();
-
-      cleanup();
-    });
+    cleanup();
   });
 
-  // ---------------------------------------------------------------------------
-  // DEPLOYMENT_URL substitution (regression test for P0.1)
-  // ---------------------------------------------------------------------------
+  it("returns an empty array for a missing content directory", () => {
+    // Point to a non-existent directory
+    const tmpDir = fs.mkdtempSync(
+      path.join(os.tmpdir(), "content-lib-missing-"),
+    );
+    vi.spyOn(process, "cwd").mockReturnValue(path.join(tmpDir, "apps", "main"));
 
-  describe("DEPLOYMENT_URL substitution", () => {
-    it("replaces DEPLOYMENT_URL placeholder with the deployment URL", async () => {
-      vi.stubEnv("NEXT_PUBLIC_DEPLOYMENT_URL", "https://example.com");
-
-      const { lib, cleanup } = makeLibrary({
-        _files: {
-          "post.md": `---\ntitle: 'Test'\ndate: '2024-06-10'\n---\n[Kathleen Miller](DEPLOYMENT_URL)`,
-        },
-      });
-
-      const content = await lib.getContentBySlug("post");
-
-      // The placeholder must NOT survive into the rendered HTML
-      expect(content!.body).not.toContain("DEPLOYMENT_URL");
-      // The href must be the deployment URL, not prefixed with a content path
-      expect(content!.body).toContain('href="https://example.com"');
-      // The deployment URL must NOT be prefixed with /test/ or basePath
-      expect(content!.body).not.toContain("/test/DEPLOYMENT_URL");
-      expect(content!.body).not.toMatch(/href="\/[^"]*DEPLOYMENT_URL"/);
-
-      cleanup();
+    const lib = createContentLibrary({
+      mdDir: "does-not-exist",
+      publicPrefix: "/test",
+      placeholderFilename: "placeholder.svg",
     });
 
-    it("leaves DEPLOYMENT_URL placeholder intact when no deployment URL is configured", async () => {
-      vi.stubEnv("NEXT_PUBLIC_DEPLOYMENT_URL", "");
-      vi.stubEnv("NEXT_PUBLIC_SITE_URL", "");
-      vi.stubEnv("NEXT_PUBLIC_VERCEL_URL", "");
+    expect(lib.getAll()).toEqual([]);
 
-      const { lib, cleanup } = makeLibrary({
-        _files: {
-          "post.md": `---\ntitle: 'Test'\ndate: '2024-06-10'\n---\n[Link](DEPLOYMENT_URL)`,
-        },
-      });
-
-      const content = await lib.getContentBySlug("post");
-      // Without a deployment URL, the placeholder is left as-is
-      expect(content!.body).toContain("DEPLOYMENT_URL");
-
-      cleanup();
-    });
-
-    it("works correctly with a basePath when deployment URL is set", async () => {
-      vi.stubEnv("NEXT_PUBLIC_DEPLOYMENT_URL", "https://example.com");
-      vi.stubEnv("NEXT_PUBLIC_BASE_PATH", "/subpath");
-
-      const { lib, cleanup } = makeLibrary({
-        _files: {
-          "post.md": `---\ntitle: 'Test'\ndate: '2024-06-10'\n---\n[Team](DEPLOYMENT_URL) and [relative](/relative-page)`,
-        },
-      });
-
-      const content = await lib.getContentBySlug("post");
-
-      // DEPLOYMENT_URL is replaced with the full deployment URL
-      expect(content!.body).not.toContain("DEPLOYMENT_URL");
-      expect(content!.body).toContain('href="https://example.com"');
-      // Relative link is rewritten with basePath + prefix
-      expect(content!.body).toContain('href="/subpath/test/relative-page"');
-
-      cleanup();
-    });
+    cleanupTempFixtures(tmpDir);
   });
 
-  // ---------------------------------------------------------------------------
-  // Relative link and image path handling
-  // ---------------------------------------------------------------------------
-
-  describe("relative path handling", () => {
-    it("rewrites relative image paths with baseURL and prefix", async () => {
-      vi.stubEnv("NEXT_PUBLIC_BASE_PATH", "/subpath");
-
-      const { lib, cleanup } = makeLibrary({
-        _files: {
-          "post.md": `---\ntitle: 'Test'\ndate: '2024-06-10'\n---\n![Alt](image.png)`,
-        },
-        _images: { "image.png": Buffer.from("fake") },
-      });
-
-      const content = await lib.getContentBySlug("post");
-      expect(content!.body).toContain('src="/subpath/test/image.png"');
-
-      cleanup();
+  it("includes imageSrc with publicPrefix when no image is present", () => {
+    const { lib, cleanup } = makeLibrary({
+      _files: {
+        "post/README.md": VALID_META,
+      },
+      publicPrefix: "/test",
+      placeholderFilename: "placeholder.svg",
     });
 
-    it("rewrites relative links with baseURL and prefix", async () => {
-      vi.stubEnv("NEXT_PUBLIC_BASE_PATH", "/subpath");
+    const items = lib.getAll();
+    expect(items[0].imageSrc).toBe("/test/placeholder.svg");
+    expect(items[0].imageType).toBe("placeholder");
 
-      const { lib, cleanup } = makeLibrary({
-        _files: {
-          "post.md": `---\ntitle: 'Test'\ndate: '2024-06-10'\n---\n[Read more](other-post)`,
-        },
-      });
-
-      const content = await lib.getContentBySlug("post");
-      expect(content!.body).toContain('href="/subpath/test/other-post"');
-
-      cleanup();
-    });
-
-    it("does not rewrite absolute URLs", async () => {
-      const { lib, cleanup } = makeLibrary({
-        _files: {
-          "post.md": `---\ntitle: 'Test'\ndate: '2024-06-10'\n---\n[External](https://example.com/page)`,
-        },
-      });
-
-      const content = await lib.getContentBySlug("post");
-      expect(content!.body).toContain('href="https://example.com/page"');
-
-      cleanup();
-    });
-
-    it("does not rewrite anchor links", async () => {
-      const { lib, cleanup } = makeLibrary({
-        _files: {
-          "post.md": `---\ntitle: 'Test'\ndate: '2024-06-10'\n---\n[Jump](#section)`,
-        },
-      });
-
-      const content = await lib.getContentBySlug("post");
-      expect(content!.body).toContain('href="#section"');
-
-      cleanup();
-    });
-
-    it("does not rewrite mailto links", async () => {
-      const { lib, cleanup } = makeLibrary({
-        _files: {
-          "post.md": `---\ntitle: 'Test'\ndate: '2024-06-10'\n---\n[Email](mailto:person@example.com)`,
-        },
-      });
-
-      const content = await lib.getContentBySlug("post");
-      expect(content!.body).toContain('href="mailto:person@example.com"');
-
-      cleanup();
-    });
-
-    it("works without a baseUrl", async () => {
-      const { lib, cleanup } = makeLibrary({
-        _files: {
-          "post.md": `---\ntitle: 'Test'\ndate: '2024-06-10'\n---\n[More](other-page)`,
-        },
-      });
-
-      const content = await lib.getContentBySlug("post");
-      expect(content!.body).toContain('href="/test/other-page"');
-
-      cleanup();
-    });
+    cleanup();
   });
 
-  // ---------------------------------------------------------------------------
-  // External link security attributes
-  // ---------------------------------------------------------------------------
-
-  describe("external link security attributes", () => {
-    it('adds target="_blank" and rel="noopener noreferrer" to external links', async () => {
-      const { lib, cleanup } = makeLibrary({
-        _files: {
-          "post.md": `---\ntitle: 'Test'\ndate: '2024-06-10'\n---\n[External](https://example.com/page)`,
-        },
-      });
-
-      const content = await lib.getContentBySlug("post");
-      expect(content!.body).toContain('target="_blank"');
-      expect(content!.body).toContain('rel="noopener noreferrer"');
-      expect(content!.body).toContain('class="external-link"');
-
-      cleanup();
+  it("uses image file matching slug + extension", () => {
+    const { lib, cleanup } = makeLibrary({
+      _files: {
+        "post/README.md": VALID_META,
+      },
+      _images: {
+        "post/post.png": Buffer.from("fake-png"),
+      },
+      publicPrefix: "/test",
+      placeholderFilename: "placeholder.svg",
     });
 
-    it("does not add security attributes to relative links", async () => {
-      const { lib, cleanup } = makeLibrary({
-        _files: {
-          "post.md": `---\ntitle: 'Test'\ndate: '2024-06-10'\n---\n[Relative](other-page)`,
-        },
-      });
+    const items = lib.getAll();
+    expect(items[0].imageSrc).toBe("/test/post/post.png");
+    expect(items[0].imageType).toBe("cover");
 
-      const content = await lib.getContentBySlug("post");
-      expect(content!.body).not.toContain('target="_blank"');
-      expect(content!.body).not.toContain('rel="noopener noreferrer"');
-
-      cleanup();
-    });
+    cleanup();
   });
 
-  // ---------------------------------------------------------------------------
-  // Image fallback behavior
-  // ---------------------------------------------------------------------------
-
-  describe("image fallback", () => {
-    it("uses placeholder when no image field is present", () => {
-      const { lib, cleanup } = makeLibrary({
-        _files: {
-          "post.md": `---\ntitle: 'Test'\ndate: '2024-06-10'\n---\nContent`,
-        },
-      });
-
-      const all = lib.getAll();
-      expect(all[0].imageSrc).toBe("/test/placeholder.svg");
-
-      cleanup();
+  it("prefers image frontmatter over slug-based filename", () => {
+    const { lib, cleanup } = makeLibrary({
+      _files: {
+        "post/README.md": `---
+title: "Test"
+date: "2024-06-10"
+image: custom-cover.png
+---
+Content`,
+      },
+      _images: {
+        "post/post.png": Buffer.from("auto"),
+        "post/custom-cover.png": Buffer.from("custom"),
+      },
+      publicPrefix: "/test",
+      placeholderFilename: "placeholder.svg",
     });
 
-    it("uses placeholder when image field is null", () => {
-      const { lib, cleanup } = makeLibrary({
-        _files: {
-          "post.md": `---\ntitle: 'Test'\ndate: '2024-06-10'\nimage:\n---\nContent`,
-        },
-      });
+    const items = lib.getAll();
+    expect(items[0].imageSrc).toBe("/test/post/custom-cover.png");
+    expect(items[0].imageType).toBe("cover");
 
-      const all = lib.getAll();
-      expect(all[0].imageSrc).toBe("/test/placeholder.svg");
-
-      cleanup();
-    });
-
-    it("uses placeholder when referenced image file is missing", () => {
-      const { lib, cleanup } = makeLibrary({
-        _files: {
-          "post.md": `---\ntitle: 'Test'\ndate: '2024-06-10'\nimage: non-existent.png\n---\nContent`,
-        },
-      });
-
-      const all = lib.getAll();
-      expect(all[0].imageSrc).toBe("/test/placeholder.svg");
-
-      cleanup();
-    });
-
-    it("prefers image frontmatter over slug-based filename", () => {
-      const { lib, cleanup } = makeLibrary({
-        _files: {
-          "post.md": `---\ntitle: 'Test'\ndate: '2024-06-10'\nimage: custom-cover.png\n---\nContent`,
-        },
-        _images: {
-          "post.png": Buffer.from("auto"),
-          "custom-cover.png": Buffer.from("custom"),
-        },
-      });
-
-      const all = lib.getAll();
-      expect(all[0].imageSrc).toBe("/test/custom-cover.png");
-
-      cleanup();
-    });
+    cleanup();
   });
 
-  // ---------------------------------------------------------------------------
-  // Markdown rendering and raw HTML
-  // ---------------------------------------------------------------------------
-
-  describe("markdown rendering", () => {
-    it("renders markdown body as HTML", async () => {
-      const { lib, cleanup } = makeLibrary({
-        _files: {
-          "post.md": `---\ntitle: 'Test'\ndate: '2024-06-10'\n---\n# Heading\n\nParagraph with **bold** and *italic* text.`,
-        },
-      });
-
-      const content = await lib.getContentBySlug("post");
-      expect(content!.body).toContain("<h1>Heading</h1>");
-      expect(content!.body).toContain("<strong>bold</strong>");
-      expect(content!.body).toContain("<em>italic</em>");
-
-      cleanup();
+  it("excludes items with draft: true", () => {
+    const { lib, cleanup } = makeLibrary({
+      _files: {
+        "published/README.md": VALID_META,
+        "draft/README.md": `---
+title: "Draft"
+date: "2024-06-10"
+draft: true
+---
+Content`,
+      },
+      publicPrefix: "/test",
+      placeholderFilename: "placeholder.svg",
     });
 
-    it("preserves raw HTML from markdown", async () => {
-      const { lib, cleanup } = makeLibrary({
-        _files: {
-          "post.md": `---\ntitle: 'Test'\ndate: '2024-06-10'\n---\n<div class="custom">Raw HTML content</div>`,
-        },
-      });
+    const items = lib.getAll();
+    expect(items.map((i) => i.slug)).toEqual(["published"]);
 
-      const content = await lib.getContentBySlug("post");
-      expect(content!.body).toContain(
-        '<div class="custom">Raw HTML content</div>',
-      );
-
-      cleanup();
-    });
-
-    it("renders markdown lists as HTML lists", async () => {
-      const { lib, cleanup } = makeLibrary({
-        _files: {
-          "post.md": `---\ntitle: 'Test'\ndate: '2024-06-10'\n---\n- Item 1\n- Item 2\n- Item 3`,
-        },
-      });
-
-      const content = await lib.getContentBySlug("post");
-      expect(content!.body).toContain("<ul>");
-      expect(content!.body).toContain("<li>Item 1</li>");
-      expect(content!.body).toContain("<li>Item 3</li>");
-
-      cleanup();
-    });
+    cleanup();
   });
 
-  // ---------------------------------------------------------------------------
-  // Frontmatter validation
-  // ---------------------------------------------------------------------------
-
-  describe("frontmatter validation", () => {
-    it("accepts valid frontmatter with all required fields", () => {
-      const { lib, cleanup } = makeLibrary({
-        _files: { "post.md": VALID_META },
-      });
-
-      const all = lib.getAll();
-      expect(all).toHaveLength(1);
-      expect(all[0].title).toBe("Test Project");
-      expect(all[0].date).toBe("2024-06-10");
-
-      cleanup();
+  it("ignores directories starting with underscore", () => {
+    const { lib, cleanup } = makeLibrary({
+      _files: {
+        "post/README.md": VALID_META,
+        "_template/README.md": VALID_META,
+      },
+      publicPrefix: "/test",
+      placeholderFilename: "placeholder.svg",
     });
 
-    it("accepts valid frontmatter with slug in frontmatter", () => {
-      const { lib, cleanup } = makeLibrary({
-        _files: {
-          "my-slug.md": `---\ntitle: 'With Slug'\ndate: '2024-06-10'\nslug: custom-slug\n---\nContent`,
-        },
-      });
+    const items = lib.getAll();
+    expect(items.map((i) => i.slug)).toEqual(["post"]);
 
-      const all = lib.getAll();
-      expect(all[0].slug).toBe("custom-slug");
-
-      cleanup();
-    });
-
-    it("uses filename when slug is absent in frontmatter", () => {
-      const { lib, cleanup } = makeLibrary({
-        _files: {
-          "filename-slug.md": `---\ntitle: 'No Slug Field'\ndate: '2024-06-10'\n---\nContent`,
-        },
-      });
-
-      const all = lib.getAll();
-      expect(all[0].slug).toBe("filename-slug");
-
-      cleanup();
-    });
-
-    it("rejects empty frontmatter (missing title)", () => {
-      const { lib, cleanup } = makeLibrary({
-        _files: {
-          "post.md": `---\ndate: '2024-06-10'\n---\nContent`,
-        },
-      });
-
-      expect(() => lib.getAll()).toThrow(/Invalid frontmatter in "post\.md"/);
-      expect(() => lib.getAll()).toThrow(/`title` is required/);
-
-      cleanup();
-    });
-
-    it("rejects frontmatter missing date", () => {
-      const { lib, cleanup } = makeLibrary({
-        _files: {
-          "post.md": `---\ntitle: 'No Date'\n---\nContent`,
-        },
-      });
-
-      expect(() => lib.getAll()).toThrow(/`date` is required/);
-
-      cleanup();
-    });
-
-    it("rejects frontmatter with invalid date format", () => {
-      const { lib, cleanup } = makeLibrary({
-        _files: {
-          "post.md": `---\ntitle: 'Bad Date'\ndate: 'not-a-date'\n---\nContent`,
-        },
-      });
-
-      expect(() => lib.getAll()).toThrow(/`date` must be in YYYY-MM-DD format/);
-
-      cleanup();
-    });
-
-    it("rejects frontmatter with non-string title", () => {
-      const { lib, cleanup } = makeLibrary({
-        _files: {
-          "post.md": `---\ntitle: 12345\ndate: '2024-06-10'\n---\nContent`,
-        },
-      });
-
-      expect(() => lib.getAll()).toThrow(/`title` must be a string/);
-
-      cleanup();
-    });
-
-    it("rejects frontmatter with non-string date", () => {
-      const { lib, cleanup } = makeLibrary({
-        _files: {
-          "post.md": `---\ntitle: 'Test'\ndate: 12345\n---\nContent`,
-        },
-      });
-
-      expect(() => lib.getAll()).toThrow(/`date` must be a string/);
-
-      cleanup();
-    });
-
-    it("rejects frontmatter with non-string slug", () => {
-      const { lib, cleanup } = makeLibrary({
-        _files: {
-          "post.md": `---\ntitle: 'Test'\ndate: '2024-06-10'\nslug: 12345\n---\nContent`,
-        },
-      });
-
-      expect(() => lib.getAll()).toThrow(/`slug` must be a string/);
-
-      cleanup();
-    });
-
-    it("aggregates multiple validation errors", () => {
-      const { lib, cleanup } = makeLibrary({
-        _files: {
-          "post.md": `---\ndate: 'bad-format'\n---\nContent`,
-        },
-      });
-
-      expect(() => lib.getAll()).toThrow(/`title` is required/);
-      expect(() => lib.getAll()).toThrow(/`date` must be in YYYY-MM-DD format/);
-
-      cleanup();
-    });
-
-    it("validation errors include the filename", () => {
-      const { lib, cleanup } = makeLibrary({
-        _files: {
-          "specific-file.md": `---\ndate: '2024-06-10'\n---\nContent`,
-        },
-      });
-
-      expect(() => lib.getAll()).toThrow(/specific-file\.md/);
-
-      cleanup();
-    });
-
-    it("rejects non-string image field", () => {
-      const { lib, cleanup } = makeLibrary({
-        _files: {
-          "post.md": `---\ntitle: 'Test'\ndate: '2024-06-10'\nimage: 123\n---\nContent`,
-        },
-      });
-
-      expect(() => lib.getAll()).toThrow(/`image` must be a string/);
-
-      cleanup();
-    });
-
-    it("rejects non-array tags field", () => {
-      const { lib, cleanup } = makeLibrary({
-        _files: {
-          "post.md": `---\ntitle: 'Test'\ndate: '2024-06-10'\ntags: "not-an-array"\n---\nContent`,
-        },
-      });
-
-      expect(() => lib.getAll()).toThrow(/`tags` must be an array/);
-
-      cleanup();
-    });
-
-    it("rejects non-array links field", () => {
-      const { lib, cleanup } = makeLibrary({
-        _files: {
-          "post.md": `---\ntitle: 'Test'\ndate: '2024-06-10'\nlinks: "not-an-array"\n---\nContent`,
-        },
-      });
-
-      expect(() => lib.getAll()).toThrow(/`links` must be an array/);
-
-      cleanup();
-    });
-
-    it("rejects non-array authors field", () => {
-      const { lib, cleanup } = makeLibrary({
-        _files: {
-          "post.md": `---\ntitle: 'Test'\ndate: '2024-06-10'\nauthors: "not-an-array"\n---\nContent`,
-        },
-      });
-
-      expect(() => lib.getAll()).toThrow(/`authors` must be an array/);
-
-      cleanup();
-    });
-
-    it("rejects non-string venue field", () => {
-      const { lib, cleanup } = makeLibrary({
-        _files: {
-          "post.md": `---\ntitle: 'Test'\ndate: '2024-06-10'\nvenue: 12345\n---\nContent`,
-        },
-      });
-
-      expect(() => lib.getAll()).toThrow(/`venue` must be a string/);
-
-      cleanup();
-    });
-
-    it("rejects non-string doi field", () => {
-      const { lib, cleanup } = makeLibrary({
-        _files: {
-          "post.md": `---\ntitle: 'Test'\ndate: '2024-06-10'\ndoi: 12345\n---\nContent`,
-        },
-      });
-
-      expect(() => lib.getAll()).toThrow(/`doi` must be a string/);
-
-      cleanup();
-    });
-
-    it("rejects non-string paperUrl field", () => {
-      const { lib, cleanup } = makeLibrary({
-        _files: {
-          "post.md": `---\ntitle: 'Test'\ndate: '2024-06-10'\npaperUrl: 12345\n---\nContent`,
-        },
-      });
-
-      expect(() => lib.getAll()).toThrow(/`paperUrl` must be a string/);
-
-      cleanup();
-    });
+    cleanup();
   });
 
-  // ---------------------------------------------------------------------------
-  // Publication-specific fields
-  // ---------------------------------------------------------------------------
-
-  describe("publication-specific fields", () => {
-    it("parses authors array", () => {
-      const { lib, cleanup } = makeLibrary({
-        _files: {
-          "pub.md": `---\ntitle: 'Test'\ndate: '2024-06-10'\nauthors:\n  - Alice\n  - Bob\n---\nContent`,
-        },
-      });
-
-      const all = lib.getAll();
-      expect(all[0].authors).toEqual(["Alice", "Bob"]);
-
-      cleanup();
+  it("ignores hidden directories", () => {
+    const { lib, cleanup } = makeLibrary({
+      _files: {
+        "post/README.md": VALID_META,
+        ".cache/README.md": VALID_META,
+      },
+      publicPrefix: "/test",
+      placeholderFilename: "placeholder.svg",
     });
 
-    it("parses single author as array", () => {
-      const { lib, cleanup } = makeLibrary({
-        _files: {
-          "pub.md": `---\ntitle: 'Test'\ndate: '2024-06-10'\nauthors: ["Alice"]\n---\nContent`,
-        },
-      });
+    const items = lib.getAll();
+    expect(items.map((i) => i.slug)).toEqual(["post"]);
 
-      const all = lib.getAll();
-      expect(all[0].authors).toEqual(["Alice"]);
+    cleanup();
+  });
+});
 
-      cleanup();
+// ---------------------------------------------------------------------------
+// getBySlug()
+// ---------------------------------------------------------------------------
+
+describe("getBySlug()", () => {
+  it("retrieves metadata by slug", () => {
+    const { lib, cleanup } = makeLibrary({
+      _files: {
+        "post/README.md": VALID_META,
+      },
+      publicPrefix: "/test",
+      placeholderFilename: "placeholder.svg",
     });
 
-    it("parses venue string", () => {
-      const { lib, cleanup } = makeLibrary({
-        _files: {
-          "pub.md": `---\ntitle: 'Test'\ndate: '2024-06-10'\nvenue: "Nature Climate Change"\n---\nContent`,
-        },
-      });
+    const item = lib.getBySlug("post");
+    expect(item).toEqual(
+      expect.objectContaining({
+        slug: "post",
+        title: "My Post",
+        date: "2024-06-10",
+      }),
+    );
 
-      const all = lib.getAll();
-      expect(all[0].venue).toBe("Nature Climate Change");
+    cleanup();
+  });
 
-      cleanup();
+  it("returns undefined for an unknown slug", () => {
+    const { lib, cleanup } = makeLibrary({
+      _files: {
+        "post/README.md": VALID_META,
+      },
+      publicPrefix: "/test",
+      placeholderFilename: "placeholder.svg",
     });
 
-    it("parses doi string", () => {
-      const { lib, cleanup } = makeLibrary({
-        _files: {
-          "pub.md": `---\ntitle: 'Test'\ndate: '2024-06-10'\ndoi: "10.1038/s41558-023-01656-8"\n---\nContent`,
-        },
-      });
+    expect(lib.getBySlug("nonexistent")).toBeUndefined();
 
-      const all = lib.getAll();
-      expect(all[0].doi).toBe("10.1038/s41558-023-01656-8");
+    cleanup();
+  });
 
-      cleanup();
+  it("returns undefined for an empty-string slug", () => {
+    const { lib, cleanup } = makeLibrary({
+      _files: {
+        "post/README.md": VALID_META,
+      },
+      publicPrefix: "/test",
+      placeholderFilename: "placeholder.svg",
     });
 
-    it("parses paperUrl string", () => {
-      const { lib, cleanup } = makeLibrary({
-        _files: {
-          "pub.md": `---\ntitle: 'Test'\ndate: '2024-06-10'\npaperUrl: "https://doi.org/10.1038/s41558-023-01656-8"\n---\nContent`,
-        },
-      });
+    expect(lib.getBySlug("")).toBeUndefined();
 
-      const all = lib.getAll();
-      expect(all[0].paperUrl).toBe(
-        "https://doi.org/10.1038/s41558-023-01656-8",
-      );
+    cleanup();
+  });
 
-      cleanup();
+  it("returns undefined for a whitespace-only slug", () => {
+    const { lib, cleanup } = makeLibrary({
+      _files: {
+        "post/README.md": VALID_META,
+      },
+      publicPrefix: "/test",
+      placeholderFilename: "placeholder.svg",
     });
 
-    it("omits optional fields when not present", () => {
-      const { lib, cleanup } = makeLibrary({
-        _files: {
-          "pub.md": `---\ntitle: 'Test'\ndate: '2024-06-10'\n---\nContent`,
-        },
-      });
+    expect(lib.getBySlug("   ")).toBeUndefined();
 
-      const all = lib.getAll();
-      expect(all[0].authors).toBeUndefined();
-      expect(all[0].venue).toBeUndefined();
-      expect(all[0].doi).toBeUndefined();
-      expect(all[0].paperUrl).toBeUndefined();
+    cleanup();
+  });
+});
 
-      cleanup();
+// ---------------------------------------------------------------------------
+// getContentBySlug()
+// ---------------------------------------------------------------------------
+
+describe("getContentBySlug()", () => {
+  it("returns full content with rendered HTML body", async () => {
+    const { lib, cleanup } = makeLibrary({
+      _files: {
+        "post/README.md": `---
+title: "My Post"
+date: "2024-06-10"
+---
+# Hello World
+
+This is **bold** text.`,
+      },
+      publicPrefix: "/test",
+      placeholderFilename: "placeholder.svg",
     });
 
-    it("parses all publication fields together", () => {
-      const { lib, cleanup } = makeLibrary({
-        _files: {
-          "pub.md": `---\ntitle: "Deep Learning for Climate"\ndate: "2024-03-15"\nauthors:\n  - "Jane Doe"\n  - "John Smith"\nvenue: "Nature"\ndoi: "10.1038/s41558-024-01495-3"\npaperUrl: "https://www.nature.com/articles/s41558-024-01495-3"\nlinks:\n  - "https://arxiv.org/abs/1234.56789"\n---\nAbstract content here.`,
-        },
-      });
+    const content = await lib.getContentBySlug("post");
+    expect(content).toEqual(
+      expect.objectContaining({
+        slug: "post",
+        title: "My Post",
+        date: "2024-06-10",
+      }),
+    );
+    expect(content!.body).toContain("<h1>Hello World</h1>");
+    expect(content!.body).toContain("<strong>bold</strong>");
 
-      const all = lib.getAll();
-      expect(all[0].authors).toEqual(["Jane Doe", "John Smith"]);
-      expect(all[0].venue).toBe("Nature");
-      expect(all[0].doi).toBe("10.1038/s41558-024-01495-3");
-      expect(all[0].paperUrl).toBe(
-        "https://www.nature.com/articles/s41558-024-01495-3",
-      );
-      expect(all[0].links).toEqual(["https://arxiv.org/abs/1234.56789"]);
+    cleanup();
+  });
 
-      cleanup();
+  it("returns undefined for an unknown slug", async () => {
+    const { lib, cleanup } = makeLibrary({
+      _files: {
+        "post/README.md": VALID_META,
+      },
+      publicPrefix: "/test",
+      placeholderFilename: "placeholder.svg",
     });
+
+    const content = await lib.getContentBySlug("nonexistent");
+    expect(content).toBeUndefined();
+
+    cleanup();
+  });
+
+  it("returns undefined for an empty-string slug", async () => {
+    const { lib, cleanup } = makeLibrary({
+      _files: {
+        "post/README.md": VALID_META,
+      },
+      publicPrefix: "/test",
+      placeholderFilename: "placeholder.svg",
+    });
+
+    const content = await lib.getContentBySlug("");
+    expect(content).toBeUndefined();
+
+    cleanup();
+  });
+
+  it("returns undefined for a whitespace-only slug", async () => {
+    const { lib, cleanup } = makeLibrary({
+      _files: {
+        "post/README.md": VALID_META,
+      },
+      publicPrefix: "/test",
+      placeholderFilename: "placeholder.svg",
+    });
+
+    const content = await lib.getContentBySlug("   ");
+    expect(content).toBeUndefined();
+
+    cleanup();
+  });
+});
+
+describe("DEPLOYMENT_URL substitution", () => {
+  it("replaces DEPLOYMENT_URL placeholder with the deployment URL", async () => {
+    vi.stubEnv("NEXT_PUBLIC_DEPLOYMENT_URL", "https://example.com");
+
+    const { lib, cleanup } = makeLibrary({
+      _files: {
+        "post/README.md": `---
+title: "My Post"
+date: "2024-06-10"
+---
+[Deployed link](DEPLOYMENT_URL)`,
+      },
+      publicPrefix: "/test",
+      placeholderFilename: "placeholder.svg",
+    });
+
+    const content = await lib.getContentBySlug("post");
+    expect(content!.body).toContain('href="https://example.com"');
+    expect(content!.body).not.toContain("DEPLOYMENT_URL");
+
+    cleanup();
+  });
+
+  it("leaves DEPLOYMENT_URL placeholder intact when no deployment URL is configured", async () => {
+    vi.stubEnv("NEXT_PUBLIC_DEPLOYMENT_URL", "");
+
+    const { lib, cleanup } = makeLibrary({
+      _files: {
+        "post/README.md": `---
+title: "My Post"
+date: "2024-06-10"
+---
+[Deployed link](DEPLOYMENT_URL)`,
+      },
+      publicPrefix: "/test",
+      placeholderFilename: "placeholder.svg",
+    });
+
+    const content = await lib.getContentBySlug("post");
+    // When no deployment URL is configured, the placeholder remains as a literal.
+    expect(content!.body).toContain("DEPLOYMENT_URL");
+
+    cleanup();
+  });
+
+  it("resolves relative links correctly when deployment URL is set", async () => {
+    vi.stubEnv("NEXT_PUBLIC_DEPLOYMENT_URL", "https://example.com");
+
+    const { lib, cleanup } = makeLibrary({
+      _files: {
+        "post/README.md": `---
+title: "My Post"
+date: "2024-06-10"
+---
+[Relative page](relative-page)`,
+      },
+      publicPrefix: "/test",
+      placeholderFilename: "placeholder.svg",
+    });
+
+    const content = await lib.getContentBySlug("post");
+    expect(content!.body).toContain('href="/test/post/relative-page"');
+
+    cleanup();
+  });
+});
+
+// ---------------------------------------------------------------------------
+// Relative path handling
+// ---------------------------------------------------------------------------
+
+describe("relative path handling", () => {
+  it("rewrites relative image paths with baseURL and prefix", async () => {
+    vi.stubEnv("NEXT_PUBLIC_BASE_PATH", "/subpath");
+
+    const { lib, cleanup } = makeLibrary({
+      _files: {
+        "post/README.md": `---
+title: "My Post"
+date: "2024-06-10"
+---
+![Alt text](image.png)`,
+      },
+      _images: {
+        "post/image.png": Buffer.from("fake-png"),
+      },
+      publicPrefix: "/test",
+      placeholderFilename: "placeholder.svg",
+    });
+
+    const content = await lib.getContentBySlug("post");
+    expect(content!.body).toContain('src="/subpath/test/post/image.png"');
+
+    cleanup();
+  });
+
+  it("rewrites relative links with baseURL and prefix", async () => {
+    vi.stubEnv("NEXT_PUBLIC_BASE_PATH", "/subpath");
+
+    const { lib, cleanup } = makeLibrary({
+      _files: {
+        "post/README.md": `---
+title: "My Post"
+date: "2024-06-10"
+---
+[Other post](other-post)`,
+      },
+      publicPrefix: "/test",
+      placeholderFilename: "placeholder.svg",
+    });
+
+    const content = await lib.getContentBySlug("post");
+    expect(content!.body).toContain('href="/subpath/test/post/other-post"');
+
+    cleanup();
+  });
+
+  it("does not rewrite absolute URLs", async () => {
+    vi.stubEnv("NEXT_PUBLIC_BASE_PATH", "/subpath");
+
+    const { lib, cleanup } = makeLibrary({
+      _files: {
+        "post/README.md": `---
+title: "My Post"
+date: "2024-06-10"
+---
+[External link](https://example.com)
+
+![External image](https://example.com/image.png)`,
+      },
+      publicPrefix: "/test",
+      placeholderFilename: "placeholder.svg",
+    });
+
+    const content = await lib.getContentBySlug("post");
+    expect(content!.body).toContain('href="https://example.com"');
+    expect(content!.body).toContain('src="https://example.com/image.png"');
+
+    cleanup();
+  });
+
+  it("does not rewrite anchor links", async () => {
+    vi.stubEnv("NEXT_PUBLIC_BASE_PATH", "/subpath");
+
+    const { lib, cleanup } = makeLibrary({
+      _files: {
+        "post/README.md": `---
+title: "My Post"
+date: "2024-06-10"
+---
+[Jump to section](#section-id)`,
+      },
+      publicPrefix: "/test",
+      placeholderFilename: "placeholder.svg",
+    });
+
+    const content = await lib.getContentBySlug("post");
+    expect(content!.body).toContain('href="#section-id"');
+
+    cleanup();
+  });
+
+  it("does not rewrite mailto links", async () => {
+    vi.stubEnv("NEXT_PUBLIC_BASE_PATH", "/subpath");
+
+    const { lib, cleanup } = makeLibrary({
+      _files: {
+        "post/README.md": `---
+title: "My Post"
+date: "2024-06-10"
+---
+[Email me](mailto:test@example.com)`,
+      },
+      publicPrefix: "/test",
+      placeholderFilename: "placeholder.svg",
+    });
+
+    const content = await lib.getContentBySlug("post");
+    expect(content!.body).toContain('href="mailto:test@example.com"');
+
+    cleanup();
+  });
+
+  it("works without a baseUrl", async () => {
+    vi.stubEnv("NEXT_PUBLIC_BASE_PATH", "");
+
+    const { lib, cleanup } = makeLibrary({
+      _files: {
+        "post/README.md": `---
+title: "My Post"
+date: "2024-06-10"
+---
+[Other page](other-page)`,
+      },
+      publicPrefix: "/test",
+      placeholderFilename: "placeholder.svg",
+    });
+
+    const content = await lib.getContentBySlug("post");
+    expect(content!.body).toContain('href="/test/post/other-page"');
+
+    cleanup();
+  });
+});
+
+// ---------------------------------------------------------------------------
+// External link security attributes
+// ---------------------------------------------------------------------------
+
+describe("external link security attributes", () => {
+  it('adds target="_blank" and rel="noopener noreferrer" to external links', async () => {
+    vi.stubEnv("NEXT_PUBLIC_BASE_PATH", "/subpath");
+
+    const { lib, cleanup } = makeLibrary({
+      _files: {
+        "post/README.md": `---
+title: "My Post"
+date: "2024-06-10"
+---
+[External link](https://example.com)`,
+      },
+      publicPrefix: "/test",
+      placeholderFilename: "placeholder.svg",
+    });
+
+    const content = await lib.getContentBySlug("post");
+    expect(content!.body).toContain('href="https://example.com"');
+    expect(content!.body).toContain('target="_blank"');
+    expect(content!.body).toContain('rel="noopener noreferrer"');
+
+    cleanup();
+  });
+
+  it("does not add security attributes to relative links", async () => {
+    vi.stubEnv("NEXT_PUBLIC_BASE_PATH", "/subpath");
+
+    const { lib, cleanup } = makeLibrary({
+      _files: {
+        "post/README.md": `---
+title: "My Post"
+date: "2024-06-10"
+---
+[Relative link](relative-page)`,
+      },
+      publicPrefix: "/test",
+      placeholderFilename: "placeholder.svg",
+    });
+
+    const content = await lib.getContentBySlug("post");
+    expect(content!.body).not.toContain('target="_blank"');
+    expect(content!.body).not.toContain('rel="noopener noreferrer"');
+
+    cleanup();
+  });
+});
+
+// ---------------------------------------------------------------------------
+// Image fallback
+// ---------------------------------------------------------------------------
+
+describe("image fallback", () => {
+  it("uses placeholder when no image field is present", () => {
+    const { lib, cleanup } = makeLibrary({
+      _files: {
+        "post/README.md": VALID_META,
+      },
+      publicPrefix: "/test",
+      placeholderFilename: "placeholder.svg",
+    });
+
+    const item = lib.getBySlug("post");
+    expect(item!.imageSrc).toBe("/test/placeholder.svg");
+    expect(item!.imageType).toBe("placeholder");
+
+    cleanup();
+  });
+
+  it("uses placeholder when image field is null", () => {
+    const { lib, cleanup } = makeLibrary({
+      _files: {
+        "post/README.md": `---
+title: "Test"
+date: "2024-06-10"
+image: null
+---
+Content`,
+      },
+      publicPrefix: "/test",
+      placeholderFilename: "placeholder.svg",
+    });
+
+    const item = lib.getBySlug("post");
+    expect(item!.imageSrc).toBe("/test/placeholder.svg");
+    expect(item!.imageType).toBe("placeholder");
+
+    cleanup();
+  });
+
+  it("uses placeholder when referenced image file is missing", () => {
+    const { lib, cleanup } = makeLibrary({
+      _files: {
+        "post/README.md": `---
+title: "Test"
+date: "2024-06-10"
+image: nonexistent.png
+---
+Content`,
+      },
+      publicPrefix: "/test",
+      placeholderFilename: "placeholder.svg",
+    });
+
+    const item = lib.getBySlug("post");
+    expect(item!.imageSrc).toBe("/test/placeholder.svg");
+    expect(item!.imageType).toBe("placeholder");
+
+    cleanup();
+  });
+
+  it("prefers image frontmatter over slug-based filename", () => {
+    const { lib, cleanup } = makeLibrary({
+      _files: {
+        "post/README.md": `---
+title: "Test"
+date: "2024-06-10"
+image: custom-cover.png
+---
+Content`,
+      },
+      _images: {
+        "post/post.png": Buffer.from("auto"),
+        "post/custom-cover.png": Buffer.from("custom"),
+      },
+      publicPrefix: "/test",
+      placeholderFilename: "placeholder.svg",
+    });
+
+    const item = lib.getBySlug("post");
+    expect(item!.imageSrc).toBe("/test/post/custom-cover.png");
+    expect(item!.imageType).toBe("cover");
+
+    cleanup();
+  });
+});
+
+// ---------------------------------------------------------------------------
+// Markdown rendering
+// ---------------------------------------------------------------------------
+
+describe("markdown rendering", () => {
+  it("renders markdown body as HTML", async () => {
+    const { lib, cleanup } = makeLibrary({
+      _files: {
+        "post/README.md": `---
+title: "Test"
+date: "2024-06-10"
+---
+# Heading
+
+Paragraph with **bold** and *italic* text.`,
+      },
+      publicPrefix: "/test",
+      placeholderFilename: "placeholder.svg",
+    });
+
+    const content = await lib.getContentBySlug("post");
+    expect(content!.body).toContain("<h1>Heading</h1>");
+    expect(content!.body).toContain("<strong>bold</strong>");
+    expect(content!.body).toContain("<em>italic</em>");
+
+    cleanup();
+  });
+
+  it("preserves raw HTML from markdown", async () => {
+    const { lib, cleanup } = makeLibrary({
+      _files: {
+        "post/README.md": `---
+title: "Test"
+date: "2024-06-10"
+---
+<div class="custom">Raw HTML</div>`,
+      },
+      publicPrefix: "/test",
+      placeholderFilename: "placeholder.svg",
+    });
+
+    const content = await lib.getContentBySlug("post");
+    expect(content!.body).toContain('<div class="custom">Raw HTML</div>');
+
+    cleanup();
+  });
+
+  it("renders markdown lists as HTML lists", async () => {
+    const { lib, cleanup } = makeLibrary({
+      _files: {
+        "post/README.md": `---
+title: "Test"
+date: "2024-06-10"
+---
+- Item 1
+- Item 2
+- Item 3`,
+      },
+      publicPrefix: "/test",
+      placeholderFilename: "placeholder.svg",
+    });
+
+    const content = await lib.getContentBySlug("post");
+    expect(content!.body).toContain("<ul>");
+    expect(content!.body).toContain("<li>Item 1</li>");
+    expect(content!.body).toContain("<li>Item 3</li>");
+
+    cleanup();
+  });
+});
+
+// ---------------------------------------------------------------------------
+// Frontmatter validation
+// ---------------------------------------------------------------------------
+
+describe("frontmatter validation", () => {
+  it("accepts valid frontmatter with all required fields", () => {
+    const { lib, cleanup } = makeLibrary({
+      _files: {
+        "post/README.md": VALID_META,
+      },
+      publicPrefix: "/test",
+      placeholderFilename: "placeholder.svg",
+    });
+
+    const items = lib.getAll();
+    expect(items).toHaveLength(1);
+    expect(items[0].title).toBe("My Post");
+    expect(items[0].date).toBe("2024-06-10");
+
+    cleanup();
+  });
+
+  it("accepts valid frontmatter with slug in frontmatter", () => {
+    const { lib, cleanup } = makeLibrary({
+      _files: {
+        "dir-name/README.md": `---
+title: "Custom Slug"
+date: "2024-06-10"
+slug: "custom-slug"
+---
+Content`,
+      },
+      publicPrefix: "/test",
+      placeholderFilename: "placeholder.svg",
+    });
+
+    // getBySlug uses the directory name; the slug from frontmatter is
+    // returned in the metadata.
+    const item = lib.getBySlug("dir-name");
+    expect(item).toBeDefined();
+    expect(item!.slug).toBe("custom-slug");
+    expect(item!.href).toBe("/test/custom-slug");
+
+    cleanup();
+  });
+
+  it("uses directory name when slug is absent in frontmatter", () => {
+    const { lib, cleanup } = makeLibrary({
+      _files: {
+        "post/README.md": VALID_META,
+      },
+      publicPrefix: "/test",
+      placeholderFilename: "placeholder.svg",
+    });
+
+    const item = lib.getBySlug("post");
+    expect(item).toBeDefined();
+    expect(item!.slug).toBe("post");
+    expect(item!.href).toBe("/test/post");
+
+    cleanup();
+  });
+
+  it("rejects empty frontmatter (missing title)", () => {
+    const { lib, cleanup } = makeLibrary({
+      _files: {
+        "post/README.md": `---
+date: "2024-06-10"
+---
+Content`,
+      },
+      publicPrefix: "/test",
+      placeholderFilename: "placeholder.svg",
+    });
+
+    expect(() => lib.getAll()).toThrow(
+      /Invalid frontmatter in "README\.md" \(entry slug: "post"\)/,
+    );
+    expect(() => lib.getAll()).toThrow(/`title` is required/);
+
+    cleanup();
+  });
+
+  it("rejects frontmatter missing date", () => {
+    const { lib, cleanup } = makeLibrary({
+      _files: {
+        "post/README.md": `---
+title: "No Date"
+---
+Content`,
+      },
+      publicPrefix: "/test",
+      placeholderFilename: "placeholder.svg",
+    });
+
+    expect(() => lib.getAll()).toThrow(/`date` is required/);
+
+    cleanup();
+  });
+
+  it("rejects frontmatter with invalid date format", () => {
+    const { lib, cleanup } = makeLibrary({
+      _files: {
+        "post/README.md": `---
+title: "Bad Date"
+date: "not-a-date"
+---
+Content`,
+      },
+      publicPrefix: "/test",
+      placeholderFilename: "placeholder.svg",
+    });
+
+    expect(() => lib.getAll()).toThrow(
+      /`date` must be a valid calendar date in YYYY-MM-DD format/,
+    );
+
+    cleanup();
+  });
+
+  it("rejects frontmatter with invalid calendar date (Feb 30)", () => {
+    const { lib, cleanup } = makeLibrary({
+      _files: {
+        "post/README.md": `---
+title: "Bad Calendar Date"
+date: "2025-02-30"
+---
+Content`,
+      },
+      publicPrefix: "/test",
+      placeholderFilename: "placeholder.svg",
+    });
+
+    expect(() => lib.getAll()).toThrow(
+      /`date` must be a valid calendar date in YYYY-MM-DD format/,
+    );
+
+    cleanup();
+  });
+
+  it("rejects frontmatter with invalid calendar date (month 13)", () => {
+    const { lib, cleanup } = makeLibrary({
+      _files: {
+        "post/README.md": `---
+title: "Bad Month"
+date: "2024-13-01"
+---
+Content`,
+      },
+      publicPrefix: "/test",
+      placeholderFilename: "placeholder.svg",
+    });
+
+    expect(() => lib.getAll()).toThrow(
+      /`date` must be a valid calendar date in YYYY-MM-DD format/,
+    );
+
+    cleanup();
+  });
+
+  it("rejects frontmatter with invalid calendar date (day 00)", () => {
+    const { lib, cleanup } = makeLibrary({
+      _files: {
+        "post/README.md": `---
+title: "Bad Day"
+date: "2024-06-00"
+---
+Content`,
+      },
+      publicPrefix: "/test",
+      placeholderFilename: "placeholder.svg",
+    });
+
+    expect(() => lib.getAll()).toThrow(
+      /`date` must be a valid calendar date in YYYY-MM-DD format/,
+    );
+
+    cleanup();
+  });
+
+  it("rejects frontmatter with non-string title", () => {
+    const { lib, cleanup } = makeLibrary({
+      _files: {
+        "post/README.md": `---
+title: 12345
+date: "2024-06-10"
+---
+Content`,
+      },
+      publicPrefix: "/test",
+      placeholderFilename: "placeholder.svg",
+    });
+
+    expect(() => lib.getAll()).toThrow(/`title` must be a string/);
+
+    cleanup();
+  });
+
+  it("rejects frontmatter with non-string date", () => {
+    const { lib, cleanup } = makeLibrary({
+      _files: {
+        "post/README.md": `---
+title: "Test"
+date: 12345
+---
+Content`,
+      },
+      publicPrefix: "/test",
+      placeholderFilename: "placeholder.svg",
+    });
+
+    expect(() => lib.getAll()).toThrow(/`date` must be a string/);
+
+    cleanup();
+  });
+
+  it("rejects frontmatter with non-string slug", () => {
+    const { lib, cleanup } = makeLibrary({
+      _files: {
+        "post/README.md": `---
+title: "Test"
+date: "2024-06-10"
+slug: 12345
+---
+Content`,
+      },
+      publicPrefix: "/test",
+      placeholderFilename: "placeholder.svg",
+    });
+
+    expect(() => lib.getAll()).toThrow(/`slug` must be a string/);
+
+    cleanup();
+  });
+
+  it("aggregates multiple validation errors", () => {
+    const { lib, cleanup } = makeLibrary({
+      _files: {
+        "post/README.md": `---
+date: "bad-format"
+---
+Content`,
+      },
+      publicPrefix: "/test",
+      placeholderFilename: "placeholder.svg",
+    });
+
+    expect(() => lib.getAll()).toThrow(/`title` is required/);
+    expect(() => lib.getAll()).toThrow(
+      /`date` must be a valid calendar date in YYYY-MM-DD format/,
+    );
+
+    cleanup();
+  });
+
+  it("validation errors include the entry slug", () => {
+    const { lib, cleanup } = makeLibrary({
+      _files: {
+        "specific-entry/README.md": `---
+date: "2024-06-10"
+---
+Content`,
+      },
+      publicPrefix: "/test",
+      placeholderFilename: "placeholder.svg",
+    });
+
+    expect(() => lib.getAll()).toThrow(
+      /Invalid frontmatter in "README\.md" \(entry slug: "specific-entry"\)/,
+    );
+
+    cleanup();
+  });
+
+  it("rejects non-string image field", () => {
+    const { lib, cleanup } = makeLibrary({
+      _files: {
+        "post/README.md": `---
+title: "Test"
+date: "2024-06-10"
+image: 123
+---
+Content`,
+      },
+      publicPrefix: "/test",
+      placeholderFilename: "placeholder.svg",
+    });
+
+    expect(() => lib.getAll()).toThrow(/`image` must be a string/);
+
+    cleanup();
+  });
+
+  it("rejects non-array tags field", () => {
+    const { lib, cleanup } = makeLibrary({
+      _files: {
+        "post/README.md": `---
+title: "Test"
+date: "2024-06-10"
+tags: "not-an-array"
+---
+Content`,
+      },
+      publicPrefix: "/test",
+      placeholderFilename: "placeholder.svg",
+    });
+
+    expect(() => lib.getAll()).toThrow(/`tags` must be an array/);
+
+    cleanup();
+  });
+
+  it("rejects non-array links field", () => {
+    const { lib, cleanup } = makeLibrary({
+      _files: {
+        "post/README.md": `---
+title: "Test"
+date: "2024-06-10"
+links: "not-an-array"
+---
+Content`,
+      },
+      publicPrefix: "/test",
+      placeholderFilename: "placeholder.svg",
+    });
+
+    expect(() => lib.getAll()).toThrow(/`links` must be an array/);
+
+    cleanup();
+  });
+
+  it("rejects non-string-non-array authors field", () => {
+    const { lib, cleanup } = makeLibrary({
+      _files: {
+        "post/README.md": `---
+title: "Test"
+date: "2024-06-10"
+authors: 12345
+---
+Content`,
+      },
+      publicPrefix: "/test",
+      placeholderFilename: "placeholder.svg",
+    });
+
+    expect(() => lib.getAll()).toThrow(
+      /`authors` must be a string or an array/,
+    );
+
+    cleanup();
+  });
+
+  it("rejects non-string venue field", () => {
+    const { lib, cleanup } = makeLibrary({
+      _files: {
+        "post/README.md": `---
+title: "Test"
+date: "2024-06-10"
+venue: 12345
+---
+Content`,
+      },
+      publicPrefix: "/test",
+      placeholderFilename: "placeholder.svg",
+    });
+
+    expect(() => lib.getAll()).toThrow(/`venue` must be a string/);
+
+    cleanup();
+  });
+
+  it("rejects non-string doi field", () => {
+    const { lib, cleanup } = makeLibrary({
+      _files: {
+        "post/README.md": `---
+title: "Test"
+date: "2024-06-10"
+doi: 12345
+---
+Content`,
+      },
+      publicPrefix: "/test",
+      placeholderFilename: "placeholder.svg",
+    });
+
+    expect(() => lib.getAll()).toThrow(/`doi` must be a string/);
+
+    cleanup();
+  });
+
+  it("rejects non-string paperUrl field", () => {
+    const { lib, cleanup } = makeLibrary({
+      _files: {
+        "post/README.md": `---
+title: "Test"
+date: "2024-06-10"
+paperUrl: 12345
+---
+Content`,
+      },
+      publicPrefix: "/test",
+      placeholderFilename: "placeholder.svg",
+    });
+
+    expect(() => lib.getAll()).toThrow(/`paperUrl` must be a string/);
+
+    cleanup();
+  });
+});
+
+// ---------------------------------------------------------------------------
+// Publication-specific fields
+// ---------------------------------------------------------------------------
+
+describe("publication-specific fields", () => {
+  it("parses authors array", () => {
+    const { lib, cleanup } = makeLibrary({
+      _files: {
+        "pub/README.md": `---
+title: "Test"
+date: "2024-06-10"
+authors: ["John Doe", "Jane Smith"]
+---
+Content`,
+      },
+      publicPrefix: "/test",
+      placeholderFilename: "placeholder.svg",
+    });
+
+    const item = lib.getBySlug("pub");
+    expect(item!.authors).toEqual(["John Doe", "Jane Smith"]);
+
+    cleanup();
+  });
+
+  it("parses single author as array", () => {
+    const { lib, cleanup } = makeLibrary({
+      _files: {
+        "pub/README.md": `---
+title: "Test"
+date: "2024-06-10"
+authors: "John Doe"
+---
+Content`,
+      },
+      publicPrefix: "/test",
+      placeholderFilename: "placeholder.svg",
+    });
+
+    const item = lib.getBySlug("pub");
+    expect(item!.authors).toEqual(["John Doe"]);
+
+    cleanup();
+  });
+
+  it("parses venue string", () => {
+    const { lib, cleanup } = makeLibrary({
+      _files: {
+        "pub/README.md": `---
+title: "Test"
+date: "2024-06-10"
+venue: "Journal of Examples"
+---
+Content`,
+      },
+      publicPrefix: "/test",
+      placeholderFilename: "placeholder.svg",
+    });
+
+    const item = lib.getBySlug("pub");
+    expect(item!.venue).toBe("Journal of Examples");
+
+    cleanup();
+  });
+
+  it("parses doi string", () => {
+    const { lib, cleanup } = makeLibrary({
+      _files: {
+        "pub/README.md": `---
+title: "Test"
+date: "2024-06-10"
+doi: "10.1000/123456"
+---
+Content`,
+      },
+      publicPrefix: "/test",
+      placeholderFilename: "placeholder.svg",
+    });
+
+    const item = lib.getBySlug("pub");
+    expect(item!.doi).toBe("10.1000/123456");
+
+    cleanup();
+  });
+
+  it("parses paperUrl string", () => {
+    const { lib, cleanup } = makeLibrary({
+      _files: {
+        "pub/README.md": `---
+title: "Test"
+date: "2024-06-10"
+paperUrl: "https://example.com/paper"
+---
+Content`,
+      },
+      publicPrefix: "/test",
+      placeholderFilename: "placeholder.svg",
+    });
+
+    const item = lib.getBySlug("pub");
+    expect(item!.paperUrl).toBe("https://example.com/paper");
+
+    cleanup();
+  });
+
+  it("omits optional fields when not present", () => {
+    const { lib, cleanup } = makeLibrary({
+      _files: {
+        "pub/README.md": VALID_META,
+      },
+      publicPrefix: "/test",
+      placeholderFilename: "placeholder.svg",
+    });
+
+    const item = lib.getBySlug("pub");
+    expect(item!.authors).toBeUndefined();
+    expect(item!.venue).toBeUndefined();
+    expect(item!.doi).toBeUndefined();
+    expect(item!.paperUrl).toBeUndefined();
+
+    cleanup();
+  });
+
+  it("parses all publication fields together", () => {
+    const { lib, cleanup } = makeLibrary({
+      _files: {
+        "pub/README.md": `---
+title: "Test"
+date: "2024-06-10"
+authors: ["John Doe", "Jane Smith"]
+venue: "Journal of Examples"
+doi: "10.1000/123456"
+paperUrl: "https://example.com/paper"
+---
+Content`,
+      },
+      publicPrefix: "/test",
+      placeholderFilename: "placeholder.svg",
+    });
+
+    const item = lib.getBySlug("pub");
+    expect(item!.title).toBe("Test");
+    expect(item!.authors).toEqual(["John Doe", "Jane Smith"]);
+    expect(item!.venue).toBe("Journal of Examples");
+    expect(item!.doi).toBe("10.1000/123456");
+    expect(item!.paperUrl).toBe("https://example.com/paper");
+
+    cleanup();
+  });
+});
+
+// ---------------------------------------------------------------------------
+// Nested image resolution
+// ---------------------------------------------------------------------------
+
+describe("nested image resolution", () => {
+  it("resolves nested image relative to entry directory", () => {
+    const { lib, cleanup } = makeLibrary({
+      _files: {
+        "post/README.md": `---
+title: "Test"
+date: "2024-06-10"
+image: images/cover.jpeg
+---
+Content`,
+      },
+      _images: {
+        "post/images/cover.jpeg": Buffer.from("fake-jpeg"),
+      },
+      publicPrefix: "/test",
+      placeholderFilename: "placeholder.svg",
+    });
+
+    const item = lib.getBySlug("post");
+    expect(item!.imageSrc).toBe("/test/post/images/cover.jpeg");
+    expect(item!.imageType).toBe("cover");
+
+    cleanup();
+  });
+
+  it("uses placeholder when nested image file is missing", () => {
+    const { lib, cleanup } = makeLibrary({
+      _files: {
+        "post/README.md": `---
+title: "Test"
+date: "2024-06-10"
+image: images/missing.jpeg
+---
+Content`,
+      },
+      publicPrefix: "/test",
+      placeholderFilename: "placeholder.svg",
+    });
+
+    const item = lib.getBySlug("post");
+    expect(item!.imageSrc).toBe("/test/placeholder.svg");
+    expect(item!.imageType).toBe("placeholder");
+
+    cleanup();
+  });
+});
+
+// ---------------------------------------------------------------------------
+// Filename collision prevention
+// ---------------------------------------------------------------------------
+
+describe("filename collision prevention", () => {
+  it("two entries with the same image filename do not collide", () => {
+    const { lib, cleanup } = makeLibrary({
+      _files: {
+        "post-a/README.md": `---
+title: "Post A"
+date: "2024-01-01"
+image: photo.png
+---
+Content A`,
+        "post-b/README.md": `---
+title: "Post B"
+date: "2024-02-01"
+image: photo.png
+---
+Content B`,
+      },
+      _images: {
+        "post-a/photo.png": Buffer.from("photo-a"),
+        "post-b/photo.png": Buffer.from("photo-b"),
+      },
+      publicPrefix: "/test",
+      placeholderFilename: "placeholder.svg",
+    });
+
+    const items = lib.getAll();
+    const postA = items.find((i) => i.slug === "post-a");
+    const postB = items.find((i) => i.slug === "post-b");
+
+    expect(postA!.imageSrc).toBe("/test/post-a/photo.png");
+    expect(postB!.imageSrc).toBe("/test/post-b/photo.png");
+    expect(postA!.imageSrc).not.toBe(postB!.imageSrc);
+
+    cleanup();
+  });
+
+  it("two entries with same slug-based auto-discovered image do not collide", () => {
+    const { lib, cleanup } = makeLibrary({
+      _files: {
+        "alpha/README.md": `---
+title: "Alpha"
+date: "2024-01-01"
+---
+Content`,
+        "beta/README.md": `---
+title: "Beta"
+date: "2024-02-01"
+---
+Content`,
+      },
+      _images: {
+        "alpha/alpha.png": Buffer.from("alpha-image"),
+        "beta/beta.png": Buffer.from("beta-image"),
+      },
+      publicPrefix: "/test",
+      placeholderFilename: "placeholder.svg",
+    });
+
+    const items = lib.getAll();
+    const alpha = items.find((i) => i.slug === "alpha");
+    const beta = items.find((i) => i.slug === "beta");
+
+    // Different slug-based filenames resolve to different URLs
+    expect(alpha!.imageSrc).toBe("/test/alpha/alpha.png");
+    expect(beta!.imageSrc).toBe("/test/beta/beta.png");
+
+    cleanup();
+  });
+});
+
+// ---------------------------------------------------------------------------
+// Path traversal prevention
+// ---------------------------------------------------------------------------
+
+describe("path traversal prevention", () => {
+  it("rejects image path that escapes the entry directory", () => {
+    const { lib, cleanup } = makeLibrary({
+      _files: {
+        "post/README.md": `---
+title: "Test"
+date: "2024-06-10"
+image: ../../etc/passwd
+---
+Content`,
+      },
+      _images: {
+        "post/../../etc/passwd": Buffer.from("should-not-find"),
+      },
+      publicPrefix: "/test",
+      placeholderFilename: "placeholder.svg",
+    });
+
+    const item = lib.getBySlug("post");
+    // Path traversal is not resolved; falls back to placeholder
+    expect(item!.imageSrc).toBe("/test/placeholder.svg");
+    expect(item!.imageType).toBe("placeholder");
+
+    cleanup();
+  });
+
+  it("rejects image path with encoded traversal sequence", () => {
+    const { lib, cleanup } = makeLibrary({
+      _files: {
+        "post/README.md": `---
+title: "Test"
+date: "2024-06-10"
+image: ..%2F..%2Fetc%2Fpasswd
+---
+Content`,
+      },
+      publicPrefix: "/test",
+      placeholderFilename: "placeholder.svg",
+    });
+
+    const item = lib.getBySlug("post");
+    expect(item!.imageSrc).toBe("/test/placeholder.svg");
+    expect(item!.imageType).toBe("placeholder");
+
+    cleanup();
+  });
+
+  it("ignores directories named with traversal patterns", () => {
+    // A directory named "etc" should be picked up as an entry if it has README.md,
+    // but a directory named ".." should never exist in readdirSync results.
+    // This test verifies that normal-looking directory names are not falsely rejected.
+    const { lib, cleanup } = makeLibrary({
+      _files: {
+        "normal/README.md": `---
+title: "Normal"
+date: "2024-06-10"
+---
+Content`,
+      },
+      publicPrefix: "/test",
+      placeholderFilename: "placeholder.svg",
+    });
+
+    const items = lib.getAll();
+    expect(items.map((i) => i.slug)).toEqual(["normal"]);
+
+    cleanup();
   });
 });

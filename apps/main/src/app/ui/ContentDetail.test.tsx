@@ -15,11 +15,13 @@ import { ContentDetail } from "./ContentDetail.js";
 
 const mockContent: ContentItemMeta = {
   slug: "my-project",
+  href: "/projects/my-project",
   title: "My Project Title",
   date: "2024-01-15",
   tags: ["TypeScript", "React"],
   excerpt: "A brief description.",
   imageSrc: "/projects/my-project.webp",
+  imageType: "cover",
   body: "<p>This is the project content.</p>",
 };
 

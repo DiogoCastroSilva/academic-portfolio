@@ -108,50 +108,96 @@ async function syncDirectory(srcDir, destDir, opts = { cleanup: true }) {
     return new Set();
   }
 
+  const expectedFiles = new Set(); // relative paths of all expected output files (originals + webp)
   const copied = new Set();
 
-  for (const file of fs.readdirSync(srcDir)) {
-    if (!isContentImage(file)) {
-      continue;
-    }
+  /**
+   * Recursively walk srcDir, copying image files to destDir while
+   * preserving the relative directory structure.
+   */
+  async function walkSrc(dir, relativeDir) {
+    const entries = fs.readdirSync(dir, { withFileTypes: true });
 
-    fs.copyFileSync(path.join(srcDir, file), path.join(destDir, file));
-    copied.add(file);
+    for (const entry of entries) {
+      const srcPath = path.join(dir, entry.name);
+      const relPath = relativeDir
+        ? path.posix.join(relativeDir, entry.name)
+        : entry.name;
 
-    // Generate WebP version
-    if (!skipWebp && isConvertable(file)) {
-      const ext = path.extname(file).toLowerCase();
-      const baseName = path.basename(file, ext);
-      const webpFile = `${baseName}.webp`;
-      const inputPath = path.join(destDir, file);
-      const outputPath = path.join(destDir, webpFile);
+      if (entry.isDirectory()) {
+        // Skip hidden directories (._template, .git) and template dirs.
+        if (entry.name.startsWith("_") || entry.name.startsWith(".")) {
+          continue;
+        }
+        await walkSrc(srcPath, relPath);
+      } else if (entry.isFile() && isContentImage(entry.name)) {
+        const destPath = path.join(destDir, relPath);
+        fs.mkdirSync(path.dirname(destPath), { recursive: true });
+        fs.copyFileSync(srcPath, destPath);
 
-      if (await convertToWebp(inputPath, outputPath)) {
-        console.log(`  Generated WebP: ${webpFile}`);
-        copied.add(webpFile);
-      } else {
-        console.warn(`  WebP conversion failed for ${file}, keeping original`);
+        expectedFiles.add(relPath);
+        copied.add(relPath);
+
+        // Generate WebP version
+        if (!skipWebp && isConvertable(entry.name)) {
+          const ext = path.extname(entry.name).toLowerCase();
+          const baseName = path.basename(entry.name, ext);
+          const relDir = path.posix.dirname(relPath);
+          const webpRelPath =
+            relDir !== "."
+              ? path.posix.join(relDir, `${baseName}.webp`)
+              : `${baseName}.webp`;
+          const outputPath = path.join(destDir, webpRelPath);
+
+          if (await convertToWebp(srcPath, outputPath)) {
+            console.log(`  Generated WebP: ${webpRelPath}`);
+            expectedFiles.add(webpRelPath);
+            copied.add(webpRelPath);
+          } else {
+            console.warn(
+              `  WebP conversion failed for ${relPath}, keeping original`,
+            );
+          }
+        }
       }
     }
   }
 
-  // Clean up orphaned files (including old WebP)
+  await walkSrc(srcDir, "");
+
+  // Clean up orphaned files (including old WebP) from the destination
   if (opts.cleanup) {
     const allExtensions = new Set([...IMAGE_EXTENSIONS, ".webp"]);
-    for (const file of fs.readdirSync(destDir)) {
-      if (
-        file === ".gitkeep" ||
-        !allExtensions.has(path.extname(file).toLowerCase())
-      ) {
-        continue;
-      }
-      if (
-        !copied.has(file) &&
-        !copied.has(`${path.basename(file, ".webp")}.webp`)
-      ) {
-        fs.unlinkSync(path.join(destDir, file));
+
+    function cleanDest(dir, relativeDir) {
+      if (!fs.existsSync(dir)) return;
+
+      for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
+        const fullPath = path.join(dir, entry.name);
+        const relPath = relativeDir
+          ? path.posix.join(relativeDir, entry.name)
+          : entry.name;
+
+        if (entry.isDirectory()) {
+          cleanDest(fullPath, relPath);
+          // Remove empty directories after cleanup
+          try {
+            if (fs.readdirSync(fullPath).length === 0) {
+              fs.rmdirSync(fullPath);
+            }
+          } catch {}
+        } else if (entry.isFile()) {
+          if (entry.name === ".gitkeep") continue;
+
+          const ext = path.extname(entry.name).toLowerCase();
+          if (allExtensions.has(ext) && !expectedFiles.has(relPath)) {
+            fs.unlinkSync(fullPath);
+          }
+        }
       }
     }
+
+    cleanDest(destDir, "");
   }
 
   return copied;
