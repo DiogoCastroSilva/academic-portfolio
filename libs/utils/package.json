@@ -16,6 +16,11 @@
       "import": "./src/test-helpers/a11y/index.ts",
       "default": "./src/test-helpers/a11y/index.ts"
     },
+    "./test-helpers/next-mocks": {
+      "types": "./src/test-helpers/next-mocks/index.ts",
+      "import": "./src/test-helpers/next-mocks/index.ts",
+      "default": "./src/test-helpers/next-mocks/index.ts"
+    },
     "./package.json": "./package.json"
   },
   "dependencies": {}
