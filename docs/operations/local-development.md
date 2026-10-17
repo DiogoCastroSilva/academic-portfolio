@@ -40,8 +40,8 @@ This starts the Next.js development server with hot reload. It also runs `sync-c
 | Run all tests                  | `npx nx run-many -t test`                      |
 | Type-check all projects        | `npx nx run-many -t typecheck`                 |
 | Run all checks (CI equivalent) | `npx nx run-many -t lint test typecheck build` |
-| Format code                    | `npx nx format:write`                          |
-| Check formatting               | `npx nx format:check`                          |
+| Format code                    | `npm run format:write`                         |
+| Check formatting               | `npm run format:check`                         |
 | Sync content images            | `npx nx run main:sync-content-assets`          |
 | Show project targets           | `npx nx show project main`                     |
 | Visualize workspace graph      | `npx nx graph`                                 |

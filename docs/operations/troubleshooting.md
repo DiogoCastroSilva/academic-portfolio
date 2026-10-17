@@ -88,12 +88,12 @@ NX_NO_CLOUD=true npx nx run-many -t test
 
 **Symptom:** `prettier/prettier` errors for single vs. double quotes, or `@typescript-eslint/no-require-imports` errors.
 
-**Cause:** The shared config uses double quotes. All source must be reformatted with `npx nx format:write`.
+**Cause:** The shared config uses double quotes. All source must be reformatted with `npm run format:write`.
 
 **Fix:**
 
 ```bash
-npx nx format:write
+npm run format:write
 npx nx run-many -t lint
 ```
 

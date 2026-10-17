@@ -3,8 +3,8 @@
   "version": "0.0.0",
   "license": "MIT",
   "scripts": {
-    "format:write": "npx nx format:write",
-    "format:check": "npx nx format:check"
+    "format:write": "./node_modules/.bin/prettier --write .",
+    "format:check": "./node_modules/.bin/prettier --check ."
   },
   "private": true,
   "engines": {
