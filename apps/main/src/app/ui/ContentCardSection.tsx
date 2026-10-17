@@ -55,7 +55,7 @@ export function ContentCardSection({
         {heading}
       </h2>
       {visibleItems.length === 0 && emptyMessage ? (
-        <p className="text-slate-700 dark:text-gray-400">{emptyMessage}</p>
+        <p className="text-slate-700 dark:text-gray-700">{emptyMessage}</p>
       ) : (
         <MotionDiv
           className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3"
