@@ -6,6 +6,13 @@ This document explains how to write and run accessibility (a11y) tests using Vit
 
 The project uses **Vitest-Axe** to run automated accessibility audits on components during unit testing. This approach allows catching WCAG violations early in the development cycle, right alongside other unit tests.
 
+### Shared Test Helpers
+
+The project provides shared utilities to reduce boilerplate:
+
+- **`@katie-portfolio/utils/test-helpers/a11y`** — Exports `expectNoA11yViolations()` for `apps/main` test files
+- **`libs/navigation/src/lib/test-utils/`** — Exports `expectNoA11yViolations()` for navigation library tests (can't import from utils due to dependency boundaries)
+
 ### Key Dependencies
 
 | Package                     | Version    | Purpose                                                         |
@@ -14,6 +21,7 @@ The project uses **Vitest-Axe** to run automated accessibility audits on compone
 | `happy-dom`                 | `^15.11.7` | DOM environment for tests (provides browser-like APIs)          |
 | `@testing-library/dom`      | `^10.4.2`  | DOM testing utilities (peer dep of `@testing-library/jest-dom`) |
 | `@testing-library/jest-dom` | `^7.0.1`   | Custom DOM matchers like `toBeInTheDocument()`                  |
+| `@testing-library/react`    | `^14.x`    | React-specific testing utilities                                |
 
 > **Note:** `axe-core` is **not** listed as a direct dependency — it comes in transitively via `vitest-axe`.
 
@@ -52,21 +60,11 @@ import "@testing-library/jest-dom";
 
 import React from "react";
 import { cleanup, render, screen } from "@testing-library/react";
-import { afterEach, describe, expect, it, vi } from "vitest";
+import { afterEach, describe, it, vi } from "vitest";
 
-import { axe } from "vitest-axe";
+import { expectNoA11yViolations } from "@katie-portfolio/utils/test-helpers/a11y";
 
 import { MyComponent } from "./MyComponent.js";
-
-// Mock next/navigation if needed
-vi.mock("next/navigation", () => ({
-  usePathname: () => "/",
-}));
-
-// Helper to check for no violations
-function expectNoViolations(results: { violations: unknown[] }) {
-  expect(results.violations).toHaveLength(0);
-}
 
 describe("MyComponent accessibility", () => {
   afterEach(() => {
@@ -75,10 +73,35 @@ describe("MyComponent accessibility", () => {
 
   it("has no accessibility violations", async () => {
     const { container } = render(<MyComponent />);
-    const results = await axe(container);
-    expectNoViolations(results);
+    await expectNoA11yViolations(container);
   });
 });
+```
+
+### Shared A11y Helper
+
+Instead of the old `axe` + `expect(results.violations).toHaveLength(0)` pattern,
+use the shared `expectNoA11yViolations()` helper:
+
+```ts
+// ❌ Old pattern (manual, boilerplate-heavy)
+import { axe } from "vitest-axe";
+
+const results = await axe(container);
+expect(results.violations).toHaveLength(0);
+
+// ✅ New pattern (shared helper)
+import { expectNoA11yViolations } from "@katie-portfolio/utils/test-helpers/a11y";
+
+await expectNoA11yViolations(container);
+```
+
+For the navigation library (no dependency on `@katie-portfolio/utils`):
+
+```ts
+import { expectNoA11yViolations } from "../test-utils/index.js";
+
+await expectNoA11yViolations(container);
 ```
 
 ### What `@vitest-environment happy-dom` Does
@@ -114,30 +137,54 @@ it("has no violations when menu is open", async () => {
   const menuButton = screen.getByRole("button");
   fireEvent.click(menuButton); // Open the menu
 
-  const results = await axe(container);
-  expectNoViolations(results);
+  await expectNoA11yViolations(container);
 });
 ```
 
 ### Mocking Next.js Modules
 
-Components that use Next.js modules like `next/navigation` or `next/link` need to be mocked for happy-dom testing:
+#### `next/navigation` — Global mock (in `test-setup.ts`)
 
-```tsx
-vi.mock("next/navigation", () => ({
-  usePathname: () => "/",
-}));
+The `next/navigation` mock is set up **globally** in the `test-setup.ts` file:
 
+**`apps/main/test-setup.ts`:**
+
+```ts
+import { vi } from "vitest";
+
+// Mock next/link globally
 vi.mock("next/link", () => ({
-  default: function MockLink({ children, href, ...props }) {
-    return (
-      <a href={href} {...props}>
-        {children}
-      </a>
-    );
+  default: function MockLink({ children, href, ...rest }) {
+    return React.createElement("a", { href, ...rest }, children);
   },
 }));
 ```
+
+**`libs/navigation/test-setup.ts`:**
+
+```ts
+import { vi } from "vitest";
+
+vi.mock("next/navigation", () => ({
+  usePathname: () => "/",
+}));
+```
+
+No need to add `vi.mock("next/navigation")` to individual test files in that library.
+
+#### `next/link` — Global mock (in `apps/main/test-setup.ts`)
+
+The `next/link` mock is also global for `apps/main`, rendering an `<a>` element that forwards all props:
+
+```ts
+vi.mock("next/link", () => ({
+  default: function MockLink({ children, href, ...rest }) {
+    return React.createElement("a", { href, ...rest }, children);
+  },
+}));
+```
+
+Test files that need additional link mocking (e.g., for specific `aria-*` props) can override this in the individual test file.
 
 ## Common Accessibility Violations and Fixes
 
