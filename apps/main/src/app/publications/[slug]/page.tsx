@@ -40,7 +40,9 @@ export async function generateMetadata({ params }: PublicationPageProps) {
   const description =
     publication.excerpt || `Publication: ${publication.title}`;
   const deploymentUrl = getDeploymentUrl();
-  const canonical = `${deploymentUrl}/publications/${publication.slug}/`;
+  const canonical = deploymentUrl
+    ? `${deploymentUrl}/publications/${publication.slug}/`
+    : undefined;
   const fullImageUrl = deploymentUrl
     ? `${deploymentUrl}${publication.imageSrc}`
     : publication.imageSrc;

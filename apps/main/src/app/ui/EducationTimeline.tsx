@@ -1,32 +1,12 @@
 "use client";
+import type { EducationEntry } from "@katie-portfolio/content";
 import { motion } from "motion/react";
 
-const EDUCATION = [
-  {
-    degree: "PhD in Earth & Atmospheric Sciences",
-    institution: "Cornell University",
-    period: "2024 - Present",
-    focus: "Remote sensing and environmental analysis",
-    details: [
-      "Focus on Earth observation applications for agricultural monitoring and climate solutions",
-      "Working with hyperspectral and multispectral satellite imagery",
-      "Collaboration with NASA DEVELOP program",
-    ],
-  },
-  {
-    degree: "BSc in Science",
-    institution: "University",
-    period: "Completed",
-    focus: "Foundation in environmental science and quantitative methods",
-    details: [
-      "Strong background in analytical methods and data analysis",
-      "Development of research and communication skills",
-      "Interdisciplinary approach to environmental challenges",
-    ],
-  },
-];
+type EducationTimelineProps = {
+  items: EducationEntry[];
+};
 
-export const EducationTimeline = () => {
+export const EducationTimeline = ({ items }: EducationTimelineProps) => {
   return (
     <section className="mx-4 rounded-2xl bg-white p-12 text-slate-900 shadow-sm dark:bg-sky-50">
       <motion.div
@@ -38,7 +18,7 @@ export const EducationTimeline = () => {
         <h2 className="mb-8 text-2xl font-bold md:text-3xl">Education</h2>
 
         <div className="space-y-8">
-          {EDUCATION.map((edu, index) => (
+          {items.map((edu, index) => (
             <motion.div
               key={edu.degree}
               className="flex gap-6 pb-8 last:pb-0"
@@ -55,7 +35,7 @@ export const EducationTimeline = () => {
                   transition={{ duration: 0.3 }}
                   viewport={{ once: true }}
                 />
-                {index < EDUCATION.length - 1 && (
+                {index < items.length - 1 && (
                   <div className="mt-2 h-16 w-0.5 bg-zinc-200 dark:bg-zinc-400" />
                 )}
               </div>
@@ -81,7 +61,7 @@ export const EducationTimeline = () => {
                         key={detail}
                         className="flex gap-2 text-sm text-slate-700 dark:text-gray-400"
                       >
-                        <span className="mt-1 text-sky-600">→</span>
+                        <span className="mt-1 text-sky-600">&rarr;</span>
                         <span>{detail}</span>
                       </li>
                     ))}

@@ -9,9 +9,11 @@ import { navigation } from "./config.js";
 
 type NavBarProps = {
   currentPath?: string;
+  /** Display name shown in the NavBar brand link. */
+  name?: string;
 };
 
-export function NavBar({ currentPath }: NavBarProps) {
+export function NavBar({ currentPath, name = "Portfolio" }: NavBarProps) {
   const pathname = usePathname();
   const activePath = currentPath ?? pathname;
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -36,7 +38,7 @@ export function NavBar({ currentPath }: NavBarProps) {
                 aria-current={isHome ? "page" : undefined}
                 className="hover:text-cyan-200 focus-visible:text-cyan-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cyan-500 dark:text-white"
               >
-                Kathleen Miller
+                {name}
               </Link>
             </div>
           </div>

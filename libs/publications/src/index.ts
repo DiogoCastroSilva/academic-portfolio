@@ -1,10 +1,10 @@
 import {
   createContentLibrary,
   type ContentItemMeta,
-  type ContentMeta,
+  type PublicationMeta,
 } from "@katie-portfolio/content";
 
-export type PublicationMeta = ContentMeta;
+export type { PublicationMeta };
 export type PublicationItemMeta = ContentItemMeta;
 
 const publications = createContentLibrary({

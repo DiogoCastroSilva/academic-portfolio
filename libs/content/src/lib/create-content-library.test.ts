@@ -775,5 +775,197 @@ describe("createContentLibrary", () => {
 
       cleanup();
     });
+
+    it("rejects non-string image field", () => {
+      const { lib, cleanup } = makeLibrary({
+        _files: {
+          "post.md": `---\ntitle: 'Test'\ndate: '2024-06-10'\nimage: 123\n---\nContent`,
+        },
+      });
+
+      expect(() => lib.getAll()).toThrow(/`image` must be a string/);
+
+      cleanup();
+    });
+
+    it("rejects non-array tags field", () => {
+      const { lib, cleanup } = makeLibrary({
+        _files: {
+          "post.md": `---\ntitle: 'Test'\ndate: '2024-06-10'\ntags: "not-an-array"\n---\nContent`,
+        },
+      });
+
+      expect(() => lib.getAll()).toThrow(/`tags` must be an array/);
+
+      cleanup();
+    });
+
+    it("rejects non-array links field", () => {
+      const { lib, cleanup } = makeLibrary({
+        _files: {
+          "post.md": `---\ntitle: 'Test'\ndate: '2024-06-10'\nlinks: "not-an-array"\n---\nContent`,
+        },
+      });
+
+      expect(() => lib.getAll()).toThrow(/`links` must be an array/);
+
+      cleanup();
+    });
+
+    it("rejects non-array authors field", () => {
+      const { lib, cleanup } = makeLibrary({
+        _files: {
+          "post.md": `---\ntitle: 'Test'\ndate: '2024-06-10'\nauthors: "not-an-array"\n---\nContent`,
+        },
+      });
+
+      expect(() => lib.getAll()).toThrow(/`authors` must be an array/);
+
+      cleanup();
+    });
+
+    it("rejects non-string venue field", () => {
+      const { lib, cleanup } = makeLibrary({
+        _files: {
+          "post.md": `---\ntitle: 'Test'\ndate: '2024-06-10'\nvenue: 12345\n---\nContent`,
+        },
+      });
+
+      expect(() => lib.getAll()).toThrow(/`venue` must be a string/);
+
+      cleanup();
+    });
+
+    it("rejects non-string doi field", () => {
+      const { lib, cleanup } = makeLibrary({
+        _files: {
+          "post.md": `---\ntitle: 'Test'\ndate: '2024-06-10'\ndoi: 12345\n---\nContent`,
+        },
+      });
+
+      expect(() => lib.getAll()).toThrow(/`doi` must be a string/);
+
+      cleanup();
+    });
+
+    it("rejects non-string paperUrl field", () => {
+      const { lib, cleanup } = makeLibrary({
+        _files: {
+          "post.md": `---\ntitle: 'Test'\ndate: '2024-06-10'\npaperUrl: 12345\n---\nContent`,
+        },
+      });
+
+      expect(() => lib.getAll()).toThrow(/`paperUrl` must be a string/);
+
+      cleanup();
+    });
+  });
+
+  // ---------------------------------------------------------------------------
+  // Publication-specific fields
+  // ---------------------------------------------------------------------------
+
+  describe("publication-specific fields", () => {
+    it("parses authors array", () => {
+      const { lib, cleanup } = makeLibrary({
+        _files: {
+          "pub.md": `---\ntitle: 'Test'\ndate: '2024-06-10'\nauthors:\n  - Alice\n  - Bob\n---\nContent`,
+        },
+      });
+
+      const all = lib.getAll();
+      expect(all[0].authors).toEqual(["Alice", "Bob"]);
+
+      cleanup();
+    });
+
+    it("parses single author as array", () => {
+      const { lib, cleanup } = makeLibrary({
+        _files: {
+          "pub.md": `---\ntitle: 'Test'\ndate: '2024-06-10'\nauthors: ["Alice"]\n---\nContent`,
+        },
+      });
+
+      const all = lib.getAll();
+      expect(all[0].authors).toEqual(["Alice"]);
+
+      cleanup();
+    });
+
+    it("parses venue string", () => {
+      const { lib, cleanup } = makeLibrary({
+        _files: {
+          "pub.md": `---\ntitle: 'Test'\ndate: '2024-06-10'\nvenue: "Nature Climate Change"\n---\nContent`,
+        },
+      });
+
+      const all = lib.getAll();
+      expect(all[0].venue).toBe("Nature Climate Change");
+
+      cleanup();
+    });
+
+    it("parses doi string", () => {
+      const { lib, cleanup } = makeLibrary({
+        _files: {
+          "pub.md": `---\ntitle: 'Test'\ndate: '2024-06-10'\ndoi: "10.1038/s41558-023-01656-8"\n---\nContent`,
+        },
+      });
+
+      const all = lib.getAll();
+      expect(all[0].doi).toBe("10.1038/s41558-023-01656-8");
+
+      cleanup();
+    });
+
+    it("parses paperUrl string", () => {
+      const { lib, cleanup } = makeLibrary({
+        _files: {
+          "pub.md": `---\ntitle: 'Test'\ndate: '2024-06-10'\npaperUrl: "https://doi.org/10.1038/s41558-023-01656-8"\n---\nContent`,
+        },
+      });
+
+      const all = lib.getAll();
+      expect(all[0].paperUrl).toBe(
+        "https://doi.org/10.1038/s41558-023-01656-8",
+      );
+
+      cleanup();
+    });
+
+    it("omits optional fields when not present", () => {
+      const { lib, cleanup } = makeLibrary({
+        _files: {
+          "pub.md": `---\ntitle: 'Test'\ndate: '2024-06-10'\n---\nContent`,
+        },
+      });
+
+      const all = lib.getAll();
+      expect(all[0].authors).toBeUndefined();
+      expect(all[0].venue).toBeUndefined();
+      expect(all[0].doi).toBeUndefined();
+      expect(all[0].paperUrl).toBeUndefined();
+
+      cleanup();
+    });
+
+    it("parses all publication fields together", () => {
+      const { lib, cleanup } = makeLibrary({
+        _files: {
+          "pub.md": `---\ntitle: "Deep Learning for Climate"\ndate: "2024-03-15"\nauthors:\n  - "Jane Doe"\n  - "John Smith"\nvenue: "Nature"\ndoi: "10.1038/s41558-024-01495-3"\npaperUrl: "https://www.nature.com/articles/s41558-024-01495-3"\nlinks:\n  - "https://arxiv.org/abs/1234.56789"\n---\nAbstract content here.`,
+        },
+      });
+
+      const all = lib.getAll();
+      expect(all[0].authors).toEqual(["Jane Doe", "John Smith"]);
+      expect(all[0].venue).toBe("Nature");
+      expect(all[0].doi).toBe("10.1038/s41558-024-01495-3");
+      expect(all[0].paperUrl).toBe(
+        "https://www.nature.com/articles/s41558-024-01495-3",
+      );
+      expect(all[0].links).toEqual(["https://arxiv.org/abs/1234.56789"]);
+
+      cleanup();
+    });
   });
 });

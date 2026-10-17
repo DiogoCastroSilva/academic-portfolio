@@ -90,3 +90,70 @@ describe("ContentDetail accessibility", () => {
     expect(items[1]).toHaveTextContent("React");
   });
 });
+
+describe("ContentDetail accessibility — figures and galleries", () => {
+  const galleryBody = `
+    <figure>
+      <img src="/projects/img1.webp" alt="Spectral signature plot" />
+      <figcaption>Figure 1. Spectral signatures show clear separation.</figcaption>
+    </figure>
+    <figure>
+      <img src="/projects/img2.webp" alt="Classification map" />
+      <figcaption>Figure 2. Model classification results over Lodi vineyards.</figcaption>
+    </figure>
+  `;
+
+  it("has no accessibility violations with figure and figcaption content", async () => {
+    const content: ContentItemMeta = {
+      ...mockContent,
+      body: galleryBody,
+    };
+    const { container } = render(<ContentDetail content={content} />);
+    await expectNoA11yViolations(container);
+  });
+
+  it("renders figures with non-empty alt text", () => {
+    const content: ContentItemMeta = {
+      ...mockContent,
+      body: galleryBody,
+    };
+    render(<ContentDetail content={content} />);
+    const imgs = screen.getAllByRole("img");
+    imgs.forEach((img) => {
+      expect(img).toHaveAttribute("alt");
+      expect(img.getAttribute("alt")).not.toBe("");
+    });
+  });
+
+  it("renders figcaptions for accessible image descriptions", () => {
+    const content: ContentItemMeta = {
+      ...mockContent,
+      body: galleryBody,
+    };
+    render(<ContentDetail content={content} />);
+    const captions = document.querySelectorAll("figcaption");
+    expect(captions).toHaveLength(2);
+    expect(captions[0]).toHaveTextContent(/Figure 1/i);
+    expect(captions[1]).toHaveTextContent(/Figure 2/i);
+  });
+
+  it("has no violations with a single figure containing an image gallery", async () => {
+    const content: ContentItemMeta = {
+      ...mockContent,
+      body: `
+        <div class="gallery">
+          <figure>
+            <img src="/projects/a.webp" alt="Panel A" />
+            <figcaption>Panel A description</figcaption>
+          </figure>
+          <figure>
+            <img src="/projects/b.webp" alt="Panel B" />
+            <figcaption>Panel B description</figcaption>
+          </figure>
+        </div>
+      `,
+    };
+    const { container } = render(<ContentDetail content={content} />);
+    await expectNoA11yViolations(container);
+  });
+});

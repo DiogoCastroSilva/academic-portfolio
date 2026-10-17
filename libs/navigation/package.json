@@ -17,5 +17,10 @@
   "peerDependencies": {
     "next": ">=16",
     "react": ">=19"
+  },
+  "nx": {
+    "tags": [
+      "foundation"
+    ]
   }
 }

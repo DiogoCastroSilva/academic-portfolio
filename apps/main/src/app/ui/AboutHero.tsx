@@ -1,14 +1,14 @@
 "use client";
+import type { ProfileData } from "@katie-portfolio/content";
 import { motion } from "motion/react";
 
-import profileImage from "../../assets/profile.jpeg";
 import { ContentImage } from "./ContentImage";
 
 type AboutHeroProps = {
-  email: string;
+  profile: ProfileData;
 };
 
-export const AboutHero = ({ email }: AboutHeroProps) => {
+export const AboutHero = ({ profile }: AboutHeroProps) => {
   return (
     <section className="mx-4 rounded-2xl p-6 sm:p-12 dark:bg-sky-50">
       <motion.div
@@ -26,8 +26,8 @@ export const AboutHero = ({ email }: AboutHeroProps) => {
               transition={{ duration: 0.6, delay: 0.2 }}
             >
               <ContentImage
-                src={profileImage}
-                alt="Profile picture of Kathleen Miller"
+                src={profile.imageSrc}
+                alt={`Profile picture of ${profile.name}`}
                 className="h-48 w-48 rounded-full sm:h-64 sm:w-64 md:h-56 md:w-56"
                 sizes="(max-width: 640px) 200px, 240px"
                 priority
@@ -41,15 +41,15 @@ export const AboutHero = ({ email }: AboutHeroProps) => {
             >
               <div>
                 <h1 className="text-3xl font-bold md:text-4xl lg:text-5xl">
-                  Kathleen Miller
+                  {profile.name}
                 </h1>
                 <p className="mt-2 text-xl text-gray-600 dark:text-gray-400">
-                  PhD Researcher | Earth Observation | Climate Solutions
+                  {profile.role}
                 </p>
               </div>
               <div className="flex flex-wrap justify-center gap-3 md:justify-start">
                 <a
-                  href={`mailto:${email}`}
+                  href={`mailto:${profile.email}`}
                   className="rounded-full border-2 border-sky-600 px-6 py-2 font-medium text-sky-600 transition-all hover:bg-sky-600 hover:text-white dark:text-sky-600"
                 >
                   Get in Touch
@@ -67,21 +67,10 @@ export const AboutHero = ({ email }: AboutHeroProps) => {
           transition={{ duration: 0.6, delay: 0.4 }}
         >
           <h2 className="text-2xl font-bold md:text-3xl">About Me</h2>
-          <p className="text-lg leading-relaxed text-gray-800 dark:text-gray-400">
-            I&apos;m a PhD researcher passionate about leveraging Earth
-            observation technology and data-driven approaches to address
-            critical environmental challenges. My work bridges remote sensing,
-            geospatial analysis, and climate science to develop scalable
-            solutions for climate change mitigation and adaptation.
-          </p>
-          <p className="text-lg leading-relaxed text-gray-800 dark:text-gray-400">
-            With expertise in hyperspectral and multispectral imagery analysis,
-            machine learning applications in environmental monitoring, and
-            collaborative research with interdisciplinary teams, I&apos;m
-            focused on translating complex Earth observation data into
-            actionable insights that support environmental sustainability and
-            decision-making.
-          </p>
+          <div
+            dangerouslySetInnerHTML={{ __html: profile.biography }}
+            className="prose prose-lg dark:prose-invert prose-p:leading-7 prose-p:my-4 prose-headings:font-bold prose-a:text-blue-600 dark:prose-a:text-blue-400 prose-a:no-underline prose-a:hover:underline max-w-none text-gray-800 dark:text-gray-400"
+          />
         </motion.div>
       </motion.div>
     </section>

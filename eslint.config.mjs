@@ -18,9 +18,14 @@ export default [
       "**/vitest.config.*.timestamp*",
     ],
   },
-  // Nx module-boundary rules — only the enforce-module-boundaries rule
-  // is layered on top; the rest of Nx's base configs are intentionally
-  // omitted to avoid conflicts with the shared config's TypeScript rules.
+  // Nx module-boundary rules with meaningful layer enforcement:
+  //   app (apps/main)           -> depends on content-layer + foundation
+  //   content-layer (projects,  -> depends on foundation
+  //     publications)
+  //   foundation (content,     -> no internal library dependencies
+  //     navigation, utils)
+  // The rest of Nx's base configs are intentionally omitted to avoid
+  // conflicts with the shared config's TypeScript rules.
   {
     files: ["**/*.ts", "**/*.tsx", "**/*.js", "**/*.jsx"],
     plugins: {
@@ -31,11 +36,22 @@ export default [
         "error",
         {
           enforceBuildableLibDependency: false,
-          allow: ["^.*/eslint(\\.(base)?)?\\.config\\.[cm]?[jt]s$"],
+          allow: [
+            "^.*/eslint(\\.(base)?)?\\.config\\.[cm]?[jt]s$",
+            "^.*/test-setup\\.[jt]s$",
+          ],
           depConstraints: [
             {
-              sourceTag: "*",
-              onlyDependOnLibsWithTags: ["*"],
+              sourceTag: "app",
+              onlyDependOnLibsWithTags: ["content-layer", "foundation"],
+            },
+            {
+              sourceTag: "content-layer",
+              onlyDependOnLibsWithTags: ["foundation"],
+            },
+            {
+              sourceTag: "foundation",
+              onlyDependOnLibsWithTags: [],
             },
           ],
         },

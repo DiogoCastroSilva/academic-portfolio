@@ -7,11 +7,14 @@ import { siteConfig } from "../configs/site-config";
 
 export const metadata = {
   title: {
-    default: "Kathleen Miller",
-    template: "%s | Kathleen Miller",
+    default: siteConfig.name,
+    template: `%s | ${siteConfig.name}`,
   },
-  description:
-    "Portfolio of Kathleen Miller — science, nature-based solutions, projects, and publications.",
+  description: `Portfolio of ${siteConfig.name} — science, nature-based solutions, projects, and publications.`,
+  // metadataBase enables Next.js to resolve relative OG image URLs and canonical links.
+  metadataBase: siteConfig.deploymentUrl
+    ? new URL(siteConfig.deploymentUrl)
+    : undefined,
   icons: {
     icon: [
       { url: "/favicon.ico" },
@@ -28,14 +31,13 @@ export const metadata = {
     url: getSiteUrl(),
     siteName: siteConfig.name,
     title: siteConfig.name,
-    description:
-      "Portfolio of Kathleen Miller — science, nature-based solutions, projects, and publications.",
+    description: `Portfolio of ${siteConfig.name} — science, nature-based solutions, projects, and publications.`,
     images: [
       {
         url: getSiteUrl("/images/og-image.svg"),
         width: 1200,
         height: 630,
-        alt: "Kathleen Miller — Portfolio",
+        alt: `${siteConfig.name} — Portfolio`,
       },
     ],
   },
@@ -47,13 +49,14 @@ export const metadata = {
       follow: true,
     },
   },
-  alternates: {
-    canonical: getSiteUrl(),
-  },
+  alternates: siteConfig.deploymentUrl
+    ? { canonical: getSiteUrl() }
+    : undefined,
 };
 
-function getSiteUrl(path = ""): string {
-  const base = siteConfig.deploymentUrl ?? "";
+function getSiteUrl(path = ""): string | undefined {
+  const base = siteConfig.deploymentUrl;
+  if (!base) return undefined;
   return `${base}${path}`;
 }
 
@@ -69,7 +72,7 @@ export default function RootLayout({
         className="min-h-full bg-stone-100 dark:bg-slate-800"
       >
         <div className="flex min-h-full flex-col">
-          <NavBar />
+          <NavBar name={siteConfig.name} />
           <main className="flex-1">{children}</main>
           <Footer />
         </div>

@@ -24,6 +24,13 @@ const CONTENT_SOURCES = [
     src: "libs/publications/src/md",
     dest: "apps/main/public/publications",
   },
+  {
+    src: "libs/content/src/md",
+    dest: "apps/main/public/images",
+    // The images/ directory also contains static assets (e.g., og-image.svg)
+    // that are not content images. Skip cleanup to avoid deleting them.
+    cleanup: false,
+  },
 ];
 
 const IMAGE_EXTENSIONS = new Set([
@@ -94,7 +101,7 @@ async function convertToWebp(inputPath, outputPath) {
 
 const skipWebp = process.env.SKIP_WEBP_CONVERSION === "true";
 
-async function syncDirectory(srcDir, destDir) {
+async function syncDirectory(srcDir, destDir, opts = { cleanup: true }) {
   fs.mkdirSync(destDir, { recursive: true });
 
   if (!fs.existsSync(srcDir)) {
@@ -111,7 +118,6 @@ async function syncDirectory(srcDir, destDir) {
     fs.copyFileSync(path.join(srcDir, file), path.join(destDir, file));
     copied.add(file);
 
-    // Generate WebP version
     // Generate WebP version
     if (!skipWebp && isConvertable(file)) {
       const ext = path.extname(file).toLowerCase();
@@ -130,19 +136,21 @@ async function syncDirectory(srcDir, destDir) {
   }
 
   // Clean up orphaned files (including old WebP)
-  const allExtensions = new Set([...IMAGE_EXTENSIONS, ".webp"]);
-  for (const file of fs.readdirSync(destDir)) {
-    if (
-      file === ".gitkeep" ||
-      !allExtensions.has(path.extname(file).toLowerCase())
-    ) {
-      continue;
-    }
-    if (
-      !copied.has(file) &&
-      !copied.has(`${path.basename(file, ".webp")}.webp`)
-    ) {
-      fs.unlinkSync(path.join(destDir, file));
+  if (opts.cleanup) {
+    const allExtensions = new Set([...IMAGE_EXTENSIONS, ".webp"]);
+    for (const file of fs.readdirSync(destDir)) {
+      if (
+        file === ".gitkeep" ||
+        !allExtensions.has(path.extname(file).toLowerCase())
+      ) {
+        continue;
+      }
+      if (
+        !copied.has(file) &&
+        !copied.has(`${path.basename(file, ".webp")}.webp`)
+      ) {
+        fs.unlinkSync(path.join(destDir, file));
+      }
     }
   }
 
@@ -150,11 +158,11 @@ async function syncDirectory(srcDir, destDir) {
 }
 
 async function main() {
-  for (const { src, dest } of CONTENT_SOURCES) {
+  for (const { src, dest, ...opts } of CONTENT_SOURCES) {
     const srcDir = path.join(root, src);
     const destDir = path.join(root, dest);
 
-    const copied = await syncDirectory(srcDir, destDir);
+    const copied = await syncDirectory(srcDir, destDir, opts);
     const names = [...copied].sort().join(", ") || "(none)";
     console.log(`Synced ${path.relative(root, destDir)}: ${names}`);
   }

@@ -39,7 +39,9 @@ export async function generateMetadata({ params }: ProjectPageProps) {
 
   const description = project.excerpt || `Project: ${project.title}`;
   const deploymentUrl = getDeploymentUrl();
-  const canonical = `${deploymentUrl}/projects/${project.slug}/`;
+  const canonical = deploymentUrl
+    ? `${deploymentUrl}/projects/${project.slug}/`
+    : undefined;
   const fullImageUrl = deploymentUrl
     ? `${deploymentUrl}${project.imageSrc}`
     : project.imageSrc;

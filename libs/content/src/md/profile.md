@@ -1,0 +1,83 @@
+---
+title: "Profile"
+name: "Kathleen Miller"
+role: "PhD Researcher | Earth Observation | Climate Solutions"
+email: "katie.miller6572@gmail.com"
+linkedInUrl: "https://www.linkedin.com/in/kathleen-rose-miller/"
+githubUrl: "https://github.com/kathleen-miller"
+location: "Ithaca, NY"
+image: "profile.jpeg"
+education:
+  - degree: "PhD in Earth & Atmospheric Sciences"
+    institution: "Cornell University"
+    period: "2024 – Present"
+    focus: "Remote sensing and environmental analysis"
+    details:
+      - "Focus on Earth observation applications for agricultural monitoring and climate solutions"
+      - "Working with hyperspectral and multispectral satellite imagery"
+      - "Collaboration with NASA DEVELOP program"
+  - degree: "BSc in Science"
+    institution: "University"
+    period: "2020 – 2024"
+    focus: "Foundation in environmental science and quantitative methods"
+    details:
+      - "Strong background in analytical methods and data analysis"
+      - "Development of research and communication skills"
+      - "Interdisciplinary approach to environmental challenges"
+researchInterests:
+  - title: "Remote Sensing & Earth Observation"
+    description: "Hyperspectral and multispectral imagery analysis for environmental monitoring and agricultural applications."
+    icon: "&#128680;"
+  - title: "Machine Learning Applications"
+    description: "Developing and implementing ML models (random forests, neural networks) for classification and predictive analysis of geospatial data."
+    icon: "&#129289;"
+  - title: "Climate Change Mitigation"
+    description: "Nature-based solutions and sustainable strategies for addressing climate change through data-driven environmental assessment."
+    icon: "&#127757;"
+  - title: "Agricultural Innovation"
+    description: "Using spectral analysis and EO data to improve crop monitoring, disease detection, and agricultural productivity."
+    icon: "&#127799;"
+  - title: "Data Visualization"
+    description: "Transforming complex geospatial data into compelling visual insights for stakeholder communication and decision support."
+    icon: "&#128202;"
+  - title: "Interdisciplinary Collaboration"
+    description: "Working with agronomists, climatologists, and policy makers to bridge science and practical environmental solutions."
+    icon: "&#129309;"
+skills:
+  - category: "Geospatial & Remote Sensing"
+    items:
+      - "ENVI/IDL"
+      - "ArcGIS"
+      - "Google Earth Engine"
+      - "QGIS"
+      - "Hyperspectral Analysis"
+      - "Sentinel-2 & Landsat"
+  - category: "Data Science & Analysis"
+    items:
+      - "Python"
+      - "R"
+      - "Machine Learning"
+      - "Random Forests"
+      - "Statistical Analysis"
+      - "Geospatial Data Processing"
+  - category: "Scientific Communication"
+    items:
+      - "Scientific Writing"
+      - "Data Visualization"
+      - "Presentations"
+      - "Technical Documentation"
+      - "Stakeholder Communication"
+      - "Academic Publishing"
+  - category: "Soft Skills"
+    items:
+      - "Project Management"
+      - "Team Collaboration"
+      - "Problem Solving"
+      - "Critical Thinking"
+      - "Interdisciplinary Research"
+      - "Mentorship"
+---
+
+I'm a PhD researcher passionate about leveraging Earth observation technology and data-driven approaches to address critical environmental challenges. My work bridges remote sensing, geospatial analysis, and climate science to develop scalable solutions for climate change mitigation and adaptation.
+
+With expertise in hyperspectral and multispectral imagery analysis, machine learning applications in environmental monitoring, and collaborative research with interdisciplinary teams, I'm focused on translating complex Earth observation data into actionable insights that support environmental sustainability and decision-making.

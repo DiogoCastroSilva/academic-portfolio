@@ -15,5 +15,10 @@
   },
   "dependencies": {
     "@katie-portfolio/content": "*"
+  },
+  "nx": {
+    "tags": [
+      "content-layer"
+    ]
   }
 }

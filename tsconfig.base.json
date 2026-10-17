@@ -21,7 +21,11 @@
       "@katie-portfolio/content": ["./libs/content/src/index.ts"],
       "@katie-portfolio/projects": ["./libs/projects/src/index.ts"],
       "@katie-portfolio/publications": ["./libs/publications/src/index.ts"],
-      "@katie-portfolio/navigation": ["./libs/navigation/src/index.ts"]
+      "@katie-portfolio/navigation": ["./libs/navigation/src/index.ts"],
+      "@katie-portfolio/utils": ["./libs/utils/src/index.ts"],
+      "@katie-portfolio/utils/test-helpers/a11y": [
+        "./libs/utils/src/test-helpers/a11y/index.ts"
+      ]
     }
   }
 }

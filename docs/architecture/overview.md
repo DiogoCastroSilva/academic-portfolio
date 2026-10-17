@@ -53,7 +53,7 @@ libs/
   utils/             Shared utilities (date formatting)
 ```
 
-**Module boundary rules:** `@nx/enforce-module-boundaries` is configured in the root `eslint.config.mjs`. All libraries may depend on any other library.
+**Module boundary rules:** `@nx/enforce-module-boundaries` is configured in the root `eslint.config.mjs`, but the `depConstraints` use a wildcard-to-wildcard pattern (`sourceTag: "*"`, `onlyDependOnLibsWithTags: ["*"]`) with no project tags defined, so it enforces nothing — any library can import any other library. Project tags have not been added; see ADR-0002 for the decision to retain Nx with weak constraints.
 
 ## Markdown Parsing, Validation, and Rendering Flow
 
@@ -72,15 +72,17 @@ toContentMeta() - resolves slug (frontmatter or filename),
   resolves image (explicit, glob by slug, or placeholder)
     |
     v
-marked() - renders markdown body to HTML
+createMarkedInstance(config) - creates a Marked instance with:
+  - walkTokens: resolves href/src on markdown image & link tokens
+    (DEPLOYMENT_URL, empty href, relative path prefixing)
+  - custom renderers: image -> <figure>/<figcaption>,
+    link -> external attributes, paragraph -> gallery detection
+  - hooks.postprocess: processes raw HTML (DEPLOYMENT_URL,
+    relative paths, external attributes) with negative lookahead
+    to avoid double-processing walkTokens-resolved URLs
     |
     v
-Post-processing:
-  1. Replace href="DEPLOYMENT_URL" -> actual deployment URL
-  2. Replace empty hrefs -> deployment URL
-  3. Rewrite relative src="..." -> absolute with base path
-  4. Rewrite relative href="..." -> absolute with base path
-  5. Add external link attributes (target="_blank", rel="noopener noreferrer")
+instance.parse(body) -> HTML string
     |
     v
 ContentItemMeta { ...meta, body: htmlString }

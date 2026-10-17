@@ -4,8 +4,16 @@ export interface ContentMeta {
   date: string;
   tags?: string[];
   excerpt?: string;
-  /** Optional team or authors listed for the content. */
+  /** Team or collaborator name(s) (primarily for projects). */
   team?: string;
+  /** Author name(s) (primarily for publications). */
+  authors?: string[];
+  /** Publication venue (journal, conference, preprint server). */
+  venue?: string;
+  /** Digital Object Identifier (DOI) for this publication. */
+  doi?: string;
+  /** Direct URL to the published paper or preprint. */
+  paperUrl?: string;
   /** Optional array of related links (paper, presentation, etc.). */
   links?: string[];
   /** Cover image filename in the content `md` folder (same folder as the `.md` file). */
@@ -34,3 +42,12 @@ export interface ContentLibrary {
   getBySlug: (slug: string) => ContentMeta | undefined;
   getContentBySlug: (slug: string) => Promise<ContentItemMeta | undefined>;
 }
+
+/** Distinct type for project metadata — uses `team` for collaborator attribution. */
+export type ProjectMeta = ContentMeta;
+
+/**
+ * Distinct type for publication metadata — uses `authors`, `venue`,
+ * `doi`, and `paperUrl` for bibliographic attribution.
+ */
+export type PublicationMeta = ContentMeta;

@@ -1,13 +1,14 @@
 # Content Authoring Guide
 
-This guide explains how to add and edit projects and publications on the portfolio site. No knowledge of React, Next.js, TypeScript, or the content-processing code is required.
+This guide explains how to add and edit projects, publications, and profile content on the portfolio site. No knowledge of React, Next.js, TypeScript, or the content-processing code is required.
 
 ## Content Locations
 
-| Content type | Directory                   |
-| ------------ | --------------------------- |
-| Projects     | `libs/projects/src/md/`     |
-| Publications | `libs/publications/src/md/` |
+| Content type | Directory                        |
+| ------------ | -------------------------------- |
+| Profile      | `libs/content/src/md/profile.md` |
+| Projects     | `libs/projects/src/md/`          |
+| Publications | `libs/publications/src/md/`      |
 
 Each item is a single `.md` file with YAML frontmatter at the top. The filename becomes the slug (URL path) unless overridden in the frontmatter.
 
@@ -18,41 +19,125 @@ Each item is a single `.md` file with YAML frontmatter at the top. The filename 
 - Match the filename to the content topic
 - Examples: `ml-classifier-benchmark`, `accessible-forms`, `adaptive-lr-scheduling`
 
-## Frontmatter Fields
+## Profile Content
 
-### Required fields (all content types)
+The About page (`/about`) and home page are driven by a profile content file containing your biography, education, research interests, skills, and contact links. All personal data lives in `libs/content/src/md/profile.md` — editing this file updates the site everywhere your name, photo, and bio appear.
+
+### Profile Frontmatter
+
+| Field               | Type   | Required | Description                                              |
+| ------------------- | ------ | -------- | -------------------------------------------------------- |
+| `title`             | string | yes      | Always `"Profile"` to identify the file type             |
+| `name`              | string | yes      | Your full name (shown in page titles and NavBar)         |
+| `role`              | string | yes      | Your professional title (e.g. `"PhD Researcher"`)        |
+| `email`             | string | yes      | Contact email address                                    |
+| `linkedInUrl`       | string | yes      | Full LinkedIn profile URL                                |
+| `githubUrl`         | string | yes      | Full GitHub profile URL                                  |
+| `location`          | string | no       | City, Country                                            |
+| `image`             | string | no       | Filename of your profile photo (default: `profile.jpeg`) |
+| `education`         | array  | no       | List of education entries (see below)                    |
+| `researchInterests` | array  | no       | List of research interest entries (see below)            |
+| `skills`            | array  | no       | List of skill categories (see below)                     |
+
+### Education Entries
+
+| Field         | Type     | Description                           |
+| ------------- | -------- | ------------------------------------- |
+| `degree`      | string   | Degree title (e.g. `"PhD"`)           |
+| `institution` | string   | Institution name                      |
+| `period`      | string   | Time period (e.g. `"2024 – Present"`) |
+| `focus`       | string   | Area of focus or specialisation       |
+| `details`     | string[] | List of bullet-point details          |
+
+### Research Interest Entries
+
+| Field         | Type   | Description                           |
+| ------------- | ------ | ------------------------------------- |
+| `title`       | string | Short title for the interest area     |
+| `description` | string | A brief paragraph describing the work |
+| `icon`        | string | _(optional)_ Emoji or HTML entity     |
+
+### Skill Category Entries
+
+| Field      | Type     | Description                           |
+| ---------- | -------- | ------------------------------------- |
+| `category` | string   | Category name (e.g. `"Data Science"`) |
+| `items`    | string[] | List of individual skill names        |
+
+### Profile Body
+
+The body section below the frontmatter is rendered as the biography. Use standard Markdown for paragraphs, lists, and links.
+
+```markdown
+## Biography
+
+I'm a PhD researcher passionate about leveraging Earth observation technology...
+```
+
+### Profile Photo
+
+Place your profile photo (JPEG or PNG) in the same `src/md/` directory. It will be automatically synced to the public folder and served as a WebP-optimised image during the build.
+
+### Getting Started (Templates)
+
+Starter template files are provided to help you create new content quickly:
+
+- **Project template:** `libs/projects/src/md/_template.md`
+- **Publication template:** `libs/publications/src/md/_template.md`
+- **Profile template:** `libs/content/src/md/_profile-template.md`
+
+Copy the file, rename it (e.g. `_template.md` → `my-new-project.md`), and remove the `draft: true` line when ready to publish. See [File Naming](#file-naming) for slug conventions.
+
+## Biography
+
+Write your biography here. Use standard Markdown for paragraphs, lists, and links.
+
+### Education
+
+- **PhD in Earth & Atmospheric Sciences**, Cornell University (2024 – Present)
+- **BSc in Environmental Science**, University Name (2020 – 2024)
+
+### Research Interests
+
+- Hyperspectral and multispectral imagery analysis
+- Machine learning for environmental monitoring
+- Climate change mitigation and adaptation
+
+### Skills
+
+**Geospatial & Remote Sensing:** ENVI/IDL, ArcGIS, Google Earth Engine, GIS
+**Data Science & Analysis:** Python, R, Machine Learning, Statistical Analysis
+**Scientific Communication:** Scientific Writing, Data Visualization
+**Soft Skills:** Project Management, Team Collaboration, Problem Solving
+
+````
+
+> **Tip:** Edit `libs/content/src/md/profile.md` to update your biography, education, research interests, and skills site-wide. Changes are reflected on both the About page and home page.
+
+## Project Content
+
+Projects are academic or professional work items (research projects, software, etc.).
+
+### Required Fields
 
 | Field   | Type   | Description                                                  |
 | ------- | ------ | ------------------------------------------------------------ |
 | `title` | string | Display title shown on the page and in listing cards         |
 | `date`  | string | Date in `YYYY-MM-DD` format; used for sorting (newest first) |
 
-### Optional fields
+### Optional Fields (Projects)
 
 | Field     | Type             | Description                                                 |
 | --------- | ---------------- | ----------------------------------------------------------- |
 | `slug`    | string           | URL-friendly identifier; defaults to filename without `.md` |
 | `tags`    | array of strings | Tags shown on cards (e.g., technologies used)               |
-| `excerpt` | string           | Short summary shown on listing cards                        |
-| `team`    | string           | Author or team name(s)                                      |
+| `excerpt` | string           | Short summary for the project card                          |
+| `team`    | string           | Team or collaborator name(s)                                |
 | `image`   | string           | Cover image filename (same directory as the `.md` file)     |
-| `links`   | array of URLs    | External links (GitHub, paper, demo, etc.)                  |
+| `links`   | array of URLs    | External links (GitHub, demo, paper, etc.)                  |
 | `draft`   | boolean          | Set to `true` to exclude from the listing and build         |
 
-### Draft items
-
-Set `draft: true` to create a placeholder project that will not appear on the live site. This is useful for work-in-progress entries. The `draft` field is optional; items without it are published by default.
-
-### Validation
-
-- **Missing `title` or `date`:** The build fails with an error identifying the file and the missing field.
-- **Invalid `date` format:** The build fails. Must be `YYYY-MM-DD` (e.g., `2025-11-01`).
-- **Non-string `title` or `date`:** The build fails.
-- **Missing `image` or invalid `image` filename:** A placeholder image is shown instead.
-
-## Adding a Project
-
-### Step 1: Create the Markdown file
+### Project Template
 
 Create `libs/projects/src/md/{slug}.md` with this template:
 
@@ -62,7 +147,7 @@ title: "My Project Title"
 date: "2026-02-12"
 tags: ["React", "TypeScript", "NASA"]
 excerpt: "A brief summary for the project card."
-image: project-cover.png
+image: project-cover.jpg
 links:
   - "https://github.com/username/repo"
   - "https://project-demo.com"
@@ -81,37 +166,48 @@ Describe your project here. You can use standard Markdown formatting.
 ### Technical Stack
 
 Built with React, TypeScript, and Tailwind CSS.
-```
+````
 
-### Step 2: Add a cover image (optional)
+### Adding a Cover Image
 
 Place the image file in `libs/projects/src/md/` (same directory as the `.md` file).
 Reference it by filename in the `image` field.
 
-- Recommended size: 1200×630px (16:9 aspect ratio)
+- Recommended size: 1200x630px (16:9 aspect ratio)
 - Supported formats: PNG, JPG, JPEG, WebP, GIF, SVG
 - If the image is missing or the filename is wrong, a placeholder is used automatically
 
-### Step 3: Sync content assets
+---
 
-```bash
-npx nx run main:sync-content-assets
-```
+## Publication Content
 
-This copies images from `libs/projects/src/md/` to `apps/main/public/projects/`.
-The dev server (`npx nx run main:dev`) and build (`npx nx build main`) do this automatically.
+Publications are academic papers, preprints, presentations, and similar works. They use a **distinct set of metadata** from projects.
 
-### Step 4: Verify
+### Required Fields (Publications)
 
-```bash
-npx nx run main:dev
-```
+| Field   | Type   | Description                                               |
+| ------- | ------ | --------------------------------------------------------- |
+| `title` | string | Display title shown on the page and in listing cards      |
+| `date`  | string | Publication date in `YYYY-MM-DD` format; used for sorting |
 
-Visit `http://localhost:3000/projects/{slug}/` to verify your project renders correctly.
+### Optional Fields (Publications)
 
-## Adding a Publication
+| Field      | Type             | Description                                    |
+| ---------- | ---------------- | ---------------------------------------------- |
+| `slug`     | string           | URL-friendly identifier; defaults to filename  |
+| `tags`     | array of strings | Tags shown on cards (e.g., research areas)     |
+| `excerpt`  | string           | Brief abstract for the publication card        |
+| `authors`  | array of strings | List of author names                           |
+| `venue`    | string           | Journal, conference, or preprint server name   |
+| `doi`      | string           | Digital Object Identifier                      |
+| `paperUrl` | string           | Direct URL to the paper or preprint            |
+| `image`    | string           | Cover image filename (same directory)          |
+| `links`    | array of URLs    | Supplementary links (presentation, code, etc.) |
+| `draft`    | boolean          | Set to `true` to exclude from the listing      |
 
-Publications follow the same structure. Create `libs/publications/src/md/{slug}.md`:
+### Publication Template
+
+Create `libs/publications/src/md/{slug}.md` with this template:
 
 ```markdown
 ---
@@ -119,10 +215,16 @@ title: "Research Paper Title"
 date: "2024-06-10"
 tags: ["Machine Learning", "Deep Learning"]
 excerpt: "A brief abstract for the publication card."
-team: "Katie Silva, Dr. Jane Researcher"
+authors:
+  - "Katie Silva"
+  - "Dr. Jane Researcher"
+venue: "Nature Climate Change"
+doi: "10.1038/s41558-024-01495-3"
+paperUrl: "https://www.nature.com/articles/s41558-024-01495-3"
 links:
   - "https://arxiv.org/abs/2406.xxxxx"
-  - "https://doi.org/10.48550/arXiv.2406.xxxxx"
+  - "https://presentation.example.com"
+image: paper-cover.png
 ---
 
 ## Abstract
@@ -135,10 +237,69 @@ A concise abstract of your publication.
 - Finding 2
 ```
 
+---
+
+## Markdown Figure Convention
+
+The portfolio supports a semantic figure convention for images with optional captions. This produces properly structured `<figure>` and `<figcaption>` HTML elements with alt text.
+
+### Single Figure
+
+Standard Markdown with a title (in double quotes) becomes a caption:
+
+```markdown
+![Close-up of leaf lesions](lesion-detail.jpg "Figure 1. Symptoms of GLRaV-3 on grapevine leaves, showing characteristic red blotches.")
+```
+
+This renders as:
+
+```html
+<figure>
+  <img src="/projects/lesion-detail.jpg" alt="Close-up of leaf lesions" />
+  <figcaption>
+    Figure 1. Symptoms of GLRaV-3 on grapevine leaves, showing characteristic
+    red blotches.
+  </figcaption>
+</figure>
+```
+
+- **Alt text** (in `[]`) is always required and used by screen readers. Make it descriptive — e.g., "Spectral plot showing wavelength vs. reflectance for vegetation indices" rather than "plot.png".
+- **Caption** (in `"..."`) is optional. When provided, it becomes a `<figcaption>` that screen readers use as the accessible name when the alt text is short.
+- When no caption is given, a bare `<img>` with proper `alt` is rendered (no `<figure>` wrapper).
+- The site respects `prefers-reduced-motion`; gallery hover effects are disabled for users who request reduced motion.
+
+### Image Galleries
+
+Consecutive figures (two or more images with captions) are automatically grouped into a responsive gallery:
+
+```markdown
+![Figure 1](emit-spectra.jpg "Figure 1. Spectral signatures from EMIT data.")
+![Figure 2](sentinel-composite.jpg "Figure 2. Sentinel-2 false-color composite.")
+```
+
+This renders as a responsive grid of `<figure>` elements within a `<div class="gallery">` wrapper. On desktop, images display side-by-side; on mobile, they stack vertically.
+
+### Inline HTML Images
+
+For more control, you can also use raw HTML:
+
+```html
+<figure>
+  <img src="custom-image.jpg" alt="Descriptive alt text" />
+  <figcaption>Custom caption with <strong>bold</strong> text.</figcaption>
+</figure>
+```
+
+> **Security note:** Raw HTML in Markdown is preserved as-is (see [ADR-0004](architecture/decisions/0004-content-validation-and-rendering.md) for the trust model). Only the repository maintainer authors content, so this is safe.
+
+---
+
 ## Markdown Features
 
 - Standard Markdown: headers, lists, code blocks, tables, blockquotes
-- Raw HTML: Allowed for academic formatting (e.g., `<figure>`, `<b>`, `<br>`, custom div layouts)
+- Semantic figures with captions (see Figure Convention above)
+- Image galleries: multiple adjacent image lines are automatically wrapped in a responsive grid
+- Raw HTML: Allowed for academic formatting when needed
 - No MDX: React components cannot be embedded in Markdown content
 
 ## Image Referencing in Content Body
@@ -151,20 +312,67 @@ Within Markdown body content, images use relative paths:
 
 These are automatically resolved to the correct public URL with the GitHub Pages base path.
 
-Inline HTML images also work:
+### Image Galleries
 
-```html
-<img src="test-emit.jpeg" alt="Alt text" class="w-full rounded" />
+Place two or more Markdown images on consecutive lines (no blank line between them) to create an automatic gallery. The images will be rendered side-by-side in a responsive grid:
+
+```markdown
+![Caption A](image-a.jpg)
+![Caption B](image-b.jpg)
+![Caption C](image-c.jpg)
 ```
+
+Each image is still wrapped in a `<figure>` with its own `<figcaption>`. The gallery layout is styled via CSS in `apps/main/src/app/global.css`.
+
+### Content Image Directory
+
+Images placed alongside Markdown files are automatically synced to the public directory during build:
+
+```
+libs/projects/src/md/
+  my-project.md
+  my-project.jpeg          <- cover image (from `image:` field)
+  screenshot.jpg           <- body image (referenced in Markdown)
+```
+
+The `sync-content-assets` tool copies all image files to `apps/main/public/{projects|publications}/` and generates WebP versions for JPEG and PNG files. This runs automatically before `build` and `dev`.
 
 ## Links in Content Body
 
 - **External links** (starting with `http://` or `https://`): Automatically open in a new tab with `rel="noopener noreferrer"`.
 - **Internal links** (starting with `/`): Rewritten to include the base path.
-- **`DEPLOYMENT_URL` placeholder:** Use `[Link text](DEPLOYMENT_URL)` to link to the deployed site URL (useful for author homepages). The placeholder is replaced at build time using the `NEXT_PUBLIC_DEPLOYMENT_URL` environment variable.
+- **`DEPLOYMENT_URL` placeholder:** Use `[Link text](DEPLOYMENT_URL)` to link to the deployed site URL. The placeholder is replaced at build time using the `NEXT_PUBLIC_DEPLOYMENT_URL` environment variable.
 - **Empty hrefs** (`href=""`): Replaced with the deployment URL.
 - **Anchor links** (`#section`): Work as expected.
 - **Mailto links:** Not modified.
+
+## Draft Items
+
+Set `draft: true` to create a placeholder entry that will not appear on the live site. This is useful for work-in-progress entries. The `draft` field is optional; items without it are published by default.
+
+Draft items are:
+
+- Excluded from listing pages (`getAll()`)
+- Not rendered in the static build
+- Visible in source control for tracking progress
+
+## Validation
+
+- **Missing `title` or `date`:** The build fails with an error identifying the file and the missing field.
+- **Invalid `date` format:** The build fails. Must be `YYYY-MM-DD` (e.g., `2025-11-01`).
+- **Non-string `title` or `date`:** The build fails.
+- **Non-string `slug`:** The build fails.
+- **Invalid type for optional fields** (`image`, `tags`, `links`, `authors`, `venue`, `doi`, `paperUrl`): The build fails with a message identifying the file and field.
+- **Missing images:** Silently replaced with a placeholder — no build failure.
+- **Malformed Markdown:** Passed through by `marked` — invalid Markdown renders as plain text.
+
+### Example Error
+
+```
+Invalid frontmatter in "my-project.md":
+  `title` is required
+  `date` must be in YYYY-MM-DD format, got "11/1/2025"
+```
 
 ## How to Validate Content Locally
 
@@ -172,13 +380,9 @@ Inline HTML images also work:
 npx nx run-many -t lint test typecheck build
 ```
 
-- **Invalid frontmatter** fails the `typecheck` or `build` step with a message like:
-  ```
-  Invalid frontmatter in "my-project.md":
-    `title` is required
-  ```
+- **Invalid frontmatter** fails the `build` step with a message identifying the file and the error.
 - **Missing images** are silently replaced with a placeholder — no build failure.
-- **Malformed Markdown** is passed through by `marked` — invalid Markdown renders as plain text.
+- **Malformed Markdown** is passed through — invalid Markdown renders as plain text.
 
 ## How CI Reports Errors
 

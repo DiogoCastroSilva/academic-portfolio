@@ -7,8 +7,8 @@ This is an Nx workspace containing a Next.js 16 static-export portfolio site.
 - **App:** `apps/main/` — Next.js App Router, static export to GitHub Pages
 - **Libraries:** `libs/content/`, `libs/navigation/`, `libs/projects/`, `libs/publications/`, `libs/utils/`
 - **Tests:** Vitest, run via `npx nx run-many --target=test --all`
-- **Lint:** ESLint 9 with shared `@diogox-org/eslint-config` + Nx module boundaries
-- **Formatting:** Prettier 3 with shared `@diogox-org/prettier-config`
+- **Lint:** ESLint 9 with shared `@diogozx-org/eslint-config` + Nx module boundaries
+- **Formatting:** Prettier 3 with shared `@diogozx-org/prettier-config`
 
 Full documentation lives in `docs/`. Start with [docs/README.md](docs/README.md).
 
@@ -49,11 +49,13 @@ npx nx run @katie-portfolio/content:test     # Run a specific project's tests
 
 To add a project or publication:
 
-1. Create `libs/projects/src/md/{slug}.md` (or `libs/publications/src/md/` for publications)
-2. Add YAML frontmatter with at least `title` and `date`
-3. Write Markdown content below the frontmatter
-4. Place cover images in the same `src/md/` directory
+1. Copy the starter template: `libs/projects/src/md/_template.md` or `libs/publications/src/md/_template.md`
+2. Rename it to `libs/projects/src/md/{slug}.md` (or `libs/publications/src/md/{slug}.md`)
+3. Remove the `draft: true` line from the frontmatter
+4. Replace the placeholder content with your own
 5. Run `npx nx run main:sync-content-assets` (or `npx nx run main:dev` which does it automatically)
+
+Templates use `draft: true` so they won't appear on the live site until published.
 
 Full guide: [docs/product/content-authoring.md](docs/product/content-authoring.md)
 
@@ -71,10 +73,11 @@ See [docs/architecture/decisions/](docs/architecture/decisions/) for ADRs on:
 ## Key implementation details
 
 - **next.config.mjs** — static export, base path, transpile packages. Converted from CommonJS to ESM.
-- **eslint.config.mjs** — composes `@diogox-org/eslint-config/next` with `@nx/enforce-module-boundaries`
+- **eslint.config.mjs** — composes `@diogozx-org/eslint-config/next` with `@nx/enforce-module-boundaries`
 - **prettier.config.mjs** — extends `@diogox-org/prettier-config`, adds Tailwind CSS plugin
+- **global.css** — semantic CSS tokens (`:root`), dark-mode overrides, `prefers-reduced-motion` global reset
 - **ContentDetail** — server component (no `'use client'`), uses `dangerouslySetInnerHTML`
-- **ContentCardSection** — client component (uses `motion/react` for animations)
+- **ContentCardSection** — client component with `motion/react` animations, respects `prefers-reduced-motion` via `useReducedMotion()`
 - **.swcrc removed** — no decorators used, SWC CLI removed; Next.js uses its own SWC config
 - **NX.md removed** — stale generated documentation, replaced by docs/ directory
 

@@ -1,54 +1,12 @@
 "use client";
+import type { SkillCategory } from "@katie-portfolio/content";
 import { motion } from "motion/react";
 
-const SKILL_CATEGORIES = [
-  {
-    category: "Geospatial & Remote Sensing",
-    skills: [
-      "ENVI/IDL",
-      "ArcGIS",
-      "Google Earth Engine",
-      "QGIS",
-      "Hyperspectral Analysis",
-      "Sentinel-2 & Landsat",
-    ],
-  },
-  {
-    category: "Data Science & Analysis",
-    skills: [
-      "Python",
-      "R",
-      "Machine Learning",
-      "Random Forests",
-      "Statistical Analysis",
-      "Geospatial Data Processing",
-    ],
-  },
-  {
-    category: "Scientific Communication",
-    skills: [
-      "Scientific Writing",
-      "Data Visualization",
-      "Presentations",
-      "Technical Documentation",
-      "Stakeholder Communication",
-      "Academic Publishing",
-    ],
-  },
-  {
-    category: "Soft Skills",
-    skills: [
-      "Project Management",
-      "Team Collaboration",
-      "Problem Solving",
-      "Critical Thinking",
-      "Interdisciplinary Research",
-      "Mentorship",
-    ],
-  },
-];
+type SkillsGridProps = {
+  categories: SkillCategory[];
+};
 
-export const SkillsGrid = () => {
+export const SkillsGrid = ({ categories }: SkillsGridProps) => {
   return (
     <section className="mx-4 rounded-2xl bg-white p-12 text-slate-900 shadow-sm dark:bg-sky-50">
       <motion.div
@@ -66,7 +24,7 @@ export const SkillsGrid = () => {
           transition={{ staggerChildren: 0.1, delayChildren: 0.2 }}
           viewport={{ once: true }}
         >
-          {SKILL_CATEGORIES.map((category, catIndex) => (
+          {categories.map((category, catIndex) => (
             <motion.div
               key={category.category}
               className="flex flex-col gap-4"
@@ -79,7 +37,7 @@ export const SkillsGrid = () => {
                 {category.category}
               </h3>
               <div className="flex flex-wrap gap-2">
-                {category.skills.map((skill, skillIndex) => (
+                {category.items.map((skill, skillIndex) => (
                   <motion.span
                     key={skill}
                     className="rounded-full border border-zinc-300 bg-white px-4 py-2 text-sm font-medium text-slate-700 dark:border-zinc-400 dark:bg-white dark:text-slate-700"

@@ -1,7 +1,7 @@
 "use client";
 import type { ContentMeta } from "@katie-portfolio/content";
 import { dates } from "@katie-portfolio/utils";
-import { AnimatePresence, motion } from "motion/react";
+import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import Link from "next/link";
 
 import { ContentImage } from "./ContentImage";
@@ -30,6 +30,18 @@ export function ContentCardSection({
   emptyMessage = "No items to display at this time.",
 }: ContentCardSectionProps) {
   const visibleItems = items.slice(0, limit);
+  const shouldReduceMotion = useReducedMotion();
+
+  // When the user prefers reduced motion, render plain elements instead of
+  // animated motion components to avoid motion-sickness triggers.
+  const MotionDiv = shouldReduceMotion ? "div" : motion.div;
+  const MotionArticle = shouldReduceMotion ? "article" : motion.article;
+
+  const containerVariants = {
+    initial: { opacity: 0 },
+    animate: { opacity: 1 },
+    transition: { staggerChildren: 0.2 },
+  };
 
   return (
     <section
@@ -45,20 +57,22 @@ export function ContentCardSection({
       {visibleItems.length === 0 && emptyMessage ? (
         <p className="text-slate-700 dark:text-gray-400">{emptyMessage}</p>
       ) : (
-        <motion.div
+        <MotionDiv
           className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ staggerChildren: 0.2 }}
+          {...(shouldReduceMotion ? {} : containerVariants)}
         >
           <AnimatePresence>
             {visibleItems.map((item, index) => (
-              <motion.article
+              <MotionArticle
                 key={item.slug}
                 className="group flex h-full flex-col overflow-hidden rounded-2xl border border-zinc-200 bg-white"
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
+                {...(shouldReduceMotion
+                  ? {}
+                  : {
+                      initial: { opacity: 0, y: 20 },
+                      animate: { opacity: 1, y: 0 },
+                      transition: { duration: 0.5, delay: index * 0.1 },
+                    })}
               >
                 <Link
                   href={itemHref(hrefPrefix, item.slug)}
@@ -91,7 +105,7 @@ export function ContentCardSection({
                       </ul>
                     </div>
                     <div className="flex flex-1 flex-col">
-                      <h3 className="tracking-tightmb-2 line-clamp-2 text-xl leading-tight font-semibold tracking-tight transition-all duration-300 group-hover:-translate-y-1 group-hover:underline">
+                      <h3 className="mb-2 line-clamp-2 text-xl leading-tight font-semibold tracking-tight transition-all duration-300 group-hover:-translate-y-1 group-hover:underline">
                         {item.title}
                       </h3>
                       {item.excerpt ? (
@@ -102,10 +116,10 @@ export function ContentCardSection({
                     </div>
                   </div>
                 </Link>
-              </motion.article>
+              </MotionArticle>
             ))}
           </AnimatePresence>
-        </motion.div>
+        </MotionDiv>
       )}
     </section>
   );

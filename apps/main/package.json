@@ -52,7 +52,10 @@
           "command": "next dev --webpack"
         }
       }
-    }
+    },
+    "tags": [
+      "app"
+    ]
   },
   "dependencies": {
     "@katie-portfolio/content": "*",

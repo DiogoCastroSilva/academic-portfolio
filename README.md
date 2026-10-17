@@ -13,8 +13,8 @@ A personal academic portfolio website built by Diogo Castro Silva for Kathleen M
 - **Tailwind CSS 4** with PostCSS
 - **Markdown** via `gray-matter` + `marked` for content
 - **Vitest 4** for unit testing
-- **ESLint 9** (shared `@diogox-org/eslint-config`) + Nx module boundaries
-- **Prettier 3** (shared `@diogox-org/prettier-config`)
+- **ESLint 9** (shared `@diogozx-org/eslint-config`) + Nx module boundaries
+- **Prettier 3** (shared `@diogozx-org/prettier-config`)
 - **GitHub Actions and GitHub Pages** for CI and deployment
 
 ## Why this architecture
@@ -67,7 +67,7 @@ libs/projects/src/md/my-project.md
 libs/publications/src/md/my-paper.md
 ```
 
-See the [Content Authoring Guide](docs/product/content-authoring.md) for templates, field reference, and validation rules. Quick reference:
+See the [Content Authoring Guide](docs/product/content-authoring.md) for templates, field reference, and validation rules. Starter templates live at `libs/projects/src/md/_template.md` and `libs/publications/src/md/_template.md` — copy them and remove the `draft: true` line. Quick reference:
 
 ```yaml
 ---

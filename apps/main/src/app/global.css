@@ -1,6 +1,54 @@
 @import "../../tw-input.css";
 
 /*
+  Semantic CSS custom properties (design tokens).
+
+  These provide a thin layer of semantic naming over raw color values so
+  that prose and component styles remain consistent and can be theme-adjusted
+  in a single place. We intentionally keep this minimal — there is no
+  standalone design-system package — and rely on Tailwind for layout and
+  spacing primitives.
+
+  See docs/architecture/decisions/0006-shared-frontend-tooling.md for design
+  rationale.
+*/
+:root {
+  --color-text: var(--tw-color-text, #171717);
+  --color-text-muted: var(--tw-color-text-muted, #6b7280);
+  --color-border: var(--tw-color-border, #e5e7eb);
+  --color-link: var(--tw-color-link, #2563eb);
+  --color-link-hover: var(--tw-color-link-hover, #1d4ed8);
+  --color-code-bg: var(--tw-color-code-bg, #f3f4f6);
+  --color-pre-bg: var(--tw-color-pre-bg, #171717);
+  --color-pre-text: var(--tw-color-pre-text, #f9fafb);
+}
+
+/* Dark-mode overrides */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-text: var(--tw-color-text, #f9fafb);
+    --color-text-muted: var(--tw-color-text-muted, #9ca3af);
+    --color-border: var(--tw-color-border, #3f3f46);
+    --color-link: var(--tw-color-link, #60a5fa);
+    --color-link-hover: var(--tw-color-link-hover, #93c5fd);
+    --color-code-bg: var(--tw-color-code-bg, #1e293b);
+    --color-pre-bg: var(--tw-color-pre-bg, #0f172a);
+    --color-pre-text: var(--tw-color-pre-text, #f1f5f9);
+  }
+}
+
+/* Reduced-motion: disable gallery animations and smooth transitions */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/*
   The default border color has changed to `currentcolor` in Tailwind CSS v4,
   so we've added these compatibility styles to make sure everything still
   looks the same as it did with Tailwind CSS v3.
@@ -24,7 +72,61 @@
 /* Fallback anchor styles for markdown-rendered content (prose) */
 .prose a {
   text-decoration: none;
+  color: var(--color-link);
 }
 .prose a:hover {
   text-decoration: underline;
+  color: var(--color-link-hover);
+}
+/* Respect reduced-motion: skip underline-on-hover animation */
+@media (prefers-reduced-motion: reduce) {
+  .prose a:hover {
+    text-decoration: underline;
+  }
+}
+
+/* Semantic figure/figcaption styles for markdown-rendered images */
+.prose figure {
+  margin: 1.5rem auto;
+  text-align: center;
+}
+.prose figcaption {
+  margin-top: 0.5rem;
+  font-size: 0.875rem;
+  color: var(--color-text-muted);
+}
+
+/* Gallery: multiple images side-by-side */
+.prose .gallery {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  justify-content: center;
+  margin: 1.5rem 0;
+}
+.prose .gallery figure {
+  margin: 0;
+  flex: 1 1 45%;
+  min-width: 200px;
+  /* Smooth layout transition for gallery hover (disabled in reduced-motion) */
+}
+@media (prefers-reduced-motion: no-preference) {
+  .prose .gallery figure {
+    transition: transform 150ms ease;
+  }
+}
+.prose .gallery img {
+  width: 100%;
+  height: auto;
+}
+
+/* External link indicator */
+.prose a.external-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+.prose a.external-link::after {
+  content: "↗";
+  font-size: 0.75em;
 }

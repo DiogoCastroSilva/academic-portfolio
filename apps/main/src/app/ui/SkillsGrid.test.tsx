@@ -8,17 +8,29 @@ import { render, screen } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
 
 import { expectNoA11yViolations } from "@katie-portfolio/utils/test-helpers/a11y";
+import type { SkillCategory } from "@katie-portfolio/content";
 
 import { SkillsGrid } from "./SkillsGrid.js";
 
+const mockCategories: SkillCategory[] = [
+  {
+    category: "Geospatial & Remote Sensing",
+    items: ["ENVI/IDL", "ArcGIS"],
+  },
+  {
+    category: "Data Science & Analysis",
+    items: ["Python", "R", "Machine Learning"],
+  },
+];
+
 describe("SkillsGrid accessibility", () => {
   it("has no accessibility violations", async () => {
-    const { container } = render(<SkillsGrid />);
+    const { container } = render(<SkillsGrid categories={mockCategories} />);
     await expectNoA11yViolations(container);
   });
 
   it("has section with heading", () => {
-    render(<SkillsGrid />);
+    render(<SkillsGrid categories={mockCategories} />);
 
     const heading = screen.getByText("Skills & Tools");
     const section = heading.closest("section");
@@ -27,16 +39,18 @@ describe("SkillsGrid accessibility", () => {
   });
 
   it("has heading level 2 for main heading", () => {
-    render(<SkillsGrid />);
+    render(<SkillsGrid categories={mockCategories} />);
 
     const mainHeading = screen.getByRole("heading", { level: 2 });
     expect(mainHeading).toHaveTextContent("Skills & Tools");
   });
 
   it("has heading level 3 for categories", () => {
-    render(<SkillsGrid />);
+    render(<SkillsGrid categories={mockCategories} />);
 
-    const categoryHeadings = screen.getAllByRole("heading", { level: 3 });
+    const categoryHeadings = screen.getAllByRole("heading", {
+      level: 3,
+    });
     expect(categoryHeadings.length).toBeGreaterThan(0);
     expect(categoryHeadings[0]).toHaveTextContent(
       "Geospatial & Remote Sensing",
@@ -44,16 +58,14 @@ describe("SkillsGrid accessibility", () => {
   });
 
   it("renders all skill categories", () => {
-    render(<SkillsGrid />);
+    render(<SkillsGrid categories={mockCategories} />);
 
     expect(screen.getByText("Geospatial & Remote Sensing")).toBeInTheDocument();
     expect(screen.getByText("Data Science & Analysis")).toBeInTheDocument();
-    expect(screen.getByText("Scientific Communication")).toBeInTheDocument();
-    expect(screen.getByText("Soft Skills")).toBeInTheDocument();
   });
 
   it("renders individual skills", () => {
-    render(<SkillsGrid />);
+    render(<SkillsGrid categories={mockCategories} />);
 
     expect(screen.getByText("Python")).toBeInTheDocument();
     expect(screen.getByText("R")).toBeInTheDocument();

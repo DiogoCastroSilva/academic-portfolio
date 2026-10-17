@@ -12,9 +12,9 @@
   - `@vitest/ui` was removed (not used in CI); coverage remains configured per-project via v8 provider.
 - **Accessibility testing:** A shared `expectNoA11yViolations` helper is provided via `@katie-portfolio/utils/test-helpers/a11y` for `apps/main` test files and locally within `libs/navigation/src/lib/test-utils/` for navigation tests. This helper wraps `vitest-axe` and throws a descriptive error when accessibility violations are found. Common Next.js mocks (`next/navigation`, `next/link`) are centralized in global setup files (`test-setup.ts`) to reduce boilerplate. The `next/link` mock itself is shared from `@katie-portfolio/utils/test-helpers/next-mocks`.
 - **Evidence or validation:**
-  - `libs/content` has 44 tests covering all content-processing scenarios.
-  - `libs/navigation` has 20 tests validating the navigation configuration and component a11y.
+  - `libs/content` has 103 tests (59 content-library + 12 profile-loader + 32 marked-extensions) covering all content-processing scenarios including publication-specific field parsing and validation, URL resolution, semantic figure rendering, gallery detection, and raw HTML postprocess.
+  - `libs/navigation` has 23 tests validating the navigation configuration and component a11y.
   - `apps/main` has 62 component tests with a11y coverage.
-  - `libs/utils` has 3 tests validating the shared `expectNoA11yViolations` helper.
+  - `libs/utils` has 8 tests validating the shared `expectNoA11yViolations` helper and utility functions.
   - All tests pass: `npx nx run-many --target=test --all`.
 - **Conditions for revisiting:** If browser-level integration testing is needed (e.g., for the mobile navigation toggle or ContentDetail rendering), a Playwright or Vitest Browser mode setup can be added.

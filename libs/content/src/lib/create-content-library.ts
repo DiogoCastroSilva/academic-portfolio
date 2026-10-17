@@ -1,13 +1,9 @@
 import fs from "fs";
 import matter from "gray-matter";
-import { marked } from "marked";
 import path from "path";
 import "server-only";
-import {
-  DEPLOYMENT_PLACEHOLDER,
-  getDeploymentUrl,
-  withPublicBasePath,
-} from "./constants";
+import { getDeploymentUrl, withPublicBasePath } from "./constants";
+import { createMarkedInstance } from "./marked-extensions.js";
 
 import {
   ContentItemMeta,
@@ -23,6 +19,8 @@ export type {
   ContentLibrary,
   ContentLibraryConfig,
   ContentMeta,
+  ProjectMeta,
+  PublicationMeta,
 } from "./types";
 
 const IMAGE_EXTENSIONS = [
@@ -97,6 +95,38 @@ function validateFrontmatter(
     errors.push(`\`slug\` must be a string, got ${typeof data.slug}`);
   }
 
+  if (
+    data.image !== undefined &&
+    typeof data.image !== "string" &&
+    typeof data.image !== "object"
+  ) {
+    errors.push(`\`image\` must be a string, got ${typeof data.image}`);
+  }
+
+  if (data.tags !== undefined && !Array.isArray(data.tags)) {
+    errors.push(`\`tags\` must be an array, got ${typeof data.tags}`);
+  }
+
+  if (data.links !== undefined && !Array.isArray(data.links)) {
+    errors.push(`\`links\` must be an array, got ${typeof data.links}`);
+  }
+
+  if (data.authors !== undefined && !Array.isArray(data.authors)) {
+    errors.push(`\`authors\` must be an array, got ${typeof data.authors}`);
+  }
+
+  if (data.venue !== undefined && typeof data.venue !== "string") {
+    errors.push(`\`venue\` must be a string, got ${typeof data.venue}`);
+  }
+
+  if (data.doi !== undefined && typeof data.doi !== "string") {
+    errors.push(`\`doi\` must be a string, got ${typeof data.doi}`);
+  }
+
+  if (data.paperUrl !== undefined && typeof data.paperUrl !== "string") {
+    errors.push(`\`paperUrl\` must be a string, got ${typeof data.paperUrl}`);
+  }
+
   if (errors.length > 0) {
     throw new Error(
       `Invalid frontmatter in "${file}":\n  ${errors.join("\n  ")}`,
@@ -130,6 +160,13 @@ function toContentMeta(
     : undefined;
   const excerpt = typeof data.excerpt === "string" ? data.excerpt : undefined;
   const team = typeof data.team === "string" ? data.team : undefined;
+  const authors = Array.isArray(data.authors)
+    ? data.authors.filter((a): a is string => typeof a === "string")
+    : undefined;
+  const venue = typeof data.venue === "string" ? data.venue : undefined;
+  const doi = typeof data.doi === "string" ? data.doi : undefined;
+  const paperUrl =
+    typeof data.paperUrl === "string" ? data.paperUrl : undefined;
   const links = Array.isArray(data.links)
     ? data.links.filter((l): l is string => typeof l === "string")
     : undefined;
@@ -142,6 +179,10 @@ function toContentMeta(
     ...(tags && tags.length > 0 && { tags }),
     ...(excerpt && { excerpt }),
     ...(team && { team }),
+    ...(authors && authors.length > 0 && { authors }),
+    ...(venue && { venue }),
+    ...(doi && { doi }),
+    ...(paperUrl && { paperUrl }),
     ...(links && links.length > 0 && { links }),
     ...(image && { image }),
     ...(draft && { draft }),
@@ -213,6 +254,10 @@ export function createContentLibrary(
     slug: string,
   ): Promise<ContentItemMeta | undefined> {
     return (async () => {
+      const markedInstance = createMarkedInstance({
+        publicPrefix: config.publicPrefix,
+        deploymentUrl: getDeploymentUrl(),
+      });
       if (!slug?.trimEnd() || typeof slug !== "string") {
         return undefined;
       }
@@ -233,49 +278,7 @@ export function createContentLibrary(
           data as Record<string, unknown>,
         );
 
-        let htmlBody = await marked(body);
-
-        // Determine deployment URL using shared helper
-        const deploymentUrl = getDeploymentUrl();
-
-        // Replace DEPLOYMENT_URL placeholder and empty hrefs BEFORE relative-link
-        // rewriting. Otherwise the placeholder gets prefixed with the public path
-        // and the later replacement no longer matches.
-        if (deploymentUrl) {
-          const ph = DEPLOYMENT_PLACEHOLDER;
-          htmlBody = htmlBody.replace(
-            new RegExp(`href=("|')${ph}\\1`, "g"),
-            `href="${deploymentUrl}"`,
-          );
-          htmlBody = htmlBody.replace(
-            /href=("|')\1/g,
-            `href="${deploymentUrl}"`,
-          );
-        }
-
-        // Post-process: rewrite relative image paths to absolute URLs
-        // Matches: src="filename.ext" or src='filename.ext' (not starting with / or http)
-        htmlBody = htmlBody.replace(
-          /src=["'](?!\/|https?:)([^"']+)["']/g,
-          (match, imagePath) =>
-            `src="${withPublicBasePath(`${config.publicPrefix}/${imagePath}`)}"`,
-        );
-
-        // Rewrite relative link hrefs to use the publicPrefix.
-        // DEPLOYMENT_URL placeholders and empty hrefs were already replaced above.
-        // Skip absolute URLs (http/https), anchors (#), and mailto links.
-        htmlBody = htmlBody.replace(
-          /href=["'](?!https?:|mailto:|#)([^"']+)["']/g,
-          (match, linkPath) =>
-            `href="${withPublicBasePath(`${config.publicPrefix}/${linkPath.replace(/^\//, "")}`)}"`,
-        );
-
-        // Ensure external links open safely in a new tab and mark them
-        htmlBody = htmlBody.replace(
-          /<a\s+href=("|')(https?:\/\/[^"']+)\1/g,
-          (match, q, url) =>
-            `<a href=${q}${url}${q} class="external-link" target="_blank" rel="noopener noreferrer"`,
-        );
+        const htmlBody = await markedInstance.parse(body);
 
         return { ...meta, body: htmlBody };
       }
