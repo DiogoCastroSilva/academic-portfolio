@@ -10,14 +10,22 @@ This guide explains how to add and edit projects, publications, and profile cont
 | Projects     | `libs/projects/src/md/`          |
 | Publications | `libs/publications/src/md/`      |
 
-Each item is a single `.md` file with YAML frontmatter at the top. The filename becomes the slug (URL path) unless overridden in the frontmatter.
+Each item lives in its own directory named `{slug}` containing a `README.md` file with YAML frontmatter at the top. The directory name becomes the slug (URL path) unless overridden in the frontmatter.
 
 ## File Naming
 
 - Use lowercase letters, numbers, and hyphens only
 - No spaces or special characters
-- Match the filename to the content topic
+- Match the directory name to the content topic
 - Examples: `ml-classifier-benchmark`, `accessible-forms`, `adaptive-lr-scheduling`
+
+To add a new entry:
+
+1. Copy the starter template: `libs/projects/src/md/_template.md`
+2. Create a directory: `libs/projects/src/md/{slug}/`
+3. Paste the template as `libs/projects/src/md/{slug}/README.md`
+4. Remove the `draft: true` line from the frontmatter
+5. Run `npx nx run main:sync-content-assets` (or `npx nx run main:dev` which does it automatically)
 
 ## Profile Content
 
@@ -129,17 +137,17 @@ Projects are academic or professional work items (research projects, software, e
 
 | Field     | Type             | Description                                                 |
 | --------- | ---------------- | ----------------------------------------------------------- |
-| `slug`    | string           | URL-friendly identifier; defaults to filename without `.md` |
+| `slug`    | string           | URL-friendly identifier; defaults to directory name |
 | `tags`    | array of strings | Tags shown on cards (e.g., technologies used)               |
 | `excerpt` | string           | Short summary for the project card                          |
 | `team`    | string           | Team or collaborator name(s)                                |
-| `image`   | string           | Cover image filename (same directory as the `.md` file)     |
+| `image`   | string           | Cover image filename (same directory as the `README.md` file)     |
 | `links`   | array of URLs    | External links (GitHub, demo, paper, etc.)                  |
 | `draft`   | boolean          | Set to `true` to exclude from the listing and build         |
 
 ### Project Template
 
-Create `libs/projects/src/md/{slug}.md` with this template:
+Create `libs/projects/src/md/{slug}/README.md` with this template:
 
 ```markdown
 ---
@@ -170,8 +178,9 @@ Built with React, TypeScript, and Tailwind CSS.
 
 ### Adding a Cover Image
 
-Place the image file in `libs/projects/src/md/` (same directory as the `.md` file).
-Reference it by filename in the `image` field.
+Place the image file in `libs/projects/src/md/{slug}/` (same directory as the `README.md` file).
+Reference it by filename in the `image` field. All images within the entry directory (including
+body images referenced in Markdown) are automatically synced to the public directory.
 
 - Recommended size: 1200x630px (16:9 aspect ratio)
 - Supported formats: PNG, JPG, JPEG, WebP, GIF, SVG
@@ -194,7 +203,7 @@ Publications are academic papers, preprints, presentations, and similar works. T
 
 | Field      | Type             | Description                                    |
 | ---------- | ---------------- | ---------------------------------------------- |
-| `slug`     | string           | URL-friendly identifier; defaults to filename  |
+| `slug`     | string           | URL-friendly identifier; defaults to directory name  |
 | `tags`     | array of strings | Tags shown on cards (e.g., research areas)     |
 | `excerpt`  | string           | Brief abstract for the publication card        |
 | `authors`  | array of strings | List of author names                           |
@@ -207,7 +216,7 @@ Publications are academic papers, preprints, presentations, and similar works. T
 
 ### Publication Template
 
-Create `libs/publications/src/md/{slug}.md` with this template:
+Create `libs/publications/src/md/{slug}/README.md` with this template:
 
 ```markdown
 ---
@@ -255,7 +264,7 @@ This renders as:
 
 ```html
 <figure>
-  <img src="/projects/lesion-detail.jpg" alt="Close-up of leaf lesions" />
+  <img src="/projects/lesion-detail.jpg" alt="Close-up of leaf lesions">
   <figcaption>
     Figure 1. Symptoms of GLRaV-3 on grapevine leaves, showing characteristic
     red blotches.
@@ -263,9 +272,10 @@ This renders as:
 </figure>
 ```
 
-- **Alt text** (in `[]`) is always required and used by screen readers. Make it descriptive — e.g., "Spectral plot showing wavelength vs. reflectance for vegetation indices" rather than "plot.png".
-- **Caption** (in `"..."`) is optional. When provided, it becomes a `<figcaption>` that screen readers use as the accessible name when the alt text is short.
-- When no caption is given, a bare `<img>` with proper `alt` is rendered (no `<figure>` wrapper).
+- **Alt text** (in `[]`) is recommended and used by screen readers. Make it descriptive — e.g., "Spectral plot showing wavelength vs. reflectance for vegetation indices" rather than "plot.png".
+- **Alt text fallback:** When alt text is omitted but a title (caption) is provided, the title is used as the `alt` attribute value for accessibility.
+- **Caption** (in `"..."`) is optional. When provided, it becomes a `<figcaption>`. When no caption is given, the alt text (if any) is used as the caption.
+- **All images** are wrapped in a `<figure>` element with a `<figcaption>` when either a caption or alt text is present.
 - The site respects `prefers-reduced-motion`; gallery hover effects are disabled for users who request reduced motion.
 
 ### Image Galleries
@@ -330,9 +340,10 @@ Images placed alongside Markdown files are automatically synced to the public di
 
 ```
 libs/projects/src/md/
-  my-project.md
-  my-project.jpeg          <- cover image (from `image:` field)
-  screenshot.jpg           <- body image (referenced in Markdown)
+  my-project/
+    README.md              <- content entry (frontmatter + Markdown body)
+    my-project.jpeg        <- cover image (from `image:` field)
+    screenshot.jpg         <- body image (referenced in Markdown)
 ```
 
 The `sync-content-assets` tool copies all image files to `apps/main/public/{projects|publications}/` and generates WebP versions for JPEG and PNG files. This runs automatically before `build` and `dev`.
@@ -359,7 +370,7 @@ Draft items are:
 ## Validation
 
 - **Missing `title` or `date`:** The build fails with an error identifying the file and the missing field.
-- **Invalid `date` format:** The build fails. Must be `YYYY-MM-DD` (e.g., `2025-11-01`).
+- **Invalid `date` format:** The build fails. Must be `YYYY-MM-DD` (e.g., `2025-11-01`) and must be a real calendar date (e.g., `2025-02-30` is rejected).
 - **Non-string `title` or `date`:** The build fails.
 - **Non-string `slug`:** The build fails.
 - **Invalid type for optional fields** (`image`, `tags`, `links`, `authors`, `venue`, `doi`, `paperUrl`): The build fails with a message identifying the file and field.
@@ -369,9 +380,9 @@ Draft items are:
 ### Example Error
 
 ```
-Invalid frontmatter in "my-project.md":
+Invalid frontmatter in "README.md" (entry slug: "my-project"):
   `title` is required
-  `date` must be in YYYY-MM-DD format, got "11/1/2025"
+  `date` must be a valid calendar date in YYYY-MM-DD format, got "11/1/2025"
 ```
 
 ## How to Validate Content Locally
