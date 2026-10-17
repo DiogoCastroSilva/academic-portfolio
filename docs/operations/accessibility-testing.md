@@ -21,7 +21,7 @@ The project provides shared utilities to reduce boilerplate:
 | `happy-dom`                 | `^15.11.7` | DOM environment for tests (provides browser-like APIs)          |
 | `@testing-library/dom`      | `^10.4.2`  | DOM testing utilities (peer dep of `@testing-library/jest-dom`) |
 | `@testing-library/jest-dom` | `^7.0.1`   | Custom DOM matchers like `toBeInTheDocument()`                  |
-| `@testing-library/react`    | `^14.x`    | React-specific testing utilities                                |
+| `@testing-library/react`    | `^16.3.3`  | React-specific testing utilities                                |
 
 > **Note:** `axe-core` is **not** listed as a direct dependency — it comes in transitively via `vitest-axe`.
 
