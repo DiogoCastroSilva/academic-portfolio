@@ -2,7 +2,10 @@
   "name": "@katie-portfolio/source",
   "version": "0.0.0",
   "license": "MIT",
-  "scripts": {},
+  "scripts": {
+    "format:write": "npx nx format:write",
+    "format:check": "npx nx format:check"
+  },
   "private": true,
   "engines": {
     "node": ">=20.9.0"
