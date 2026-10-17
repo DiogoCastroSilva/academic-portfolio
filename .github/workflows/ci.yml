@@ -31,7 +31,7 @@ jobs:
         run: npx nx --version
 
       - name: Check formatting
-        run: npx prettier --check .
+        run: npx --no-install prettier --check .
 
       - name: Run CI Tasks
         run: npx nx run-many -t lint test typecheck build
