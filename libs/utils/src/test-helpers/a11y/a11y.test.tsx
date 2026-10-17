@@ -25,6 +25,7 @@ function AccessibleComponent() {
 function InaccessibleComponent() {
   return (
     <div>
+      {/* eslint-disable-next-line @next/next/no-img-element, jsx-a11y/alt-text */}
       <img src="/test.jpg" />
       <button />
     </div>
