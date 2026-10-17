@@ -1,5 +1,5 @@
-:HL["/academic-portfolio/_next/static/css/67dc0dc48ef5ff9e.css","style"]
+:HL["/academic-portfolio/_next/static/css/28c83ba5e641b408.css","style"]
 3:[["children",{"s":"__PAGE__","h":160}]]
 2:[["children",{"s":{"n":"slug","t":"d","k":"first-project","s":[]},"h":65632,"c":"$Q3"}]]
 1:[["children",{"s":"projects","h":131168,"c":"$Q2"}]]
-0:{"b":"HKh3HEiMbQWhUuiF7Ft9t","t":{"t":{"s":"","h":131152,"c":"$Q1"}}}
+0:{"b":"OXbyVvx4DG3TrXWb0bdy2","t":{"t":{"s":"","h":131152,"c":"$Q1"}}}
