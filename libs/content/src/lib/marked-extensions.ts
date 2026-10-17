@@ -123,8 +123,15 @@ function renderFigure(
   config: ContentRendererConfig,
 ): string {
   const href = resolveHref(token.href || "", config, "image");
-  const alt = token.text || "";
   const title = token.title || null;
+  // Alt text: prefer token.text; fall back to title for a11y when alt is
+  // missing but a title is present (e.g. `![](img.png "A chart")`).
+  const alt =
+    token.text && token.text.trim() !== ""
+      ? token.text
+      : title && title.trim() !== ""
+        ? title
+        : "";
 
   let out = `<figure><img src="${escapeHtmlAttr(href)}" alt="${escapeHtmlAttr(alt)}"`;
   if (title) {

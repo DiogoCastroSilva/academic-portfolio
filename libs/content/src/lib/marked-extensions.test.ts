@@ -129,6 +129,20 @@ describe("ContentRenderer — image rendering", () => {
     expect(html).toContain('alt=""');
   });
 
+  it("uses title as alt text fallback when alt is missing", () => {
+    const html = renderBody('![](image.png "Chart title")');
+    expect(html).toContain('alt="Chart title"');
+    // Caption still uses title
+    expect(html).toContain("<figcaption>Chart title</figcaption>");
+  });
+
+  it("prefers explicit alt text over title for the alt attribute", () => {
+    const html = renderBody('![Explicit alt](image.png "Title text")');
+    expect(html).toContain('alt="Explicit alt"');
+    // Caption prefers title over alt text
+    expect(html).toContain("<figcaption>Title text</figcaption>");
+  });
+
   it("wraps gallery images in div.gallery", () => {
     const html = renderBody("![Img1](a.png)\n![Img2](b.png)");
     expect(html).toContain('<div class="gallery">');

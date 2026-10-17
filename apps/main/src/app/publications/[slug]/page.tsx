@@ -80,8 +80,8 @@ export default async function PublicationPage({
   }
 
   return (
-    <main className="mx-4 flex grow flex-col rounded-2xl dark:bg-sky-50">
+    <div className="mx-4 flex grow flex-col rounded-2xl dark:bg-sky-50">
       <ContentDetail content={publication} />
-    </main>
+    </div>
   );
 }
