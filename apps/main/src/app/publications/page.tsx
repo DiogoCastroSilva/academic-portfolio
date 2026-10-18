@@ -16,7 +16,7 @@ export default function PublicationsPage() {
   const publications = getAllPublications();
 
   return (
-    <div className="flex grow flex-col gap-4 py-8">
+    <div className="flex grow flex-col gap-4">
       <ContentCardSection
         heading="Publications"
         headingId="publications-heading"

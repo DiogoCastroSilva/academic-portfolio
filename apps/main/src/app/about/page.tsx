@@ -25,7 +25,7 @@ export default function AboutPage() {
   const profile = getProfile();
 
   return (
-    <div className="flex grow flex-col gap-6 py-8">
+    <div className="flex grow flex-col gap-4">
       <JsonLd data={buildPersonSchema(profile)} />
       <AboutHero profile={profile} />
       <ResearchInterests items={profile.researchInterests} />
