@@ -24,9 +24,9 @@ describe("site-config", () => {
     expect(siteConfig.repoLicenseUrl).toMatch(/^https:\/\//);
   });
 
-  it("has analytics configuration", () => {
-    expect(siteConfig.analytics.cloudflare.enabled).toBe(true);
-    expect(siteConfig.analytics.cloudflare.token).toBeTruthy();
+  it("has analytics configuration disabled by default (no token set)", () => {
+    expect(siteConfig.analytics.cloudflare.enabled).toBe(false);
+    expect(siteConfig.analytics.cloudflare.token).toBe("");
   });
 
   it("has a deployment URL field from environment", () => {

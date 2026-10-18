@@ -58,7 +58,7 @@ export const AboutHero = ({ profile }: AboutHeroProps) => {
                 <h1 className="text-3xl font-bold md:text-4xl lg:text-5xl">
                   {profile.name}
                 </h1>
-                <p className="mt-2 text-xl text-gray-600 dark:text-gray-700">
+                <p className="mt-2 text-xl text-gray-700 dark:text-gray-700">
                   {profile.role}
                 </p>
               </div>

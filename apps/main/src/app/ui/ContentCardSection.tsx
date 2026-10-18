@@ -1,7 +1,6 @@
 "use client";
 import type { ContentMeta } from "@katie-portfolio/content";
 import { dates } from "@katie-portfolio/utils";
-import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import Link from "next/link";
 
 import { ContentImage } from "./ContentImage";
@@ -30,19 +29,6 @@ export function ContentCardSection({
   emptyMessage = "No items to display at this time.",
 }: ContentCardSectionProps) {
   const visibleItems = items.slice(0, limit);
-  const shouldReduceMotion = useReducedMotion();
-
-  // When the user prefers reduced motion, render plain elements instead of
-  // animated motion components to avoid motion-sickness triggers.
-  const MotionDiv = shouldReduceMotion ? "div" : motion.div;
-  const MotionArticle = shouldReduceMotion ? "article" : motion.article;
-
-  const containerVariants = {
-    initial: { opacity: 0 },
-    animate: { opacity: 1 },
-    transition: { staggerChildren: 0.2 },
-  };
-
   return (
     <section
       className="mx-4 rounded-2xl bg-white p-12 text-slate-900 shadow-sm dark:bg-sky-50"
@@ -57,35 +43,28 @@ export function ContentCardSection({
       {visibleItems.length === 0 && emptyMessage ? (
         <p className="text-slate-700 dark:text-gray-700">{emptyMessage}</p>
       ) : (
-        <MotionDiv
-          className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3"
-          {...(shouldReduceMotion ? {} : containerVariants)}
-        >
-          <AnimatePresence>
+        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="contents">
             {visibleItems.map((item, index) => (
-              <MotionArticle
+              <article
                 key={item.slug}
-                className="group flex h-full flex-col overflow-hidden rounded-2xl border border-zinc-200 bg-white"
-                {...(shouldReduceMotion
-                  ? {}
-                  : {
-                      initial: { opacity: 0, y: 20 },
-                      animate: { opacity: 1, y: 0 },
-                      transition: { duration: 0.5, delay: index * 0.1 },
-                    })}
+                className="animate-fadeInUp rounded-2xl border border-zinc-200 bg-white motion-reduce:animate-none"
+                style={{
+                  animationDelay: `${index * 100}ms`,
+                }}
               >
                 <Link
                   href={itemHref(hrefPrefix, item.slug)}
                   className="group block rounded-lg focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-600"
                   aria-label={`Read more: ${item.title}`}
                 >
-                  <div className="aspect-[16/9] w-full overflow-hidden bg-stone-200 dark:bg-stone-700">
+                  <div className="relative aspect-[16/9] w-full overflow-hidden bg-stone-200 dark:bg-stone-700">
                     <ContentImage
                       src={item.imageSrc}
                       alt={item.title}
                       className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
                       sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                      priority={index < 3}
+                      priority={index === 0}
                     />
                   </div>
                   <div className="p-4">
@@ -116,10 +95,10 @@ export function ContentCardSection({
                     </div>
                   </div>
                 </Link>
-              </MotionArticle>
+              </article>
             ))}
-          </AnimatePresence>
-        </MotionDiv>
+          </div>
+        </div>
       )}
     </section>
   );

@@ -3,9 +3,12 @@
  *
  * Copies images from library markdown directories to the app's public folder,
  * and generates WebP versions for JPEG and PNG files to reduce bandwidth.
+ * Also resizes images to a maximum width of 1200px to reduce bandwidth
+ * while preserving full resolution for detail pages.
  *
  * Environment variables:
  * - SKIP_WEBP_CONVERSION — set to "true" to skip WebP generation (e.g., in dev)
+ * - SKIP_IMAGE_RESIZE — set to "true" to skip image resizing (e.g., in dev)
  */
 
 import fs from "node:fs";
@@ -103,7 +106,31 @@ async function convertToWebp(inputPath, outputPath) {
   }
 }
 
+/**
+ * Resize an image to MAX_IMAGE_WIDTH while preserving aspect ratio.
+ * Uses sharp (already a project dependency).
+ */
+async function resizeImage(inputPath, outputPath) {
+  try {
+    const sharpModule = await import("sharp");
+    const sharp = sharpModule.default || sharpModule;
+    await sharp(inputPath)
+      .rotate()
+      .resize({
+        width: MAX_IMAGE_WIDTH,
+        withoutEnlargement: true,
+      })
+      .toFile(outputPath);
+    return true;
+  } catch (err) {
+    console.warn(`  Sharp resize failed: ${err?.message || err}`);
+    return false;
+  }
+}
+
+const MAX_IMAGE_WIDTH = 1200;
 const skipWebp = process.env.SKIP_WEBP_CONVERSION === "true";
+const skipResize = process.env.SKIP_IMAGE_RESIZE === "true";
 
 async function syncDirectory(srcDir, destDir, opts = { cleanup: true }) {
   fs.mkdirSync(destDir, { recursive: true });
@@ -137,7 +164,18 @@ async function syncDirectory(srcDir, destDir, opts = { cleanup: true }) {
       } else if (entry.isFile() && isContentImage(entry.name)) {
         const destPath = path.join(destDir, relPath);
         fs.mkdirSync(path.dirname(destPath), { recursive: true });
-        fs.copyFileSync(srcPath, destPath);
+
+        // Resize large images to reduce bandwidth (skip for SVG)
+        if (!skipResize && isConvertable(entry.name)) {
+          if (!(await resizeImage(srcPath, destPath))) {
+            // Fall back to direct copy if resize fails
+            fs.copyFileSync(srcPath, destPath);
+          } else {
+            console.log(`  Resized: ${relPath}`);
+          }
+        } else {
+          fs.copyFileSync(srcPath, destPath);
+        }
 
         expectedFiles.add(relPath);
         copied.add(relPath);
@@ -153,7 +191,7 @@ async function syncDirectory(srcDir, destDir, opts = { cleanup: true }) {
               : `${baseName}.webp`;
           const outputPath = path.join(destDir, webpRelPath);
 
-          if (await convertToWebp(srcPath, outputPath)) {
+          if (await convertToWebp(destPath, outputPath)) {
             console.log(`  Generated WebP: ${webpRelPath}`);
             expectedFiles.add(webpRelPath);
             copied.add(webpRelPath);

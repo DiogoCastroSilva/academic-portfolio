@@ -1,6 +1,4 @@
-"use client";
 import type { ProfileData } from "@katie-portfolio/content";
-import { motion, useReducedMotion } from "motion/react";
 
 import { ContentImage } from "./ContentImage";
 
@@ -9,21 +7,9 @@ type AboutSectionProps = {
 };
 
 export const AboutSection = ({ profile }: AboutSectionProps) => {
-  const shouldReduceMotion = useReducedMotion();
-  const MotionDiv = shouldReduceMotion ? "div" : motion.div;
-
   return (
     <section className="mx-4 rounded-2xl p-6 sm:p-12 dark:bg-sky-50">
-      <MotionDiv
-        className="flex flex-col gap-4 md:flex-row"
-        {...(shouldReduceMotion
-          ? {}
-          : {
-              initial: { opacity: 0, y: 20 },
-              animate: { opacity: 1, y: 0 },
-              transition: { duration: 0.8 },
-            })}
-      >
+      <div className="animate-fadeInUp flex flex-col gap-4 motion-reduce:animate-none md:flex-row">
         <div className="flex flex-4 flex-col items-center gap-2 md:flex-6">
           <ContentImage
             src={profile.imageSrc}
@@ -34,7 +20,7 @@ export const AboutSection = ({ profile }: AboutSectionProps) => {
           />
           <div className="flex flex-col items-center justify-center text-wrap">
             <h1 className="text-2xl font-bold lg:text-3xl">{profile.name}</h1>
-            <p className="items-center text-center text-lg text-gray-600 dark:text-gray-700">
+            <p className="items-center text-center text-lg text-gray-700 dark:text-gray-700">
               {profile.role}
             </p>
           </div>
@@ -46,7 +32,7 @@ export const AboutSection = ({ profile }: AboutSectionProps) => {
             className="prose prose-sm dark:prose-invert prose-p:leading-6 prose-a:text-blue-600 dark:prose-a:text-blue-400 prose-a:no-underline prose-a:hover:underline mt-4 max-w-none text-gray-800 dark:text-gray-700"
           />
         </div>
-      </MotionDiv>
+      </div>
     </section>
   );
 };

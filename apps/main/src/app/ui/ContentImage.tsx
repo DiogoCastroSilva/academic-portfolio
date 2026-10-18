@@ -63,8 +63,11 @@ export function ContentImage({
       <img
         src={src.src}
         alt={alt}
+        width={800}
+        height={800}
         className={className}
         loading={priority ? "eager" : loading}
+        fetchPriority={priority ? "high" : "auto"}
         sizes={sizes}
       />
     );
@@ -81,6 +84,7 @@ export function ContentImage({
         className={className}
         sizes={sizes}
         loading={priority ? "eager" : loading}
+        fetchPriority={priority ? "high" : "auto"}
       />
     );
   }
@@ -89,18 +93,16 @@ export function ContentImage({
   if (webpSrc) {
     return (
       <picture>
-        <source
-          srcSet={webpSrc}
-          type="image/webp"
-          // Provide sizes hint for responsive optimization
-          {...(sizes && { sizes })}
-        />
+        <source srcSet={webpSrc} type="image/webp" {...(sizes && { sizes })} />
         <img
           src={src}
           alt={alt}
           className={className}
           loading={priority ? "eager" : loading}
+          fetchPriority={priority ? "high" : "auto"}
           sizes={sizes}
+          width={800}
+          height={600}
         />
       </picture>
     );
@@ -114,6 +116,9 @@ export function ContentImage({
       className={className}
       sizes={sizes}
       loading={priority ? "eager" : loading}
+      fetchPriority={priority ? "high" : "auto"}
+      width={800}
+      height={600}
     />
   );
 }

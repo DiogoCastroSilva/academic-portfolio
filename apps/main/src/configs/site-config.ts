@@ -19,10 +19,12 @@ export const siteConfig = {
   deploymentUrl: process.env.NEXT_PUBLIC_DEPLOYMENT_URL || undefined,
   analytics: {
     cloudflare: {
-      token:
-        process.env.NEXT_PUBLIC_CLOUDFLARE_ANALYTICS_TOKEN ??
-        "613324dfdf5043a19a5a8f040a7b180b",
-      enabled: process.env.NEXT_PUBLIC_CLOUDFLARE_ANALYTICS_DISABLED !== "true",
+      // Analytics must be explicitly configured via environment variable.
+      // No hardcoded fallback token to avoid CORS errors in local/dev.
+      token: process.env.NEXT_PUBLIC_CLOUDFLARE_ANALYTICS_TOKEN ?? "",
+      enabled:
+        process.env.NEXT_PUBLIC_CLOUDFLARE_ANALYTICS_DISABLED !== "true" &&
+        Boolean(process.env.NEXT_PUBLIC_CLOUDFLARE_ANALYTICS_TOKEN),
     },
   },
 };

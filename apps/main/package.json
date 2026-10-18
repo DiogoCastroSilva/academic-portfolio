@@ -14,7 +14,7 @@
       "sync-content-assets-dev": {
         "executor": "nx:run-commands",
         "options": {
-          "command": "SKIP_WEBP_CONVERSION=true node tools/sync-content-assets.mjs",
+          "command": "SKIP_WEBP_CONVERSION=true SKIP_IMAGE_RESIZE=true node tools/sync-content-assets.mjs",
           "cwd": "{workspaceRoot}"
         }
       },

@@ -78,6 +78,12 @@ export default function RootLayout({
           <Footer />
         </div>
         <CloudflareAnalytics />
+        <link
+          rel="preload"
+          as="image"
+          href="/images/profile.webp"
+          type="image/webp"
+        />
       </body>
     </html>
   );
