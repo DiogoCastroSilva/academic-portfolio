@@ -61,6 +61,7 @@ libs/
 ```
 
 **Module boundary rules:** `@nx/enforce-module-boundaries` is configured in the root `eslint.config.mjs` with `depConstraints` based on project tags defined in each library's `package.json`:
+
 - `app` (apps/main) → can depend on `content-layer` and `foundation`
 - `content-layer` (projects, publications, blog) → can depend on `foundation`
 - `foundation` (content, navigation, utils) → cannot depend on any internal library

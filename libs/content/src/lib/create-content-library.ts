@@ -135,6 +135,73 @@ function isValidCalendarDate(value: string): boolean {
 function isLeapYear(year: number): boolean {
   return (year % 4 === 0 && year % 100 !== 0) || year % 400 === 0;
 }
+
+/**
+ * Validate that all inline image references in a Markdown body point to
+ * files that exist relative to the entry directory.
+ *
+ * This catches broken references like `![alt](missing.png)` that would
+ * render as broken images on the published site. Path traversal is also
+ * rejected to prevent references outside the entry directory.
+ *
+ * External URLs (`https://`), anchors (`#`), and absolute paths
+ * (`/...`) are skipped — they point to external resources.
+ *
+ * @param body       The raw Markdown body text.
+ * @param entryDir   The per-entry directory (e.g. `.../md/first-project/`).
+ * @param slug       The entry slug (for error messages).
+ * @param filename   The filename being validated (for error messages).
+ */
+function validateBodyImages(
+  body: string,
+  entryDir: string,
+  slug: string,
+  filename: string,
+): void {
+  // Match Markdown image syntax: ![alt text](url "optional title")
+  const IMAGE_TOKEN_RE = /!\[(?:[^\]\\]|\\.)*\]\(([^)]+)\)/g;
+  let match: RegExpExecArray | null;
+
+  while ((match = IMAGE_TOKEN_RE.exec(body)) !== null) {
+    const rawUrl = match[1].trim();
+
+    // Extract the URL portion (strip optional title in quotes or parens)
+    const urlPart = rawUrl.split('"')[0].split("'")[0].trim();
+    const href = urlPart.split(/\s/)[0];
+
+    // Skip external URLs, anchors, and absolute paths
+    if (
+      /^https?:\/\//i.test(href) ||
+      href.startsWith("#") ||
+      href.startsWith("/")
+    ) {
+      continue;
+    }
+
+    // Resolve relative to the entry directory and check traversal
+    const resolved = path.resolve(entryDir, href);
+    const entryRoot = path.resolve(entryDir);
+
+    if (
+      resolved !== entryRoot &&
+      !resolved.startsWith(`${entryRoot}${path.sep}`)
+    ) {
+      throw new Error(
+        `Image path "${href}" in "${filename}" (entry slug: "${slug}") ` +
+          `references a path outside the entry directory.`,
+      );
+    }
+
+    // Check file exists
+    if (!fs.existsSync(resolved) || !fs.statSync(resolved).isFile()) {
+      throw new Error(
+        `Image not found: "${href}" referenced in "${filename}" ` +
+          `(entry slug: "${slug}"). Expected at: ${resolved}.`,
+      );
+    }
+  }
+}
+
 function validateFrontmatter(
   slug: string,
   data: Record<string, unknown>,
@@ -259,6 +326,17 @@ function toContentMeta(
     slug,
     image,
   );
+
+  // If an image was explicitly specified in frontmatter, validate that
+  // the file exists. A missing explicitly-specified image indicates a typo
+  // or missing asset, not an intentional placeholder fallback.
+  if (image && !fileExistsInDir(entryDir, image)) {
+    throw new Error(
+      `Invalid frontmatter in "README.md" (entry slug: "${slug}"):\n` +
+        `  \`image\` references "${image}" but the file was not found in "${entryDir}". ` +
+        `Add the file or remove the \`image\` field to use the default placeholder.`,
+    );
+  }
 
   return {
     slug,
@@ -431,6 +509,9 @@ export function createContentLibrary(
           resolvedSlug,
           data as Record<string, unknown>,
         );
+
+        // Validate inline image references before rendering.
+        validateBodyImages(body, entryDir, resolvedSlug, ENTRY_FILENAME);
 
         const htmlBody = await markedInstance.parse(body);
 

@@ -378,7 +378,7 @@ Draft items are:
 - **Non-string `slug`:** The build fails.
 - **Duplicate slug:** The build fails. Each entry must have a unique slug (either the directory name or the `slug` frontmatter override). Two entries with the same slug would create conflicting static routes.
 - **Invalid type for optional fields** (`image`, `tags`, `links`, `authors`, `venue`, `doi`, `paperUrl`): The build fails with a message identifying the file and field.
-- **Missing images:** Silently replaced with a placeholder — no build failure.
+- **Missing images:** Explicitly-specified `image:` fields that don't exist fail the build with an error identifying the file and path. Remove the `image` field or add the file to use the placeholder fallback.
 - **Malformed Markdown:** Passed through by `marked` — invalid Markdown renders as plain text.
 - **Raw HTML in Markdown:** Allowed for academic formatting (`<figure>`, `<b>`, `<br>`, etc.). Content is author-controlled (trusted), so no HTML sanitizer is applied. See [ADR-0004](../../architecture/decisions/0004-content-validation-and-rendering.md) for the full trust model.
 
@@ -397,7 +397,8 @@ npx nx run-many -t lint test typecheck build
 ```
 
 - **Invalid frontmatter** fails the `build` step with a message identifying the file and the error.
-- **Missing images** are silently replaced with a placeholder — no build failure.
+- **Missing images** — explicitly specified `image:` fields that don't exist fail the build with the file and path. Remove the field or add the file to use the placeholder.
+- **Inline Markdown image references** to missing files also fail the build with the file and path.
 - **Malformed Markdown** is passed through — invalid Markdown renders as plain text.
 
 ## How CI Reports Errors

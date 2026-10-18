@@ -818,7 +818,7 @@ Content`,
     cleanup();
   });
 
-  it("uses placeholder when referenced image file is missing", () => {
+  it("throws when referenced image file is missing", () => {
     const { lib, cleanup } = makeLibrary({
       _files: {
         "post/README.md": `---
@@ -832,9 +832,9 @@ Content`,
       placeholderFilename: "placeholder.svg",
     });
 
-    const item = lib.getBySlug("post");
-    expect(item!.imageSrc).toBe("/test/placeholder.svg");
-    expect(item!.imageType).toBe("placeholder");
+    expect(() => lib.getBySlug("post")).toThrow(
+      /Invalid frontmatter[\s\S]*nonexistent\.png/,
+    );
 
     cleanup();
   });
@@ -932,6 +932,108 @@ date: "2024-06-10"
     expect(content!.body).toContain("<li>Item 1</li>");
     expect(content!.body).toContain("<li>Item 3</li>");
 
+    cleanup();
+  });
+});
+
+// ---------------------------------------------------------------------------
+// Body image validation
+// ---------------------------------------------------------------------------
+
+describe("body image validation", () => {
+  it("throws when an inline image file is missing", async () => {
+    const { lib, cleanup } = makeLibrary({
+      _files: {
+        "post/README.md": `---
+title: "Test"
+date: "2024-06-10"
+---
+![Figure 1](missing.png "Caption")`,
+      },
+      publicPrefix: "/test",
+      placeholderFilename: "placeholder.svg",
+    });
+
+    await expect(lib.getContentBySlug("post")).rejects.toThrow(
+      /Image not found.*missing\.png/,
+    );
+    cleanup();
+  });
+
+  it("passes when an inline image file exists", async () => {
+    const { lib, cleanup } = makeLibrary({
+      _files: {
+        "post/README.md": `---
+title: "Test"
+date: "2024-06-10"
+---
+![Figure 1](plot.png "Caption")`,
+      },
+      _images: {
+        "post/plot.png": Buffer.from("fake-png"),
+      },
+      publicPrefix: "/test",
+      placeholderFilename: "placeholder.svg",
+    });
+
+    const content = await lib.getContentBySlug("post");
+    expect(content!.body).toContain("<figure");
+    cleanup();
+  });
+
+  it("skips external URLs in inline images", async () => {
+    const { lib, cleanup } = makeLibrary({
+      _files: {
+        "post/README.md": `---
+title: "Test"
+date: "2024-06-10"
+---
+![External](https://example.com/img.png "Caption")`,
+      },
+      publicPrefix: "/test",
+      placeholderFilename: "placeholder.svg",
+    });
+
+    const content = await lib.getContentBySlug("post");
+    expect(content!.body).toContain("https://example.com/img.png");
+    cleanup();
+  });
+
+  it("skips anchor links in inline images", async () => {
+    const { lib, cleanup } = makeLibrary({
+      _files: {
+        "post/README.md": `---
+title: "Test"
+date: "2024-06-10"
+---
+![Anchor](#section)`,
+      },
+      publicPrefix: "/test",
+      placeholderFilename: "placeholder.svg",
+    });
+
+    const content = await lib.getContentBySlug("post");
+    // Anchor "images" are not real images but should not cause validation errors
+    expect(content).toBeDefined();
+    cleanup();
+  });
+
+  it("throws when an inline image path escapes the entry directory", async () => {
+    const { lib, cleanup } = makeLibrary({
+      _files: {
+        "post/README.md": `---
+title: "Test"
+date: "2024-06-10"
+---
+![Bad](../../etc/passwd "Caption")`,
+      },
+      publicPrefix: "/test",
+      placeholderFilename: "placeholder.svg",
+    });
+
+    await expect(lib.getContentBySlug("post")).rejects.toThrow(
+      /etc\/passwd.*outside the entry directory/,
+    );
     cleanup();
   });
 });
@@ -1526,7 +1628,7 @@ Content`,
     cleanup();
   });
 
-  it("uses placeholder when nested image file is missing", () => {
+  it("throws when nested image file is missing", () => {
     const { lib, cleanup } = makeLibrary({
       _files: {
         "post/README.md": `---
@@ -1540,9 +1642,9 @@ Content`,
       placeholderFilename: "placeholder.svg",
     });
 
-    const item = lib.getBySlug("post");
-    expect(item!.imageSrc).toBe("/test/placeholder.svg");
-    expect(item!.imageType).toBe("placeholder");
+    expect(() => lib.getBySlug("post")).toThrow(
+      /Invalid frontmatter[\s\S]*images\/missing\.jpeg/,
+    );
 
     cleanup();
   });
@@ -1644,10 +1746,9 @@ Content`,
       placeholderFilename: "placeholder.svg",
     });
 
-    const item = lib.getBySlug("post");
-    // Path traversal is not resolved; falls back to placeholder
-    expect(item!.imageSrc).toBe("/test/placeholder.svg");
-    expect(item!.imageType).toBe("placeholder");
+    expect(() => lib.getBySlug("post")).toThrow(
+      /Invalid frontmatter[\s\S]*image/,
+    );
 
     cleanup();
   });
@@ -1666,9 +1767,9 @@ Content`,
       placeholderFilename: "placeholder.svg",
     });
 
-    const item = lib.getBySlug("post");
-    expect(item!.imageSrc).toBe("/test/placeholder.svg");
-    expect(item!.imageType).toBe("placeholder");
+    expect(() => lib.getBySlug("post")).toThrow(
+      /Invalid frontmatter[\s\S]*image/,
+    );
 
     cleanup();
   });
