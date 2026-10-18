@@ -1,0 +1,143 @@
+1:"$Sreact.fragment"
+2:"static/chunks/825-5ef58e99accc81d7.js"
+3:"static/chunks/app/layout-17d0eb5369b20dca.js"
+4:I[1128,["825","$2","177","$3"],"NavBar"]
+5:I[9630,[],""]
+6:"static/chunks/app/error-67049539385438d3.js"
+7:I[6009,["825","$2","39","$6"],"default"]
+8:I[1380,[],""]
+9:"static/chunks/app/not-found-6aaae78a0e586f18.js"
+a:I[5587,["825","$2","345","$9"],""]
+b:I[594,["825","$2","177","$3"],""]
+19:"ViewportBoundary"
+1a:I[887,[],"$19"]
+1b:"MetadataBoundary"
+1c:I[887,[],"$1b"]
+1d:"$Sreact.suspense"
+:HL["/academic-portfolio/_next/static/css/28c83ba5e641b408.css","style"]
+d:X
+10:X
+10:C
+13:[["children",{"s":"__PAGE__","h":160,"d":{"r":["$","$1","c",{"children":[["$","div",null,{"className":"flex grow flex-col gap-4","children":["$","article",null,{"className":"mx-auto flex w-full max-w-3xl grow flex-col gap-8 px-4 py-8","children":[["$","script",null,{"type":"application/ld+json","dangerouslySetInnerHTML":{"__html":"{\"@context\":\"https://schema.org\",\"@type\":\"Article\",\"headline\":\"Understanding Satellite Data for Vegetation Monitoring\",\"datePublished\":\"2025-03-15\",\"image\":\"https://DiogoCastroSilva.github.io/academic-portfolio/blog/understanding-satellite-data/ndvi-map.svg\",\"url\":\"https://DiogoCastroSilva.github.io/academic-portfolio/blog/understanding-satellite-data/\",\"description\":\"A beginner-friendly guide to satellite-derived vegetation indices and how they help track ecosystem health across landscapes.\",\"keywords\":\"remote-sensing, vegetation-indices, satellite-data\"}"}}],"$L14","$L15","$L16"]}]}],null,"$L17"]}],"p":"$@18","v":null,"s":"$d"}}]]
+11:[["children",{"s":{"n":"slug","t":"d","k":"understanding-satellite-data","s":[]},"h":65632,"d":{"r":["$","$1","c",{"children":[null,["$","$L5",null,{"parallelRouterKey":"children","template":["$","$L8",null,{}]}]]}],"p":"$@12","v":"$10","s":"$d"},"c":"$Q13"}]]
+e:[["children",{"s":"blog","h":131168,"d":{"r":["$","$1","c",{"children":[null,["$","$L5",null,{"parallelRouterKey":"children","template":["$","$L8",null,{}]}]]}],"p":"$@f","v":"$10","s":"$d"},"c":"$Q11"}]]
+0:{"t":{"t":{"s":"","h":131152,"d":{"r":["$","$1","c",{"children":[[["$","link","0",{"rel":"stylesheet","href":"/academic-portfolio/_next/static/css/28c83ba5e641b408.css","precedence":"next"}]],["$","html",null,{"lang":"en","suppressHydrationWarning":true,"children":["$","body",null,{"suppressHydrationWarning":true,"className":"min-h-full bg-stone-100 dark:bg-slate-800","children":[["$","div",null,{"className":"flex min-h-full flex-col","children":[["$","$L4",null,{"name":"Kathleen Miller"}],["$","main",null,{"className":"flex-1","children":["$","$L5",null,{"parallelRouterKey":"children","error":"$7","errorStyles":[],"errorScripts":null,"template":["$","$L8",null,{}],"notFound":[["$","main",null,{"className":"mx-auto flex min-h-[calc(100vh-6rem)] flex-col items-center justify-center px-4 py-16 text-center","children":["$","div",null,{"className":"rounded-3xl bg-white p-10 shadow-sm ring-1 ring-slate-200 dark:bg-slate-900 dark:ring-slate-700","children":[["$","p",null,{"className":"text-sm font-semibold tracking-[0.3em] text-sky-600 uppercase","children":"404"}],["$","h1",null,{"className":"mt-4 text-4xl font-bold tracking-tight text-slate-900 dark:text-white","children":"Page not found"}],["$","p",null,{"className":"mt-4 max-w-xl text-base leading-7 text-slate-600 dark:text-slate-300","children":"The page you are looking for does not exist or has been moved. Please check the URL or return to the homepage."}],["$","$La",null,{"href":"/","className":"mt-8 inline-flex rounded-full bg-slate-900 px-6 py-3 text-sm font-semibold text-white transition hover:bg-slate-700 dark:bg-slate-100 dark:text-slate-900 dark:hover:bg-slate-200","children":"Return home"}]]}]}],[]]}]}],["$","footer",null,{"className":"py-4","children":["$","div",null,{"className":"mx-auto flex w-full max-w-6xl flex-col gap-4 px-4 sm:px-6 dark:text-white","children":["$","div",null,{"className":"flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between","children":[["$","p",null,{"className":"text-sm leading-6","children":["© ",2026," ","Kathleen Miller",". Licensed under"," ",["$","a",null,{"href":"https://creativecommons.org/licenses/by-nc-nd/4.0/","target":"_blank","rel":"noopener noreferrer","className":"underline transition-colors duration-200 hover:text-slate-900 dark:hover:text-slate-100","children":"CC BY-NC-ND 4.0"}],". Code licensed under"," ",["$","a",null,{"href":"https://opensource.org/licenses/MIT","target":"_blank","rel":"noopener noreferrer","className":"underline transition-colors duration-200 hover:text-slate-900 dark:hover:text-slate-100","children":"MIT"}],"."]}],["$","div",null,{"className":"flex flex-wrap gap-4 text-sm","children":[["$","a",null,{"href":"https://www.linkedin.com/in/kathleen-rose-miller/","target":"_blank","rel":"noopener noreferrer","className":"underline transition-colors duration-200 hover:text-slate-900 dark:hover:text-slate-100","children":"LinkedIn"}],["$","a",null,{"href":"https://github.com/kathleen-miller","target":"_blank","rel":"noopener noreferrer","className":"underline transition-colors duration-200 hover:text-slate-900 dark:hover:text-slate-100","children":"GitHub"}],["$","a",null,{"href":"mailto:katie.miller6572@gmail.com","className":"underline transition-colors duration-200 hover:text-slate-900 dark:hover:text-slate-100","children":"Email"}]]}]]}]}]}]]}],["$","$Lb",null,{"id":"cloudflare-web-analytics","src":"https://static.cloudflareinsights.com/beacon.min.js","strategy":"afterInteractive","data-cf-beacon":"{\"token\":\"613324dfdf5043a19a5a8f040a7b180b\"}"}]]}]}]]}],"p":"$@c","v":null,"s":"$d"},"c":"$Qe"},"h":{"r":["$","$1","h",{"children":[null,["$","$L1a",null,{"children":[["$","meta","0",{"charSet":"utf-8"}],["$","meta","1",{"name":"viewport","content":"width=device-width, initial-scale=1"}]]}],["$","$L1c",null,{"children":[["$","div",null,{"hidden":true,"children":["$","$1d",null,{"name":"Next.Metadata","children":[["$","title","0",{"children":"Understanding Satellite Data for Vegetation Monitoring | Kathleen Miller"}],["$","meta","1",{"name":"description","content":"A beginner-friendly guide to satellite-derived vegetation indices and how they help track ecosystem health across landscapes."}],"$L1e","$L1f","$L20","$L21","$L22","$L23","$L24","$L25","$L26","$L27","$L28","$L29","$L2a","$L2b","$L2c","$L2d","$L2e","$L2f","$L30"]}]}],null]}],null]}],"p":"$@31","v":null,"s":"$d"}},"a":"$@32","u":"$@33","b":"UwZSe1b1OShJ8O437wV5z"}
+36:I[887,[],"OutletBoundary"]
+38:I[214,[],"IconMark"]
+14:["$","div",null,{"className":"aspect-[16/9] w-full overflow-hidden rounded-xl bg-stone-200 dark:bg-stone-700","children":["$","img",null,{"src":"/academic-portfolio/blog/understanding-satellite-data/ndvi-map.svg","alt":"Understanding Satellite Data for Vegetation Monitoring","className":"h-full w-full object-cover","sizes":"(max-width: 640px) 100vw, (max-width: 1024px) 90vw, 768px","loading":"lazy"}]}]
+15:["$","header",null,{"className":"flex flex-col gap-4","children":[["$","h1",null,{"className":"text-3xl leading-tight font-bold md:text-4xl","children":"Understanding Satellite Data for Vegetation Monitoring"}],["$","div",null,{"className":"flex flex-wrap items-center gap-4","children":[["$","time",null,{"dateTime":"2025-03-15","className":"text-sm text-gray-600 dark:text-gray-700","children":"Mar 15, 2025"}],["$","ul",null,{"className":"flex flex-wrap gap-2","children":[["$","li","remote-sensing",{"className":"rounded-full border border-zinc-200 px-3 py-1 text-sm font-medium text-zinc-600 dark:border-zinc-700 dark:text-zinc-700","children":"remote-sensing"}],["$","li","vegetation-indices",{"className":"rounded-full border border-zinc-200 px-3 py-1 text-sm font-medium text-zinc-600 dark:border-zinc-700 dark:text-zinc-700","children":"vegetation-indices"}],["$","li","satellite-data",{"className":"rounded-full border border-zinc-200 px-3 py-1 text-sm font-medium text-zinc-600 dark:border-zinc-700 dark:text-zinc-700","children":"satellite-data"}]]}]]}]]}]
+34:T146a,<h2>Introduction</h2>
+<p>Satellite remote sensing has revolutionized how we monitor vegetation at scale.
+Instead of measuring individual plants, we can now track ecosystem health
+across entire continents — every few days — using freely available satellite
+data. This post walks through the core concepts, key indices, and practical
+applications.</p>
+<h3>What Are Vegetation Indices?</h3>
+<p>Vegetation indices are mathematical combinations of surface reflectance
+measured at different wavelengths. Healthy vegetation absorbs most visible
+light (for photosynthesis) and reflects strongly in the near-infrared (NIR)
+portion of the spectrum.</p>
+<p>By comparing how much light is absorbed versus reflected, we can quantify:</p>
+<ul>
+<li><strong>Leaf area</strong> and biomass</li>
+<li><strong>Photosynthetic activity</strong></li>
+<li><strong>Plant stress</strong> or water content</li>
+<li><strong>Land-cover change</strong> over time</li>
+</ul>
+<h3>The NDVI</h3>
+<p>The Normalized Difference Vegetation Index (NDVI) is the most widely used
+vegetation index. It is calculated as:</p>
+<pre><code>NDVI = (NIR - Red) / (NIR + Red)
+</code></pre>
+<p>Where <code>NIR</code> is near-infrared reflectance and <code>Red</code> is red-band reflectance.</p>
+<p>NDVI values range from -1 to +1:</p>
+<ul>
+<li><strong>-1 to 0</strong>: Water, barren land, or snow</li>
+<li><strong>0.1 to 0.2</strong>: Sparse vegetation (grasslands)</li>
+<li><strong>0.3 to 0.6</strong>: Moderate vegetation (forests, crops)</li>
+<li><strong>0.7 to 1.0</strong>: Dense, healthy vegetation (tropical forests)</li>
+</ul>
+<p><figure><img src="/academic-portfolio/blog/understanding-satellite-data/ndvi-map.jpeg" alt="Figure 1. NDVI map of California showing vegetation density gradients" title="Figure 1. NDVI map of California. Dark green areas indicate dense vegetation in forested regions, while tan and brown tones show sparse or stressed vegetation in agricultural valleys."><figcaption>Figure 1. NDVI map of California. Dark green areas indicate dense vegetation in forested regions, while tan and brown tones show sparse or stressed vegetation in agricultural valleys.</figcaption></figure></p>
+<h3>Data Sources</h3>
+<h4>Landsat</h4>
+<p>NASA and USGS operate the Landsat program, providing continuous Earth
+observation since 1972. Landsat 8 and 9 carry the Operational Land Imager
+(OLI), which captures data in 9 spectral bands at 30 m resolution.</p>
+<h4>Sentinel-2</h4>
+<p>The European Space Agency&#39;s Sentinel-2 mission provides even higher
+spatial resolution (10 m) and a 5-day revisit cycle. Its 13 spectral
+bands include two red-edge bands that are particularly useful for
+vegetation monitoring.</p>
+<h4>MODIS</h4>
+<p>For broad-scale monitoring, MODIS on NASA&#39;s Terra and Aqua satellites
+provides daily global coverage at 250 m to 1 km resolution, ideal for
+tracking phenology and seasonal dynamics.</p>
+<h3>Practical Applications</h3>
+<h4>Precision Agriculture</h4>
+<p>Farmers use NDVI maps to identify irrigation problems, nutrient deficiencies,
+and pest damage before symptoms are visible to the naked eye. This allows
+for targeted interventions rather than field-wide treatments.</p>
+<h4>Forest Management</h4>
+<p>Forest services monitor tree health after wildfires, storms, or disease
+outbreaks. Time-series NDVI analysis reveals recovery patterns and helps
+prioritize restoration efforts.</p>
+<h4>Climate Research</h4>
+<p>Researchers track long-term vegetation trends to study the impacts of climate
+change on ecosystems. Shifts in NDVI seasonality can indicate changes in
+growing seasons or migration patterns.</p>
+<h3>Getting Started</h3>
+<p>If you&#39;re new to satellite data analysis, here&#39;s a practical roadmap:</p>
+<ol>
+<li><strong>Choose a platform</strong>: Google Earth Engine provides free, browser-based
+access to petabytes of satellite data with no storage required.</li>
+<li><strong>Start simple</strong>: Calculate NDVI for a single scene over your area of
+interest.</li>
+<li><strong>Build a time series</strong>: Compare multiple dates to see seasonal patterns.</li>
+<li><strong>Validate with ground truth</strong>: Compare your results to field
+measurements or higher-resolution aerial imagery.</li>
+</ol>
+<h3>Conclusion</h3>
+<p>Satellite-derived vegetation indices are powerful tools for monitoring ecosystem
+health at scales that would be impossible with ground-based methods alone.
+While the math behind indices like NDVI is straightforward, the insights they
+provide — from tracking drought impacts to guiding sustainable agriculture —
+are profound.</p>
+<p>Whether you&#39;re a researcher, conservationist, or farmer, understanding these
+tools opens up new possibilities for data-driven environmental stewardship.</p>
+<h2>Further Reading</h2>
+<ul>
+<li><a href="https://earthdata.nasa.gov/" class="external-link" target="_blank" rel="noopener noreferrer">NASA Earthdata: Vegetation Indices</a></li>
+<li><a href="https://developers.google.com/earth-engine" class="external-link" target="_blank" rel="noopener noreferrer">Google Earth Engine Documentation</a></li>
+<li><a href="https://landsat.usgs.gov/" class="external-link" target="_blank" rel="noopener noreferrer">USGS Landsat Missions</a></li>
+</ul>
+35:T4b3,prose prose-lg dark:prose-invert prose-p:leading-7 prose-p:my-4 prose-headings:font-bold prose-headings:my-6 prose-h1:text-3xl prose-h2:text-2xl prose-h3:text-xl prose-h4:text-lg prose-h5:text-base prose-h6:text-sm prose-a:text-blue-600 dark:prose-a:text-blue-400 prose-a:no-underline prose-a:hover:underline prose-code:bg-gray-100 dark:prose-code:bg-gray-800 prose-code:px-2 prose-code:py-1 prose-code:rounded prose-code:text-sm prose-code:font-mono prose-pre:bg-gray-900 prose-pre:text-gray-100 prose-pre:p-4 prose-pre:rounded-lg prose-pre:overflow-x-auto prose-blockquote:border-l-4 prose-blockquote:border-gray-300 dark:prose-blockquote:border-gray-600 prose-blockquote:pl-4 prose-blockquote:italic prose-ul:list-disc prose-ul:pl-6 prose-ul:my-4 prose-ol:list-decimal prose-ol:pl-6 prose-ol:my-4 prose-li:my-2 prose-img:rounded-lg prose-img:my-6 prose-table:border-collapse prose-table:w-full prose-table:my-4 prose-thead:bg-gray-100 dark:prose-thead:bg-gray-800 prose-th:border prose-th:border-gray-300 dark:prose-th:border-gray-600 prose-th:p-2 prose-th:text-left prose-td:border prose-td:border-gray-300 dark:prose-td:border-gray-600 prose-td:p-2 prose-strong:font-bold prose-em:italic max-w-none16:["$","div",null,{"className":"flex flex-col gap-6 text-slate-900 dark:text-gray-700","children":["$","div",null,{"dangerouslySetInnerHTML":{"__html":"$34"},"className":"$35"}]}]
+17:["$","$L36",null,{"children":["$","$1d",null,{"name":"Next.MetadataOutlet","children":"$@37"}]}]
+1e:["$","meta","2",{"name":"robots","content":"index, follow"}]
+1f:["$","meta","3",{"name":"googlebot","content":"index, follow"}]
+20:["$","link","4",{"rel":"canonical","href":"https://diogocastrosilva.github.io/academic-portfolio/blog/understanding-satellite-data/"}]
+21:["$","meta","5",{"property":"og:title","content":"Understanding Satellite Data for Vegetation Monitoring"}]
+22:["$","meta","6",{"property":"og:description","content":"A beginner-friendly guide to satellite-derived vegetation indices and how they help track ecosystem health across landscapes."}]
+23:["$","meta","7",{"property":"og:url","content":"https://diogocastrosilva.github.io/academic-portfolio/blog/understanding-satellite-data/"}]
+24:["$","meta","8",{"property":"og:image","content":"https://diogocastrosilva.github.io/academic-portfolio/blog/understanding-satellite-data/ndvi-map.svg"}]
+25:["$","meta","9",{"property":"og:image:alt","content":"Understanding Satellite Data for Vegetation Monitoring"}]
+26:["$","meta","10",{"property":"og:type","content":"article"}]
+27:["$","meta","11",{"property":"article:published_time","content":"2025-03-15"}]
+28:["$","meta","12",{"name":"twitter:card","content":"summary_large_image"}]
+29:["$","meta","13",{"name":"twitter:title","content":"Understanding Satellite Data for Vegetation Monitoring"}]
+2a:["$","meta","14",{"name":"twitter:description","content":"A beginner-friendly guide to satellite-derived vegetation indices and how they help track ecosystem health across landscapes."}]
+2b:["$","meta","15",{"name":"twitter:image","content":"https://diogocastrosilva.github.io/academic-portfolio/blog/understanding-satellite-data/ndvi-map.svg"}]
+2c:["$","meta","16",{"name":"twitter:image:alt","content":"Understanding Satellite Data for Vegetation Monitoring"}]
+2d:["$","link","17",{"rel":"icon","href":"/favicon.ico"}]
+2e:["$","link","18",{"rel":"icon","href":"/favicon.svg","type":"image/svg+xml"}]
+2f:["$","link","19",{"rel":"apple-touch-icon","href":"/favicon.svg","type":"image/svg+xml"}]
+30:["$","$L38","20",{}]
+d:300
+37:null
+33:true
+d:C
+32:0
+12:"$undefined"
+f:"$undefined"
+c:"$undefined"
+31:"$undefined"
+18:"$undefined"
