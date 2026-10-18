@@ -1,6 +1,8 @@
 import type { ContentItemMeta } from "@katie-portfolio/content";
 import { dates } from "@katie-portfolio/utils";
 import { ContentImage } from "./ContentImage";
+import { JsonLd } from "./JsonLd";
+import { buildArticleSchema } from "../lib/structured-data";
 
 interface ContentDetailProps {
   content: ContentItemMeta;
@@ -9,6 +11,7 @@ interface ContentDetailProps {
 export function ContentDetail({ content }: ContentDetailProps) {
   return (
     <article className="mx-auto flex w-full max-w-3xl grow flex-col gap-8 px-4 py-8">
+      <JsonLd data={buildArticleSchema(content)} />
       <div className="aspect-[16/9] w-full overflow-hidden rounded-xl bg-stone-200 dark:bg-stone-700">
         <ContentImage
           src={content.imageSrc}

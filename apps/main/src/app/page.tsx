@@ -4,6 +4,11 @@ import { getProfile } from "@katie-portfolio/content";
 
 import { AboutSection } from "./ui/AboutSection";
 import { ContentCardSection } from "./ui/ContentCardSection";
+import { JsonLd } from "./ui/JsonLd";
+import {
+  buildWebSiteSchema,
+  buildSiteAuthorSchema,
+} from "./lib/structured-data";
 
 export default function Index() {
   const projects = getAllProjects();
@@ -12,6 +17,8 @@ export default function Index() {
 
   return (
     <div className="flex grow flex-col gap-4">
+      <JsonLd data={buildWebSiteSchema()} />
+      <JsonLd data={buildSiteAuthorSchema(profile.name, profile.imageSrc)} />
       <AboutSection profile={profile} />
       <ContentCardSection
         heading="Projects"

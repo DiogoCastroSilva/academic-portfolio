@@ -98,6 +98,8 @@ vi.mock("@katie-portfolio/publications", () => ({
 vi.mock("@katie-portfolio/content", () => ({
   getProfile: () => mockProfile,
   getDeploymentUrl: () => undefined,
+  getFullUrl: () => undefined,
+  getFullAssetUrl: () => undefined,
   resolveImage: (slug: string, filename?: string) =>
     filename ? `/${slug}/${filename}` : `/${slug}/cover.webp`,
 }));

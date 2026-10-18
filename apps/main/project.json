@@ -1,5 +1,15 @@
 {
   "$schema": "../node_modules/nx/schemas/project-schema.json",
   "name": "@katie-portfolio/main",
-  "tags": ["app"]
+  "tags": ["app"],
+  "targets": {
+    "generate-sitemap": {
+      "dependsOn": ["build"],
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "node tools/generate-sitemap.mjs",
+        "cwd": "{workspaceRoot}"
+      }
+    }
+  }
 }
