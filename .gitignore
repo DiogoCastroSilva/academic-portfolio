@@ -56,4 +56,4 @@ test-output
 vite.config.*.timestamp*
 vitest.config.*.timestamp*
 .claude/worktrees
-.claude/settings.local.json
+.claude/settings.local.json.lighthouseci/
