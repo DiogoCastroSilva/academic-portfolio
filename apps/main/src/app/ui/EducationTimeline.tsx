@@ -1,39 +1,54 @@
 "use client";
 import type { EducationEntry } from "@katie-portfolio/content";
-import { motion } from "motion/react";
+import { motion, useReducedMotion } from "motion/react";
 
 type EducationTimelineProps = {
   items: EducationEntry[];
 };
 
 export const EducationTimeline = ({ items }: EducationTimelineProps) => {
+  const shouldReduceMotion = useReducedMotion();
+  const MotionDiv = shouldReduceMotion ? "div" : motion.div;
+
   return (
     <section className="mx-4 rounded-2xl bg-white p-12 text-slate-900 shadow-sm dark:bg-sky-50">
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6 }}
-        viewport={{ once: true }}
+      <MotionDiv
+        {...(shouldReduceMotion
+          ? {}
+          : {
+              initial: { opacity: 0, y: 20 },
+              whileInView: { opacity: 1, y: 0 },
+              transition: { duration: 0.6 },
+              viewport: { once: true },
+            })}
       >
         <h2 className="mb-8 text-2xl font-bold md:text-3xl">Education</h2>
 
         <div className="space-y-8">
           {items.map((edu, index) => (
-            <motion.div
+            <MotionDiv
               key={edu.degree}
               className="flex gap-6 pb-8 last:pb-0"
-              initial={{ opacity: 0, x: -20 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.4, delay: index * 0.15 }}
-              viewport={{ once: true }}
+              {...(shouldReduceMotion
+                ? {}
+                : {
+                    initial: { opacity: 0, x: -20 },
+                    whileInView: { opacity: 1, x: 0 },
+                    transition: { duration: 0.4, delay: index * 0.15 },
+                    viewport: { once: true },
+                  })}
             >
               {/* Timeline dot */}
               <div className="flex flex-col items-center">
-                <motion.div
+                <MotionDiv
                   className="h-4 w-4 rounded-full bg-sky-600"
-                  whileInView={{ scale: 1.2 }}
-                  transition={{ duration: 0.3 }}
-                  viewport={{ once: true }}
+                  {...(shouldReduceMotion
+                    ? {}
+                    : {
+                        whileInView: { scale: 1.2 },
+                        transition: { duration: 0.3 },
+                        viewport: { once: true },
+                      })}
                 />
                 {index < items.length - 1 && (
                   <div className="mt-2 h-16 w-0.5 bg-zinc-200 dark:bg-zinc-400" />
@@ -68,10 +83,10 @@ export const EducationTimeline = ({ items }: EducationTimelineProps) => {
                   </ul>
                 </div>
               </div>
-            </motion.div>
+            </MotionDiv>
           ))}
         </div>
-      </motion.div>
+      </MotionDiv>
     </section>
   );
 };

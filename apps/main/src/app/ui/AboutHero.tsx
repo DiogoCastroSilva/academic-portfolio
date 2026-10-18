@@ -1,6 +1,6 @@
 "use client";
 import type { ProfileData } from "@katie-portfolio/content";
-import { motion } from "motion/react";
+import { motion, useReducedMotion } from "motion/react";
 
 import { ContentImage } from "./ContentImage";
 
@@ -9,21 +9,32 @@ type AboutHeroProps = {
 };
 
 export const AboutHero = ({ profile }: AboutHeroProps) => {
+  const shouldReduceMotion = useReducedMotion();
+  const MotionDiv = shouldReduceMotion ? "div" : motion.div;
+
   return (
     <section className="mx-4 rounded-2xl p-6 sm:p-12 dark:bg-sky-50">
-      <motion.div
+      <MotionDiv
         className="flex flex-col gap-8 md:gap-12"
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8 }}
+        {...(shouldReduceMotion
+          ? {}
+          : {
+              initial: { opacity: 0, y: 20 },
+              animate: { opacity: 1, y: 0 },
+              transition: { duration: 0.8 },
+            })}
       >
         {/* Hero Header */}
         <div className="flex flex-col gap-6">
           <div className="flex flex-col items-center gap-4 md:flex-row md:gap-8">
-            <motion.div
-              initial={{ scale: 0.8, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              transition={{ duration: 0.6, delay: 0.2 }}
+            <MotionDiv
+              {...(shouldReduceMotion
+                ? {}
+                : {
+                    initial: { scale: 0.8, opacity: 0 },
+                    animate: { scale: 1, opacity: 1 },
+                    transition: { duration: 0.6, delay: 0.2 },
+                  })}
             >
               <ContentImage
                 src={profile.imageSrc}
@@ -32,12 +43,16 @@ export const AboutHero = ({ profile }: AboutHeroProps) => {
                 sizes="(max-width: 640px) 200px, 240px"
                 priority
               />
-            </motion.div>
-            <motion.div
+            </MotionDiv>
+            <MotionDiv
               className="flex flex-col gap-4 text-center md:text-left"
-              initial={{ opacity: 0, x: 20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.6, delay: 0.3 }}
+              {...(shouldReduceMotion
+                ? {}
+                : {
+                    initial: { opacity: 0, x: 20 },
+                    animate: { opacity: 1, x: 0 },
+                    transition: { duration: 0.6, delay: 0.3 },
+                  })}
             >
               <div>
                 <h1 className="text-3xl font-bold md:text-4xl lg:text-5xl">
@@ -55,24 +70,28 @@ export const AboutHero = ({ profile }: AboutHeroProps) => {
                   Get in Touch
                 </a>
               </div>
-            </motion.div>
+            </MotionDiv>
           </div>
         </div>
 
         {/* Main Bio */}
-        <motion.div
+        <MotionDiv
           className="space-y-4"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.6, delay: 0.4 }}
+          {...(shouldReduceMotion
+            ? {}
+            : {
+                initial: { opacity: 0 },
+                animate: { opacity: 1 },
+                transition: { duration: 0.6, delay: 0.4 },
+              })}
         >
           <h2 className="text-2xl font-bold md:text-3xl">About Me</h2>
           <div
             dangerouslySetInnerHTML={{ __html: profile.biography }}
             className="prose prose-lg dark:prose-invert prose-p:leading-7 prose-p:my-4 prose-headings:font-bold prose-a:text-blue-600 dark:prose-a:text-blue-400 prose-a:no-underline prose-a:hover:underline max-w-none text-gray-800 dark:text-gray-700"
           />
-        </motion.div>
-      </motion.div>
+        </MotionDiv>
+      </MotionDiv>
     </section>
   );
 };
