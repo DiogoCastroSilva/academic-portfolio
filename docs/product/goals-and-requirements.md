@@ -66,14 +66,14 @@ The repository should demonstrate:
 
 ## Acceptance Criteria — Website Quality
 
-| Criterion                                                     | Status                                   |
-| ------------------------------------------------------------- | ---------------------------------------- |
-| Homepage, list pages, and detail pages render correctly       | Verified in build output                 |
-| Internal links and images resolve correctly                   | Verified                                 |
-| SEO metadata and canonical URLs correct for deployment        | In progress (canonical URL configurable) |
-| Responsive behavior and content readability checked           | Done                                     |
-| Analytics behavior is intentional and documented              | See site-config.ts                       |
-| No unintended temporary deployment URL in production metadata | Verified                                 |
+| Criterion                                                     | Status                                                           |
+| ------------------------------------------------------------- | ---------------------------------------------------------------- |
+| Homepage, list pages, and detail pages render correctly       | Verified in build output                                         |
+| Internal links and images resolve correctly                   | Verified                                                         |
+| SEO metadata and canonical URLs correct for deployment        | Done (canonical URLs in layout, page metadata, and detail pages) |
+| Responsive behavior and content readability checked           | Done                                                             |
+| Analytics behavior is intentional and documented              | See site-config.ts                                               |
+| No unintended temporary deployment URL in production metadata | Verified                                                         |
 
 ## Future Possibilities (Not Yet Implemented)
 
