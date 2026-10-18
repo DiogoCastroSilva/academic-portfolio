@@ -352,6 +352,23 @@ Content`,
 
     cleanup();
   });
+
+  it("throws when duplicate slugs are found in different directories", () => {
+    const { lib, cleanup } = makeLibrary({
+      _files: {
+        "dir-a/README.md":
+          '---\ntitle: "Post A"\ndate: "2024-06-10"\nslug: "collision"\n---\nContent A',
+        "dir-b/README.md":
+          '---\ntitle: "Post B"\ndate: "2024-06-10"\nslug: "collision"\n---\nContent B',
+      },
+      publicPrefix: "/test",
+      placeholderFilename: "placeholder.svg",
+    });
+
+    expect(() => lib.getAll()).toThrow(/Duplicate slug/);
+
+    cleanup();
+  });
 });
 
 // ---------------------------------------------------------------------------

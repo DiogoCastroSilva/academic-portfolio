@@ -312,3 +312,60 @@ describe("ContentRenderer — integration", () => {
     vi.unstubAllEnvs();
   });
 });
+
+// ---------------------------------------------------------------------------
+// Markdown HTML Policy (ADR-0004: trusted content, no sanitizer)
+// ---------------------------------------------------------------------------
+
+describe("Markdown HTML policy", () => {
+  const config: ContentRendererConfig = {
+    publicPrefix: "/test",
+    deploymentUrl: "https://example.com",
+  };
+
+  function renderBody(markdown: string): string {
+    const instance = createMarkedInstance(config);
+    return instance.parse(markdown) as string;
+  }
+
+  it("passes through inline HTML formatting elements unmodified", () => {
+    const html = renderBody(
+      "<b>bold</b> and <i>italic</i> and <em>emphasis</em>",
+    );
+    expect(html).toContain("<b>bold</b>");
+    expect(html).toContain("<i>italic</i>");
+    expect(html).toContain("<em>emphasis</em>");
+  });
+
+  it("passes through block-level HTML elements (figure, div, br)", () => {
+    const html = renderBody(
+      '<figure><img src="/img.png" alt="Test" /><figcaption>Caption</figcaption></figure>',
+    );
+    expect(html).toContain("<figure>");
+    expect(html).toContain("</figure>");
+    expect(html).toContain("<figcaption>Caption</figcaption>");
+  });
+
+  it("does not escape raw HTML angle brackets", () => {
+    const html = renderBody("<b>text</b>");
+    // If HTML were escaped, <b> would become &lt;b&gt;
+    expect(html).not.toContain("&lt;b&gt;");
+    expect(html).toContain("<b>text</b>");
+  });
+
+  it("adds security attributes to raw HTML external links", () => {
+    const html = renderBody('<a href="https://evil.com">Unsafe</a>');
+    expect(html).toContain('target="_blank"');
+    expect(html).toContain('rel="noopener noreferrer"');
+    expect(html).toContain('class="external-link"');
+  });
+
+  it("does not sanitize script tags (trusted-author policy)", () => {
+    // ADR-0004 documents that content is author-controlled (trusted).
+    // No HTML sanitizer is used. This test documents that <script> passes
+    // through unchanged — if a sanitizer is ever added, this test must
+    // be updated to reflect the new policy.
+    const html = renderBody("<b>text</b>\n\n<script>alert(1)</script>");
+    expect(html).toContain("<script>");
+  });
+});

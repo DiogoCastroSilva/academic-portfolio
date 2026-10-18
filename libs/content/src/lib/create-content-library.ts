@@ -293,7 +293,7 @@ export function createContentLibrary(
     // Per-entry directory structure: each subdirectory is an entry
     // with its own README.md.  Flat .md files at the root level (such
     // as _template.md) are ignored.
-    return fs
+    const items = fs
       .readdirSync(contentPath)
       .filter((entry) => {
         const fullPath = path.join(contentPath, entry);
@@ -335,8 +335,26 @@ export function createContentLibrary(
           data as Record<string, unknown>,
         );
       })
-      .filter((item) => !item.draft)
-      .sort((a, b) => +new Date(b.date) - +new Date(a.date));
+      .filter((item) => !item.draft);
+
+    // Validate slug uniqueness — two entries with the same slug would
+    // create conflicting static routes and broken canonical URLs.
+    const seenSlugs = new Set<string>();
+    const duplicates = new Set<string>();
+    for (const item of items) {
+      if (seenSlugs.has(item.slug)) {
+        duplicates.add(item.slug);
+      }
+      seenSlugs.add(item.slug);
+    }
+    if (duplicates.size > 0) {
+      throw new Error(
+        `Duplicate slug(s) found in "${config.mdDir}": ` +
+          `[${[...duplicates].join(", ")}]. Each entry must have a unique slug.`,
+      );
+    }
+
+    return items.sort((a, b) => +new Date(b.date) - +new Date(a.date));
   }
 
   function getBySlug(slug: string): ContentMeta | undefined {
