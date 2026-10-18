@@ -1,5 +1,0 @@
-:HL["/academic-portfolio/_next/static/css/28c83ba5e641b408.css","style"]
-3:[["children",{"s":"__PAGE__","h":160}]]
-2:[["children",{"s":{"n":"slug","t":"d","k":"understanding-satellite-data","s":[]},"h":65632,"c":"$Q3"}]]
-1:[["children",{"s":"blog","h":131168,"c":"$Q2"}]]
-0:{"b":"UwZSe1b1OShJ8O437wV5z","t":{"t":{"s":"","h":131152,"c":"$Q1"}}}

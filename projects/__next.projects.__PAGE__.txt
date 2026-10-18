@@ -8,43 +8,48 @@
 8:I[1380,[],""]
 9:"static/chunks/app/not-found-6aaae78a0e586f18.js"
 a:I[5587,["825","$2","345","$9"],""]
-b:I[594,["825","$2","177","$3"],""]
-12:"static/chunks/804-55ef69a258891470.js"
-13:"static/chunks/266-e6a6b01fb2e8ee08.js"
-14:"static/chunks/app/projects/page-5ac7b2db2f28bb6a.js"
-15:"ContentCardSection"
-16:I[6266,["825","$2","804","$12","266","$13","893","$14"],"$15"]
-19:"ViewportBoundary"
-1a:I[887,[],"$19"]
-1b:"MetadataBoundary"
-1c:I[887,[],"$1b"]
-1d:"$Sreact.suspense"
-:HL["/academic-portfolio/_next/static/css/28c83ba5e641b408.css","style"]
-d:X
-10:X
-10:C
-11:[["children",{"s":"__PAGE__","h":160,"d":{"r":["$","$1","c",{"children":[["$","div",null,{"className":"flex grow flex-col gap-4","children":["$","$L16",null,{"heading":"Projects","headingId":"projects-heading","items":[{"slug":"first-project","href":"/projects/first-project","title":"Grapevine virus detection in Lodi, California","date":"2025-11-01","tags":["intro","welcome"],"excerpt":"Field notes from grapevine virus screening in Lodi, California.","image":"first-project.jpeg","imageSrc":"/academic-portfolio/projects/first-project/first-project.jpeg","imageType":"cover"}],"hrefPrefix":"/projects","emptyMessage":"Projects are coming soon."}]}],null,"$L17"]}],"p":"$@18","v":null,"s":"$d"}}]]
-e:[["children",{"s":"projects","h":96,"d":{"r":["$","$1","c",{"children":[null,["$","$L5",null,{"parallelRouterKey":"children","template":["$","$L8",null,{}]}]]}],"p":"$@f","v":"$10","s":"$d"},"c":"$Q11"}]]
-0:{"t":{"t":{"s":"","h":80,"d":{"r":["$","$1","c",{"children":[[["$","link","0",{"rel":"stylesheet","href":"/academic-portfolio/_next/static/css/28c83ba5e641b408.css","precedence":"next"}]],["$","html",null,{"lang":"en","suppressHydrationWarning":true,"children":["$","body",null,{"suppressHydrationWarning":true,"className":"min-h-full bg-stone-100 dark:bg-slate-800","children":[["$","div",null,{"className":"flex min-h-full flex-col","children":[["$","$L4",null,{"name":"Kathleen Miller"}],["$","main",null,{"className":"flex-1","children":["$","$L5",null,{"parallelRouterKey":"children","error":"$7","errorStyles":[],"errorScripts":null,"template":["$","$L8",null,{}],"notFound":[["$","main",null,{"className":"mx-auto flex min-h-[calc(100vh-6rem)] flex-col items-center justify-center px-4 py-16 text-center","children":["$","div",null,{"className":"rounded-3xl bg-white p-10 shadow-sm ring-1 ring-slate-200 dark:bg-slate-900 dark:ring-slate-700","children":[["$","p",null,{"className":"text-sm font-semibold tracking-[0.3em] text-sky-600 uppercase","children":"404"}],["$","h1",null,{"className":"mt-4 text-4xl font-bold tracking-tight text-slate-900 dark:text-white","children":"Page not found"}],["$","p",null,{"className":"mt-4 max-w-xl text-base leading-7 text-slate-600 dark:text-slate-300","children":"The page you are looking for does not exist or has been moved. Please check the URL or return to the homepage."}],["$","$La",null,{"href":"/","className":"mt-8 inline-flex rounded-full bg-slate-900 px-6 py-3 text-sm font-semibold text-white transition hover:bg-slate-700 dark:bg-slate-100 dark:text-slate-900 dark:hover:bg-slate-200","children":"Return home"}]]}]}],[]]}]}],["$","footer",null,{"className":"py-4","children":["$","div",null,{"className":"mx-auto flex w-full max-w-6xl flex-col gap-4 px-4 sm:px-6 dark:text-white","children":["$","div",null,{"className":"flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between","children":[["$","p",null,{"className":"text-sm leading-6","children":["© ",2026," ","Kathleen Miller",". Licensed under"," ",["$","a",null,{"href":"https://creativecommons.org/licenses/by-nc-nd/4.0/","target":"_blank","rel":"noopener noreferrer","className":"underline transition-colors duration-200 hover:text-slate-900 dark:hover:text-slate-100","children":"CC BY-NC-ND 4.0"}],". Code licensed under"," ",["$","a",null,{"href":"https://opensource.org/licenses/MIT","target":"_blank","rel":"noopener noreferrer","className":"underline transition-colors duration-200 hover:text-slate-900 dark:hover:text-slate-100","children":"MIT"}],"."]}],["$","div",null,{"className":"flex flex-wrap gap-4 text-sm","children":[["$","a",null,{"href":"https://www.linkedin.com/in/kathleen-rose-miller/","target":"_blank","rel":"noopener noreferrer","className":"underline transition-colors duration-200 hover:text-slate-900 dark:hover:text-slate-100","children":"LinkedIn"}],["$","a",null,{"href":"https://github.com/kathleen-miller","target":"_blank","rel":"noopener noreferrer","className":"underline transition-colors duration-200 hover:text-slate-900 dark:hover:text-slate-100","children":"GitHub"}],["$","a",null,{"href":"mailto:katie.miller6572@gmail.com","className":"underline transition-colors duration-200 hover:text-slate-900 dark:hover:text-slate-100","children":"Email"}]]}]]}]}]}]]}],["$","$Lb",null,{"id":"cloudflare-web-analytics","src":"https://static.cloudflareinsights.com/beacon.min.js","strategy":"afterInteractive","data-cf-beacon":"{\"token\":\"613324dfdf5043a19a5a8f040a7b180b\"}"}]]}]}]]}],"p":"$@c","v":null,"s":"$d"},"c":"$Qe"},"h":{"r":["$","$1","h",{"children":[null,["$","$L1a",null,{"children":[["$","meta","0",{"charSet":"utf-8"}],["$","meta","1",{"name":"viewport","content":"width=device-width, initial-scale=1"}]]}],["$","$L1c",null,{"children":[["$","div",null,{"hidden":true,"children":["$","$1d",null,{"name":"Next.Metadata","children":[["$","title","0",{"children":"Projects | Kathleen Miller | Kathleen Miller"}],["$","meta","1",{"name":"description","content":"Projects by Kathleen Miller."}],["$","meta","2",{"name":"robots","content":"index, follow"}],["$","meta","3",{"name":"googlebot","content":"index, follow"}],["$","link","4",{"rel":"canonical","href":"https://diogocastrosilva.github.io/academic-portfolio/"}],"$L1e","$L1f","$L20","$L21","$L22","$L23","$L24","$L25","$L26","$L27"]}]}],null]}],null]}],"p":"$@28","v":null,"s":"$d"}},"a":"$@29","u":"$@2a","b":"UwZSe1b1OShJ8O437wV5z"}
-2b:I[887,[],"OutletBoundary"]
-2d:I[214,[],"IconMark"]
-17:["$","$L2b",null,{"children":["$","$1d",null,{"name":"Next.MetadataOutlet","children":"$@2c"}]}]
-1e:["$","meta","5",{"property":"og:title","content":"Projects | Kathleen Miller"}]
-1f:["$","meta","6",{"property":"og:description","content":"Projects by Kathleen Miller."}]
-20:["$","meta","7",{"property":"og:type","content":"website"}]
-21:["$","meta","8",{"name":"twitter:card","content":"summary"}]
-22:["$","meta","9",{"name":"twitter:title","content":"Projects | Kathleen Miller"}]
-23:["$","meta","10",{"name":"twitter:description","content":"Projects by Kathleen Miller."}]
-24:["$","link","11",{"rel":"icon","href":"/favicon.ico"}]
-25:["$","link","12",{"rel":"icon","href":"/favicon.svg","type":"image/svg+xml"}]
-26:["$","link","13",{"rel":"apple-touch-icon","href":"/favicon.svg","type":"image/svg+xml"}]
-27:["$","$L2d","14",{}]
-d:300
-2c:null
-2a:true
-d:C
-29:0
-f:"$undefined"
-c:"$undefined"
-28:"$undefined"
-18:"$undefined"
+11:"static/chunks/app/projects/page-93965dfc8bb50fe9.js"
+12:"ContentCardSection"
+13:I[6374,["825","$2","893","$11"],"$12"]
+16:"ViewportBoundary"
+17:I[887,[],"$16"]
+18:"MetadataBoundary"
+19:I[887,[],"$18"]
+1a:"$Sreact.suspense"
+:HL["/academic-portfolio/_next/static/css/3e7c51f4fd881052.css","style"]
+:HL["/images/profile.webp","image",{"type":"image/webp"}]
+c:X
+f:X
+f:C
+10:[["children",{"s":"__PAGE__","h":160,"d":{"r":["$","$1","c",{"children":[["$","div",null,{"className":"flex grow flex-col gap-4","children":["$","$L13",null,{"heading":"Projects","headingId":"projects-heading","items":[{"slug":"first-project","href":"/projects/first-project","title":"Grapevine virus detection in Lodi, California","date":"2025-11-01","tags":["intro","welcome"],"excerpt":"Field notes from grapevine virus screening in Lodi, California.","image":"first-project.jpeg","imageSrc":"/academic-portfolio/projects/first-project/first-project.jpeg","imageType":"cover"}],"hrefPrefix":"/projects","emptyMessage":"Projects are coming soon."}]}],null,"$L14"]}],"p":"$@15","v":null,"s":"$c"}}]]
+d:[["children",{"s":"projects","h":96,"d":{"r":["$","$1","c",{"children":[null,["$","$L5",null,{"parallelRouterKey":"children","template":["$","$L8",null,{}]}]]}],"p":"$@e","v":"$f","s":"$c"},"c":"$Q10"}]]
+0:{"t":{"t":{"s":"","h":80,"d":{"r":["$","$1","c",{"children":[[["$","link","0",{"rel":"stylesheet","href":"/academic-portfolio/_next/static/css/3e7c51f4fd881052.css","precedence":"next"}]],["$","html",null,{"lang":"en","suppressHydrationWarning":true,"children":["$","body",null,{"suppressHydrationWarning":true,"className":"min-h-full bg-stone-100 dark:bg-slate-800","children":[["$","div",null,{"className":"flex min-h-full flex-col","children":[["$","$L4",null,{"name":"Kathleen Miller"}],["$","main",null,{"className":"flex-1","children":["$","$L5",null,{"parallelRouterKey":"children","error":"$7","errorStyles":[],"errorScripts":null,"template":["$","$L8",null,{}],"notFound":[["$","main",null,{"className":"mx-auto flex min-h-[calc(100vh-6rem)] flex-col items-center justify-center px-4 py-16 text-center","children":["$","div",null,{"className":"rounded-3xl bg-white p-10 shadow-sm ring-1 ring-slate-200 dark:bg-slate-900 dark:ring-slate-700","children":[["$","p",null,{"className":"text-sm font-semibold tracking-[0.3em] text-sky-600 uppercase","children":"404"}],["$","h1",null,{"className":"mt-4 text-4xl font-bold tracking-tight text-slate-900 dark:text-white","children":"Page not found"}],["$","p",null,{"className":"mt-4 max-w-xl text-base leading-7 text-slate-600 dark:text-slate-300","children":"The page you are looking for does not exist or has been moved. Please check the URL or return to the homepage."}],["$","$La",null,{"href":"/","className":"mt-8 inline-flex rounded-full bg-slate-900 px-6 py-3 text-sm font-semibold text-white transition hover:bg-slate-700 dark:bg-slate-100 dark:text-slate-900 dark:hover:bg-slate-200","children":"Return home"}]]}]}],[]]}]}],["$","footer",null,{"className":"py-4","children":["$","div",null,{"className":"mx-auto flex w-full max-w-6xl flex-col gap-4 px-4 sm:px-6 dark:text-white","children":["$","div",null,{"className":"flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between","children":[["$","p",null,{"className":"text-sm leading-6","children":["© ",2026," ","Kathleen Miller",". Licensed under"," ",["$","a",null,{"href":"https://creativecommons.org/licenses/by-nc-nd/4.0/","target":"_blank","rel":"noopener noreferrer","className":"underline transition-colors duration-200 hover:text-slate-900 dark:hover:text-slate-100","children":"CC BY-NC-ND 4.0"}],". Code licensed under"," ",["$","a",null,{"href":"https://opensource.org/licenses/MIT","target":"_blank","rel":"noopener noreferrer","className":"underline transition-colors duration-200 hover:text-slate-900 dark:hover:text-slate-100","children":"MIT"}],"."]}],["$","div",null,{"className":"flex flex-wrap gap-4 text-sm","children":[["$","a",null,{"href":"https://www.linkedin.com/in/kathleen-rose-miller/","target":"_blank","rel":"noopener noreferrer","className":"underline transition-colors duration-200 hover:text-slate-900 dark:hover:text-slate-100","children":"LinkedIn"}],["$","a",null,{"href":"https://github.com/kathleen-miller","target":"_blank","rel":"noopener noreferrer","className":"underline transition-colors duration-200 hover:text-slate-900 dark:hover:text-slate-100","children":"GitHub"}],["$","a",null,{"href":"mailto:katie.miller6572@gmail.com","className":"underline transition-colors duration-200 hover:text-slate-900 dark:hover:text-slate-100","children":"Email"}]]}]]}]}]}]]}],null,["$","link",null,{"rel":"preload","as":"image","href":"/images/profile.webp","type":"image/webp"}]]}]}]]}],"p":"$@b","v":null,"s":"$c"},"c":"$Qd"},"h":{"r":["$","$1","h",{"children":[null,["$","$L17",null,{"children":[["$","meta","0",{"charSet":"utf-8"}],["$","meta","1",{"name":"viewport","content":"width=device-width, initial-scale=1"}]]}],["$","$L19",null,{"children":[["$","div",null,{"hidden":true,"children":["$","$1a",null,{"name":"Next.Metadata","children":[["$","title","0",{"children":"Projects | Kathleen Miller | Kathleen Miller"}],["$","meta","1",{"name":"description","content":"Projects by Kathleen Miller."}],["$","meta","2",{"name":"robots","content":"index, follow"}],["$","meta","3",{"name":"googlebot","content":"index, follow"}],["$","link","4",{"rel":"canonical","href":"https://diogocastrosilva.github.io/academic-portfolio/"}],["$","meta","5",{"property":"og:title","content":"Projects | Kathleen Miller"}],"$L1b","$L1c","$L1d","$L1e","$L1f","$L20","$L21","$L22","$L23","$L24","$L25","$L26","$L27","$L28","$L29","$L2a","$L2b"]}]}],null]}],null]}],"p":"$@2c","v":null,"s":"$c"}},"a":"$@2d","u":"$@2e","b":"WC8GEvruM0076Axk0zBeo"}
+2f:I[887,[],"OutletBoundary"]
+31:I[214,[],"IconMark"]
+14:["$","$L2f",null,{"children":["$","$1a",null,{"name":"Next.MetadataOutlet","children":"$@30"}]}]
+1b:["$","meta","6",{"property":"og:description","content":"Projects by Kathleen Miller."}]
+1c:["$","meta","7",{"property":"og:image","content":"https://diogocastrosilva.github.io/academic-portfolio/academic-portfolio/og/projects.svg"}]
+1d:["$","meta","8",{"property":"og:image:width","content":"1200"}]
+1e:["$","meta","9",{"property":"og:image:height","content":"630"}]
+1f:["$","meta","10",{"property":"og:image:alt","content":"Projects — Kathleen Miller"}]
+20:["$","meta","11",{"property":"og:type","content":"website"}]
+21:["$","meta","12",{"name":"twitter:card","content":"summary_large_image"}]
+22:["$","meta","13",{"name":"twitter:title","content":"Projects | Kathleen Miller"}]
+23:["$","meta","14",{"name":"twitter:description","content":"Projects by Kathleen Miller."}]
+24:["$","meta","15",{"name":"twitter:image","content":"https://diogocastrosilva.github.io/academic-portfolio/academic-portfolio/og/projects.svg"}]
+25:["$","meta","16",{"name":"twitter:image:alt","content":"Projects — Kathleen Miller"}]
+26:["$","meta","17",{"name":"twitter:image:width","content":"1200"}]
+27:["$","meta","18",{"name":"twitter:image:height","content":"630"}]
+28:["$","link","19",{"rel":"icon","href":"/favicon.ico"}]
+29:["$","link","20",{"rel":"icon","href":"/favicon.svg","type":"image/svg+xml"}]
+2a:["$","link","21",{"rel":"apple-touch-icon","href":"/favicon.svg","type":"image/svg+xml"}]
+2b:["$","$L31","22",{}]
+c:300
+30:null
+2e:true
+c:C
+2d:0
+e:"$undefined"
+b:"$undefined"
+2c:"$undefined"
+15:"$undefined"
