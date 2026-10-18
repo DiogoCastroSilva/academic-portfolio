@@ -9,6 +9,7 @@ This guide explains how to add and edit projects, publications, and profile cont
 | Profile      | `libs/content/src/md/profile.md` |
 | Projects     | `libs/projects/src/md/`          |
 | Publications | `libs/publications/src/md/`      |
+| Blog         | `libs/blog/src/md/` (optional)   |
 
 Each item lives in its own directory named `{slug}` containing a `README.md` file with YAML frontmatter at the top. The directory name becomes the slug (URL path) unless overridden in the frontmatter.
 
@@ -364,7 +365,9 @@ Set `draft: true` to create a placeholder entry that will not appear on the live
 Draft items are:
 
 - Excluded from listing pages (`getAll()`)
-- Not rendered in the static build
+- Not rendered in the static build (no route generated)
+- Excluded from the sitemap and robots.txt
+- Excluded from Open Graph image generation
 - Visible in source control for tracking progress
 
 ## Validation

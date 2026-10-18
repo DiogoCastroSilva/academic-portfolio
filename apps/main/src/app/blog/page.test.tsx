@@ -61,7 +61,7 @@ vi.mock("../ui/ContentCardSection", () => ({
 }));
 
 vi.mock("../lib/og-image", () => ({
-  generateOgImage: () => "data:image/svg+xml;base64,abc",
+  ogImageRef: (path: string) => `/og/${path}`,
 }));
 
 // Import after mocks

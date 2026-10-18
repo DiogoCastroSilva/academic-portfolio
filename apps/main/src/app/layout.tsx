@@ -4,7 +4,7 @@ import { CloudflareAnalytics } from "./ui/CloudflareAnalytics";
 import { Footer } from "./ui/Footer";
 
 import { siteConfig } from "../configs/site-config";
-import { generateOgImage } from "./lib/og-image";
+import { ogImageRef } from "./lib/og-image";
 
 export const metadata = {
   title: {
@@ -35,14 +35,10 @@ export const metadata = {
     description: `Portfolio of ${siteConfig.name} — science, nature-based solutions, projects, and publications.`,
     images: [
       {
-        url: generateOgImage({
-          title: siteConfig.name,
-          subtitle:
-            "Science, nature-based solutions, projects, and publications",
-        }),
+        url: ogImageRef("home.svg"),
+        alt: `${siteConfig.name} — Portfolio`,
         width: 1200,
         height: 630,
-        alt: `${siteConfig.name} — Portfolio`,
       },
     ],
   },

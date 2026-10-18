@@ -80,15 +80,6 @@ export function buildWebSiteSchema(): JsonLdData {
     name: siteConfig.name,
     url: getFullUrl("/"),
     description,
-    ...(siteConfig.deploymentUrl
-      ? {
-          potentialAction: {
-            "@type": "SearchAction",
-            target: `${siteConfig.deploymentUrl}/search?q={search_term_string}`,
-            "query-input": "required name=search_term_string",
-          },
-        }
-      : {}),
   };
 }
 

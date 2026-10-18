@@ -77,8 +77,6 @@ The repository should demonstrate:
 
 ## Future Possibilities (Not Yet Implemented)
 
-- Blog with listing page and post-detail routes (Markdown-based, static-export compatible)
-- Sitemap generation
-- `robots.txt` generation
-- Open Graph images for social sharing
-- Structured data (JSON-LD) for search engines
+- Content image validation (frontmatter + inline Markdown image path checks)
+- Per-page sitemap modification dates
+- Web App Manifest

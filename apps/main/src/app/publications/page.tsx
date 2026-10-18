@@ -1,6 +1,7 @@
 import { getAllPublications } from "@katie-portfolio/publications";
 
 import { ContentCardSection } from "../ui/ContentCardSection";
+import { ogImageRef } from "../lib/og-image";
 
 export const metadata = {
   title: "Publications | Kathleen Miller",
@@ -9,6 +10,14 @@ export const metadata = {
     title: "Publications | Kathleen Miller",
     description: "Research publications by Kathleen Miller.",
     type: "website",
+    images: [
+      {
+        url: ogImageRef("publications.svg"),
+        alt: "Publications — Kathleen Miller",
+        width: 1200,
+        height: 630,
+      },
+    ],
   },
 };
 

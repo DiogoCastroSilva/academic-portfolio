@@ -13,6 +13,9 @@ apps/main/src/app/
 ├── publications/       Publications listing and detail pages
 │   ├── page.tsx        Publications index (list all)
 │   └── [slug]/page.tsx Dynamic detail page (SSG per publication)
+├── blog/               Optional blog listing and post-detail pages
+│   ├── page.tsx        Blog index (list all)
+│   └── [slug]/page.tsx Dynamic detail page (SSG per post)
 ├── not-found.tsx       404 page
 ├── error.tsx           Error boundary with dev-mode stack trace
 ├── layout.tsx          Root layout with NavBar, Footer, analytics
@@ -30,11 +33,13 @@ apps/main/src/app/
 | `/projects/[slug]/`     | SSG    | One static page per project               |
 | `/publications/`        | Static | Lists all publications (currently empty)  |
 | `/publications/[slug]/` | SSG    | One static page per publication           |
+| `/blog/`                | Static | Lists all blog posts (or placeholder)     |
+| `/blog/[slug]/`         | SSG    | One static page per blog post             |
 | `/_not-found/`          | Static | Fallback 404 page                         |
 
 ## Content Directories and Package Boundaries
 
-The workspace is an Nx monorepo with one application and five libraries:
+The workspace is an Nx monorepo with one application and **six** libraries:
 
 ```
 apps/main/
@@ -50,10 +55,17 @@ libs/
     src/md/            .md files + co-located cover images
   publications/      Publication content (markdown files) + library accessor
     src/md/            .md files + co-located cover images
+  blog/              Optional blog content (markdown files) + library accessor
+    src/md/            .md files + co-located cover images
   utils/             Shared utilities (date formatting)
 ```
 
-**Module boundary rules:** `@nx/enforce-module-boundaries` is configured in the root `eslint.config.mjs`, but the `depConstraints` use a wildcard-to-wildcard pattern (`sourceTag: "*"`, `onlyDependOnLibsWithTags: ["*"]`) with no project tags defined, so it enforces nothing — any library can import any other library. Project tags have not been added; see ADR-0002 for the decision to retain Nx with weak constraints.
+**Module boundary rules:** `@nx/enforce-module-boundaries` is configured in the root `eslint.config.mjs` with `depConstraints` based on project tags defined in each library's `package.json`:
+- `app` (apps/main) → can depend on `content-layer` and `foundation`
+- `content-layer` (projects, publications, blog) → can depend on `foundation`
+- `foundation` (content, navigation, utils) → cannot depend on any internal library
+
+This enforces the dependency layers: app → content-layer → foundation → external.
 
 ## Markdown Parsing, Validation, and Rendering Flow
 

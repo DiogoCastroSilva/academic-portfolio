@@ -17,6 +17,7 @@ education:
       - "Working with hyperspectral and multispectral satellite imagery"
       - "Collaboration with NASA DEVELOP program"
   - degree: "BSc in Science"
+    # TODO(owner): Replace with real undergraduate details
     institution: "University"
     period: "2020 – 2024"
     focus: "Foundation in environmental science and quantitative methods"
@@ -27,10 +28,10 @@ education:
 researchInterests:
   - title: "Remote Sensing & Earth Observation"
     description: "Hyperspectral and multispectral imagery analysis for environmental monitoring and agricultural applications."
-    icon: "🚨"
+    icon: "🛰️"
   - title: "Machine Learning Applications"
     description: "Developing and implementing ML models (random forests, neural networks) for classification and predictive analysis of geospatial data."
-    icon: "🤉"
+    icon: "🤖"
   - title: "Climate Change Mitigation"
     description: "Nature-based solutions and sustainable strategies for addressing climate change through data-driven environmental assessment."
     icon: "🌍"

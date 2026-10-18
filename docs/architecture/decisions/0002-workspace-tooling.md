@@ -1,7 +1,7 @@
 # ADR-0002: Nx workspace tooling
 
 - **Status:** Accepted — retain Nx
-- **Context:** The repository is a single Next.js website with five internal content/UI libraries (`content`, `navigation`, `projects`, `publications`, `utils`). Nx was introduced during project scaffolding. The question was whether to retain Nx or simplify to a conventional Next.js project with npm scripts.
+- **Context:** The repository is a single Next.js website with six internal content/UI libraries (`content`, `navigation`, `projects`, `publications`, `blog`, `utils`). Nx was introduced during project scaffolding. The question was whether to retain Nx or simplify to a conventional Next.js project with npm scripts.
 - **Decision:** Retain Nx 22.6.5.
 - **Evidence supporting retention:**
   - **Dependency-aware typecheck:** `main:build` has `"dependsOn": ["^typecheck"]`, meaning all library type-checking runs before the app builds. Without Nx, this would require manual scripting in `package.json`.
@@ -13,7 +13,7 @@
   - `@nx/web` and `@nx/rollup` were installed but never used — removed in this modernization pass.
   - **Module boundary enforcement is now active:** `@nx/enforce-module-boundaries` uses meaningful `depConstraints` based on project tags defined in each library's `package.json`:
     - `app` (apps/main) -> can depend on `content-layer` and `foundation`
-    - `content-layer` (projects, publications) -> can depend on `foundation`
+    - `content-layer` (projects, publications, blog) -> can depend on `foundation`
     - `foundation` (content, navigation, utils) -> cannot depend on any internal library
       This enforces the dependency layers: app -> content-layer -> foundation -> external.
   - Nx adds ~150MB of dev dependencies to `node_modules`.

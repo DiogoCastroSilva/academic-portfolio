@@ -98,12 +98,12 @@ describe("generate-sitemap", () => {
     );
   });
 
-  it("includes lastmod date in sitemap entries", () => {
+  it("does not include lastmod (build date is not a content change date)", () => {
     fixture.writeFile("index.html");
 
     const { sitemap } = runSitemap(BASE_URL, fixture.tmpDir);
 
-    expect(sitemap).toMatch(/<lastmod>\d{4}-\d{2}-\d{2}<\/lastmod>/);
+    expect(sitemap).not.toContain("<lastmod>");
   });
 
   it("includes valid XML structure", () => {

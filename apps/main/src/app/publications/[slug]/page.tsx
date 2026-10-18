@@ -5,7 +5,7 @@ import {
 import { getFullAssetUrl, getFullUrl } from "@katie-portfolio/content";
 import { notFound } from "next/navigation";
 import { ContentDetail } from "../../ui/ContentDetail";
-import { generateOgImage } from "../../lib/og-image";
+import { ogImageRef } from "../../lib/og-image";
 
 const EMPTY_SLUG = "NON-EXISTENT-SLUG";
 
@@ -55,11 +55,7 @@ export async function generateMetadata({ params }: PublicationPageProps) {
       images: [
         {
           url:
-            fullImageUrl ??
-            generateOgImage({
-              title: publication.title,
-              subtitle: publication.excerpt,
-            }),
+            fullImageUrl ?? ogImageRef(`publication-${publication.slug}.svg`),
           alt: publication.title,
         },
       ],

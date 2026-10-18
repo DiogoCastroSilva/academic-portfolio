@@ -6,7 +6,7 @@ import { getFullAssetUrl, getFullUrl } from "@katie-portfolio/content";
 import { notFound } from "next/navigation";
 
 import { ContentDetail } from "../../ui/ContentDetail";
-import { generateOgImage } from "../../lib/og-image";
+import { ogImageRef } from "../../lib/og-image";
 
 const EMPTY_SLUG = "NON-EXISTENT-SLUG";
 
@@ -54,9 +54,7 @@ export async function generateMetadata({ params }: BlogPostPageProps) {
       url: canonical,
       images: [
         {
-          url:
-            fullImageUrl ??
-            generateOgImage({ title: post.title, subtitle: post.excerpt }),
+          url: fullImageUrl ?? ogImageRef(`blog-${post.slug}.svg`),
           alt: post.title,
         },
       ],

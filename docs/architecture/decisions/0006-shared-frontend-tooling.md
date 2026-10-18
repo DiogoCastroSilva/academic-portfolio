@@ -17,7 +17,7 @@
   - Upstream changes to the shared configs will require workspace updates.
   - `@nx/enforce-module-boundaries` must be explicitly layered on top of the shared config because the shared config does not include Nx-specific rules.
   - `apps/main/eslint.config.mjs` was simplified from a multi-config setup (redundant Next.js + Nx TypeScript configs) to just extending the root config with app-specific ignores.
-  - `npx nx run-many -t lint` passes for all 6 projects (0 errors).
+  - `npx nx run-many -t lint` passes for all 7 projects (0 errors, 5 warnings).
   - `npx prettier --check .` passes for all files.
   - `npx nx build main` produces correct static output.
 - **Conditions for revisiting:** If a project-specific ESLint rule is needed that conflicts with the shared config, prefer adding it as a narrow override rather than forking the shared config.

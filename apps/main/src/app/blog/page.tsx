@@ -2,7 +2,7 @@ import { getAllBlogPosts } from "@katie-portfolio/blog";
 
 import { siteConfig } from "../../configs/site-config";
 import { ContentCardSection } from "../ui/ContentCardSection";
-import { generateOgImage } from "../lib/og-image";
+import { ogImageRef } from "../lib/og-image";
 
 export const metadata = {
   title: `Blog | ${siteConfig.name}`,
@@ -13,10 +13,7 @@ export const metadata = {
     type: "website",
     images: [
       {
-        url: generateOgImage({
-          title: "Blog",
-          subtitle: `${siteConfig.name} — Field notes`,
-        }),
+        url: ogImageRef("blog.svg"),
         alt: `Blog — ${siteConfig.name}`,
         width: 1200,
         height: 630,

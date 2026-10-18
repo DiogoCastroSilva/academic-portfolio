@@ -18,9 +18,17 @@
           "cwd": "{workspaceRoot}"
         }
       },
+      "generate-og-images": {
+        "executor": "nx:run-commands",
+        "options": {
+          "command": "node tools/generate-og-images.mjs",
+          "cwd": "{workspaceRoot}"
+        }
+      },
       "build": {
         "dependsOn": [
           "sync-content-assets",
+          "generate-og-images",
           "^typecheck"
         ],
         "options": {
@@ -58,6 +66,7 @@
     ]
   },
   "dependencies": {
+    "@katie-portfolio/blog": "*",
     "@katie-portfolio/content": "*",
     "@katie-portfolio/navigation": "*",
     "@katie-portfolio/projects": "*",

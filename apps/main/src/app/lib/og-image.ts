@@ -1,13 +1,4 @@
-/**
- * Dynamic Open Graph image generator for static export.
- *
- * Generates 1200×630 SVG images with customizable title, subtitle, and
- * optional background image. Used in Next.js `generateMetadata` to produce
- * per-page OG images for social sharing.
- *
- * @see https://developer.mozilla.org/en-US/docs/Web/SVG
- * @see https://opengraph.com/
- */
+import { withPublicBasePath } from "@katie-portfolio/content";
 
 /** Characters that need XML escaping in SVG `<text>` content. */
 const XML_ESCAPE_MAP: Record<string, string> = {
@@ -124,17 +115,18 @@ export function generateOgImageSvg({
 }
 
 /**
- * Convert an SVG string to a base64 data URI suitable for use as an
- * Open Graph image URL.
+ * Return the public URL for a pre-generated Open Graph image SVG file.
+ *
+ * OG images are generated as static files in `public/og/` by the
+ * `tools/generate-og-images.mjs` script (runs before `next build`).
+ * This helper resolves the path to an absolute URL that includes the
+ * GitHub Pages base path. Next.js's `metadataBase` setting resolves
+ * relative URLs to absolute HTTPS URLs in the exported HTML.
+ *
+ * @param path - Path relative to `/og/`, e.g. `"home.svg"` or `"project-first-project.svg"`.
+ * @returns Absolute URL like `https://user.github.io/repo/og/home.svg`,
+ *          or a base-path-prefixed relative URL when no deployment URL is set.
  */
-export function generateOgImageUri(svg: string): string {
-  const base64 = Buffer.from(svg, "utf-8").toString("base64");
-  return `data:image/svg+xml;charset=utf-8;base64,${base64}`;
-}
-
-/**
- * Convenience: generate an OG image data URI in one call.
- */
-export function generateOgImage(params: OgImageParams): string {
-  return generateOgImageUri(generateOgImageSvg(params));
+export function ogImageRef(path: string): string {
+  return withPublicBasePath(`/og/${path}`);
 }

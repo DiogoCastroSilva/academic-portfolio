@@ -16,7 +16,7 @@
   - URL resolution is split into two phases: `walkTokens` handles Markdown-native `href`/`src` tokens (image and link); `hooks.postprocess` handles raw HTML attributes. The two paths use complementary regex patterns with a negative lookahead to prevent double-processing.
   - Slugs are derived from filenames, with an optional frontmatter `slug` override.
 - **Evidence or validation:**
-  - 59 tests in `libs/content/src/lib/create-content-library.test.ts` cover frontmatter parsing, validation, image resolution, link rewriting, DEPLOYMENT_URL handling, empty/missing-content cases, and publication-specific fields (`authors`, `venue`, `doi`, `paperUrl`).
+  - 73 tests in `libs/content/src/lib/create-content-library.test.ts` cover frontmatter parsing, validation, image resolution, link rewriting, DEPLOYMENT_URL handling, empty/missing-content cases, and publication-specific fields (`authors`, `venue`, `doi`, `paperUrl`).
   - 12 tests in `libs/content/src/lib/profile.test.ts` cover profile frontmatter parsing, validation of required fields, structured data parsing (education, research interests, skills), biography rendering, and image URL resolution.
   - 32 tests in `libs/content/src/lib/marked-extensions.test.ts` cover the `resolveHref` URL resolver, image rendering (`<figure>`/`<figcaption>`), link rendering (external link attributes), gallery detection, raw HTML postprocess (DEPLOYMENT_URL replacement, relative path prefixing, double-processing prevention), and integration of all features together.
   - The content pipeline runs at build time (SSG), not at request time.

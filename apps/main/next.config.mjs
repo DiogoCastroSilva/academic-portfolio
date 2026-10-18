@@ -22,6 +22,7 @@ const createNextConfig = (phase) => ({
     "@katie-portfolio/content",
     "@katie-portfolio/projects",
     "@katie-portfolio/publications",
+    "@katie-portfolio/blog",
     "@katie-portfolio/navigation",
   ],
   pageExtensions: ["ts", "tsx", "md"],

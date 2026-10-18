@@ -7,7 +7,7 @@ import { ResearchInterests } from "../ui/ResearchInterests";
 import { SkillsGrid } from "../ui/SkillsGrid";
 import { JsonLd } from "../ui/JsonLd";
 import { buildPersonSchema } from "../lib/structured-data";
-import { generateOgImage } from "../lib/og-image";
+import { ogImageRef } from "../lib/og-image";
 
 const aboutCanonical = getFullUrl("/about/");
 
@@ -20,10 +20,7 @@ export const metadata = {
     type: "website",
     images: [
       {
-        url: generateOgImage({
-          title: siteConfig.name,
-          subtitle: siteConfig.role,
-        }),
+        url: ogImageRef("about.svg"),
         alt: `${siteConfig.name} — About`,
         width: 1200,
         height: 630,

@@ -105,6 +105,7 @@ vi.mock("@katie-portfolio/content", () => ({
   getDeploymentUrl: () => undefined,
   getFullUrl: () => undefined,
   getFullAssetUrl: () => undefined,
+  withPublicBasePath: (p: string) => p,
   resolveImage: (slug: string, filename?: string) =>
     filename ? `/${slug}/${filename}` : `/${slug}/cover.webp`,
 }));
@@ -118,7 +119,7 @@ import BlogPage from "./blog/page";
 
 // Mock og-image for pages that use it in metadata.
 vi.mock("./lib/og-image", () => ({
-  generateOgImage: () => "data:image/svg+xml;base64,abc",
+  ogImageRef: (path: string) => `/og/${path}`,
 }));
 
 describe("Landmark: no duplicate <main> elements", () => {

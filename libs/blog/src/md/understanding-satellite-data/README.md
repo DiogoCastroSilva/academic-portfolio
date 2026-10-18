@@ -1,4 +1,5 @@
 ---
+draft: true
 title: "Understanding Satellite Data for Vegetation Monitoring"
 date: "2025-03-15"
 tags: ["remote-sensing", "vegetation-indices", "satellite-data"]
@@ -46,7 +47,7 @@ NDVI values range from -1 to +1:
 - **0.3 to 0.6**: Moderate vegetation (forests, crops)
 - **0.7 to 1.0**: Dense, healthy vegetation (tropical forests)
 
-![Figure 1. NDVI map of California showing vegetation density gradients](ndvi-map.jpeg "Figure 1. NDVI map of California. Dark green areas indicate dense vegetation in forested regions, while tan and brown tones show sparse or stressed vegetation in agricultural valleys.")
+![Figure 1. NDVI map of California showing vegetation density gradients](ndvi-map.svg "Figure 1. NDVI map of California. Dark green areas indicate dense vegetation in forested regions, while tan and brown tones show sparse or stressed vegetation in agricultural valleys.")
 
 ### Data Sources
 

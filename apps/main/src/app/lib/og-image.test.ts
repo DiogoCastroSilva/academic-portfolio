@@ -1,11 +1,10 @@
-import { describe, expect, it } from "vitest";
+import { describe, expect, it, vi } from "vitest";
 
-import {
-  generateOgImage,
-  generateOgImageSvg,
-  generateOgImageUri,
-  wrapText,
-} from "./og-image";
+import { generateOgImageSvg, ogImageRef, wrapText } from "./og-image";
+
+vi.mock("@katie-portfolio/content", () => ({
+  withPublicBasePath: (p: string) => p,
+}));
 
 describe("escapeXml", () => {
   it("escapes special XML characters in titles", () => {
@@ -110,38 +109,15 @@ describe("generateOgImageSvg", () => {
   });
 });
 
-describe("generateOgImageUri", () => {
-  it("produces a base64 data URI with correct prefix", () => {
-    const svg = generateOgImageSvg({ title: "Test" });
-    const uri = generateOgImageUri(svg);
-
-    expect(uri).toMatch(/^data:image\/svg\+xml;charset=utf-8;base64,/);
+describe("ogImageRef", () => {
+  it("builds public path URL under /og/", () => {
+    expect(ogImageRef("home.svg")).toBe("/og/home.svg");
+    expect(ogImageRef("project-first-project.svg")).toBe(
+      "/og/project-first-project.svg",
+    );
   });
 
-  it("produces a decodable URI", () => {
-    const svg = generateOgImageSvg({ title: "Decodable Test" });
-    const uri = generateOgImageUri(svg);
-
-    const base64 = uri.split(",")[1];
-    const decoded = Buffer.from(base64, "base64").toString("utf-8");
-
-    expect(decoded).toContain("Decodable Test");
-    expect(decoded).toContain("<svg");
-  });
-});
-
-describe("generateOgImage", () => {
-  it("combines SVG generation and URI encoding", () => {
-    const uri = generateOgImage({
-      title: "Combined Test",
-      subtitle: "Subtitle",
-    });
-
-    expect(uri).toMatch(/^data:image\/svg\+xml;charset=utf-8;base64,/);
-
-    const base64 = uri.split(",")[1];
-    const decoded = Buffer.from(base64, "base64").toString("utf-8");
-    expect(decoded).toContain("Combined Test");
-    expect(decoded).toContain("Subtitle");
+  it("handles multi-segment paths", () => {
+    expect(ogImageRef("blog/post-slug.svg")).toBe("/og/blog/post-slug.svg");
   });
 });
