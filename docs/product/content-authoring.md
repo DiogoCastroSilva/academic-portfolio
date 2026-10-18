@@ -373,9 +373,11 @@ Draft items are:
 - **Invalid `date` format:** The build fails. Must be `YYYY-MM-DD` (e.g., `2025-11-01`) and must be a real calendar date (e.g., `2025-02-30` is rejected).
 - **Non-string `title` or `date`:** The build fails.
 - **Non-string `slug`:** The build fails.
+- **Duplicate slug:** The build fails. Each entry must have a unique slug (either the directory name or the `slug` frontmatter override). Two entries with the same slug would create conflicting static routes.
 - **Invalid type for optional fields** (`image`, `tags`, `links`, `authors`, `venue`, `doi`, `paperUrl`): The build fails with a message identifying the file and field.
 - **Missing images:** Silently replaced with a placeholder — no build failure.
 - **Malformed Markdown:** Passed through by `marked` — invalid Markdown renders as plain text.
+- **Raw HTML in Markdown:** Allowed for academic formatting (`<figure>`, `<b>`, `<br>`, etc.). Content is author-controlled (trusted), so no HTML sanitizer is applied. See [ADR-0004](../../architecture/decisions/0004-content-validation-and-rendering.md) for the full trust model.
 
 ### Example Error
 
