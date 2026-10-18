@@ -7,7 +7,7 @@ A personal academic portfolio website built by Diogo Castro Silva for Kathleen M
 ## Stack
 
 - **Next.js 16** with App Router and static export for GitHub Pages
-- **React 19** with Motion animations
+- **React 19** with CSS animations (home page) and `motion/react` (about page only)
 - **Nx 22** for workspace tooling and module-boundary enforcement
 - **TypeScript** with strict mode and project references
 - **Tailwind CSS 4** with PostCSS
@@ -15,11 +15,18 @@ A personal academic portfolio website built by Diogo Castro Silva for Kathleen M
 - **Vitest 4** for unit testing
 - **ESLint 9** (shared `@diogozx-org/eslint-config`) + Nx module boundaries
 - **Prettier 3** (shared `@diogozx-org/prettier-config`)
+- **Lighthouse CI** with performance budgets (Performance 90+, a11y 95+, Best Practices 95+, SEO 95+)
 - **GitHub Actions and GitHub Pages** for CI and deployment
 
 ## Why this architecture
 
-This is a single Next.js site with five internal content/UI libraries. Nx is retained for two concrete benefits: (1) `@nx/enforce-module-boundaries` prevents libraries from importing each other in unintended ways, and (2) `^typecheck` dependency chains ensure all libraries are type-checked before the app builds. See [ADR-0002](docs/architecture/decisions/0002-workspace-tooling.md) for details.
+This is a single Next.js site with six internal libraries organized into dependency layers enforced by Nx module boundaries:
+
+- **app** (`apps/main`) → can depend on `content-layer` and `foundation`
+- **content-layer** (`projects`, `publications`, `blog`) → can depend on `foundation`
+- **foundation** (`content`, `navigation`, `utils`) → cannot depend on any internal library
+
+Nx is retained for concrete benefits: (1) `@nx/enforce-module-boundaries` prevents foundation libraries from importing content-layer libraries, catching architectural regressions at lint time; (2) `^typecheck` dependency chains ensure all libraries are type-checked before the app builds; (3) project-aware test/lint targets with automatic parallel execution. See [ADR-0002](docs/architecture/decisions/0002-workspace-tooling.md) for details.
 
 ## Get started
 
@@ -42,18 +49,21 @@ npx nx run main:dev  # http://localhost:3000
 | Typecheck     | `npx nx run-many -t typecheck`                 |
 | Format        | `npx nx format:write`                          |
 | Sync images   | `npx nx run main:sync-content-assets`          |
+| OG images     | `npx nx run main:generate-og-images`           |
+| Sitemap       | `npx nx run main:generate-sitemap`             |
 | All CI checks | `npx nx run-many -t lint test typecheck build` |
 
 ## Project structure
 
 ```text
 apps/main/                  Next.js application and page UI
+libs/blog/                  Blog content (Markdown files in src/md/)
 libs/content/               Markdown loading, frontmatter parsing, URL helpers
 libs/navigation/            NavBar component and route configuration
 libs/projects/              Project content (Markdown files in src/md/)
 libs/publications/          Publication content (Markdown files in src/md/)
 libs/utils/                 Shared utilities (date formatting)
-tools/sync-content-assets.mjs  Copies content images into public output
+tools/                      Build utilities (sync-content-assets.mjs, generate-og-images.mjs, generate-sitemap.mjs)
 .github/workflows/ci.yml    CI checks and GitHub Pages deployment
 docs/                       Full documentation
 ```
@@ -88,6 +98,7 @@ Write the project or publication details here.
 - [Architecture overview](docs/architecture/overview.md)
 - [Architecture decisions](docs/architecture/decisions/)
 - [Operations guides](docs/operations/)
+- [Lighthouse CI budgets](docs/operations/lighthouse.md)
 
 ## Deployment
 
