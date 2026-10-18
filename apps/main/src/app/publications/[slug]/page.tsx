@@ -2,7 +2,7 @@ import {
   getAllPublications,
   getPublicationContentBySlug,
 } from "@katie-portfolio/publications";
-import { getDeploymentUrl } from "@katie-portfolio/content";
+import { getFullAssetUrl, getFullUrl } from "@katie-portfolio/content";
 import { notFound } from "next/navigation";
 import { ContentDetail } from "../../ui/ContentDetail";
 
@@ -39,13 +39,8 @@ export async function generateMetadata({ params }: PublicationPageProps) {
 
   const description =
     publication.excerpt || `Publication: ${publication.title}`;
-  const deploymentUrl = getDeploymentUrl();
-  const canonical = deploymentUrl
-    ? `${deploymentUrl}/publications/${publication.slug}/`
-    : undefined;
-  const fullImageUrl = deploymentUrl
-    ? `${deploymentUrl}${publication.imageSrc}`
-    : publication.imageSrc;
+  const canonical = getFullUrl(`${publication.href}/`);
+  const fullImageUrl = getFullAssetUrl(publication.imageSrc);
 
   return {
     title: publication.title,

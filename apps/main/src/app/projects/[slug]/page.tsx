@@ -2,7 +2,7 @@ import {
   getAllProjects,
   getProjectContentBySlug,
 } from "@katie-portfolio/projects";
-import { getDeploymentUrl } from "@katie-portfolio/content";
+import { getFullAssetUrl, getFullUrl } from "@katie-portfolio/content";
 import { notFound } from "next/navigation";
 import { ContentDetail } from "../../ui/ContentDetail";
 
@@ -38,13 +38,8 @@ export async function generateMetadata({ params }: ProjectPageProps) {
   }
 
   const description = project.excerpt || `Project: ${project.title}`;
-  const deploymentUrl = getDeploymentUrl();
-  const canonical = deploymentUrl
-    ? `${deploymentUrl}/projects/${project.slug}/`
-    : undefined;
-  const fullImageUrl = deploymentUrl
-    ? `${deploymentUrl}${project.imageSrc}`
-    : project.imageSrc;
+  const canonical = getFullUrl(`${project.href}/`);
+  const fullImageUrl = getFullAssetUrl(project.imageSrc);
 
   return {
     title: project.title,

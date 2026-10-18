@@ -1,22 +1,16 @@
 import { getProfile, type ProfileData } from "@katie-portfolio/content";
 
 // Load personal data from profile.md at module load time.
-// Falls back to hardcoded defaults if the profile file is unavailable.
-let profile: ProfileData | null = null;
-try {
-  profile = getProfile();
-} catch {
-  // Profile file not found or invalid — use fallback defaults below.
-}
+// If the profile is missing or invalid, fail the build with a clear error
+// rather than silently falling back to hardcoded personal information.
+const profile: ProfileData = getProfile();
 
 export const siteConfig = {
-  name: profile?.name ?? "Kathleen Miller",
-  role:
-    profile?.role ?? "PhD Researcher | Earth Observation | Climate Solutions",
-  email: profile?.email ?? "katie.miller6572@gmail.com",
-  linkedInUrl:
-    profile?.linkedInUrl ?? "https://www.linkedin.com/in/kathleen-rose-miller/",
-  githubUrl: profile?.githubUrl ?? "https://github.com/kathleen-miller",
+  name: profile.name,
+  role: profile.role,
+  email: profile.email,
+  linkedInUrl: profile.linkedInUrl,
+  githubUrl: profile.githubUrl,
   contentLicenseName: "CC BY-NC-ND 4.0",
   contentLicenseUrl: "https://creativecommons.org/licenses/by-nc-nd/4.0/",
   repoLicenseName: "MIT",

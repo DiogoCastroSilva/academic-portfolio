@@ -65,7 +65,7 @@ vi.mock("@katie-portfolio/navigation", () => ({
 }));
 
 // Mock the site-config module (it uses process.env).
-vi.mock("../../configs/site-config", () => ({
+vi.mock("../configs/site-config", () => ({
   siteConfig: {
     name: "Kathleen Miller",
     linkedInUrl: "https://linkedin.com/in/test",

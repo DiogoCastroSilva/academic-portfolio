@@ -21,7 +21,7 @@ education:
 researchInterests:
   - title: "Research Area 1"
     description: "Brief description of the research area."
-    icon: "&#128202;" # optional emoji
+    icon: "🛰️" # optional emoji
   - title: "Research Area 2"
     description: "Brief description of the research area."
 skills:

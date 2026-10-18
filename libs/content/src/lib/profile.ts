@@ -84,7 +84,10 @@ function parseResearchInterests(data: unknown): ResearchInterest[] {
     .map((r) => ({
       title: typeof r.title === "string" ? r.title : "",
       description: typeof r.description === "string" ? r.description : "",
-      icon: typeof r.icon === "string" ? r.icon : undefined,
+      icon:
+        typeof r.icon === "string"
+          ? decodeHtmlEntities(r.icon.trim())
+          : undefined,
     }));
 }
 
@@ -153,6 +156,15 @@ export function parseProfile(content: string): ProfileData {
     skills: parseSkills(data.skills),
     biography: parseBiography(markdownBody),
   };
+}
+
+/** Decode HTML numeric entities (e.g. `&#128680;` → emoji) in text strings. */
+function decodeHtmlEntities(str: string): string {
+  return str
+    .replace(/&#x([0-9a-fA-F]+);/g, (_, hex) =>
+      String.fromCodePoint(parseInt(hex, 16)),
+    )
+    .replace(/&#(\d+);/g, (_, dec) => String.fromCodePoint(parseInt(dec, 10)));
 }
 
 /** Parse a markdown biography string into HTML using the content renderer. */

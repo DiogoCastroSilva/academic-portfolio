@@ -86,7 +86,22 @@ describe("parseProfile", () => {
     expect(result.researchInterests).toHaveLength(1);
     expect(result.researchInterests[0].title).toBe("Satellites");
     expect(result.researchInterests[0].description).toBe("EO data analysis");
-    expect(result.researchInterests[0].icon).toBe("&#128680;");
+    expect(result.researchInterests[0].icon).toBe("🚨");
+  });
+
+  it("decodes HTML entity icons to unicode", () => {
+    const content = VALID_PROFILE.replace(
+      'icon: "&#128680;"',
+      'icon: "&#128680;"',
+    );
+    const result = parseProfile(content);
+    expect(result.researchInterests[0].icon).toBe("🚨");
+  });
+
+  it("preserves unicode icon characters", () => {
+    const content = VALID_PROFILE.replace('icon: "&#128680;"', 'icon: "🛰️"');
+    const result = parseProfile(content);
+    expect(result.researchInterests[0].icon).toBe("🛰️");
   });
 
   it("parses skills categories", () => {
