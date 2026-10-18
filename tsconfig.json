@@ -16,6 +16,9 @@
       "path": "./libs/publications"
     },
     {
+      "path": "./libs/blog"
+    },
+    {
       "path": "./libs/navigation"
     },
     {

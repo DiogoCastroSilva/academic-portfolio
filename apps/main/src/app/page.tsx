@@ -1,5 +1,6 @@
 import { getAllProjects } from "@katie-portfolio/projects";
 import { getAllPublications } from "@katie-portfolio/publications";
+import { getAllBlogPosts } from "@katie-portfolio/blog";
 import { getProfile } from "@katie-portfolio/content";
 
 import { AboutSection } from "./ui/AboutSection";
@@ -13,6 +14,7 @@ import {
 export default function Index() {
   const projects = getAllProjects();
   const publications = getAllPublications();
+  const blogPosts = getAllBlogPosts();
   const profile = getProfile();
 
   return (
@@ -31,6 +33,12 @@ export default function Index() {
         headingId="publications-heading"
         items={publications}
         hrefPrefix="/publications"
+      />
+      <ContentCardSection
+        heading="Blog"
+        headingId="blog-heading"
+        items={blogPosts}
+        hrefPrefix="/blog"
       />
     </div>
   );

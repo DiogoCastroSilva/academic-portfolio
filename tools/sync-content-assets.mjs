@@ -25,6 +25,10 @@ const CONTENT_SOURCES = [
     dest: "apps/main/public/publications",
   },
   {
+    src: "libs/blog/src/md",
+    dest: "apps/main/public/blog",
+  },
+  {
     src: "libs/content/src/md",
     dest: "apps/main/public/images",
     // The images/ directory also contains static assets (e.g., og-image.svg)

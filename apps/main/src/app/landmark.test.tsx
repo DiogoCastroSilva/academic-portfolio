@@ -95,6 +95,11 @@ vi.mock("@katie-portfolio/publications", () => ({
   getPublicationContentBySlug: vi.fn(),
 }));
 
+vi.mock("@katie-portfolio/blog", () => ({
+  getAllBlogPosts: () => [],
+  getBlogPostContentBySlug: vi.fn(),
+}));
+
 vi.mock("@katie-portfolio/content", () => ({
   getProfile: () => mockProfile,
   getDeploymentUrl: () => undefined,
@@ -109,6 +114,12 @@ import Index from "./page";
 import AboutPage from "./about/page";
 import ProjectsPage from "./projects/page";
 import PublicationsPage from "./publications/page";
+import BlogPage from "./blog/page";
+
+// Mock og-image for pages that use it in metadata.
+vi.mock("./lib/og-image", () => ({
+  generateOgImage: () => "data:image/svg+xml;base64,abc",
+}));
 
 describe("Landmark: no duplicate <main> elements", () => {
   it("homepage uses <div> not <main> (nav layout provides <main>)", async () => {
@@ -133,6 +144,12 @@ describe("Landmark: no duplicate <main> elements", () => {
 
   it("publications listing uses <div> not <main>", () => {
     const { container } = render(<PublicationsPage />);
+    const mains = container.querySelectorAll("main");
+    expect(mains).toHaveLength(0);
+  });
+
+  it("blog listing uses <div> not <main>", () => {
+    const { container } = render(<BlogPage />);
     const mains = container.querySelectorAll("main");
     expect(mains).toHaveLength(0);
   });

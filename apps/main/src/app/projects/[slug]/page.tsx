@@ -5,6 +5,7 @@ import {
 import { getFullAssetUrl, getFullUrl } from "@katie-portfolio/content";
 import { notFound } from "next/navigation";
 import { ContentDetail } from "../../ui/ContentDetail";
+import { generateOgImage } from "../../lib/og-image";
 
 const EMPTY_SLUG = "NON-EXISTENT-SLUG";
 
@@ -52,7 +53,12 @@ export async function generateMetadata({ params }: ProjectPageProps) {
       url: canonical,
       images: [
         {
-          url: fullImageUrl,
+          url:
+            fullImageUrl ??
+            generateOgImage({
+              title: project.title,
+              subtitle: project.excerpt,
+            }),
           alt: project.title,
         },
       ],

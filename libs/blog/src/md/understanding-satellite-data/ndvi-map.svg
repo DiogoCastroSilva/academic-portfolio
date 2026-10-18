@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="450" viewBox="0 0 800 450" role="img" aria-label="NDVI map of California showing vegetation density">
+  <defs>
+    <linearGradient id="ndvi-gradient" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#2d0029"/>
+      <stop offset="25%" stop-color="#3b0f45"/>
+      <stop offset="50%" stop-color="#4a2a4d"/>
+      <stop offset="75%" stop-color="#6ba34d"/>
+      <stop offset="100%" stop-color="#286b30"/>
+    </linearGradient>
+  </defs>
+  <rect width="800" height="450" fill="#87ceeb"/>
+  <path d="M0 300 Q150 280 300 310 T600 300 T800 290 V450 H0 Z" fill="#87ceeb"/>
+  <rect x="50" y="50" width="700" height="200" fill="url(#ndvi-gradient)"/>
+  <path d="M50 250 Q200 230 400 260 T750 250 V300 H50 Z" fill="#6ba34d"/>
+  <circle cx="150" cy="150" r="40" fill="#2d0029"/>
+  <circle cx="550" cy="120" r="30" fill="#4a2a4d"/>
+  <circle cx="650" cy="180" r="35" fill="#286b30"/>
+  <text x="400" y="420" text-anchor="middle" font-family="system-ui" font-size="14" fill="#334159">
+    NDVI map of California — dark green = dense vegetation, brown = sparse
+  </text>
+</svg>
