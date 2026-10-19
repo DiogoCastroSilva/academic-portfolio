@@ -107,6 +107,9 @@ The CI workflow (`.github/workflows/ci.yml`) runs all checks on every push and d
 ## License
 
 - **Code and configuration:** [MIT](./LICENSE) — reuse the template structure freely
-- **Portfolio content** (text, images, publications, blog posts in `libs/*/src/md/`): Licensed under [CC BY-NC-ND 4.0](https://creativecommons.org/licenses/by-nc-nd/4.0/). Do not copy sample content into your own portfolio. See [TEMPLATE_USAGE.md](./TEMPLATE_USAGE.md) for fork/customization guidance.
+- **Portfolio content** (text, images, publications, blog posts in `libs/*/src/md/`): Licensed under [CC BY-NC-ND 4.0](https://creativecommons.org/licenses/by-nc-nd/4.0/). Do not copy sample content into your own portfolio.
+- **Your own content:** No license is imposed by the template. Replace the sample content with your own and license it however you choose.
+
+See [TEMPLATE_USAGE.md](./TEMPLATE_USAGE.md) for fork/customization guidance and [ADR-0007](./docs/architecture/decisions/0007-licensing-policy.md) for the full licensing policy.
 
 [![CI](https://github.com/DiogoCastroSilva/academic-portfolio/actions/workflows/ci.yml/badge.svg)](https://github.com/DiogoCastroSilva/academic-portfolio/actions/workflows/ci.yml)

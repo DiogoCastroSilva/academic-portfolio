@@ -220,7 +220,7 @@ The shared `ContentCardSection` defaults to showing six items on the homepage vi
 - Ensure draft entries never appear in generated SEO output.
 - Ignore and remove generated TypeScript build-info/cache artifacts from version control.
 - Refresh dependency/security documentation using a new audit; clearly separate current findings from old audit counts.
-- Resolve the repository-code license versus portfolio-content license/template-reuse documentation mismatch. State separately what license applies to code, sample content, and owner-supplied content.
+- ~~Resolve the repository-code license versus portfolio-content license/template-reuse documentation mismatch. State separately what license applies to code, sample content, and owner-supplied content.~~ ✅ ADR-0007 created — MIT for code, CC BY-NC-ND 4.0 for sample content, no license imposed on owner-supplied content
 - Remove stale roadmap items that are already implemented, and update status tables when fixes land.
 
 **Exit criteria:** Metadata and generated assets are correct for representative routes and deployment modes; documentation reflects the current code and licensing intent.
