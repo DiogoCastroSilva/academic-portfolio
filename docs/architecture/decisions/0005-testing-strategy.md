@@ -14,7 +14,7 @@
 - **Evidence or validation:**
   - `libs/content` has 141 tests (73 content-library + 14 profile-loader + 39 marked-extensions + 15 constants) covering all content-processing scenarios including publication-specific field parsing and validation, URL resolution, semantic figure rendering, gallery detection, and raw HTML postprocess.
   - `libs/navigation` has 23 tests validating the navigation configuration and component a11y.
-  - `apps/main` has 110 component tests (4 JsonLd, 12 structured-data, 5 reduced-motion, 2 og-image, 3 sitemap, plus a11y coverage).
+  - `apps/main` has 110 component tests (4 JsonLd, 12 structured-data, 5 reduced-motion, 2 og-image, 3 sitemap, plus a11y coverage), plus collection/page-level tests added in Phase 3.
   - `libs/utils` has 8 tests validating the shared `expectNoA11yViolations` helper and utility functions.
-  - Total: 282 tests across 25 test files. All pass: `npx nx run-many --target=test --all`.
+  - Total: 242 tests across 23 test files. All pass: `npx nx run-many --target=test --all`.
 - **Conditions for revisiting:** If browser-level integration testing is needed (e.g., for the mobile navigation toggle or ContentDetail rendering), a Playwright or Vitest Browser mode setup can be added.

@@ -1,7 +1,7 @@
 # ADR-0001: Static hosting on GitHub Pages
 
 - **Status:** Accepted
-- **Context:** Kathleen needs a low-maintenance, free hosting solution for an academic portfolio. The site is content-driven and does not require server-side rendering or dynamic routes at request time.
+- **Context:** The repository is a single Next.js website that needs a low-maintenance, free hosting solution for an academic portfolio. The site is content-driven and does not require server-side rendering or dynamic routes at request time.
 - **Decision:** Use Next.js static export (`output: "export"`) deployed to GitHub Pages via the `peaceiris/actions-gh-pages` GitHub Action.
 - **Alternatives considered:**
   - **Vercel:** Offers excellent Next.js integration but introduces a dependency on a third-party service and potential cost at scale.

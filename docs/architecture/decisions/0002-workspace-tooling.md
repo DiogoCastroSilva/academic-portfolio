@@ -26,7 +26,7 @@
 - **Phase 3 verification (post-modernization):**
   - **Clean-install:** `npm ci` completes without errors; 7 projects detected by Nx.
   - **Build reliability:** `nx build main` succeeds (~1.0s), runs all dependency targets (`sync-content-assets`, `generate-og-images`, `^typecheck`) in order.
-  - **Full CI pass:** `npx nx run-many -t lint test typecheck build --all` passes: 7 projects, 0 lint errors, 287 tests passing, all typecheck targets pass.
+  - **Full CI pass:** `npx nx run-many -t lint test typecheck build --all` passes: 7 projects, 0 lint errors, 242 tests passing, all typecheck targets pass.
   - **Module boundary enforcement verified:** Deliberately imported `@katie-portfolio/projects` from `libs/content` (a `foundation` library) and confirmed ESLint flags the `@nx/enforce-module-boundaries` violation with a clear error including the violating file path.
   - **Configuration cleanup performed:** Removed duplicate `generate-sitemap` target that was defined in both `apps/main/project.json` and `apps/main/package.json`; consolidated to a single definition in `project.json` with `dependsOn: ["build"]`.
   - **Configuration lines:** `nx.json` (10 lines) + `project.json` files (1 per project) + per-project `"nx"` sections in `package.json` = ~50 total lines across 7 projects.
