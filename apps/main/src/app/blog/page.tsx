@@ -8,10 +8,10 @@ import { Pagination } from "../ui/Pagination";
 
 export const metadata = {
   title: "Blog",
-  description: `Science, nature-based solutions, and field notes by ${siteConfig.name}.`,
+  description: `Field notes and updates by ${siteConfig.name}.`,
   openGraph: {
     title: `Blog | ${siteConfig.name}`,
-    description: `Science, nature-based solutions, and field notes by ${siteConfig.name}.`,
+    description: `Field notes and updates by ${siteConfig.name}.`,
     type: "website",
     images: [
       {

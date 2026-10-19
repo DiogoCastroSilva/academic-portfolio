@@ -13,10 +13,10 @@ const aboutCanonical = getFullUrl("/about/");
 
 export const metadata = {
   title: "About",
-  description: `Learn more about ${siteConfig.name}, their research, and background.`,
+  description: `Learn more about ${siteConfig.name} and their background.`,
   openGraph: {
     title: `About | ${siteConfig.name}`,
-    description: `Learn more about ${siteConfig.name}, their research, and background.`,
+    description: `Learn more about ${siteConfig.name} and their background.`,
     type: "website",
     images: [
       {

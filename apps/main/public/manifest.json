@@ -1,7 +1,7 @@
 {
   "name": "Academic Portfolio",
   "short_name": "Portfolio",
-  "description": "Academic portfolio — science, nature-based solutions, projects, and publications.",
+  "description": "Academic portfolio.",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#1e293b",

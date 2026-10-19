@@ -12,9 +12,7 @@ export const metadata = {
     default: siteConfig.name,
     template: `%s | ${siteConfig.name}`,
   },
-  description:
-    siteConfig.description ??
-    `Portfolio of ${siteConfig.name} — science, nature-based solutions, projects, and publications.`,
+  description: siteConfig.description ?? `Portfolio of ${siteConfig.name}.`,
   // metadataBase enables Next.js to resolve relative OG image URLs and canonical links.
   metadataBase: siteConfig.deploymentUrl
     ? new URL(siteConfig.deploymentUrl)
@@ -36,9 +34,7 @@ export const metadata = {
     url: getSiteUrl(),
     siteName: siteConfig.name,
     title: siteConfig.name,
-    description:
-      siteConfig.description ??
-      `Portfolio of ${siteConfig.name} — science, nature-based solutions, projects, and publications.`,
+    description: siteConfig.description ?? `Portfolio of ${siteConfig.name}.`,
     images: [
       {
         url: ogImageRef("home.svg"),

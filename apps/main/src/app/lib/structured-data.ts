@@ -76,8 +76,7 @@ export function buildArticleSchema(content: ContentItemMeta): JsonLdData {
 /** WebSite schema for the homepage. */
 export function buildWebSiteSchema(): JsonLdData {
   const description =
-    siteConfig.description ??
-    `Portfolio of ${siteConfig.name} — science, nature-based solutions, projects, and publications.`;
+    siteConfig.description ?? `Portfolio of ${siteConfig.name}.`;
 
   return {
     "@context": "https://schema.org",
