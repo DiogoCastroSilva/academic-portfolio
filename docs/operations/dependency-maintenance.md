@@ -47,11 +47,24 @@ Check for security vulnerabilities:
 npm audit
 ```
 
-Current status after modernization (71 vulnerabilities, reduced from 99):
+Current status after modernization (36 vulnerabilities, reduced from 99):
 
-- Most remaining vulnerabilities are in transitive dependencies of Nx and Vite/Vitest.
-- No direct dependencies have known critical vulnerabilities.
-- Consider running `npm audit fix` for safe automatic fixes, but review changes before committing.
+- **0 critical, 0 low, 20 moderate, 16 high** (down from 4 critical, 70 total).
+- All 4 critical vulnerabilities (happy-dom, proxy-addr, shell-quote, websocket-driver) eliminated.
+  These were in dev-only dependencies (test environment and build tooling), not in production
+  dependencies — confirmed via `npm ls --omit=dev`.
+- The remaining 16 high and 20 moderate vulnerabilities are in transitive dependencies of:
+  - Nx and Vite/Vitest (build/test tooling)
+  - Next.js and webpack-dev-server (dev server)
+  - Module Federation (build-time DTS plugin)
+- No direct production dependencies have known critical or high vulnerabilities.
+- happy-dom upgraded from 15.x to ^20.14.6 to resolve the critical RCE advisory
+  (GHSA-37j7-fg3j-429f). Test setup updated to suppress a known harmless
+  AbortError from motion-dom animation teardown in happy-dom 20+.
+
+Note: the system `npm` (v10.9.7) has an `edgesOut` bug that prevents
+`npm audit fix` and `npm install` from running. Use `npx npm@11` to
+apply security-related dependency updates.
 
 ## Shared Tooling Updates
 
