@@ -12,7 +12,7 @@ title: "Paper Title"
 date: "2024-06-10"
 tags: ["Machine Learning", "Research"]
 excerpt: "A brief abstract for the publication card."
-team: "Dr. Alex Morgan, Dr. Jane Researcher"
+team: "Alex Morgan, Taylor Kim"
 image: paper-cover.png
 links:
   - "https://arxiv.org/abs/2406.xxxxx"
