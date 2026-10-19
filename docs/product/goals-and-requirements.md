@@ -214,14 +214,14 @@ The shared `ContentCardSection` defaults to showing six items on the homepage vi
 
 **Priority: P2**
 
-- Make page titles and descriptions derive from the editable site/profile data, not a specific person's name.
-- Fix/test Open Graph selection: use a real content cover when present and generated title-based imagery when absent.
-- Verify canonical URLs, sitemap entries, robots rules, and social image paths under both root-domain and GitHub Pages project-site/base-path deployments.
-- Ensure draft entries never appear in generated SEO output.
-- Ignore and remove generated TypeScript build-info/cache artifacts from version control.
-- Refresh dependency/security documentation using a new audit; clearly separate current findings from old audit counts.
-- ~~Resolve the repository-code license versus portfolio-content license/template-reuse documentation mismatch. State separately what license applies to code, sample content, and owner-supplied content.~~ ✅ ADR-0007 created — MIT for code, CC BY-NC-ND 4.0 for sample content, no license imposed on owner-supplied content
-- Remove stale roadmap items that are already implemented, and update status tables when fixes land.
+- ✅ Make page titles and descriptions derive from the editable site/profile data, not a specific person's name
+- ✅ Fix/test Open Graph selection: use a real content cover when present and generated title-based imagery when absent
+- ✅ Verify canonical URLs, sitemap entries, robots rules, and social image paths under both root-domain and GitHub Pages project-site/base-path deployments
+- ✅ Ensure draft entries never appear in generated SEO output
+- ✅ Ignore and remove generated TypeScript build-info/cache artifacts from version control
+- ✅ Refresh dependency/security documentation using a new audit; clearly separate current findings from old audit counts
+- ✅ ~~Resolve the repository-code license versus portfolio-content license/template-reuse documentation mismatch. State separately what license applies to code, sample content, and owner-supplied content.~~ — ADR-0007 created — MIT for code, CC BY-NC-ND 4.0 for sample content, no license imposed on owner-supplied content
+- ✅ Remove stale roadmap items and update status tables (ADRs, README, goals updated)
 
 **Exit criteria:** Metadata and generated assets are correct for representative routes and deployment modes; documentation reflects the current code and licensing intent.
 
