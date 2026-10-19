@@ -369,3 +369,54 @@ describe("Markdown HTML policy", () => {
     expect(html).toContain("<script>");
   });
 });
+
+// ---------------------------------------------------------------------------
+// Heading level shifting
+// ---------------------------------------------------------------------------
+
+describe("heading level shifting", () => {
+  const config: ContentRendererConfig = {
+    publicPrefix: "/content",
+  };
+
+  function renderMarkdown(md: string): string {
+    return createMarkedInstance(config).parse(md) as string;
+  }
+
+  it("shifts h1 (#) down to h2", () => {
+    const html = renderMarkdown("# My Heading");
+    expect(html).toContain("<h2>");
+    expect(html).toContain("My Heading</h2>");
+    expect(html).not.toContain("<h1>");
+  });
+
+  it("shifts h2 (##) down to h3", () => {
+    const html = renderMarkdown("## Section Title");
+    expect(html).toContain("<h3>");
+    expect(html).toContain("Section Title</h3>");
+  });
+
+  it("shifts h3 (###) down to h4", () => {
+    const html = renderMarkdown("### Subsection");
+    expect(html).toContain("<h4>");
+    expect(html).toContain("Subsection</h4>");
+  });
+
+  it("caps heading at h6", () => {
+    // ###### is the deepest heading in markdown (h6). After shifting by +1,
+    // it should cap at h6 (not go to h7).
+    const html = renderMarkdown("###### Deepest");
+    expect(html).toContain("<h6>");
+    expect(html).toContain("Deepest</h6>");
+  });
+
+  it("never produces h1 in rendered markdown content", () => {
+    const html = renderMarkdown("# Top\n## Sub\n### Sub-sub\n#### Deep");
+    // The page-level H1 is reserved for the title; markdown content must
+    // never introduce duplicate h1 elements.
+    expect(html).not.toContain("<h1");
+    expect(html).toContain("<h2");
+    expect(html).toContain("<h3");
+    expect(html).toContain("<h4");
+  });
+});

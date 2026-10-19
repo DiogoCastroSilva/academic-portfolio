@@ -516,7 +516,7 @@ This is **bold** text.`,
         date: "2024-06-10",
       }),
     );
-    expect(content!.body).toContain("<h1>Hello World</h1>");
+    expect(content!.body).toContain("<h2>Hello World</h2>");
     expect(content!.body).toContain("<strong>bold</strong>");
 
     cleanup();
@@ -934,7 +934,7 @@ Paragraph with **bold** and *italic* text.`,
     });
 
     const content = await lib.getContentBySlug("post");
-    expect(content!.body).toContain("<h1>Heading</h1>");
+    expect(content!.body).toContain("<h2>Heading</h2>");
     expect(content!.body).toContain("<strong>bold</strong>");
     expect(content!.body).toContain("<em>italic</em>");
 

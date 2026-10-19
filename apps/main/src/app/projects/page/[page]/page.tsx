@@ -56,6 +56,7 @@ export default async function ProjectsPage({ params }: ProjectsPageProps) {
       <ContentCardSection
         heading="Projects"
         headingId={`projects-page-${currentPage}-heading`}
+        headingLevel="h1"
         items={pageItems}
         hrefPrefix="/projects"
         emptyMessage="Projects are coming soon."

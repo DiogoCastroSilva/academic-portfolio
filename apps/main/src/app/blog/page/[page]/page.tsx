@@ -56,6 +56,7 @@ export default async function BlogPage({ params }: BlogPageProps) {
       <ContentCardSection
         heading="Blog"
         headingId={`blog-page-${currentPage}-heading`}
+        headingLevel="h1"
         items={pageItems}
         hrefPrefix="/blog"
         emptyMessage="New posts coming soon."

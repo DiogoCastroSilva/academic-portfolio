@@ -35,6 +35,7 @@ export default function ProjectsPage() {
       <ContentCardSection
         heading="Projects"
         headingId="projects-heading"
+        headingLevel="h1"
         items={pageItems}
         hrefPrefix="/projects"
         emptyMessage="Projects are coming soon."

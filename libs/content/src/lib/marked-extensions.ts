@@ -205,6 +205,31 @@ function renderParagraph(
 }
 
 // ---------------------------------------------------------------------------
+// Heading renderer — shifts levels down by 1
+// ---------------------------------------------------------------------------
+
+/**
+ * Markdown content is always rendered below a page-level H1 (e.g. the post
+ * title in ContentDetail, or the person's name in AboutHero/AboutSection).
+ *
+ * To enforce the heading-hierarchy rule — "Markdown content headings start
+ * at H2 (since H1 is reserved for the page title)" — this renderer shifts
+ * every heading level down by 1:
+ *
+ * - `#`  (h1) → `<h2>`
+ * - `##` (h2) → `<h3>`
+ * - `###` (h3) → `<h4>`
+ * - ... capped at `<h6>`
+ *
+ * This prevents duplicate H1s and keeps the document outline sequential
+ * (h1 → h2 → h3 → …) with no skipped levels.
+ */
+function renderHeading(token: Tokens.Heading): string {
+  const shiftedDepth = Math.min(token.depth + 1, 6);
+  return `<h${shiftedDepth}>${token.text}</h${shiftedDepth}>`;
+}
+
+// ---------------------------------------------------------------------------
 // walkTokens — resolve hrefs on image and link tokens
 // ---------------------------------------------------------------------------
 
@@ -318,6 +343,7 @@ export function createContentRenderer(config: ContentRendererConfig): {
     image: (token: Tokens.Image) => renderFigure(token, config),
     link: renderLink as RendererObject["link"],
     paragraph: renderParagraph as RendererObject["paragraph"],
+    heading: renderHeading as RendererObject["heading"],
   };
 
   const hooks = {

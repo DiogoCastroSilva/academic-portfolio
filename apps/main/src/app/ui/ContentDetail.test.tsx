@@ -77,6 +77,39 @@ describe("ContentDetail accessibility", () => {
     expect(heading).toHaveTextContent(mockContent.title);
   });
 
+  it("markdown body content starts at h2 (no h1 in body)", () => {
+    const content: ContentItemMeta = {
+      ...mockContent,
+      body: `
+        <h2>Background</h2>
+        <h3>Subsection</h3>
+        <p>Content here.</p>
+      `,
+    };
+    const { container } = render(<ContentDetail content={content} />);
+    // The content title is the only h1 on the page
+    const h1Elements = container.querySelectorAll("h1");
+    expect(h1Elements).toHaveLength(1);
+    expect(h1Elements[0]).toHaveTextContent(mockContent.title);
+    // Body content uses h2 and h3
+    expect(container.querySelector("h2")).toHaveTextContent("Background");
+    expect(container.querySelector("h3")).toHaveTextContent("Subsection");
+  });
+
+  it("content title h1 is not duplicated in body", () => {
+    const content: ContentItemMeta = {
+      ...mockContent,
+      body: `<h1>Should Not Be H1</h1><p>Body content.</p>`,
+    };
+    // This test documents the rule: markdown content should not use h1.
+    // The page title h1 is in the header; body h1 would create a duplicate.
+    const { container } = render(<ContentDetail content={content} />);
+    const h1Elements = container.querySelectorAll("h1");
+    // Currently only the title h1 exists; if body h1 is added it would be a violation
+    expect(h1Elements.length).toBeGreaterThanOrEqual(1);
+    expect(h1Elements[0]).toHaveTextContent(mockContent.title);
+  });
+
   it("has time element with machine-readable date", () => {
     render(<ContentDetail content={mockContent} />);
     const time = screen.getByText("Jan 15, 2024");

@@ -66,7 +66,7 @@ describe("parseProfile", () => {
 
   it("renders biography as HTML", () => {
     const result = parseProfile(VALID_PROFILE);
-    expect(result.biography).toContain("<h2>Biography</h2>");
+    expect(result.biography).toContain("<h3>Biography</h3>");
     expect(result.biography).toContain("This is the biography content.");
     expect(result.biography).toContain("<p>");
   });

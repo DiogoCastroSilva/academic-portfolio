@@ -121,7 +121,7 @@ The repository should demonstrate:
 | Navigation marks the active section on collection and nested detail routes                              | Implemented; isPathActive() uses segment-aware prefix matching; NavBar and MobileNavLinks both use it |
 | Collection pages show every item or provide pagination; never silently truncate content                 | Implemented; collection pages use ContentCardSection with all items; pagination via Pagination component with 10 items per page |
 | Pagination appears only when more than one page exists                                                  | Implemented; static pagination via Pagination component (returns null when totalPages u2264 1), generateStaticParams for pages 1..N, 0/1/10/11/20/21 item test coverage |
-| Heading hierarchy and typography are consistent across homepage, lists, details, and Markdown content   | Audit item: define and test page-level H1 and nested content heading behavior                                                     |
+| Heading hierarchy and typography are consistent across homepage, lists, details, and Markdown content   | Implemented; collection pages use headingLevel="h1" for page title, ContentCardSection defaults to "h2", markdown headings shifted +1 to start at H2, prose-h1 styling removed from ContentDetail |
 | Motion is purposeful, restrained, performant, and respects reduced-motion preferences                   | Existing CSS supports reduced motion; review animation density and consistency                                                    |
 
 ## Roadmap

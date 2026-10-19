@@ -35,6 +35,7 @@ export default function PublicationsPage() {
       <ContentCardSection
         heading="Publications"
         headingId="publications-heading"
+        headingLevel="h1"
         items={pageItems}
         hrefPrefix="/publications"
         emptyMessage="Publications are coming soon."

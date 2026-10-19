@@ -11,6 +11,14 @@ type ContentCardSectionProps = {
   items: ContentMeta[];
   hrefPrefix: string;
   /**
+   * HTML heading level for the section title.
+   * Use `"h1"` on collection listing pages (where the heading is the
+   * page title) and `"h2"` everywhere else (e.g. the homepage, where
+   * the name H1 already serves as the page title).
+   * @default "h2"
+   */
+  headingLevel?: "h1" | "h2";
+  /**
    * Maximum number of items to display in the card grid.
    * When omitted, ALL items are displayed (used by collection listing
    * pages that slice items server-side via `paginate()`).
@@ -38,6 +46,7 @@ export function ContentCardSection({
   headingId,
   items,
   hrefPrefix,
+  headingLevel = "h2",
   limit,
   tagsLimit = 2,
   emptyMessage = "No items to display at this time.",
@@ -45,17 +54,18 @@ export function ContentCardSection({
   viewAllLabel = "View all",
 }: ContentCardSectionProps) {
   const visibleItems = items.slice(0, limit);
+  const HeadingTag: "h1" | "h2" = headingLevel;
   return (
     <section
       className="mx-4 rounded-2xl bg-white p-12 text-slate-900 shadow-sm dark:bg-sky-50"
       aria-labelledby={headingId ?? heading}
     >
-      <h2
+      <HeadingTag
         id={headingId ?? heading}
         className="mb-6 text-2xl font-bold text-slate-900"
       >
         {heading}
-      </h2>
+      </HeadingTag>
       {visibleItems.length === 0 && emptyMessage ? (
         <p className="text-slate-700 dark:text-gray-700">{emptyMessage}</p>
       ) : (

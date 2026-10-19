@@ -35,6 +35,7 @@ export default function BlogPage() {
       <ContentCardSection
         heading="Blog"
         headingId="blog-heading"
+        headingLevel="h1"
         items={pageItems}
         hrefPrefix="/blog"
         emptyMessage="New posts coming soon."

@@ -58,6 +58,7 @@ export default async function PublicationsPage({
       <ContentCardSection
         heading="Publications"
         headingId={`publications-page-${currentPage}-heading`}
+        headingLevel="h1"
         items={pageItems}
         hrefPrefix="/publications"
         emptyMessage="Publications are coming soon."

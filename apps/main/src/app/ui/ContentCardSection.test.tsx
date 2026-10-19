@@ -224,3 +224,70 @@ describe("ContentCardSection accessibility", () => {
     expect(screen.getByText("Item 7")).toBeInTheDocument();
   });
 });
+
+describe("ContentCardSection heading hierarchy", () => {
+  const items: ContentMeta[] = [
+    {
+      slug: "test",
+      title: "Test",
+      date: "2024-01-15",
+      tags: [],
+      imageSrc: "/placeholder.svg",
+    },
+  ];
+
+  it("defaults heading to h2", () => {
+    const { container } = render(
+      <ContentCardSection
+        heading="Projects"
+        headingId="projects-heading"
+        items={items}
+        hrefPrefix="/projects"
+      />,
+    );
+    const heading = container.querySelector("h2");
+    expect(heading).toHaveTextContent("Projects");
+    expect(container.querySelector("h1")).toBeNull();
+  });
+
+  it('renders heading as h1 when headingLevel prop is "h1"', () => {
+    const { container } = render(
+      <ContentCardSection
+        heading="Projects"
+        headingId="projects-heading"
+        headingLevel="h1"
+        items={items}
+        hrefPrefix="/projects"
+      />,
+    );
+    const heading = container.querySelector("h1");
+    expect(heading).toHaveTextContent("Projects");
+    expect(container.querySelector("h2")).toBeNull();
+  });
+
+  it('renders heading as h2 when headingLevel prop is "h2"', () => {
+    const { container } = render(
+      <ContentCardSection
+        heading="Projects"
+        headingId="projects-heading"
+        headingLevel="h2"
+        items={items}
+        hrefPrefix="/projects"
+      />,
+    );
+    expect(container.querySelector("h2")).toHaveTextContent("Projects");
+    expect(container.querySelector("h1")).toBeNull();
+  });
+
+  it("card titles are h3 (one level below heading)", () => {
+    const { container } = render(
+      <ContentCardSection
+        heading="Projects"
+        headingId="projects-heading"
+        items={items}
+        hrefPrefix="/projects"
+      />,
+    );
+    expect(container.querySelector("h3")).toHaveTextContent("Test");
+  });
+});

@@ -80,9 +80,9 @@ vi.mock("../lib/og-image", () => ({
 import PublicationsPage from "./page";
 
 describe("PublicationsPage", () => {
-  it("renders publications listing heading", () => {
+  it("renders publications listing heading as h1 (page-level title)", () => {
     const { container } = render(<PublicationsPage />);
-    const heading = container.querySelector("h2");
+    const heading = container.querySelector("h1");
     expect(heading).toHaveTextContent("Publications");
   });
 
