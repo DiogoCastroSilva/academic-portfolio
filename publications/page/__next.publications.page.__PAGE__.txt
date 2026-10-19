@@ -1,0 +1,58 @@
+1:"$Sreact.fragment"
+2:"static/chunks/825-5ef58e99accc81d7.js"
+3:"static/chunks/app/layout-df1e957d2320dffe.js"
+4:I[1128,["825","$2","177","$3"],"NavBar"]
+5:I[9630,[],""]
+6:"static/chunks/app/error-67049539385438d3.js"
+7:I[6009,["825","$2","39","$6"],"default"]
+8:I[1380,[],""]
+9:"static/chunks/app/not-found-6aaae78a0e586f18.js"
+a:I[5587,["825","$2","345","$9"],""]
+13:I[887,[],"OutletBoundary"]
+14:"$Sreact.suspense"
+17:"ViewportBoundary"
+18:I[887,[],"$17"]
+19:"MetadataBoundary"
+1a:I[887,[],"$19"]
+:HL["/academic-portfolio/_next/static/css/a619e880c67eaa0e.css","style"]
+:HL["/images/profile.webp","image",{"type":"image/webp"}]
+c:X
+f:X
+f:C
+12:[["children",{"s":"__PAGE__","h":160,"d":{"r":["$","$1","c",{"children":[["$","meta",null,{"httpEquiv":"refresh","content":"0;url=/publications/"}],null,["$","$L13",null,{"children":["$","$14",null,{"name":"Next.MetadataOutlet","children":"$@15"}]}]]}],"p":"$@16","v":null,"s":"$c"}}]]
+10:[["children",{"s":"page","h":96,"d":{"r":["$","$1","c",{"children":[null,["$","$L5",null,{"parallelRouterKey":"children","template":["$","$L8",null,{}]}]]}],"p":"$@11","v":"$f","s":"$c"},"c":"$Q12"}]]
+d:[["children",{"s":"publications","h":96,"d":{"r":["$","$1","c",{"children":[null,["$","$L5",null,{"parallelRouterKey":"children","template":["$","$L8",null,{}]}]]}],"p":"$@e","v":"$f","s":"$c"},"c":"$Q10"}]]
+0:{"t":{"t":{"s":"","h":80,"d":{"r":["$","$1","c",{"children":[[["$","link","0",{"rel":"stylesheet","href":"/academic-portfolio/_next/static/css/a619e880c67eaa0e.css","precedence":"next"}]],["$","html",null,{"lang":"en","suppressHydrationWarning":true,"children":["$","body",null,{"suppressHydrationWarning":true,"className":"min-h-full bg-stone-100 dark:bg-slate-800","children":[["$","div",null,{"className":"flex min-h-full flex-col","children":[["$","$L4",null,{"name":"Kathleen Miller","items":[{"name":"Projects","href":"/projects"},{"name":"Publications","href":"/publications"},{"name":"About","href":"/about"}]}],["$","main",null,{"className":"flex-1","children":["$","$L5",null,{"parallelRouterKey":"children","error":"$7","errorStyles":[],"errorScripts":null,"template":["$","$L8",null,{}],"notFound":[["$","main",null,{"className":"mx-auto flex min-h-[calc(100vh-6rem)] flex-col items-center justify-center px-4 py-16 text-center","children":["$","div",null,{"className":"rounded-3xl bg-white p-10 shadow-sm ring-1 ring-slate-200 dark:bg-slate-900 dark:ring-slate-700","children":[["$","p",null,{"className":"text-sm font-semibold tracking-[0.3em] text-sky-600 uppercase","children":"404"}],["$","h1",null,{"className":"mt-4 text-4xl font-bold tracking-tight text-slate-900 dark:text-white","children":"Page not found"}],["$","p",null,{"className":"mt-4 max-w-xl text-base leading-7 text-slate-600 dark:text-slate-300","children":"The page you are looking for does not exist or has been moved. Please check the URL or return to the homepage."}],["$","$La",null,{"href":"/","className":"mt-8 inline-flex rounded-full bg-slate-900 px-6 py-3 text-sm font-semibold text-white transition hover:bg-slate-700 dark:bg-slate-100 dark:text-slate-900 dark:hover:bg-slate-200","children":"Return home"}]]}]}],[]]}]}],["$","footer",null,{"className":"py-4","children":["$","div",null,{"className":"mx-auto flex w-full max-w-6xl flex-col gap-4 px-4 sm:px-6 dark:text-white","children":["$","div",null,{"className":"flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between","children":[["$","p",null,{"className":"text-sm leading-6","children":["© ",2026," ","Kathleen Miller",". Licensed under"," ",["$","a",null,{"href":"https://creativecommons.org/licenses/by-nc-nd/4.0/","target":"_blank","rel":"noopener noreferrer","className":"underline transition-colors duration-200 hover:text-slate-900 dark:hover:text-slate-100","children":"CC BY-NC-ND 4.0"}],". Code licensed under"," ",["$","a",null,{"href":"https://opensource.org/licenses/MIT","target":"_blank","rel":"noopener noreferrer","className":"underline transition-colors duration-200 hover:text-slate-900 dark:hover:text-slate-100","children":"MIT"}],"."]}],["$","div",null,{"className":"flex flex-wrap gap-4 text-sm","children":[["$","a",null,{"href":"https://www.linkedin.com/in/kathleen-rose-miller/","target":"_blank","rel":"noopener noreferrer","className":"underline transition-colors duration-200 hover:text-slate-900 dark:hover:text-slate-100","children":"LinkedIn"}],["$","a",null,{"href":"https://github.com/katiemiller17","target":"_blank","rel":"noopener noreferrer","className":"underline transition-colors duration-200 hover:text-slate-900 dark:hover:text-slate-100","children":"GitHub"}],["$","a",null,{"href":"mailto:katie.miller6572@gmail.com","className":"underline transition-colors duration-200 hover:text-slate-900 dark:hover:text-slate-100","children":"Email"}]]}]]}]}]}]]}],null,["$","link",null,{"rel":"preload","as":"image","href":"/images/profile.webp","type":"image/webp"}]]}]}]]}],"p":"$@b","v":null,"s":"$c"},"c":"$Qd"},"h":{"r":["$","$1","h",{"children":[null,["$","$L18",null,{"children":[["$","meta","0",{"charSet":"utf-8"}],["$","meta","1",{"name":"viewport","content":"width=device-width, initial-scale=1"}]]}],["$","$L1a",null,{"children":[["$","div",null,{"hidden":true,"children":["$","$14",null,{"name":"Next.Metadata","children":[["$","title","0",{"children":"Kathleen Miller"}],["$","meta","1",{"name":"description","content":"Portfolio of Kathleen Miller — science, nature-based solutions, projects, and publications."}],["$","link","2",{"rel":"manifest","href":"/manifest.json"}],["$","meta","3",{"name":"robots","content":"index, follow"}],["$","meta","4",{"name":"googlebot","content":"index, follow"}],"$L1b","$L1c","$L1d","$L1e","$L1f","$L20","$L21","$L22","$L23","$L24","$L25","$L26","$L27","$L28","$L29","$L2a","$L2b","$L2c","$L2d","$L2e","$L2f","$L30"]}]}],null]}],null]}],"p":"$@31","v":null,"s":"$c"}},"a":"$@32","u":"$@33","b":"lihjQU55YoNLP2e1f130f"}
+34:I[214,[],"IconMark"]
+15:null
+1b:["$","link","5",{"rel":"canonical","href":"https://diogocastrosilva.github.io/academic-portfolio/"}]
+1c:["$","meta","6",{"property":"og:title","content":"Kathleen Miller"}]
+1d:["$","meta","7",{"property":"og:description","content":"Portfolio of Kathleen Miller — science, nature-based solutions, projects, and publications."}]
+1e:["$","meta","8",{"property":"og:url","content":"https://diogocastrosilva.github.io/academic-portfolio/"}]
+1f:["$","meta","9",{"property":"og:site_name","content":"Kathleen Miller"}]
+20:["$","meta","10",{"property":"og:locale","content":"en_US"}]
+21:["$","meta","11",{"property":"og:image","content":"https://diogocastrosilva.github.io/academic-portfolio/academic-portfolio/og/home.svg"}]
+22:["$","meta","12",{"property":"og:image:width","content":"1200"}]
+23:["$","meta","13",{"property":"og:image:height","content":"630"}]
+24:["$","meta","14",{"property":"og:image:alt","content":"Kathleen Miller — Portfolio"}]
+25:["$","meta","15",{"property":"og:type","content":"website"}]
+26:["$","meta","16",{"name":"twitter:card","content":"summary_large_image"}]
+27:["$","meta","17",{"name":"twitter:title","content":"Kathleen Miller"}]
+28:["$","meta","18",{"name":"twitter:description","content":"Portfolio of Kathleen Miller — science, nature-based solutions, projects, and publications."}]
+29:["$","meta","19",{"name":"twitter:image","content":"https://diogocastrosilva.github.io/academic-portfolio/academic-portfolio/og/home.svg"}]
+2a:["$","meta","20",{"name":"twitter:image:alt","content":"Kathleen Miller — Portfolio"}]
+2b:["$","meta","21",{"name":"twitter:image:width","content":"1200"}]
+2c:["$","meta","22",{"name":"twitter:image:height","content":"630"}]
+2d:["$","link","23",{"rel":"icon","href":"/favicon.ico"}]
+2e:["$","link","24",{"rel":"icon","href":"/favicon.svg","type":"image/svg+xml"}]
+2f:["$","link","25",{"rel":"apple-touch-icon","href":"/favicon.svg","type":"image/svg+xml"}]
+30:["$","$L34","26",{}]
+c:300
+33:true
+c:C
+32:0
+11:"$undefined"
+e:"$undefined"
+b:"$undefined"
+31:"$undefined"
+16:"$undefined"
