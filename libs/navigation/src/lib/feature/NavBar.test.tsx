@@ -87,4 +87,28 @@ describe("NavBar accessibility", () => {
 
     expect(screen.getAllByText("Blog")).toHaveLength(2);
   });
+
+  it("marks Projects active on /projects detail route", () => {
+    render(<NavBar currentPath="/projects/example-project" />);
+    const projectsLinks = screen.getAllByText("Projects");
+    projectsLinks.forEach((link) => {
+      expect(link).toHaveAttribute("aria-current", "page");
+    });
+  });
+
+  it("marks Blog active on /blog detail route", () => {
+    render(<NavBar currentPath="/blog/my-post" />);
+    const blogLinks = screen.getAllByText("Blog");
+    blogLinks.forEach((link) => {
+      expect(link).toHaveAttribute("aria-current", "page");
+    });
+  });
+
+  it("does not mark Projects active on /projects-archive route", () => {
+    render(<NavBar currentPath="/projects-archive" />);
+    const projectsLinks = screen.getAllByText("Projects");
+    projectsLinks.forEach((link) => {
+      expect(link).not.toHaveAttribute("aria-current");
+    });
+  });
 });

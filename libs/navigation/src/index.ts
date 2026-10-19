@@ -3,6 +3,7 @@ export {
   baseNavigation,
   blogNavigationItem,
   getNavigation,
+  isPathActive,
   navigation,
 } from "./lib/feature/config.js";
 export type { NavigationItem } from "./lib/feature/config.js";

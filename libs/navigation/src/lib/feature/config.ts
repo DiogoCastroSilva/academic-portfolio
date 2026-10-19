@@ -33,3 +33,25 @@ export const navigation: NavigationItem[] = [
 export function getNavigation(hasBlogPosts: boolean): NavigationItem[] {
   return hasBlogPosts ? navigation : baseNavigation;
 }
+
+/**
+ * Determine whether a navigation item is "active" for the given current path.
+ *
+ * Uses segment-aware prefix matching: the current path must either be an
+ * exact match or start with the item's href followed by a `/` separator.
+ * This prevents false positives like `/projects-archive/` matching `/projects`.
+ *
+ * @example
+ * isPathActive("/projects/example-project", "/projects")  // true
+ * isPathActive("/projects", "/projects")                   // true
+ * isPathActive("/projects-archive", "/projects")          // false
+ * isPathActive("/blog/my-post", "/blog")                  // true
+ */
+export function isPathActive(
+  currentPath: string | undefined,
+  itemHref: string,
+): boolean {
+  if (!currentPath) return false;
+  if (currentPath === itemHref) return true;
+  return currentPath.startsWith(itemHref + "/");
+}

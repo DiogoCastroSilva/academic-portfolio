@@ -5,7 +5,7 @@ import { usePathname } from "next/navigation";
 import { useState } from "react";
 import { MobileMenuButton } from "../ui/MobileMenuButton.js";
 import { MobileNavLinks } from "../ui/MobileNavLinks.js";
-import { getNavigation, type NavigationItem } from "./config.js";
+import { getNavigation, isPathActive, type NavigationItem } from "./config.js";
 
 export type { NavigationItem };
 
@@ -57,7 +57,9 @@ export function NavBar({
                 <Link
                   key={item.name}
                   href={item.href}
-                  aria-current={activePath === item.href ? "page" : undefined}
+                  aria-current={
+                    isPathActive(activePath, item.href) ? "page" : undefined
+                  }
                   className="aria-current/page:border-b-2 aria-current/page:border-white transition-all duration-200 hover:text-cyan-200 focus-visible:text-cyan-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cyan-500 dark:text-white"
                 >
                   {item.name}

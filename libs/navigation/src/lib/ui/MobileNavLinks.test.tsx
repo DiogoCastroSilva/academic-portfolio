@@ -130,4 +130,32 @@ describe("MobileNavLinks accessibility", () => {
     const aboutLink = screen.getByText("About");
     expect(aboutLink).not.toHaveAttribute("aria-current");
   });
+
+  it("marks Projects active on /projects detail route", () => {
+    render(
+      <MobileNavLinks
+        isMenuOpen={true}
+        currentPath="/projects/example-project"
+      />,
+    );
+
+    const projectsLink = screen.getByText("Projects");
+    expect(projectsLink).toHaveAttribute("aria-current", "page");
+  });
+
+  it("marks Blog active on /blog detail route", () => {
+    render(<MobileNavLinks isMenuOpen={true} currentPath="/blog/my-post" />);
+
+    const blogLink = screen.getByText("Blog");
+    expect(blogLink).toHaveAttribute("aria-current", "page");
+  });
+
+  it("does not mark Projects active on /projects-archive route", () => {
+    render(
+      <MobileNavLinks isMenuOpen={true} currentPath="/projects-archive" />,
+    );
+
+    const projectsLink = screen.getByText("Projects");
+    expect(projectsLink).not.toHaveAttribute("aria-current");
+  });
 });

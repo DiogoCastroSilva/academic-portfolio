@@ -2,6 +2,7 @@ import {
   baseNavigation,
   blogNavigationItem,
   getNavigation,
+  isPathActive,
   navigation,
 } from "./config.js";
 
@@ -63,5 +64,40 @@ describe("navigation config", () => {
 
   it("getNavigation(false) equals baseNavigation", () => {
     expect(getNavigation(false)).toEqual(baseNavigation);
+  });
+
+  // ---------------------------------------------------------------------------
+  // isPathActive — segment-aware prefix matching
+  // ---------------------------------------------------------------------------
+
+  it("isPathActive returns true for exact match", () => {
+    expect(isPathActive("/projects", "/projects")).toBe(true);
+    expect(isPathActive("/about", "/about")).toBe(true);
+    expect(isPathActive("/blog", "/blog")).toBe(true);
+  });
+
+  it("isPathActive returns true for nested detail routes", () => {
+    expect(isPathActive("/projects/example-project", "/projects")).toBe(true);
+    expect(
+      isPathActive("/projects/example-project/sub/page", "/projects"),
+    ).toBe(true);
+    expect(isPathActive("/blog/my-post", "/blog")).toBe(true);
+    expect(isPathActive("/publications/my-paper", "/publications")).toBe(true);
+  });
+
+  it("isPathActive returns false for sibling routes with similar prefixes", () => {
+    expect(isPathActive("/projects-archive", "/projects")).toBe(false);
+    expect(isPathActive("/blogging", "/blog")).toBe(false);
+    expect(isPathActive("/about-us", "/about")).toBe(false);
+  });
+
+  it("isPathActive returns false for root path on section pages", () => {
+    expect(isPathActive("/", "/projects")).toBe(false);
+    expect(isPathActive("", "/blog")).toBe(false);
+  });
+
+  it("isPathActive handles trailing slashes", () => {
+    expect(isPathActive("/projects/", "/projects")).toBe(true);
+    expect(isPathActive("/blog/", "/blog")).toBe(true);
   });
 });
