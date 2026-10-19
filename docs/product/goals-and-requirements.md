@@ -99,7 +99,7 @@ The repository should demonstrate:
 | Nx module-boundary rules are effective                                          | Implemented                                                               |
 | Lockfile supports reproducible clean install                                    | Previously verified with `npm ci`; repeat during clean-fork test          |
 | TypeScript strictness and useful lint rules are not weakened to bypass failures | Previously verified; preserve                                             |
-| Generated build/cache artifacts are not tracked                                 | Roadmap item: ignore/remove tracked `*.tsbuildinfo` artifacts             |
+| Generated build/cache artifacts are not tracked                                 | Verified: `*.tsbuildinfo` already in `.gitignore`; no tracked artifacts found             |
 | Dependency security status is current and documented                            | Re-run audit; old vulnerability counts are historical, not current status |
 | Content paths and workspace execution assumptions are explicit and tested       | Review content path resolution during correctness pass                    |
 
