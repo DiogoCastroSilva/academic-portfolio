@@ -41,9 +41,9 @@ The workflow is in `.github/workflows/ci.yml`:
 
 ### For a fork
 
-When Kathleen forks this repository into her own GitHub account:
+When you fork this repository into your own GitHub account:
 
-1. **Repository name:** If she names it `kathleen-miller.github.io`, the site will be served at `https://kathleen-miller.github.io/` with no base path.
+1. **Repository name:** If you name it `{username}.github.io`, the site will be served at `https://{username}.github.io/` with no base path.
 2. **Base path:** The CI workflow automatically detects this case and sets `NEXT_PUBLIC_BASE_PATH=""`.
 3. **Deployment URL:** The CI workflow sets `NEXT_PUBLIC_DEPLOYMENT_URL` to the correct URL.
 4. **GitHub Pages settings:** Must be configured in the fork's Settings → Pages.
@@ -83,6 +83,58 @@ analytics: {
 - To disable analytics locally: `NEXT_PUBLIC_CLOUDFLARE_ANALYTICS_DISABLED=true`
 - To override the token: `NEXT_PUBLIC_CLOUDFLARE_ANALYTICS_TOKEN=your-token`
 - The `CloudflareAnalytics` component validates the token format (32-character hex) before rendering the beacon script.
+
+## Clean-Fork Acceptance Test Checklist
+
+This checklist verifies that a scientist with no frontend experience can
+fork, personalize, and deploy this portfolio template without editing
+application code.
+
+### Prerequisites
+
+- [ ] A GitHub account
+- [ ] No paid GitHub features required (only public repositories + GitHub Pages)
+- [ ] Node.js 22.x (`.nvmrc` specifies version 22)
+
+### Fork and deploy
+
+- [ ] Use "Use this template" to create a new repository (e.g., `username.github.io`)
+- [ ] Enable GitHub Pages: **Settings → Pages → Deploy from a workflow → `CI & Deploy` → `main`**
+- [ ] Push to `main` triggers CI → site deploys to GitHub Pages automatically
+- [ ] No manually-set secrets are required
+
+### Personalization checklist
+
+| #   | Action                                                                       | Expected result                                         |
+| --- | ---------------------------------------------------------------------------- | ------------------------------------------------------- |
+| 1   | Edit `libs/content/src/md/profile.md` (name, bio, photo)                     | Site reflects new profile on `/about/`                  |
+| 2   | Add a new project under `libs/projects/src/md/new-project/` with `README.md` | Appears in `/projects/` list and its own detail page    |
+| 3   | Add a project with `draft: true`                                             | Does NOT appear in `/projects/` list or sitemap         |
+| 4   | Delete `draft: true` from a project                                          | Now appears in `/projects/` list and sitemap            |
+| 5   | Replace `cover.jpg` in a project folder                                      | New image appears in OG image and detail page           |
+| 6   | Add a publication under `libs/publications/src/md/`                          | Appears in `/publications/` with authors/venue metadata |
+| 7   | Delete all sample entries from a collection                                  | Collection page renders intentional empty state         |
+| 8   | Update `apps/main/src/configs/site-config.ts` (site name, description)       | Metadata (title, description, OG) reflects changes      |
+
+### No-code confirmation
+
+- [ ] No edits to any `.tsx`/`.ts` files under `apps/main/src/app/`
+- [ ] No edits to any `.ts` files under `libs/` (except `src/md/` markdown)
+- [ ] No dependency installation or Nx configuration changes
+
+### Post-deployment verification
+
+- [ ] Sitemap (`https://username.github.io/sitemap.xml`) contains all published routes
+- [ ] Sitemap excludes drafts, error pages (`404`, `non-existent-slug`)
+- [ ] `robots.txt` has `Allow: /` and correct `Sitemap:` directive
+- [ ] All URLs include the GitHub Pages base path (`/repo` or root for user sites)
+- [ ] Internal links resolve correctly (no 404s from base-path mismatches)
+
+### Definition of done
+
+- [ ] All checklist items pass
+- [ ] Fork owner confirms they never needed to touch application code
+- [ ] CI workflow runs and deploys with zero manual configuration
 
 ## Manual Deployment
 
