@@ -13,6 +13,7 @@ export type JsonLdData = Record<string, unknown>;
 /** Person schema for the About page. */
 export function buildPersonSchema(profile: ProfileData): JsonLdData {
   const profileImage = getFullAssetUrl(profile.imageSrc);
+  const aboutUrl = getFullUrl("/about/");
 
   return {
     "@context": "https://schema.org",
@@ -22,7 +23,7 @@ export function buildPersonSchema(profile: ProfileData): JsonLdData {
     ...(profile.location ? { location: profile.location } : {}),
     jobTitle: profile.role,
     ...(profile.email ? { email: profile.email } : {}),
-    url: getFullUrl("/about/"),
+    ...(aboutUrl ? { url: aboutUrl } : {}),
     sameAs: [profile.linkedInUrl, profile.githubUrl].filter(Boolean),
   };
 }
@@ -45,7 +46,9 @@ export function buildArticleSchema(content: ContentItemMeta): JsonLdData {
     headline: content.title,
     datePublished: content.date,
     ...(image ? { image } : {}),
-    url: getFullUrl(`${content.href}/`),
+    ...(getFullUrl(`${content.href}/`)
+      ? { url: getFullUrl(`${content.href}/`) }
+      : {}),
     ...(content.excerpt ? { description: content.excerpt } : {}),
   };
 
@@ -80,7 +83,7 @@ export function buildWebSiteSchema(): JsonLdData {
     "@context": "https://schema.org",
     "@type": "WebSite",
     name: siteConfig.name,
-    url: getFullUrl("/"),
+    ...(getFullUrl("/") ? { url: getFullUrl("/") } : {}),
     description,
   };
 }
@@ -97,6 +100,6 @@ export function buildSiteAuthorSchema(
     "@type": "Person",
     name: profileName,
     ...(image ? { image } : {}),
-    url: getFullUrl("/about/"),
+    ...(getFullUrl("/about/") ? { url: getFullUrl("/about/") } : {}),
   };
 }

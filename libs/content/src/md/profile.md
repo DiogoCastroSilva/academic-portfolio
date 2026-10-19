@@ -1,5 +1,13 @@
 ---
 title: "Profile"
+# ── TEMPLATE PLACEHOLDER ──────────────────────────────────────────────
+# This is sample content for the template. Replace ALL fields below
+# with your real information before deploying your portfolio.
+# The `description`, `email`, `linkedInUrl`, and `githubUrl` fields
+# are optional — remove any you do not want to display publicly.
+# Email uses the reserved example.com domain (never real).
+# ───────────────────────────────────────────────────────────────────────
+
 name: "Dr. Alex Morgan"
 role: "PhD Researcher | Earth Observation | Climate Solutions"
 description: "Earth observation researcher developing machine learning and remote sensing methods for climate change mitigation and agricultural monitoring."

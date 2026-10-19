@@ -86,6 +86,34 @@ describe("generate-sitemap", () => {
     expect(sitemap).not.toContain("/non-existent-slug/");
   });
 
+  it("excludes page-1 redirect stubs from paginated collections", () => {
+    fixture.writeFile("index.html");
+    fixture.writeFile("projects/index.html");
+    // Page 1 is a redirect stub (meta http-equiv="refresh") — not content
+    fixture.writeFile("projects/page/1/index.html");
+    // Page 2 has real content — should be included
+    fixture.writeFile("projects/page/2/index.html");
+    fixture.writeFile("blog/page/1/index.html");
+
+    const { sitemap } = runSitemap(BASE_URL, fixture.tmpDir);
+    const urls = sitemap.match(/<loc>([^<]*)<\/loc>/g) || [];
+
+    // Redirect stubs excluded
+    expect(urls).not.toContain(
+      "<loc>https://example.com/portfolio/projects/page/1/</loc>",
+    );
+    expect(urls).not.toContain(
+      "<loc>https://example.com/portfolio/blog/page/1/</loc>",
+    );
+    // Real content pages still included
+    expect(urls).toContain(
+      "<loc>https://example.com/portfolio/projects/</loc>",
+    );
+    expect(urls).toContain(
+      "<loc>https://example.com/portfolio/projects/page/2/</loc>",
+    );
+  });
+
   it("generates robots.txt with correct directives", () => {
     fixture.writeFile("index.html");
 

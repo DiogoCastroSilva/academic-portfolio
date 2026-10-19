@@ -73,11 +73,18 @@ Cloudflare Web Analytics is configured in `apps/main/src/configs/site-config.ts`
 ```typescript
 analytics: {
   cloudflare: {
-    token: process.env.NEXT_PUBLIC_CLOUDFLARE_ANALYTICS_TOKEN ?? "fallback-token",
-    enabled: process.env.NEXT_PUBLIC_CLOUDFLARE_ANALYTICS_DISABLED !== "true",
+    token: process.env.NEXT_PUBLIC_CLOUDFLARE_ANALYTICS_TOKEN ?? "",
+    enabled:
+      process.env.NEXT_PUBLIC_CLOUDFLARE_ANALYTICS_DISABLED !== "true" &&
+      Boolean(process.env.NEXT_PUBLIC_CLOUDFLARE_ANALYTICS_TOKEN),
   },
 }
 ```
+
+Analytics is **disabled by default**. To enable:
+
+1. Set `NEXT_PUBLIC_CLOUDFLARE_ANALYTICS_TOKEN` to your Cloudflare Web Analytics token.
+2. Analytics is automatically enabled when a token is present and `NEXT_PUBLIC_CLOUDFLARE_ANALYTICS_DISABLED` is not `"true"`.
 
 - The token is a **public identifier**, not a secret. It is safe to commit a fallback value to source control.
 - To disable analytics locally: `NEXT_PUBLIC_CLOUDFLARE_ANALYTICS_DISABLED=true`
@@ -114,7 +121,7 @@ application code.
 | 5   | Replace `cover.jpg` in a project folder                                      | New image appears in OG image and detail page           |
 | 6   | Add a publication under `libs/publications/src/md/`                          | Appears in `/publications/` with authors/venue metadata |
 | 7   | Delete all sample entries from a collection                                  | Collection page renders intentional empty state         |
-| 8   | Update `apps/main/src/configs/site-config.ts` (site name, description)       | Metadata (title, description, OG) reflects changes      |
+| 8   | Edit `libs/content/src/md/profile.md` (`name`, `description`, contact links) | Metadata (title, description, OG) reflects changes      |
 
 ### No-code confirmation
 

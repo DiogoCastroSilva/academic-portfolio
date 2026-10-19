@@ -1,6 +1,7 @@
 import { describe, expect, it, vi } from "vitest";
 
 import type { ProfileData, ContentItemMeta } from "@academic-portfolio/content";
+import { getFullUrl } from "@academic-portfolio/content";
 import {
   buildPersonSchema,
   buildArticleSchema,
@@ -29,7 +30,7 @@ vi.mock("@academic-portfolio/content", async (importOriginal) => {
       researchInterests: [],
       skills: [],
     }),
-    getFullUrl: (path: string) => `https://example.com/portfolio${path}`,
+    getFullUrl: vi.fn((path: string) => `https://example.com/portfolio${path}`),
     getFullAssetUrl: (publicPath: string) =>
       `https://example.com/portfolio${publicPath.replace(/^\/portfolio/, "")}`,
     getDeploymentUrl: () => "https://example.com/portfolio",
@@ -101,6 +102,23 @@ describe("buildPersonSchema", () => {
     const schema = buildPersonSchema(profileNoEmail);
 
     expect(schema).not.toHaveProperty("email");
+  });
+
+  it("omits url when deployment URL is not configured", () => {
+    // Simulate no deployment URL: getFullUrl returns undefined
+    vi.mocked(getFullUrl).mockReturnValueOnce(undefined);
+    const schema = buildPersonSchema(mockProfile);
+
+    expect(schema).not.toHaveProperty("url");
+  });
+
+  it("still includes other fields when url is omitted", () => {
+    vi.mocked(getFullUrl).mockReturnValueOnce(undefined);
+    const schema = buildPersonSchema(mockProfile);
+
+    expect(schema.name).toBe("Dr. Jane Doe");
+    expect(schema.email).toBe("jane@example.com");
+    expect(schema).not.toHaveProperty("url");
   });
 });
 
@@ -213,6 +231,13 @@ describe("buildWebSiteSchema", () => {
 
     expect(schema.description).toBeTruthy();
   });
+
+  it("omits url when deployment URL is not configured", () => {
+    vi.mocked(getFullUrl).mockReturnValueOnce(undefined);
+    const schema = buildWebSiteSchema();
+
+    expect(schema).not.toHaveProperty("url");
+  });
 });
 
 describe("buildSiteAuthorSchema", () => {
@@ -235,5 +260,12 @@ describe("buildSiteAuthorSchema", () => {
     const schema = buildSiteAuthorSchema("Dr. Jane Doe", undefined);
 
     expect(schema).not.toHaveProperty("image");
+  });
+
+  it("omits url when deployment URL is not configured", () => {
+    vi.mocked(getFullUrl).mockReturnValueOnce(undefined);
+    const schema = buildSiteAuthorSchema("Dr. Jane Doe", undefined);
+
+    expect(schema).not.toHaveProperty("url");
   });
 });

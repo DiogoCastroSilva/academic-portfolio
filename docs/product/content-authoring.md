@@ -2,6 +2,42 @@
 
 This guide explains how to add and edit projects, publications, and profile content on the portfolio site. No knowledge of React, Next.js, TypeScript, or the content-processing code is required.
 
+## Quick Reference — Task-to-File Mapping
+
+Every personal or site-level change maps to a specific file or directory. Edit Markdown for content; the only configuration file you may need is `site-config.ts` for advanced settings.
+
+| Want to…                                                   | Edit                                        | Field(s) / detail                                                                               |
+| ---------------------------------------------------------- | ------------------------------------------- | ----------------------------------------------------------------------------------------------- |
+| Change your name (shown in titles and NavBar)              | `libs/content/src/md/profile.md`            | `name` (required)                                                                               |
+| Change your professional title / role                      | `libs/content/src/md/profile.md`            | `role` (required)                                                                               |
+| Change the SEO description (search/social previews)        | `libs/content/src/md/profile.md`            | `description` (optional)                                                                        |
+| Change your location (shown in structured data)            | `libs/content/src/md/profile.md`            | `location` (optional)                                                                           |
+| Change your profile photo                                  | `libs/content/src/md/profile.md`            | `image` (optional; default `profile.jpeg`)                                                      |
+| Add/remove your email, LinkedIn, or GitHub                 | `libs/content/src/md/profile.md`            | `email`, `linkedInUrl`, `githubUrl` (all optional)                                              |
+| Update your biography text                                 | `libs/content/src/md/profile.md`            | Markdown body after frontmatter                                                                 |
+| Add/edit education entries                                 | `libs/content/src/md/profile.md`            | `education` array (see [Education Entries](#education-entries))                                 |
+| Add/edit research interests                                | `libs/content/src/md/profile.md`            | `researchInterests` array                                                                       |
+| Add/edit skills                                            | `libs/content/src/md/profile.md`            | `skills` array (see [Skill Category Entries](#skill-category-entries))                          |
+| Add a project                                              | `libs/projects/src/md/{slug}/README.md`     | See [Project Content](#project-content)                                                         |
+| Add a publication                                          | `libs/publications/src/md/{slug}/README.md` | See [Publication Content](#publication-content)                                                 |
+| Add a blog post                                            | `libs/blog/src/md/{slug}/README.md`         | Same frontmatter rules as projects                                                              |
+| Draft/unpublish an entry                                   | Any `README.md` in a content directory      | `draft: true` (remove to publish)                                                               |
+| Change the site title suffix (appended to all page titles) | **No edit needed**                          | Derived from `profile.name` automatically                                                       |
+| Enable/disable Cloudflare Analytics                        | `apps/main/src/configs/site-config.ts`      | `NEXT_PUBLIC_CLOUDFLARE_ANALYTICS_TOKEN` / `NEXT_PUBLIC_CLOUDFLARE_ANALYTICS_DISABLED` env vars |
+| Change the deployment URL / base path (GitHub Pages)       | **No edit needed**                          | Derived automatically from repository name in CI                                                |
+
+## Site Configuration
+
+Site configuration lives in `apps/main/src/configs/site-config.ts`. Most fields are read from `profile.md` at build time so you do not need to edit this file for routine changes. The file also exposes:
+
+| Setting                             | Source                                        | Description                                                                                  |
+| ----------------------------------- | --------------------------------------------- | -------------------------------------------------------------------------------------------- |
+| `name`, `role`, `description`       | `profile.md` frontmatter                      | Displayed in titles, OG metadata, and JSON-LD                                                |
+| `email`, `linkedInUrl`, `githubUrl` | `profile.md` frontmatter                      | Rendered in footer and Person schema (omitted when absent)                                   |
+| `contentLicense`                    | Hardcoded (CC BY-NC-ND 4.0)                   | License for sample content (see [ADR-0007](architecture/decisions/0007-licensing-policy.md)) |
+| `deploymentUrl`                     | `NEXT_PUBLIC_DEPLOYMENT_URL`                  | Set by CI from the repository name; can be set for local builds                              |
+| `analytics`                         | `NEXT_PUBLIC_CLOUDFLARE_ANALYTICS_*` env vars | Disabled by default; set a token to enable                                                   |
+
 ## Content Locations
 
 | Content type | Directory                        |
