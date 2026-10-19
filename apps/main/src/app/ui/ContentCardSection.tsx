@@ -67,7 +67,24 @@ export function ContentCardSection({
         {heading}
       </HeadingTag>
       {visibleItems.length === 0 && emptyMessage ? (
-        <p className="text-slate-600 dark:text-slate-600">{emptyMessage}</p>
+        <div className="flex flex-col items-center justify-center py-12 text-center">
+          <svg
+            aria-hidden="true"
+            className="mb-4 h-12 w-12 text-sky-300"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={1.5}
+              d="M9 12h6m-6 2h6m2 6a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2zM9 9h.01M9 9a.75.75 0 11-1.5 0V8a.75.75 0 011.5 0v1z"
+            />
+          </svg>
+          <p className="text-slate-600 dark:text-slate-600">{emptyMessage}</p>
+        </div>
       ) : (
         <>
           <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">

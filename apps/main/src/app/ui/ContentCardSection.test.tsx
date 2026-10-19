@@ -291,3 +291,38 @@ describe("ContentCardSection heading hierarchy", () => {
     expect(container.querySelector("h3")).toHaveTextContent("Test");
   });
 });
+
+
+describe("ContentCardSection empty state", () => {
+  it("renders an icon alongside the empty message", () => {
+    const { container } = render(
+      <ContentCardSection
+        heading="Projects"
+        headingId="projects-heading"
+        items={[]}
+        hrefPrefix="/projects"
+        emptyMessage="No projects yet."
+      />,
+    );
+    // An inline SVG icon should be present in the empty state
+    const emptyIcon = container.querySelector("svg");
+    expect(emptyIcon).toBeInTheDocument();
+    expect(emptyIcon).toHaveAttribute("aria-hidden", "true");
+  });
+
+  it("centers the empty state content vertically and horizontally", () => {
+    const { container } = render(
+      <ContentCardSection
+        heading="Projects"
+        headingId="projects-heading"
+        items={[]}
+        hrefPrefix="/projects"
+        emptyMessage="No projects yet."
+      />,
+    );
+    const emptyDiv = container.querySelector(".flex-col.items-center");
+    expect(emptyDiv).toBeInTheDocument();
+    expect(emptyDiv).toHaveClass("justify-center");
+    expect(emptyDiv).toHaveClass("text-center");
+  });
+});
