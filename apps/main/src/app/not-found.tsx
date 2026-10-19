@@ -1,7 +1,8 @@
 import Link from "next/link";
+import { siteConfig } from "../configs/site-config";
 
 export const metadata = {
-  title: "Page Not Found | Kathleen Miller",
+  title: `Page Not Found | ${siteConfig.name}`,
   description: "The page you are looking for does not exist.",
 };
 
