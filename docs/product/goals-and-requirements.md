@@ -118,6 +118,11 @@ The repository should demonstrate:
 | Sitemap dates reflect defensible content/build dates rather than an arbitrary current date              | Previously reported fixed; retain regression test                          |
 | Personal metadata derives from editable profile/site configuration rather than hardcoded names in pages | Roadmap item                                                               |
 | Empty states and sample entries look intentional                                                        | Roadmap item                                                               |
+| Navigation marks the active section on collection and nested detail routes                                  | Roadmap item: exact-path matching currently misses nested project/publication/blog routes |
+| Collection pages show every item or provide pagination; never silently truncate content                     | Audit finding: shared card section defaults to six items with no page navigation |
+| Pagination appears only when more than one page exists                                                       | Roadmap item: build-time static pagination and accessible current-page state |
+| Heading hierarchy and typography are consistent across homepage, lists, details, and Markdown content        | Audit item: define and test page-level H1 and nested content heading behavior |
+| Motion is purposeful, restrained, performant, and respects reduced-motion preferences                       | Existing CSS supports reduced motion; review animation density and consistency |
 
 ## Roadmap
 
@@ -152,20 +157,46 @@ This roadmap is ordered by user impact and correctness, not by adding more featu
 
 **Exit criteria:** A non-frontend owner can find every editable detail from the main README and make routine content changes without touching React/Next.js components.
 
-### Phase 3 — Visual consistency and accessibility
+### Phase 3 — Visual consistency, navigation, and accessibility
 
-**Priority: P1/P2**
+**Priority: P1 — core quality requirement**
 
-- Resolve the light/dark theme surface and prose contrast mismatch found in the detail-page styling.
+- Resolve the light/dark theme surface and prose contrast mismatch found in the detail-page styling, including dates, tags, card surfaces, links, and body prose.
 - Use semantic tokens consistently for surfaces, text, muted text, borders, links, accent colors, and focus rings where that simplifies maintenance.
 - Check homepage, about, project, publication, and blog pages in both themes and at mobile/desktop widths.
-- Verify keyboard navigation, visible focus, heading hierarchy, link distinction, image alt text, captions, and reduced-motion behavior.
+- Fix active navigation matching: a detail route such as `/projects/example-project/` must mark Projects as the current section. Use segment-aware path matching (not a naive prefix that could match unrelated paths) and consistent behavior in desktop and mobile navigation.
+- Show the active state with a clear visual indicator and `aria-current="page"` where appropriate; do not communicate state by color alone.
+- Establish a compact typography system for body text, page titles, section headings, card titles, metadata, and long-form Markdown. Check readable line length, line-height, spacing, and responsive sizes.
+- Audit heading hierarchy: one clear page-level H1, section headings in order, no levels skipped for styling, and a deliberate rule for headings authored inside Markdown detail content.
+- Review repeated components for consistent card image ratios, padding, borders, radii, text lengths, link treatment, empty states, and responsive breakpoints.
+- Keep animations purposeful and subtle. Audit the existing staggered card entrance, image zoom, and title movement for excessive motion, visual noise, and performance impact; avoid animating every item on long pages. Respect `prefers-reduced-motion` for all motion.
+- Verify keyboard navigation, visible and unobscured focus, link distinction, image alt text, captions, semantic landmarks, touch target sizes, and reduced-motion behavior.
+- Use WCAG 2.2 AA as the practical target, supported by automated checks and manual keyboard/zoom/reflow testing; automated scans alone are not sufficient.
 - Ensure placeholder images and empty states are visibly intentional.
 - Keep the UI system compact; do not create a separate design-system package without a concrete need.
 
-**Exit criteria:** No known contrast/layout defects; key routes pass automated accessibility checks and a documented manual keyboard/responsive smoke test.
+**Exit criteria:** No known contrast/layout defects; active navigation works for all parent/detail routes; typography and heading structure are consistent; key routes pass automated accessibility checks and a documented manual keyboard/responsive smoke test.
 
-### Phase 4 — SEO, metadata, and repository hygiene
+### Phase 4 — Collection pagination and long-list behavior
+
+**Priority: P1/P2 — content must never disappear silently**
+
+The current shared `ContentCardSection` defaults to showing six items via `items.slice(0, limit)`, but collection pages do not provide pagination. Once a collection exceeds six items, later entries are silently omitted from the listing. Fix this before treating collection pages as complete.
+
+- Add a reusable, static-export-compatible pagination pattern for blog posts, projects, and publications.
+- Start with **10 items per page** as a reasonable content/scanability default. Keep the page size in one shared configuration; change it only if visual and performance testing provides evidence for a better value.
+- Render pagination controls **only when total items exceed the page size**. For zero items, show the empty state; for one through ten items, show the full list and no pagination controls.
+- Generate all listing pages at build time for Next.js static export/GitHub Pages. Do not depend on client-only filtering, server runtime, or query-string behavior that fails on static hosting.
+- Preserve deterministic ordering (date descending for dated content unless a documented section-specific order applies) so items do not move unpredictably between pages.
+- Provide accessible Previous/Next links, numbered pages where useful, a visible current-page state, descriptive labels, keyboard focus, and sensible first/last-page behavior. Do not render disabled links that navigate nowhere.
+- Ensure each page has appropriate title/description/canonical behavior and that sitemap/SEO output does not expose drafts or invalid page routes.
+- Avoid rendering the same full collection on every page when a simple shared pagination helper can slice it at build time. Since this is a static site, the page size is a usability and page-weight choice, not a substitute for image optimization.
+- Add tests for 0, 1, exactly 10, 11, 20, and 21 items; verify every published item appears exactly once across pages, no item is silently lost, and no pagination controls appear when there is only one page.
+- Keep the homepage's featured/recent sections intentionally limited, but make that limit explicit and ensure the full collection is available through its collection page.
+
+**Exit criteria:** Every published item is reachable; listing pages generate deterministically for static export; pagination is absent when there is only one page; the clean-fork test verifies the behavior.
+
+### Phase 5 — SEO, metadata, and repository hygiene
 
 **Priority: P2**
 
@@ -180,7 +211,7 @@ This roadmap is ordered by user impact and correctness, not by adding more featu
 
 **Exit criteria:** Metadata and generated assets are correct for representative routes and deployment modes; documentation reflects the current code and licensing intent.
 
-### Phase 5 — Documentation and clean-fork acceptance test
+### Phase 6 — Documentation and clean-fork acceptance test
 
 **Priority: P1 — release gate**
 
