@@ -1,6 +1,6 @@
 # Documentation Index
 
-This directory contains the full documentation for the Katie Portfolio project.
+This directory contains the full documentation for the academic portfolio template.
 Start with the document that matches your goal:
 
 | If you want to…                                          | Read                                                                         |
@@ -26,3 +26,4 @@ Start with the document that matches your goal:
 | [0004](architecture/decisions/0004-content-validation-and-rendering.md) | Runtime frontmatter validation       | Invalid content fails the build                                |
 | [0005](architecture/decisions/0005-testing-strategy.md)                 | Vitest as sole test framework        | No Jest compatibility                                          |
 | [0006](architecture/decisions/0006-shared-frontend-tooling.md)          | Adopt shared Prettier/ESLint configs | Upstream changes require workspace updates                     |
+| [0007](architecture/decisions/0007-licensing-policy.md)                 | Three-tier licensing policy          | Separate licenses for code, sample content, and owner content  |

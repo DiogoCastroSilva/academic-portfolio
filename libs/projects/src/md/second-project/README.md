@@ -7,7 +7,7 @@ draft: true
 image:
 ---
 
-<!-- TODO(katie): This is a template/placeholder project. Replace this content
+<!-- TODO(owner): This is a template/placeholder project. Replace this content
      with the real project description, add relevant images, and remove the
      `draft: true` line after filling in the details. -->
 

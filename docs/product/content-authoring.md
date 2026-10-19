@@ -226,7 +226,7 @@ date: "2024-06-10"
 tags: ["Machine Learning", "Deep Learning"]
 excerpt: "A brief abstract for the publication card."
 authors:
-  - "Katie Silva"
+  - "Dr. Sam Carter"
   - "Dr. Jane Researcher"
 venue: "Nature Climate Change"
 doi: "10.1038/s41558-024-01495-3"
