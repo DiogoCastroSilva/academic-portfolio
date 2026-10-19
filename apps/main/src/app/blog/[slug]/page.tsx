@@ -41,7 +41,10 @@ export async function generateMetadata({ params }: BlogPostPageProps) {
 
   const description = post.excerpt || `Blog: ${post.title}`;
   const canonical = getFullUrl(`${post.href}/`);
-  const fullImageUrl = getFullAssetUrl(post.imageSrc);
+  const fullImageUrl =
+    post.imageType === "cover"
+      ? getFullAssetUrl(post.imageSrc)
+      : undefined;
 
   return {
     title: post.title,

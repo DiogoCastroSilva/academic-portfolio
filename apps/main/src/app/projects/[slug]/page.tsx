@@ -40,7 +40,10 @@ export async function generateMetadata({ params }: ProjectPageProps) {
 
   const description = project.excerpt || `Project: ${project.title}`;
   const canonical = getFullUrl(`${project.href}/`);
-  const fullImageUrl = getFullAssetUrl(project.imageSrc);
+  const fullImageUrl =
+    project.imageType === "cover"
+      ? getFullAssetUrl(project.imageSrc)
+      : undefined;
 
   return {
     title: project.title,

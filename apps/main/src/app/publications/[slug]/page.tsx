@@ -41,7 +41,10 @@ export async function generateMetadata({ params }: PublicationPageProps) {
   const description =
     publication.excerpt || `Publication: ${publication.title}`;
   const canonical = getFullUrl(`${publication.href}/`);
-  const fullImageUrl = getFullAssetUrl(publication.imageSrc);
+  const fullImageUrl =
+    publication.imageType === "cover"
+      ? getFullAssetUrl(publication.imageSrc)
+      : undefined;
 
   return {
     title: publication.title,
