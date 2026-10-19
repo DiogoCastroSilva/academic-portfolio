@@ -39,6 +39,20 @@ const mockProjects: ContentMeta[] = [
   },
 ];
 
+const mockPublications: ContentMeta[] = [
+  {
+    slug: "test-publication",
+    href: "/publications/test-publication",
+    title: "Test Publication",
+    date: "2024-01-15",
+    tags: [],
+    authors: ["Test Author"],
+    venue: "Test Journal",
+    imageSrc: "/publications/test-publication/cover.webp",
+    imageType: "cover",
+  },
+];
+
 const mockBlogPost: ContentMeta = {
   slug: "test-post",
   href: "/blog/test-post",
@@ -67,7 +81,7 @@ vi.mock("@katie-portfolio/projects", () => ({
 }));
 
 vi.mock("@katie-portfolio/publications", () => ({
-  getAllPublications: () => [],
+  getAllPublications: vi.fn(() => []),
   getPublicationContentBySlug: vi.fn(),
 }));
 
@@ -100,15 +114,30 @@ vi.mock("./ui/ContentCardSection", () => ({
   ContentCardSection: ({
     heading,
     items,
+    limit,
+    viewAllHref,
+    viewAllLabel,
   }: {
     heading: string;
     items: ContentMeta[];
+    limit?: number;
+    viewAllHref?: string;
+    viewAllLabel?: string;
   }) => (
     <section data-testid="card-section" data-heading={heading}>
       <h2>{heading}</h2>
-      {items.map((item) => (
+      {(limit ? items.slice(0, limit) : items).map((item) => (
         <article key={item.slug}>{item.title}</article>
       ))}
+      {viewAllHref && items.length > 0 && (
+        <a
+          data-testid="view-all-link"
+          href={viewAllHref}
+          aria-label={viewAllLabel}
+        >
+          {viewAllLabel}
+        </a>
+      )}
     </section>
   ),
 }));
@@ -128,6 +157,7 @@ vi.mock("./lib/og-image", () => ({
 // Import after mocks
 import Index from "./page";
 import { getAllBlogPosts } from "@katie-portfolio/blog";
+import { getAllPublications } from "@katie-portfolio/publications";
 
 describe("Homepage", () => {
   it("hides Blog section when no published blog posts exist", () => {
@@ -151,5 +181,65 @@ describe("Homepage", () => {
     expect(headings).toContain("Blog");
 
     expect(screen.getByText("Test Blog Post")).toBeInTheDocument();
+  });
+
+  it("shows 'View all posts' link pointing to /blog when blog posts exist", () => {
+    vi.mocked(getAllBlogPosts).mockReturnValue([mockBlogPost]);
+
+    render(<Index />);
+
+    const allLinks = screen.getAllByTestId("view-all-link");
+    const blogViewAll = allLinks.find(
+      (a) => a.getAttribute("href") === "/blog",
+    );
+    expect(blogViewAll).toBeInTheDocument();
+    expect(blogViewAll).toHaveTextContent("View all posts");
+  });
+
+  it("shows 'View all projects' and 'View all publications' links when items exist", () => {
+    vi.mocked(getAllBlogPosts).mockReturnValue([]);
+    vi.mocked(getAllPublications).mockReturnValue([mockPublications[0]]);
+
+    render(<Index />);
+
+    const links = screen.getAllByTestId("view-all-link");
+    const labels = links.map((l) => l.getAttribute("aria-label"));
+    expect(labels).toContain("View all projects");
+    expect(labels).toContain("View all publications");
+  });
+
+  it("does not show 'View all publications' link when no publications exist", () => {
+    vi.mocked(getAllBlogPosts).mockReturnValue([]);
+    vi.mocked(getAllPublications).mockReturnValue([]);
+
+    render(<Index />);
+
+    const links = screen.getAllByTestId("view-all-link");
+    const labels = links.map((l) => l.getAttribute("aria-label"));
+    expect(labels).not.toContain("View all publications");
+    expect(labels).toContain("View all projects");
+  });
+
+  it("limits Blog section to 6 items on the homepage", () => {
+    const mockPosts = Array.from({ length: 8 }, (_, i) => ({
+      slug: `post-${i}`,
+      href: `/blog/post-${i}`,
+      title: `Post ${i}`,
+      date: `2024-01-0${(i % 9) + 1}`,
+      tags: [],
+      excerpt: "A post.",
+      imageSrc: "/blog/placeholder.svg",
+      imageType: "placeholder" as const,
+    }));
+    vi.mocked(getAllBlogPosts).mockReturnValue(mockPosts);
+
+    render(<Index />);
+
+    const blogSection = screen
+      .getAllByTestId("card-section")
+      .find((s) => s.getAttribute("data-heading") === "Blog");
+    expect(blogSection).toBeDefined();
+    const articles = blogSection!.querySelectorAll("article");
+    expect(articles).toHaveLength(6);
   });
 });

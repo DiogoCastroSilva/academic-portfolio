@@ -1,7 +1,4 @@
-/**
- * @vitest-environment happy-dom
- */
-
+/** @vitest-environment happy-dom */
 import "@testing-library/jest-dom";
 
 import React from "react";
@@ -95,6 +92,20 @@ describe("ContentCardSection accessibility", () => {
     await expectNoA11yViolations(container);
   });
 
+  it("has no accessibility violations with 'View all' link", async () => {
+    const { container } = render(
+      <ContentCardSection
+        heading="Projects"
+        headingId="projects-heading"
+        items={mockItems}
+        hrefPrefix="/projects"
+        viewAllHref="/projects"
+        viewAllLabel="View all projects"
+      />,
+    );
+    await expectNoA11yViolations(container);
+  });
+
   it("section has heading with text content", () => {
     render(
       <ContentCardSection
@@ -126,5 +137,90 @@ describe("ContentCardSection accessibility", () => {
 
     const secondLink = screen.getByText("Project Two").closest("a");
     expect(secondLink).toHaveAttribute("aria-label", "Read more: Project Two");
+  });
+
+  it("renders a 'View all' link when viewAllHref is provided", () => {
+    render(
+      <ContentCardSection
+        heading="Projects"
+        headingId="projects-heading"
+        items={mockItems}
+        hrefPrefix="/projects"
+        viewAllHref="/projects"
+        viewAllLabel="View all projects"
+      />,
+    );
+
+    const link = screen.getByRole("link", { name: "View all projects" });
+    expect(link).toHaveAttribute("href", "/projects");
+  });
+
+  it("does not render a 'View all' link when viewAllHref is omitted", () => {
+    render(
+      <ContentCardSection
+        heading="Projects"
+        headingId="projects-heading"
+        items={mockItems}
+        hrefPrefix="/projects"
+      />,
+    );
+
+    expect(screen.queryByRole("link", { name: /view all/i })).toBeNull();
+  });
+
+  it("applies limit to the number of visible items", () => {
+    const manyItems: ContentMeta[] = Array.from({ length: 8 }, (_, i) => ({
+      slug: `item-${i}`,
+      href: `/projects/item-${i}`,
+      title: `Item ${i}`,
+      date: "2024-01-15",
+      tags: [],
+      imageSrc: "/projects/placeholder.svg",
+      imageType: "placeholder" as const,
+    }));
+
+    render(
+      <ContentCardSection
+        heading="Projects"
+        headingId="projects-heading"
+        items={manyItems}
+        hrefPrefix="/projects"
+        limit={3}
+      />,
+    );
+
+    // The component should render exactly 3 article cards (the limit).
+    const articles = screen.getAllByRole("article");
+    expect(articles).toHaveLength(3);
+    expect(screen.getByText("Item 0")).toBeInTheDocument();
+    expect(screen.getByText("Item 1")).toBeInTheDocument();
+    expect(screen.getByText("Item 2")).toBeInTheDocument();
+    expect(screen.queryByText("Item 3")).toBeNull();
+  });
+
+  it("renders all items when limit is not provided (no truncation)", () => {
+    const manyItems: ContentMeta[] = Array.from({ length: 8 }, (_, i) => ({
+      slug: `item-${i}`,
+      href: `/projects/item-${i}`,
+      title: `Item ${i}`,
+      date: "2024-01-15",
+      tags: [],
+      imageSrc: "/projects/placeholder.svg",
+      imageType: "placeholder" as const,
+    }));
+
+    render(
+      <ContentCardSection
+        heading="Projects"
+        headingId="projects-heading"
+        items={manyItems}
+        hrefPrefix="/projects"
+      />,
+    );
+
+    // Without a limit, ALL items should be visible.
+    const articles = screen.getAllByRole("article");
+    expect(articles).toHaveLength(8);
+    expect(screen.getByText("Item 7")).toBeInTheDocument();
   });
 });

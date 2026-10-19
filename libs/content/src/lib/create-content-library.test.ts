@@ -222,6 +222,24 @@ Content`,
     cleanup();
   });
 
+  it("uses slug as a deterministic tie-breaker for items with the same date", () => {
+    const { lib, cleanup } = makeLibrary({
+      _files: {
+        "zebra/README.md": `---\ntitle: "Zebra"\ndate: "2024-06-10"\n---\nContent`,
+        "apple/README.md": `---\ntitle: "Apple"\ndate: "2024-06-10"\n---\nContent`,
+        "mango/README.md": `---\ntitle: "Mango"\ndate: "2024-06-10"\n---\nContent`,
+      },
+      publicPrefix: "/test",
+      placeholderFilename: "placeholder.svg",
+    });
+
+    const items = lib.getAll();
+    // Same date for all three — ordering must be deterministic by slug.
+    expect(items.map((i) => i.slug)).toEqual(["apple", "mango", "zebra"]);
+
+    cleanup();
+  });
+
   it("returns an empty array for a missing content directory", () => {
     // Point to a non-existent directory
     const tmpDir = fs.mkdtempSync(

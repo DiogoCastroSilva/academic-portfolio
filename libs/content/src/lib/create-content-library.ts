@@ -432,7 +432,14 @@ export function createContentLibrary(
       );
     }
 
-    return items.sort((a, b) => +new Date(b.date) - +new Date(a.date));
+    // Sort newest-first by publication date.  For items that share the
+    // same date, fall back to a deterministic slug comparison so that
+    // ordering is stable regardless of filesystem readdir order.
+    return items.sort((a, b) => {
+      const dateDiff = +new Date(b.date) - +new Date(a.date);
+      if (dateDiff !== 0) return dateDiff;
+      return a.slug.localeCompare(b.slug);
+    });
   }
 
   function getBySlug(slug: string): ContentMeta | undefined {

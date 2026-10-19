@@ -1,8 +1,10 @@
 import { getAllBlogPosts } from "@katie-portfolio/blog";
 
 import { siteConfig } from "../../configs/site-config";
-import { ContentCardSection } from "../ui/ContentCardSection";
+import { paginate, PAGE_SIZE } from "../lib/pagination";
 import { ogImageRef } from "../lib/og-image";
+import { ContentCardSection } from "../ui/ContentCardSection";
+import { Pagination } from "../ui/Pagination";
 
 export const metadata = {
   title: `Blog | ${siteConfig.name}`,
@@ -24,15 +26,23 @@ export const metadata = {
 
 export default function BlogPage() {
   const posts = getAllBlogPosts();
+  const currentPage = 1;
+  const totalPages = Math.max(1, Math.ceil(posts.length / PAGE_SIZE));
+  const { items: pageItems } = paginate(posts, currentPage);
 
   return (
     <div className="flex grow flex-col gap-4">
       <ContentCardSection
         heading="Blog"
         headingId="blog-heading"
-        items={posts}
+        items={pageItems}
         hrefPrefix="/blog"
         emptyMessage="New posts coming soon."
+      />
+      <Pagination
+        currentPage={currentPage}
+        totalPages={totalPages}
+        baseUrl="/blog"
       />
     </div>
   );

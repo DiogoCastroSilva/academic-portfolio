@@ -10,9 +10,23 @@ type ContentCardSectionProps = {
   headingId: string;
   items: ContentMeta[];
   hrefPrefix: string;
+  /**
+   * Maximum number of items to display in the card grid.
+   * When omitted, ALL items are displayed (used by collection listing
+   * pages that slice items server-side via `paginate()`).
+   */
   limit?: number;
   emptyMessage?: string;
   tagsLimit?: number;
+  /**
+   * Optional "View all" link rendered after the card grid.
+   * When omitted, no link is rendered (e.g. on paginated collection pages
+   * where a Pagination nav takes its place, or on the homepage Blog section
+   * which always has fewer items than the limit).
+   */
+  viewAllHref?: string;
+  /** Visible label for the "View all" link (e.g. "View all posts"). */
+  viewAllLabel?: string;
 };
 
 function itemHref(prefix: string, slug: string): string {
@@ -24,9 +38,11 @@ export function ContentCardSection({
   headingId,
   items,
   hrefPrefix,
-  limit = 6,
+  limit,
   tagsLimit = 2,
   emptyMessage = "No items to display at this time.",
+  viewAllHref,
+  viewAllLabel = "View all",
 }: ContentCardSectionProps) {
   const visibleItems = items.slice(0, limit);
   return (
@@ -43,62 +59,91 @@ export function ContentCardSection({
       {visibleItems.length === 0 && emptyMessage ? (
         <p className="text-slate-700 dark:text-gray-700">{emptyMessage}</p>
       ) : (
-        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          <div className="contents">
-            {visibleItems.map((item, index) => (
-              <article
-                key={item.slug}
-                className="animate-fadeInUp rounded-2xl border border-zinc-200 bg-white motion-reduce:animate-none"
-                style={{
-                  animationDelay: `${index * 100}ms`,
-                }}
-              >
-                <Link
-                  href={itemHref(hrefPrefix, item.slug)}
-                  className="group block rounded-lg focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-600"
-                  aria-label={`Read more: ${item.title}`}
+        <>
+          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            <div className="contents">
+              {visibleItems.map((item, index) => (
+                <article
+                  key={item.slug}
+                  className="animate-fadeInUp rounded-2xl border border-zinc-200 bg-white motion-reduce:animate-none"
+                  style={{
+                    animationDelay: `${index * 100}ms`,
+                  }}
                 >
-                  <div className="relative aspect-[16/9] w-full overflow-hidden bg-stone-200 dark:bg-stone-700">
-                    <ContentImage
-                      src={item.imageSrc}
-                      alt={item.title}
-                      className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
-                      sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                      priority={index === 0}
+                  <Link
+                    href={itemHref(hrefPrefix, item.slug)}
+                    className="group block rounded-lg focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-600"
+                    aria-label={`Read more: ${item.title}`}
+                  >
+                    <div className="relative aspect-[16/9] w-full overflow-hidden bg-stone-200 dark:bg-stone-700">
+                      <ContentImage
+                        src={item.imageSrc}
+                        alt={item.title}
+                        className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                        sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                        priority={index === 0}
+                      />
+                    </div>
+                    <div className="p-4">
+                      <div className="flex gap-2">
+                        <time dateTime={item.date}>
+                          {dates.formatISODate(item.date)}
+                        </time>
+                        <ul className="flex flex-wrap gap-2">
+                          {item.tags?.slice(0, tagsLimit).map((tag) => (
+                            <li
+                              key={tag}
+                              className="rounded-full border border-zinc-200 px-2.5 py-1 text-xs font-medium text-zinc-600 dark:border-zinc-700 dark:text-zinc-400"
+                            >
+                              {tag}
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                      <div className="flex flex-1 flex-col">
+                        <h3 className="mb-2 line-clamp-2 text-xl leading-tight font-semibold tracking-tight transition-all duration-300 group-hover:-translate-y-1 group-hover:underline">
+                          {item.title}
+                        </h3>
+                        {item.excerpt ? (
+                          <p className="line-clamp-3 text-sm leading-6 text-zinc-600 dark:text-gray-400">
+                            {item.excerpt}
+                          </p>
+                        ) : null}
+                      </div>
+                    </div>
+                  </Link>
+                </article>
+              ))}
+            </div>
+
+            {viewAllHref && (
+              <div className="col-span-full mt-2">
+                <Link
+                  href={viewAllHref}
+                  className="inline-flex items-center gap-1 text-sm font-medium text-sky-600 hover:text-sky-500 hover:underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-600"
+                  aria-label={viewAllLabel}
+                >
+                  {viewAllLabel}
+                  <svg
+                    aria-hidden="true"
+                    className="-mr-1 h-4 w-4"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M17 8l4 4m0 0l-4 4m4-4H3"
                     />
-                  </div>
-                  <div className="p-4">
-                    <div className="flex gap-2">
-                      <time dateTime={item.date}>
-                        {dates.formatISODate(item.date)}
-                      </time>
-                      <ul className="flex flex-wrap gap-2">
-                        {item.tags?.slice(0, tagsLimit).map((tag) => (
-                          <li
-                            key={tag}
-                            className="rounded-full border border-zinc-200 px-2.5 py-1 text-xs font-medium text-zinc-600 dark:border-zinc-700 dark:text-zinc-400"
-                          >
-                            {tag}
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                    <div className="flex flex-1 flex-col">
-                      <h3 className="mb-2 line-clamp-2 text-xl leading-tight font-semibold tracking-tight transition-all duration-300 group-hover:-translate-y-1 group-hover:underline">
-                        {item.title}
-                      </h3>
-                      {item.excerpt ? (
-                        <p className="line-clamp-3 text-sm leading-6 text-zinc-600 dark:text-gray-400">
-                          {item.excerpt}
-                        </p>
-                      ) : null}
-                    </div>
-                  </div>
+                  </svg>
                 </Link>
-              </article>
-            ))}
+              </div>
+            )}
           </div>
-        </div>
+        </>
       )}
     </section>
   );

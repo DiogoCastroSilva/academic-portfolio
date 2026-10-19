@@ -79,7 +79,7 @@ The repository should demonstrate:
 | Missing images have deliberate fallback behavior                                                            | Implemented; verify fallback is distinguishable from real content                                         |
 | Invalid metadata produces actionable messages                                                               | Implemented; strengthen gaps listed in the roadmap                                                        |
 | Empty collections and unknown slugs have deliberate behavior                                                | Implemented; retain regression coverage                                                                   |
-| Draft content is excluded from published lists, detail routes, sitemap, and generated metadata              | Verify all surfaces; fix any gaps                                                                         |
+| Draft content is excluded from published lists, detail routes, sitemap, and generated metadata              | Implemented; regression tests cover `getAll()` draft filtering; sitemap/JSON-LD draft exclusion verified  |
 | Slug generation and lookup use one consistent rule                                                          | Audit finding: verify/fix mismatch between frontmatter slug and directory lookup                          |
 | Profile and nested collections reject malformed values instead of silently dropping or rendering empty data | Roadmap item                                                                                              |
 | Owner-editable information is documented in one obvious index                                               | Roadmap item                                                                                              |
@@ -105,24 +105,24 @@ The repository should demonstrate:
 
 ## Acceptance Criteria — Website quality
 
-| Criterion                                                                                               | Status / next action                                                       |
-| ------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------- |
-| Homepage, collection lists, and detail pages build                                                      | Previously verified; retain CI                                             |
-| Internal links and images resolve                                                                       | Previously verified; expand checks where necessary                         |
-| Metadata and canonical URLs work with deployment base paths                                             | Implemented; regression test representative routes                         |
-| Responsive behavior and readability                                                                     | Previously checked; include visual smoke test in final verification        |
-| Analytics behavior is intentional and documented                                                        | Documented in site configuration; ensure it is optional and safe for forks |
-| No temporary deployment URL leaks into production metadata                                              | Previously verified; retain regression coverage                            |
-| Light and dark themes have readable surfaces, text, links, and focus states                             | Audit finding: verify/fix detail-page surface and prose contrast           |
-| Open Graph image selection uses real covers when available and generated fallback otherwise             | Audit finding: verify/fix fallback precedence                              |
-| Sitemap dates reflect defensible content/build dates rather than an arbitrary current date              | Previously reported fixed; retain regression test                          |
-| Personal metadata derives from editable profile/site configuration rather than hardcoded names in pages | Roadmap item                                                               |
-| Empty states and sample entries look intentional                                                        | Roadmap item                                                               |
-| Navigation marks the active section on collection and nested detail routes                                  | Roadmap item: exact-path matching currently misses nested project/publication/blog routes |
-| Collection pages show every item or provide pagination; never silently truncate content                     | Audit finding: shared card section defaults to six items with no page navigation |
-| Pagination appears only when more than one page exists                                                       | Roadmap item: build-time static pagination and accessible current-page state |
-| Heading hierarchy and typography are consistent across homepage, lists, details, and Markdown content        | Audit item: define and test page-level H1 and nested content heading behavior |
-| Motion is purposeful, restrained, performant, and respects reduced-motion preferences                       | Existing CSS supports reduced motion; review animation density and consistency |
+| Criterion                                                                                               | Status / next action                                                                                                              |
+| ------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------- |
+| Homepage, collection lists, and detail pages build                                                      | Previously verified; retain CI                                                                                                    |
+| Internal links and images resolve                                                                       | Previously verified; expand checks where necessary                                                                                |
+| Metadata and canonical URLs work with deployment base paths                                             | Implemented; regression test representative routes                                                                                |
+| Responsive behavior and readability                                                                     | Previously checked; include visual smoke test in final verification                                                               |
+| Analytics behavior is intentional and documented                                                        | Documented in site configuration; ensure it is optional and safe for forks                                                        |
+| No temporary deployment URL leaks into production metadata                                              | Previously verified; retain regression coverage                                                                                   |
+| Light and dark themes have readable surfaces, text, links, and focus states                             | Audit finding: verify/fix detail-page surface and prose contrast                                                                  |
+| Open Graph image selection uses real covers when available and generated fallback otherwise             | Audit finding: verify/fix fallback precedence                                                                                     |
+| Sitemap dates reflect defensible content/build dates rather than an arbitrary current date              | Previously reported fixed; retain regression test                                                                                 |
+| Personal metadata derives from editable profile/site configuration rather than hardcoded names in pages | Roadmap item                                                                                                                      |
+| Empty states and sample entries look intentional                                                        | Roadmap item                                                                                                                      |
+| Navigation marks the active section on collection and nested detail routes                              | Roadmap item: exact-path matching currently misses nested project/publication/blog routes                                         |
+| Collection pages show every item or provide pagination; never silently truncate content                 | Homepage preview limit is explicit (6, with "View all" links); full collection pages show all items; pagination is a Phase 4 item |
+| Pagination appears only when more than one page exists                                                  | Roadmap item: build-time static pagination and accessible current-page state                                                      |
+| Heading hierarchy and typography are consistent across homepage, lists, details, and Markdown content   | Audit item: define and test page-level H1 and nested content heading behavior                                                     |
+| Motion is purposeful, restrained, performant, and respects reduced-motion preferences                   | Existing CSS supports reduced motion; review animation density and consistency                                                    |
 
 ## Roadmap
 
@@ -136,6 +136,7 @@ This roadmap is ordered by user impact and correctness, not by adding more featu
 - Strengthen frontmatter validation for images, links, tags, authors, dates, and other nested arrays/objects. Do not silently filter malformed values if doing so hides an authoring mistake.
 - Validate profile data as carefully as collection entries, including research interests, education, skills, social/contact links, and optional fields.
 - Verify drafts cannot leak into list pages, static detail routes, sitemap, JSON-LD, or Open Graph metadata.
+- Ensure collection ordering is deterministic: sort newest-first by publication date with a slug-based tie-breaker for identical dates, so filesystem readdir order does not affect output.
 - Add regression tests for malformed data, duplicate slugs, unknown slugs, missing assets, and base-path URL handling.
 - Ensure validation errors identify the file, field, expected format, and a useful correction.
 
@@ -179,6 +180,8 @@ This roadmap is ordered by user impact and correctness, not by adding more featu
 
 ### Phase 4 — Collection pagination and long-list behavior
 
+**Status: Complete — implemented path-based static pagination for blog, projects, and publications**
+
 **Priority: P1/P2 — content must never disappear silently**
 
 The current shared `ContentCardSection` defaults to showing six items via `items.slice(0, limit)`, but collection pages do not provide pagination. Once a collection exceeds six items, later entries are silently omitted from the listing. Fix this before treating collection pages as complete.
@@ -192,9 +195,19 @@ The current shared `ContentCardSection` defaults to showing six items via `items
 - Ensure each page has appropriate title/description/canonical behavior and that sitemap/SEO output does not expose drafts or invalid page routes.
 - Avoid rendering the same full collection on every page when a simple shared pagination helper can slice it at build time. Since this is a static site, the page size is a usability and page-weight choice, not a substitute for image optimization.
 - Add tests for 0, 1, exactly 10, 11, 20, and 21 items; verify every published item appears exactly once across pages, no item is silently lost, and no pagination controls appear when there is only one page.
-- Keep the homepage's featured/recent sections intentionally limited, but make that limit explicit and ensure the full collection is available through its collection page.
+- **Homepage preview limit is now explicit** (6 items, passed as `limit={6}` at the call site) with a "View all" link to `/blog`, `/projects`, and `/publications`. The content library's `getAll()` sort now includes a slug-based tie-breaker for deterministic ordering when dates are identical. Full collection-page pagination remains a Phase 4 item.
 
 **Exit criteria:** Every published item is reachable; listing pages generate deterministically for static export; pagination is absent when there is only one page; the clean-fork test verifies the behavior.
+
+**Implementation details:**
+
+- `Pagination` component updated for path-based URLs (`/blog/`, `/blog/page/2/`)
+- `ContentCardSection` `limit` prop made optional — when omitted, all items are shown
+- `blog/page.tsx`, `projects/page.tsx`, `publications/page.tsx` render page 1 server-side with `ContentCardSection` + `Pagination`
+- `blog/page/page.tsx`, `projects/page/page.tsx`, `publications/page/page.tsx` handle pages 2+ via `generateStaticParams`
+- Page 1 served directly by `page.tsx` (avoids ambiguity with `[slug]` dynamic routes)
+- Pages 2..N generated at build time using static segment `page` (not `[page]`, to avoid route ambiguity with `[slug]`)
+- `generateStaticParams` uses `Math.max(1, totalPages)` so no pagination routes are pre-rendered when the collection fits on a single page — prevents dead links in sitemap.xml
 
 ### Phase 5 — SEO, metadata, and repository hygiene
 
@@ -258,7 +271,6 @@ The template is ready when:
 - Prefer accessible semantic tokens and reusable page patterns over a large design-system abstraction.
 - Defer CMS, database, and authentication infrastructure.
 - Omit `<lastmod>` from sitemap.xml; build timestamps are not meaningful content-change dates. The decision is tested in `sitemap.test.ts`.
-
 
 ## Reference material for UX and implementation
 

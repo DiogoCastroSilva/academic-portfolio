@@ -27,12 +27,19 @@ export default function Index() {
         headingId="projects-heading"
         items={projects}
         hrefPrefix="/projects"
+        limit={6}
+        viewAllHref="/projects"
+        viewAllLabel="View all projects"
       />
       <ContentCardSection
         heading="Publications"
         headingId="publications-heading"
         items={publications}
         hrefPrefix="/publications"
+        limit={6}
+        viewAllHref="/publications"
+        viewAllLabel="View all publications"
+        emptyMessage="Publications will be added as they are published."
       />
       {blogPosts.length > 0 && (
         <ContentCardSection
@@ -40,6 +47,9 @@ export default function Index() {
           headingId="blog-heading"
           items={blogPosts}
           hrefPrefix="/blog"
+          limit={6}
+          viewAllHref="/blog"
+          viewAllLabel="View all posts"
           emptyMessage="New posts coming soon."
         />
       )}
