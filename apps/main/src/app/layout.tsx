@@ -26,6 +26,7 @@ export const metadata = {
       type: "image/svg+xml",
     },
   },
+  manifest: "/manifest.json",
   openGraph: {
     type: "website",
     locale: "en_US",
