@@ -1,6 +1,0 @@
-:HL["/academic-portfolio/_next/static/css/a619e880c67eaa0e.css","style"]
-:HL["/images/profile.webp","image",{"type":"image/webp"}]
-3:[["children",{"s":"__PAGE__","h":160}]]
-2:[["children",{"s":"page","h":96,"c":"$Q3"}]]
-1:[["children",{"s":"blog","h":96,"c":"$Q2"}]]
-0:{"b":"lihjQU55YoNLP2e1f130f","t":{"t":{"s":"","h":80,"c":"$Q1"}}}
