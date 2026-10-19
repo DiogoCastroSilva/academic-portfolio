@@ -71,53 +71,53 @@ The repository should demonstrate:
 
 ## Acceptance Criteria — Content and authoring
 
-| Criterion | Status / next action |
-| --- | --- |
-| Markdown/frontmatter validation has positive and negative tests | Implemented; recheck coverage for malformed nested values and array entries |
-| Deployment URL substitution works | Previously verified; retain regression coverage |
-| Relative links and images support GitHub Pages base paths | Previously verified; retain regression coverage |
-| Missing images have deliberate fallback behavior | Implemented; verify fallback is distinguishable from real content |
-| Invalid metadata produces actionable messages | Implemented; strengthen gaps listed in the roadmap |
-| Empty collections and unknown slugs have deliberate behavior | Implemented; retain regression coverage |
-| Draft content is excluded from published lists, detail routes, sitemap, and generated metadata | Verify all surfaces; fix any gaps |
-| Slug generation and lookup use one consistent rule | Audit finding: verify/fix mismatch between frontmatter slug and directory lookup |
-| Profile and nested collections reject malformed values instead of silently dropping or rendering empty data | Roadmap item |
-| Owner-editable information is documented in one obvious index | Roadmap item |
-| Sample content is clearly labelled and safe for a fresh fork | Roadmap item; this replaces any expectation that the template must contain the owner's final real content |
-| Content author can add/edit/remove entries without changing app code | Must be demonstrated in clean-fork test |
-| Images and inline Markdown references are validated with useful errors | Verify current implementation and document its exact guarantees |
+| Criterion                                                                                                   | Status / next action                                                                                      |
+| ----------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------- |
+| Markdown/frontmatter validation has positive and negative tests                                             | Implemented; recheck coverage for malformed nested values and array entries                               |
+| Deployment URL substitution works                                                                           | Previously verified; retain regression coverage                                                           |
+| Relative links and images support GitHub Pages base paths                                                   | Previously verified; retain regression coverage                                                           |
+| Missing images have deliberate fallback behavior                                                            | Implemented; verify fallback is distinguishable from real content                                         |
+| Invalid metadata produces actionable messages                                                               | Implemented; strengthen gaps listed in the roadmap                                                        |
+| Empty collections and unknown slugs have deliberate behavior                                                | Implemented; retain regression coverage                                                                   |
+| Draft content is excluded from published lists, detail routes, sitemap, and generated metadata              | Verify all surfaces; fix any gaps                                                                         |
+| Slug generation and lookup use one consistent rule                                                          | Audit finding: verify/fix mismatch between frontmatter slug and directory lookup                          |
+| Profile and nested collections reject malformed values instead of silently dropping or rendering empty data | Roadmap item                                                                                              |
+| Owner-editable information is documented in one obvious index                                               | Roadmap item                                                                                              |
+| Sample content is clearly labelled and safe for a fresh fork                                                | Roadmap item; this replaces any expectation that the template must contain the owner's final real content |
+| Content author can add/edit/remove entries without changing app code                                        | Must be demonstrated in clean-fork test                                                                   |
+| Images and inline Markdown references are validated with useful errors                                      | Verify current implementation and document its exact guarantees                                           |
 
 ## Acceptance Criteria — Engineering
 
-| Criterion | Status / next action |
-| --- | --- |
-| Internal namespace uses `@katie-portfolio/*` | Previously marked complete; verify current state |
-| Nx retained with documented justification | ADR-0002 |
-| Vitest is the single unit-test framework | Implemented |
-| Empty test suites do not pass silently | Implemented |
-| Shared lint and formatting configurations work | ADR-0006 |
-| Nx module-boundary rules are effective | Implemented |
-| Lockfile supports reproducible clean install | Previously verified with `npm ci`; repeat during clean-fork test |
-| TypeScript strictness and useful lint rules are not weakened to bypass failures | Previously verified; preserve |
-| Generated build/cache artifacts are not tracked | Roadmap item: ignore/remove tracked `*.tsbuildinfo` artifacts |
-| Dependency security status is current and documented | Re-run audit; old vulnerability counts are historical, not current status |
-| Content paths and workspace execution assumptions are explicit and tested | Review content path resolution during correctness pass |
+| Criterion                                                                       | Status / next action                                                      |
+| ------------------------------------------------------------------------------- | ------------------------------------------------------------------------- |
+| Internal namespace uses `@katie-portfolio/*`                                    | Previously marked complete; verify current state                          |
+| Nx retained with documented justification                                       | ADR-0002                                                                  |
+| Vitest is the single unit-test framework                                        | Implemented                                                               |
+| Empty test suites do not pass silently                                          | Implemented                                                               |
+| Shared lint and formatting configurations work                                  | ADR-0006                                                                  |
+| Nx module-boundary rules are effective                                          | Implemented                                                               |
+| Lockfile supports reproducible clean install                                    | Previously verified with `npm ci`; repeat during clean-fork test          |
+| TypeScript strictness and useful lint rules are not weakened to bypass failures | Previously verified; preserve                                             |
+| Generated build/cache artifacts are not tracked                                 | Roadmap item: ignore/remove tracked `*.tsbuildinfo` artifacts             |
+| Dependency security status is current and documented                            | Re-run audit; old vulnerability counts are historical, not current status |
+| Content paths and workspace execution assumptions are explicit and tested       | Review content path resolution during correctness pass                    |
 
 ## Acceptance Criteria — Website quality
 
-| Criterion | Status / next action |
-| --- | --- |
-| Homepage, collection lists, and detail pages build | Previously verified; retain CI |
-| Internal links and images resolve | Previously verified; expand checks where necessary |
-| Metadata and canonical URLs work with deployment base paths | Implemented; regression test representative routes |
-| Responsive behavior and readability | Previously checked; include visual smoke test in final verification |
-| Analytics behavior is intentional and documented | Documented in site configuration; ensure it is optional and safe for forks |
-| No temporary deployment URL leaks into production metadata | Previously verified; retain regression coverage |
-| Light and dark themes have readable surfaces, text, links, and focus states | Audit finding: verify/fix detail-page surface and prose contrast |
-| Open Graph image selection uses real covers when available and generated fallback otherwise | Audit finding: verify/fix fallback precedence |
-| Sitemap dates reflect defensible content/build dates rather than an arbitrary current date | Previously reported fixed; retain regression test |
-| Personal metadata derives from editable profile/site configuration rather than hardcoded names in pages | Roadmap item |
-| Empty states and sample entries look intentional | Roadmap item |
+| Criterion                                                                                               | Status / next action                                                       |
+| ------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------- |
+| Homepage, collection lists, and detail pages build                                                      | Previously verified; retain CI                                             |
+| Internal links and images resolve                                                                       | Previously verified; expand checks where necessary                         |
+| Metadata and canonical URLs work with deployment base paths                                             | Implemented; regression test representative routes                         |
+| Responsive behavior and readability                                                                     | Previously checked; include visual smoke test in final verification        |
+| Analytics behavior is intentional and documented                                                        | Documented in site configuration; ensure it is optional and safe for forks |
+| No temporary deployment URL leaks into production metadata                                              | Previously verified; retain regression coverage                            |
+| Light and dark themes have readable surfaces, text, links, and focus states                             | Audit finding: verify/fix detail-page surface and prose contrast           |
+| Open Graph image selection uses real covers when available and generated fallback otherwise             | Audit finding: verify/fix fallback precedence                              |
+| Sitemap dates reflect defensible content/build dates rather than an arbitrary current date              | Previously reported fixed; retain regression test                          |
+| Personal metadata derives from editable profile/site configuration rather than hardcoded names in pages | Roadmap item                                                               |
+| Empty states and sample entries look intentional                                                        | Roadmap item                                                               |
 
 ## Roadmap
 
@@ -200,6 +200,7 @@ This roadmap is ordered by user impact and correctness, not by adding more featu
 - Search/filtering, teaching/talks/awards/datasets sections, and other academic content types: add only when the intended owner has content that benefits from them.
 - Contact form or backend: not needed for a static template; use contact links.
 - Framework/workspace migration: only if evidence shows current tooling creates more maintenance than value.
+- Web App Manifest: not needed for a static portfolio site; installability is not a requirement for this template.
 
 ## Definition of done
 
@@ -225,3 +226,4 @@ The template is ready when:
 - Keep analytics optional and deployment configuration explicit.
 - Prefer accessible semantic tokens and reusable page patterns over a large design-system abstraction.
 - Defer CMS, database, and authentication infrastructure.
+- Omit `<lastmod>` from sitemap.xml; build timestamps are not meaningful content-change dates. The decision is tested in `sitemap.test.ts`.
