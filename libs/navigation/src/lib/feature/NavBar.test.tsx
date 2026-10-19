@@ -6,10 +6,10 @@ import "@testing-library/jest-dom";
 
 import React from "react";
 import { cleanup, fireEvent, render, screen } from "@testing-library/react";
-import { afterEach, describe, it, vi } from "vitest";
+import { afterEach, describe, expect, it, vi } from "vitest";
 
 import { expectNoA11yViolations } from "../test-utils/index.js";
-
+import { baseNavigation } from "./config.js";
 import { NavBar } from "./NavBar.js";
 
 // Mock next/link for happy-dom environment
@@ -71,5 +71,20 @@ describe("NavBar accessibility", () => {
     fireEvent.click(menuButton);
 
     await expectNoA11yViolations(container);
+  });
+
+  it("hides Blog when items prop excludes it", () => {
+    render(<NavBar currentPath="/" items={baseNavigation} />);
+
+    expect(screen.queryAllByText("Blog")).toHaveLength(0);
+    expect(screen.getAllByText("Projects")).toHaveLength(2);
+    expect(screen.getAllByText("Publications")).toHaveLength(2);
+    expect(screen.getAllByText("About")).toHaveLength(2);
+  });
+
+  it("shows Blog by default (items prop omitted)", () => {
+    render(<NavBar currentPath="/" />);
+
+    expect(screen.getAllByText("Blog")).toHaveLength(2);
   });
 });

@@ -9,6 +9,7 @@ import { cleanup, render, screen } from "@testing-library/react";
 import { afterEach, describe, expect, it, vi } from "vitest";
 
 import { expectNoA11yViolations } from "../test-utils/index.js";
+import { baseNavigation } from "../feature/config.js";
 
 import { MobileNavLinks } from "./MobileNavLinks.js";
 
@@ -91,6 +92,21 @@ describe("MobileNavLinks accessibility", () => {
 
     expect(screen.getByText("Projects")).toBeInTheDocument();
     expect(screen.getByText("Publications")).toBeInTheDocument();
+    expect(screen.getByText("Blog")).toBeInTheDocument();
+    expect(screen.getByText("About")).toBeInTheDocument();
+  });
+
+  it("hides Blog when items prop excludes it", () => {
+    render(
+      <MobileNavLinks
+        isMenuOpen={true}
+        currentPath="/"
+        items={baseNavigation}
+      />,
+    );
+
+    expect(screen.queryByText("Blog")).not.toBeInTheDocument();
+    expect(screen.getByText("Projects")).toBeInTheDocument();
     expect(screen.getByText("About")).toBeInTheDocument();
   });
 

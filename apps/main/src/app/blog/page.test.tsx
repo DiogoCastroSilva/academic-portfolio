@@ -29,7 +29,18 @@ vi.mock("@katie-portfolio/blog", () => ({
 }));
 
 vi.mock("@katie-portfolio/navigation", () => ({
-  NavBar: () => null,
+  NavBar: ({ items }: { items?: { name: string; href: string }[] }) => (
+    <nav
+      data-testid="navbar"
+      data-has-blog={items?.some((i) => i.name === "Blog")}
+    >
+      {items?.map((i) => (
+        <a key={i.name} href={i.href}>
+          {i.name}
+        </a>
+      ))}
+    </nav>
+  ),
 }));
 
 vi.mock("../configs/site-config", () => ({

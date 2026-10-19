@@ -1,4 +1,5 @@
-import { NavBar } from "@katie-portfolio/navigation";
+import { getAllBlogPosts } from "@katie-portfolio/blog";
+import { getNavigation, NavBar } from "@katie-portfolio/navigation";
 import "./global.css";
 import { CloudflareAnalytics } from "./ui/CloudflareAnalytics";
 import { Footer } from "./ui/Footer";
@@ -67,6 +68,10 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
+  // Compute navigation server-side: hide Blog when no published blog posts exist.
+  const hasBlogPosts = getAllBlogPosts().length > 0;
+  const navItems = getNavigation(hasBlogPosts);
+
   return (
     <html lang="en" suppressHydrationWarning>
       <body
@@ -74,7 +79,7 @@ export default function RootLayout({
         className="min-h-full bg-stone-100 dark:bg-slate-800"
       >
         <div className="flex min-h-full flex-col">
-          <NavBar name={siteConfig.name} />
+          <NavBar name={siteConfig.name} items={navItems} />
           <main className="flex-1">{children}</main>
           <Footer />
         </div>

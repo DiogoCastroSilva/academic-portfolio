@@ -34,12 +34,15 @@ export default function Index() {
         items={publications}
         hrefPrefix="/publications"
       />
-      <ContentCardSection
-        heading="Blog"
-        headingId="blog-heading"
-        items={blogPosts}
-        hrefPrefix="/blog"
-      />
+      {blogPosts.length > 0 && (
+        <ContentCardSection
+          heading="Blog"
+          headingId="blog-heading"
+          items={blogPosts}
+          hrefPrefix="/blog"
+          emptyMessage="New posts coming soon."
+        />
+      )}
     </div>
   );
 }

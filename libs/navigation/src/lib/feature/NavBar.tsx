@@ -5,15 +5,23 @@ import { usePathname } from "next/navigation";
 import { useState } from "react";
 import { MobileMenuButton } from "../ui/MobileMenuButton.js";
 import { MobileNavLinks } from "../ui/MobileNavLinks.js";
-import { navigation } from "./config.js";
+import { getNavigation, type NavigationItem } from "./config.js";
+
+export type { NavigationItem };
 
 type NavBarProps = {
   currentPath?: string;
   /** Display name shown in the NavBar brand link. */
   name?: string;
+  /** Override navigation items (e.g. conditionally hide Blog). */
+  items?: NavigationItem[];
 };
 
-export function NavBar({ currentPath, name = "Portfolio" }: NavBarProps) {
+export function NavBar({
+  currentPath,
+  name = "Portfolio",
+  items: navItems,
+}: NavBarProps) {
   const pathname = usePathname();
   const activePath = currentPath ?? pathname;
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -23,6 +31,7 @@ export function NavBar({ currentPath, name = "Portfolio" }: NavBarProps) {
   };
 
   const isHome = activePath === "/" || activePath === "";
+  const items = navItems ?? getNavigation(true);
 
   return (
     <nav
@@ -44,7 +53,7 @@ export function NavBar({ currentPath, name = "Portfolio" }: NavBarProps) {
           </div>
           <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
             <div className="hidden space-x-4 md:flex">
-              {navigation.map((item) => (
+              {items.map((item) => (
                 <Link
                   key={item.name}
                   href={item.href}
@@ -66,6 +75,7 @@ export function NavBar({ currentPath, name = "Portfolio" }: NavBarProps) {
         currentPath={activePath}
         isMenuOpen={isMenuOpen}
         onNavigate={() => setIsMenuOpen(false)}
+        items={items}
       />
     </nav>
   );

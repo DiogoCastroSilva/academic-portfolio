@@ -1,26 +1,30 @@
 "use client";
 
 import Link from "next/link";
-import { navigation } from "../feature/config.js";
+import { getNavigation, type NavigationItem } from "../feature/config.js";
 
 type MobileNavLinksProps = {
   currentPath?: string;
   isMenuOpen: boolean;
   onNavigate?: () => void;
+  /** Override navigation items (e.g. conditionally hide Blog). */
+  items?: NavigationItem[];
 };
 
 export function MobileNavLinks({
   currentPath,
   isMenuOpen,
   onNavigate,
+  items: navItems,
 }: MobileNavLinksProps) {
+  const items = navItems ?? getNavigation(true);
   return (
     <div
       id="mobile-navigation"
       className="space-y-1 px-2 pt-2 pb-3 sm:px-3 md:hidden"
       hidden={!isMenuOpen}
     >
-      {navigation.map((item) => (
+      {items.map((item) => (
         <Link
           key={item.name}
           href={item.href}
