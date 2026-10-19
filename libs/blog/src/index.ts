@@ -1,7 +1,7 @@
 import {
   createContentLibrary,
   type ContentItemMeta,
-} from "@katie-portfolio/content";
+} from "@academic-portfolio/content";
 
 export type BlogPostItemMeta = ContentItemMeta;
 

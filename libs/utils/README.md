@@ -1,4 +1,4 @@
-# @katie-portfolio/utils
+# @academic-portfolio/utils
 
 Shared utility functions used across the application.
 
@@ -9,7 +9,7 @@ Shared utility functions used across the application.
 ## Usage
 
 ```ts
-import { dates } from "@katie-portfolio/utils";
+import { dates } from "@academic-portfolio/utils";
 
 const formatted = dates.formatISODate("2025-11-01");
 ```

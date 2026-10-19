@@ -1,5 +1,5 @@
-import { getAllBlogPosts } from "@katie-portfolio/blog";
-import { getNavigation, NavBar } from "@katie-portfolio/navigation";
+import { getAllBlogPosts } from "@academic-portfolio/blog";
+import { getNavigation, NavBar } from "@academic-portfolio/navigation";
 import "./global.css";
 import { CloudflareAnalytics } from "./ui/CloudflareAnalytics";
 import { Footer } from "./ui/Footer";

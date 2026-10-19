@@ -7,7 +7,7 @@ import "@testing-library/jest-dom";
 import { render, screen } from "@testing-library/react";
 import { afterEach, describe, expect, it, vi } from "vitest";
 
-import type { ContentMeta } from "@katie-portfolio/content";
+import type { ContentMeta } from "@academic-portfolio/content";
 import { PAGE_SIZE } from "../lib/pagination.js";
 
 const mockBlogPosts: ContentMeta[] = [
@@ -24,12 +24,12 @@ const mockBlogPosts: ContentMeta[] = [
   },
 ];
 
-vi.mock("@katie-portfolio/blog", () => ({
+vi.mock("@academic-portfolio/blog", () => ({
   getAllBlogPosts: () => mockBlogPosts,
   getBlogPostContentBySlug: vi.fn(),
 }));
 
-vi.mock("@katie-portfolio/navigation", () => ({
+vi.mock("@academic-portfolio/navigation", () => ({
   NavBar: ({ items }: { items?: { name: string; href: string }[] }) => (
     <nav
       data-testid="navbar"

@@ -8,7 +8,7 @@ import React from "react";
 import { render, screen } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
 
-import type { ContentMeta, ProfileData } from "@katie-portfolio/content";
+import type { ContentMeta, ProfileData } from "@academic-portfolio/content";
 
 // Shared mock data
 const mockProfile: ProfileData = {
@@ -65,7 +65,7 @@ const mockBlogPost: ContentMeta = {
 };
 
 // Mock dependencies
-vi.mock("@katie-portfolio/content", () => ({
+vi.mock("@academic-portfolio/content", () => ({
   getProfile: () => mockProfile,
   getDeploymentUrl: () => undefined,
   getFullUrl: () => undefined,
@@ -75,22 +75,22 @@ vi.mock("@katie-portfolio/content", () => ({
     filename ? `/${slug}/${filename}` : `/${slug}/cover.webp`,
 }));
 
-vi.mock("@katie-portfolio/projects", () => ({
+vi.mock("@academic-portfolio/projects", () => ({
   getAllProjects: () => mockProjects,
   getProjectContentBySlug: vi.fn(),
 }));
 
-vi.mock("@katie-portfolio/publications", () => ({
+vi.mock("@academic-portfolio/publications", () => ({
   getAllPublications: vi.fn(() => []),
   getPublicationContentBySlug: vi.fn(),
 }));
 
-vi.mock("@katie-portfolio/blog", () => ({
+vi.mock("@academic-portfolio/blog", () => ({
   getAllBlogPosts: vi.fn(),
   getBlogPostContentBySlug: vi.fn(),
 }));
 
-vi.mock("@katie-portfolio/navigation", () => ({
+vi.mock("@academic-portfolio/navigation", () => ({
   NavBar: () => null,
 }));
 
@@ -156,8 +156,8 @@ vi.mock("./lib/og-image", () => ({
 
 // Import after mocks
 import Index from "./page";
-import { getAllBlogPosts } from "@katie-portfolio/blog";
-import { getAllPublications } from "@katie-portfolio/publications";
+import { getAllBlogPosts } from "@academic-portfolio/blog";
+import { getAllPublications } from "@academic-portfolio/publications";
 
 describe("Homepage", () => {
   it("hides Blog section when no published blog posts exist", () => {

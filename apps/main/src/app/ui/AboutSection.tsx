@@ -1,4 +1,4 @@
-import type { ProfileData } from "@katie-portfolio/content";
+import type { ProfileData } from "@academic-portfolio/content";
 
 import { ContentImage } from "./ContentImage";
 

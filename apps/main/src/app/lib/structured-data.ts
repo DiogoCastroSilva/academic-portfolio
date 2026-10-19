@@ -1,5 +1,5 @@
-import type { ProfileData, ContentItemMeta } from "@katie-portfolio/content";
-import { getFullUrl, getFullAssetUrl } from "@katie-portfolio/content";
+import type { ProfileData, ContentItemMeta } from "@academic-portfolio/content";
+import { getFullUrl, getFullAssetUrl } from "@academic-portfolio/content";
 
 import { siteConfig } from "../../configs/site-config";
 

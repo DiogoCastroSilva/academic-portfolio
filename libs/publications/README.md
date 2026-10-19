@@ -1,4 +1,4 @@
-# @katie-portfolio/publications
+# @academic-portfolio/publications
 
 Publications content library. Markdown files in `src/md/` are loaded and rendered on the `/publications` page and `/publications/[slug]/` detail pages.
 

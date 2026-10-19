@@ -7,7 +7,7 @@ import "@testing-library/jest-dom";
 import { cleanup, render, screen } from "@testing-library/react";
 import { afterEach, describe, expect, it } from "vitest";
 
-import { expectNoA11yViolations } from "@katie-portfolio/utils/test-helpers/a11y";
+import { expectNoA11yViolations } from "@academic-portfolio/utils/test-helpers/a11y";
 import type { StaticImageData } from "next/image";
 
 import { ContentImage } from "./ContentImage.js";

@@ -1,4 +1,4 @@
-import { getAllProjects } from "@katie-portfolio/projects";
+import { getAllProjects } from "@academic-portfolio/projects";
 
 import { siteConfig } from "../../configs/site-config";
 import { paginate, PAGE_SIZE } from "../lib/pagination";

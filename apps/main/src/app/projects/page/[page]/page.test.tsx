@@ -5,7 +5,7 @@ import React from "react";
 import { render } from "@testing-library/react";
 import { afterEach, describe, expect, it, vi } from "vitest";
 
-import type { ContentMeta } from "@katie-portfolio/content";
+import type { ContentMeta } from "@academic-portfolio/content";
 import { PAGE_SIZE, paginate } from "../../../lib/pagination.js";
 
 import ProjectsPage, { generateStaticParams } from "./page";
@@ -26,7 +26,7 @@ afterEach(() => {
   vi.unstubAllEnvs();
 });
 
-vi.mock("@katie-portfolio/content", () => ({
+vi.mock("@academic-portfolio/content", () => ({
   withPublicBasePath: (p: string) => {
     if (!p.startsWith("/")) return p;
     const bp = process.env.NEXT_PUBLIC_BASE_PATH;
@@ -35,12 +35,12 @@ vi.mock("@katie-portfolio/content", () => ({
   },
 }));
 
-vi.mock("@katie-portfolio/projects", () => ({
+vi.mock("@academic-portfolio/projects", () => ({
   getAllProjects: () => mockProjects,
   getProjectContentBySlug: vi.fn(),
 }));
 
-vi.mock("@katie-portfolio/navigation", () => ({
+vi.mock("@academic-portfolio/navigation", () => ({
   NavBar: () => null,
 }));
 

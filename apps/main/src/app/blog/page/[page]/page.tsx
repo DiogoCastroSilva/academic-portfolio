@@ -1,7 +1,7 @@
 import { notFound } from "next/navigation";
 
-import { getAllBlogPosts } from "@katie-portfolio/blog";
-import { withPublicBasePath } from "@katie-portfolio/content";
+import { getAllBlogPosts } from "@academic-portfolio/blog";
+import { withPublicBasePath } from "@academic-portfolio/content";
 
 import { paginate, parsePageParam, PAGE_SIZE } from "../../../lib/pagination";
 import { ContentCardSection } from "../../../ui/ContentCardSection";

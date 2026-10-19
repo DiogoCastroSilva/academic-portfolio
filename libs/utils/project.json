@@ -1,5 +1,5 @@
 {
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
-  "name": "@katie-portfolio/utils",
+  "name": "@academic-portfolio/utils",
   "tags": ["foundation"]
 }

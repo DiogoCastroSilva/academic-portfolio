@@ -1,6 +1,6 @@
 import { describe, expect, it, vi } from "vitest";
 
-import type { ProfileData, ContentItemMeta } from "@katie-portfolio/content";
+import type { ProfileData, ContentItemMeta } from "@academic-portfolio/content";
 import {
   buildPersonSchema,
   buildArticleSchema,
@@ -10,7 +10,7 @@ import {
 
 // Mock getProfile so site-config loads without requiring profile.md on disk
 // during unit tests (site-config calls getProfile at module load time).
-vi.mock("@katie-portfolio/content", async (importOriginal) => {
+vi.mock("@academic-portfolio/content", async (importOriginal) => {
   const actual = (await importOriginal()) as Record<string, unknown>;
   return {
     ...actual,

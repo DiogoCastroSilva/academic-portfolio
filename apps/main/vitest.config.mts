@@ -8,7 +8,7 @@ export default defineConfig(() => ({
     jsx: "automatic",
   },
   test: {
-    name: "@katie-portfolio/main",
+    name: "@academic-portfolio/main",
     watch: false,
     globals: true,
     environment: "node",

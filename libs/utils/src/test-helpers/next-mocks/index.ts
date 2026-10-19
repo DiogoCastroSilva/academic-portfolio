@@ -12,7 +12,7 @@ import React from "react";
  * ```ts
  * // test-setup.ts
  * import { vi } from "vitest";
- * import { mockNextLink } from "@katie-portfolio/utils/test-helpers/next-mocks";
+ * import { mockNextLink } from "@academic-portfolio/utils/test-helpers/next-mocks";
  *
  * vi.mock("next/link", () => mockNextLink);
  * ```

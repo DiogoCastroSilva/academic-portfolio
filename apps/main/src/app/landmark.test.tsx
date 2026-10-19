@@ -8,8 +8,8 @@ import React from "react";
 import { render } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
 
-import { expectNoA11yViolations } from "@katie-portfolio/utils/test-helpers/a11y";
-import type { ContentMeta, ProfileData } from "@katie-portfolio/content";
+import { expectNoA11yViolations } from "@academic-portfolio/utils/test-helpers/a11y";
+import type { ContentMeta, ProfileData } from "@academic-portfolio/content";
 
 // Mock content libraries to isolate page-level structure.
 const mockProfile: ProfileData = {
@@ -60,7 +60,7 @@ const mockProjects: ContentMeta[] = [
 ];
 
 // Mock the navigation module's NavBar (it uses server-only imports).
-vi.mock("@katie-portfolio/navigation", () => ({
+vi.mock("@academic-portfolio/navigation", () => ({
   NavBar: () => <nav aria-label="navigation">Nav</nav>,
 }));
 
@@ -85,22 +85,22 @@ vi.mock("../configs/site-config", () => ({
   },
 }));
 
-vi.mock("@katie-portfolio/projects", () => ({
+vi.mock("@academic-portfolio/projects", () => ({
   getAllProjects: () => mockProjects,
   getProjectContentBySlug: vi.fn(),
 }));
 
-vi.mock("@katie-portfolio/publications", () => ({
+vi.mock("@academic-portfolio/publications", () => ({
   getAllPublications: () => [],
   getPublicationContentBySlug: vi.fn(),
 }));
 
-vi.mock("@katie-portfolio/blog", () => ({
+vi.mock("@academic-portfolio/blog", () => ({
   getAllBlogPosts: () => [],
   getBlogPostContentBySlug: vi.fn(),
 }));
 
-vi.mock("@katie-portfolio/content", () => ({
+vi.mock("@academic-portfolio/content", () => ({
   getProfile: () => mockProfile,
   getDeploymentUrl: () => undefined,
   getFullUrl: () => undefined,

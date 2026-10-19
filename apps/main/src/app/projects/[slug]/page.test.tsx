@@ -28,7 +28,7 @@ const mockPlaceholderProject = {
   body: "<p>Content</p>",
 };
 
-vi.mock("@katie-portfolio/projects", () => ({
+vi.mock("@academic-portfolio/projects", () => ({
   getAllProjects: () => [mockCoverProject, mockPlaceholderProject],
   getProjectContentBySlug: (slug: string) =>
     Promise.resolve(
@@ -36,9 +36,9 @@ vi.mock("@katie-portfolio/projects", () => ({
     ),
 }));
 
-vi.mock("@katie-portfolio/content", async (importOriginal) => {
+vi.mock("@academic-portfolio/content", async (importOriginal) => {
   const actual =
-    await importOriginal<typeof import("@katie-portfolio/content")>();
+    await importOriginal<typeof import("@academic-portfolio/content")>();
   return {
     ...actual,
     getFullAssetUrl: (path: string) =>

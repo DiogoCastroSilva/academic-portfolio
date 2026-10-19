@@ -1,5 +1,5 @@
-import type { ContentItemMeta } from "@katie-portfolio/content";
-import { dates } from "@katie-portfolio/utils";
+import type { ContentItemMeta } from "@academic-portfolio/content";
+import { dates } from "@academic-portfolio/utils";
 import { ContentImage } from "./ContentImage";
 import { JsonLd } from "./JsonLd";
 import { buildArticleSchema } from "../lib/structured-data";

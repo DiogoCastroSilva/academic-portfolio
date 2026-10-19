@@ -52,13 +52,13 @@ Each Nx project (libraries and the app) has its own `lint`, `test`, and `typeche
 
 ```bash
 # Just the content library tests
-npx nx run @katie-portfolio/content:test
+npx nx run @academic-portfolio/content:test
 
 # Just the main app lint
-npx nx run @katie-portfolio/main:lint
+npx nx run @academic-portfolio/main:lint
 
 # Just the navigation library typecheck
-npx nx run @katie-portfolio/navigation:typecheck
+npx nx run @academic-portfolio/navigation:typecheck
 ```
 
 ## Environment Variables

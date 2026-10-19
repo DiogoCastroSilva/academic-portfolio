@@ -10,7 +10,7 @@ import { axe } from "vitest-axe";
  *
  * @example
  * ```ts
- * import { expectNoA11yViolations } from "@katie-portfolio/utils/test-helpers/a11y";
+ * import { expectNoA11yViolations } from "@academic-portfolio/utils/test-helpers/a11y";
  *
  * const { container } = render(<MyComponent />);
  * await expectNoA11yViolations(container);

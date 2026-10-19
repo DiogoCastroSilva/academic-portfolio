@@ -13,7 +13,7 @@ import type {
   EducationEntry,
   ResearchInterest,
   SkillCategory,
-} from "@katie-portfolio/content";
+} from "@academic-portfolio/content";
 
 import { AboutHero } from "./AboutHero.js";
 import { AboutSection } from "./AboutSection.js";

@@ -2,7 +2,7 @@ import { describe, expect, it, vi } from "vitest";
 
 import { generateOgImageSvg, ogImageRef, wrapText } from "./og-image";
 
-vi.mock("@katie-portfolio/content", () => ({
+vi.mock("@academic-portfolio/content", () => ({
   withPublicBasePath: (p: string) => p,
 }));
 

@@ -19,11 +19,11 @@ const createNextConfig = (phase) => ({
   basePath,
   assetPrefix,
   transpilePackages: [
-    "@katie-portfolio/content",
-    "@katie-portfolio/projects",
-    "@katie-portfolio/publications",
-    "@katie-portfolio/blog",
-    "@katie-portfolio/navigation",
+    "@academic-portfolio/content",
+    "@academic-portfolio/projects",
+    "@academic-portfolio/publications",
+    "@academic-portfolio/blog",
+    "@academic-portfolio/navigation",
   ],
   pageExtensions: ["ts", "tsx", "md"],
   images: {

@@ -1,7 +1,7 @@
 import { notFound } from "next/navigation";
 
-import { getAllProjects } from "@katie-portfolio/projects";
-import { withPublicBasePath } from "@katie-portfolio/content";
+import { getAllProjects } from "@academic-portfolio/projects";
+import { withPublicBasePath } from "@academic-portfolio/content";
 
 import { paginate, parsePageParam, PAGE_SIZE } from "../../../lib/pagination";
 import { ContentCardSection } from "../../../ui/ContentCardSection";

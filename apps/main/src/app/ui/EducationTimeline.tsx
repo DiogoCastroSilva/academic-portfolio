@@ -1,5 +1,5 @@
 "use client";
-import type { EducationEntry } from "@katie-portfolio/content";
+import type { EducationEntry } from "@academic-portfolio/content";
 import { motion, useReducedMotion } from "motion/react";
 
 type EducationTimelineProps = {

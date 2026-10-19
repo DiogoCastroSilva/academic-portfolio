@@ -8,8 +8,8 @@ import React from "react";
 import { render, screen } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
 
-import { expectNoA11yViolations } from "@katie-portfolio/utils/test-helpers/a11y";
-import type { ContentItemMeta } from "@katie-portfolio/content";
+import { expectNoA11yViolations } from "@academic-portfolio/utils/test-helpers/a11y";
+import type { ContentItemMeta } from "@academic-portfolio/content";
 
 import { ContentDetail } from "./ContentDetail.js";
 

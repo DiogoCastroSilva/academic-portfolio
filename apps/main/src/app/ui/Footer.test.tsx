@@ -7,7 +7,7 @@ import "@testing-library/jest-dom";
 import { render, screen } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
 
-import { expectNoA11yViolations } from "@katie-portfolio/utils/test-helpers/a11y";
+import { expectNoA11yViolations } from "@academic-portfolio/utils/test-helpers/a11y";
 
 import { Footer } from "./Footer.js";
 

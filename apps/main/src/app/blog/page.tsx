@@ -1,4 +1,4 @@
-import { getAllBlogPosts } from "@katie-portfolio/blog";
+import { getAllBlogPosts } from "@academic-portfolio/blog";
 
 import { siteConfig } from "../../configs/site-config";
 import { paginate, PAGE_SIZE } from "../lib/pagination";

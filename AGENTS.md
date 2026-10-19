@@ -28,7 +28,7 @@ npx nx graph                                 # Visualize workspace
 
 # Individual project
 npx nx show project main                     # Show all targets for a project
-npx nx run @katie-portfolio/content:test     # Run a specific project's tests
+npx nx run @academic-portfolio/content:test     # Run a specific project's tests
 ```
 
 ## Before making changes

@@ -1,6 +1,6 @@
 "use client";
-import type { ContentMeta } from "@katie-portfolio/content";
-import { dates } from "@katie-portfolio/utils";
+import type { ContentMeta } from "@academic-portfolio/content";
+import { dates } from "@academic-portfolio/utils";
 import Link from "next/link";
 
 import { ContentImage } from "./ContentImage";

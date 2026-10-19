@@ -1,4 +1,4 @@
-import { withPublicBasePath } from "@katie-portfolio/content";
+import { withPublicBasePath } from "@academic-portfolio/content";
 
 /** Characters that need XML escaping in SVG `<text>` content. */
 const XML_ESCAPE_MAP: Record<string, string> = {

@@ -1,5 +1,5 @@
 "use client";
-import type { ProfileData } from "@katie-portfolio/content";
+import type { ProfileData } from "@academic-portfolio/content";
 import { motion, useReducedMotion } from "motion/react";
 
 import { ContentImage } from "./ContentImage";

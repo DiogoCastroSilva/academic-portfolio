@@ -1,5 +1,5 @@
 "use client";
-import type { SkillCategory } from "@katie-portfolio/content";
+import type { SkillCategory } from "@academic-portfolio/content";
 import { motion, useReducedMotion } from "motion/react";
 
 type SkillsGridProps = {

@@ -7,8 +7,8 @@ import "@testing-library/jest-dom";
 import { render, screen } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
 
-import { expectNoA11yViolations } from "@katie-portfolio/utils/test-helpers/a11y";
-import type { SkillCategory } from "@katie-portfolio/content";
+import { expectNoA11yViolations } from "@academic-portfolio/utils/test-helpers/a11y";
+import type { SkillCategory } from "@academic-portfolio/content";
 
 import { SkillsGrid } from "./SkillsGrid.js";
 

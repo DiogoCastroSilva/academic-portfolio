@@ -1,4 +1,4 @@
-import { getProfile, getFullUrl } from "@katie-portfolio/content";
+import { getProfile, getFullUrl } from "@academic-portfolio/content";
 
 import { siteConfig } from "../../configs/site-config";
 import { AboutHero } from "../ui/AboutHero";

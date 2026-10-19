@@ -1,5 +1,5 @@
 "use client";
-import type { ResearchInterest } from "@katie-portfolio/content";
+import type { ResearchInterest } from "@academic-portfolio/content";
 import { motion, useReducedMotion } from "motion/react";
 
 type ResearchInterestsProps = {

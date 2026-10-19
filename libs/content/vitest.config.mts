@@ -5,7 +5,7 @@ export default defineConfig(() => ({
   root: __dirname,
   cacheDir: "../../node_modules/.vite/libs/content",
   test: {
-    name: "@katie-portfolio/content",
+    name: "@academic-portfolio/content",
     watch: false,
     globals: true,
     environment: "node",

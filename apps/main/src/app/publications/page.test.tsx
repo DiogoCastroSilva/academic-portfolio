@@ -7,7 +7,7 @@ import "@testing-library/jest-dom";
 import { render, screen } from "@testing-library/react";
 import { afterEach, describe, expect, it, vi } from "vitest";
 
-import type { ContentMeta } from "@katie-portfolio/content";
+import type { ContentMeta } from "@academic-portfolio/content";
 import { PAGE_SIZE } from "../lib/pagination.js";
 
 const mockPublications: ContentMeta[] = [
@@ -24,12 +24,12 @@ const mockPublications: ContentMeta[] = [
   },
 ];
 
-vi.mock("@katie-portfolio/publications", () => ({
+vi.mock("@academic-portfolio/publications", () => ({
   getAllPublications: () => mockPublications,
   getPublicationContentBySlug: vi.fn(),
 }));
 
-vi.mock("@katie-portfolio/navigation", () => ({
+vi.mock("@academic-portfolio/navigation", () => ({
   NavBar: ({ items }: { items?: { name: string; href: string }[] }) => (
     <nav data-testid="navbar">
       {items?.map((i) => (

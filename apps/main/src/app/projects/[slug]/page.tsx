@@ -1,8 +1,8 @@
 import {
   getAllProjects,
   getProjectContentBySlug,
-} from "@katie-portfolio/projects";
-import { getFullAssetUrl, getFullUrl } from "@katie-portfolio/content";
+} from "@academic-portfolio/projects";
+import { getFullAssetUrl, getFullUrl } from "@academic-portfolio/content";
 import { notFound } from "next/navigation";
 import { ContentDetail } from "../../ui/ContentDetail";
 import { ogImageRef } from "../../lib/og-image";

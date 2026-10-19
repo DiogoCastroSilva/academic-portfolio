@@ -1,5 +1,5 @@
 {
-  "name": "@katie-portfolio/main",
+  "name": "@academic-portfolio/main",
   "version": "0.0.1",
   "private": true,
   "nx": {
@@ -59,12 +59,12 @@
     ]
   },
   "dependencies": {
-    "@katie-portfolio/blog": "*",
-    "@katie-portfolio/content": "*",
-    "@katie-portfolio/navigation": "*",
-    "@katie-portfolio/projects": "*",
-    "@katie-portfolio/publications": "*",
-    "@katie-portfolio/utils": "*",
+    "@academic-portfolio/blog": "*",
+    "@academic-portfolio/content": "*",
+    "@academic-portfolio/navigation": "*",
+    "@academic-portfolio/projects": "*",
+    "@academic-portfolio/publications": "*",
+    "@academic-portfolio/utils": "*",
     "next": "16.4.2",
     "react": "^19.2.5",
     "react-dom": "^19.2.5"

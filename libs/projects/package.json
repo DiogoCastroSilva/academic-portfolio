@@ -1,5 +1,5 @@
 {
-  "name": "@katie-portfolio/projects",
+  "name": "@academic-portfolio/projects",
   "version": "0.0.1",
   "private": true,
   "type": "module",
@@ -14,7 +14,7 @@
     "./package.json": "./package.json"
   },
   "dependencies": {
-    "@katie-portfolio/content": "*"
+    "@academic-portfolio/content": "*"
   },
   "nx": {
     "tags": [

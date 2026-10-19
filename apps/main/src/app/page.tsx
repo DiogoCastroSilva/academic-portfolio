@@ -1,7 +1,7 @@
-import { getAllProjects } from "@katie-portfolio/projects";
-import { getAllPublications } from "@katie-portfolio/publications";
-import { getAllBlogPosts } from "@katie-portfolio/blog";
-import { getProfile } from "@katie-portfolio/content";
+import { getAllProjects } from "@academic-portfolio/projects";
+import { getAllPublications } from "@academic-portfolio/publications";
+import { getAllBlogPosts } from "@academic-portfolio/blog";
+import { getProfile } from "@academic-portfolio/content";
 
 import { AboutSection } from "./ui/AboutSection";
 import { ContentCardSection } from "./ui/ContentCardSection";

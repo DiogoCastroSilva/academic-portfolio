@@ -1,8 +1,8 @@
 import {
   getAllBlogPosts,
   getBlogPostContentBySlug,
-} from "@katie-portfolio/blog";
-import { getFullAssetUrl, getFullUrl } from "@katie-portfolio/content";
+} from "@academic-portfolio/blog";
+import { getFullAssetUrl, getFullUrl } from "@academic-portfolio/content";
 import { notFound } from "next/navigation";
 
 import { ContentDetail } from "../../ui/ContentDetail";

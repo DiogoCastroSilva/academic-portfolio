@@ -10,7 +10,7 @@ The project uses **Vitest-Axe** to run automated accessibility audits on compone
 
 The project provides shared utilities to reduce boilerplate:
 
-- **`@katie-portfolio/utils/test-helpers/a11y`** — Exports `expectNoA11yViolations()` for `apps/main` test files
+- **`@academic-portfolio/utils/test-helpers/a11y`** — Exports `expectNoA11yViolations()` for `apps/main` test files
 - **`libs/navigation/src/lib/test-utils/`** — Exports `expectNoA11yViolations()` for navigation library tests (can't import from utils due to dependency boundaries)
 
 ### Key Dependencies
@@ -62,7 +62,7 @@ import React from "react";
 import { cleanup, render, screen } from "@testing-library/react";
 import { afterEach, describe, it, vi } from "vitest";
 
-import { expectNoA11yViolations } from "@katie-portfolio/utils/test-helpers/a11y";
+import { expectNoA11yViolations } from "@academic-portfolio/utils/test-helpers/a11y";
 
 import { MyComponent } from "./MyComponent.js";
 
@@ -91,12 +91,12 @@ const results = await axe(container);
 expect(results.violations).toHaveLength(0);
 
 // ✅ New pattern (shared helper)
-import { expectNoA11yViolations } from "@katie-portfolio/utils/test-helpers/a11y";
+import { expectNoA11yViolations } from "@academic-portfolio/utils/test-helpers/a11y";
 
 await expectNoA11yViolations(container);
 ```
 
-For the navigation library (no dependency on `@katie-portfolio/utils`):
+For the navigation library (no dependency on `@academic-portfolio/utils`):
 
 ```ts
 import { expectNoA11yViolations } from "../test-utils/index.js";

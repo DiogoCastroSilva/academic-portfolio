@@ -1,4 +1,4 @@
 "use client";
-import { NavBar } from "@katie-portfolio/navigation";
+import { NavBar } from "@academic-portfolio/navigation";
 
 export { NavBar };

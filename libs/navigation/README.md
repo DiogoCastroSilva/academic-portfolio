@@ -1,4 +1,4 @@
-# @katie-portfolio/navigation
+# @academic-portfolio/navigation
 
 Navigation configuration and NavBar component for the portfolio site.
 
@@ -10,7 +10,7 @@ Navigation configuration and NavBar component for the portfolio site.
 ## Usage
 
 ```tsx
-import { NavBar, navigation } from "@katie-portfolio/navigation";
+import { NavBar, navigation } from "@academic-portfolio/navigation";
 ```
 
 The NavBar component is a client component (uses `usePathname` and `useState` hooks).
@@ -31,7 +31,7 @@ To add a new navigation item, add an entry to the `navigation` array.
 ## Tests
 
 ```bash
-npx nx run @katie-portfolio/navigation:test
+npx nx run @academic-portfolio/navigation:test
 ```
 
 Runs Vitest tests validating the navigation configuration structure.
