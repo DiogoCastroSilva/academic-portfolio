@@ -119,8 +119,8 @@ The repository should demonstrate:
 | Personal metadata derives from editable profile/site configuration rather than hardcoded names in pages | Roadmap item                                                                                                                      |
 | Empty states and sample entries look intentional                                                        | Roadmap item                                                                                                                      |
 | Navigation marks the active section on collection and nested detail routes                              | Roadmap item: exact-path matching currently misses nested project/publication/blog routes                                         |
-| Collection pages show every item or provide pagination; never silently truncate content                 | Homepage preview limit is explicit (6, with "View all" links); full collection pages show all items; pagination is a Phase 4 item |
-| Pagination appears only when more than one page exists                                                  | Roadmap item: build-time static pagination and accessible current-page state                                                      |
+| Collection pages show every item or provide pagination; never silently truncate content                 | Implemented; collection pages use ContentCardSection with all items; pagination via Pagination component with 10 items per page |
+| Pagination appears only when more than one page exists                                                  | Implemented; static pagination via Pagination component (returns null when totalPages u2264 1), generateStaticParams for pages 1..N, 0/1/10/11/20/21 item test coverage |
 | Heading hierarchy and typography are consistent across homepage, lists, details, and Markdown content   | Audit item: define and test page-level H1 and nested content heading behavior                                                     |
 | Motion is purposeful, restrained, performant, and respects reduced-motion preferences                   | Existing CSS supports reduced motion; review animation density and consistency                                                    |
 
@@ -184,7 +184,7 @@ This roadmap is ordered by user impact and correctness, not by adding more featu
 
 **Priority: P1/P2 — content must never disappear silently**
 
-The current shared `ContentCardSection` defaults to showing six items via `items.slice(0, limit)`, but collection pages do not provide pagination. Once a collection exceeds six items, later entries are silently omitted from the listing. Fix this before treating collection pages as complete.
+The shared `ContentCardSection` defaults to showing six items on the homepage via `items.slice(0, limit)`, but collection pages now provide full pagination. This is resolved — see below.
 
 - Add a reusable, static-export-compatible pagination pattern for blog posts, projects, and publications.
 - Start with **10 items per page** as a reasonable content/scanability default. Keep the page size in one shared configuration; change it only if visual and performance testing provides evidence for a better value.
@@ -195,7 +195,7 @@ The current shared `ContentCardSection` defaults to showing six items via `items
 - Ensure each page has appropriate title/description/canonical behavior and that sitemap/SEO output does not expose drafts or invalid page routes.
 - Avoid rendering the same full collection on every page when a simple shared pagination helper can slice it at build time. Since this is a static site, the page size is a usability and page-weight choice, not a substitute for image optimization.
 - Add tests for 0, 1, exactly 10, 11, 20, and 21 items; verify every published item appears exactly once across pages, no item is silently lost, and no pagination controls appear when there is only one page.
-- **Homepage preview limit is now explicit** (6 items, passed as `limit={6}` at the call site) with a "View all" link to `/blog`, `/projects`, and `/publications`. The content library's `getAll()` sort now includes a slug-based tie-breaker for deterministic ordering when dates are identical. Full collection-page pagination remains a Phase 4 item.
+- **Homepage preview limit is now explicit** (6 items, passed as `limit={6}` at the call site) with a "View all" link to `/blog`, `/projects`, and `/publications`. The content library's `getAll()` sort now includes a slug-based tie-breaker for deterministic ordering when dates are identical. Full collection-page pagination is implemented and tested (see below).
 
 **Exit criteria:** Every published item is reachable; listing pages generate deterministically for static export; pagination is absent when there is only one page; the clean-fork test verifies the behavior.
 
