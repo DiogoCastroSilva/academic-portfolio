@@ -258,3 +258,16 @@ The template is ready when:
 - Prefer accessible semantic tokens and reusable page patterns over a large design-system abstraction.
 - Defer CMS, database, and authentication infrastructure.
 - Omit `<lastmod>` from sitemap.xml; build timestamps are not meaningful content-change dates. The decision is tested in `sitemap.test.ts`.
+
+
+## Reference material for UX and implementation
+
+Use these as references, not as designs to copy wholesale. Preserve the template's focus on clarity, maintainability, and a scientist's Markdown-first workflow.
+
+- [W3C Web Content Accessibility Guidelines (WCAG) 2.2](https://www.w3.org/TR/WCAG22/) — target for contrast, headings/labels, keyboard focus, navigation, reflow, and motion.
+- [Next.js static export guide](https://nextjs.org/docs/app/guides/static-exports) and [`generateStaticParams` reference](https://nextjs.org/docs/app/api-reference/functions/generate-static-params) — ensure collection pagination routes are generated at build time and work on GitHub Pages without a server.
+- [PhD student website examples, annotated](https://www.scilio.app/examples/phd-student-websites) — inspiration for clear research-area summaries, dated updates, and publications presented as useful artifacts rather than citation-only lists.
+- [Mayank Mittal's academic site](https://mayankm96.github.io/) — example of publication entries with visuals and direct links to abstracts, code, and project artifacts.
+- [Cecilia Baldoni's academic/science communication site](https://cecibaldoni.github.io/) — example of a portfolio that spans projects, publications, talks, workshops, and communication work over time.
+
+The useful pattern from these examples is not extra animation or decoration: make the research and outputs easy to understand, provide direct evidence/links, keep dates and context visible, and make the site easy to maintain over multiple career stages.
