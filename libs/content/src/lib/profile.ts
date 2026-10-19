@@ -124,6 +124,148 @@ function validateProfileFrontmatter(data: Record<string, unknown>): void {
 }
 
 /**
+ * Validate `value` is a non-empty string, pushing an error if not.
+ */
+function assertNonEmptyString(
+  value: unknown,
+  path: string,
+  errors: string[],
+): void {
+  if (typeof value !== "string" || value.trim() === "") {
+    errors.push(
+      `\`'${path}' must be a non-empty string, got \`${typeof value}\``,
+    );
+  }
+}
+
+/**
+ * Validate `value` is an array of strings, pushing an error if not.
+ */
+function assertStringArray(
+  value: unknown,
+  path: string,
+  errors: string[],
+): void {
+  if (value === undefined) return;
+  if (!Array.isArray(value)) {
+    errors.push(`\`'${path}' must be an array, got \`${typeof value}\``);
+    return;
+  }
+  for (const [j, item] of value.entries()) {
+    if (typeof item !== "string") {
+      errors.push(`\`'${path}[${j}]' must be a string, got \`${typeof item}\``);
+    }
+  }
+}
+
+/** Validate an education entry from profile frontmatter. */
+function validateEducationEntry(
+  entry: unknown,
+  index: number,
+  errors: string[],
+): void {
+  const path = `education[${index}]`;
+  if (typeof entry !== "object" || entry === null) {
+    errors.push(`\`'${path}' must be an object, got \`${typeof entry}\``);
+    return;
+  }
+  const e = entry as Record<string, unknown>;
+  assertNonEmptyString(e.degree, `${path}.degree`, errors);
+  assertNonEmptyString(e.institution, `${path}.institution`, errors);
+  assertNonEmptyString(e.period, `${path}.period`, errors);
+  assertNonEmptyString(e.focus, `${path}.focus`, errors);
+  assertStringArray(e.details, `${path}.details`, errors);
+}
+
+/** Validate a research interest entry from profile frontmatter. */
+function validateResearchInterestEntry(
+  entry: unknown,
+  index: number,
+  errors: string[],
+): void {
+  const path = `researchInterests[${index}]`;
+  if (typeof entry !== "object" || entry === null) {
+    errors.push(`\`'${path}' must be an object, got \`${typeof entry}\``);
+    return;
+  }
+  const r = entry as Record<string, unknown>;
+  assertNonEmptyString(r.title, `${path}.title`, errors);
+  assertNonEmptyString(r.description, `${path}.description`, errors);
+  if (r.icon !== undefined && typeof r.icon !== "string") {
+    errors.push(
+      `\`'${path}.icon' must be a string or undefined, got \`${typeof r.icon}\``,
+    );
+  }
+}
+
+/** Validate a skill category entry from profile frontmatter. */
+function validateSkillEntry(
+  entry: unknown,
+  index: number,
+  errors: string[],
+): void {
+  const path = `skills[${index}]`;
+  if (typeof entry !== "object" || entry === null) {
+    errors.push(`\`'${path}' must be an object, got \`${typeof entry}\``);
+    return;
+  }
+  const s = entry as Record<string, unknown>;
+  assertNonEmptyString(s.category, `${path}.category`, errors);
+  assertStringArray(s.items, `${path}.items`, errors);
+}
+
+/**
+ * Validate the nested collections in profile frontmatter.
+ *
+ * Unlike the parsing functions (which silently drop or default invalid
+ * values), this validator collects all errors and throws once with an
+ * actionable message — matching the approach used by `validateFrontmatter`
+ * for content collections. Fields are only validated when present; missing
+ * optional collections are not errors.
+ */
+export function validateProfileNestedData(data: Record<string, unknown>): void {
+  const errors: string[] = [];
+
+  if (data.education !== undefined) {
+    if (!Array.isArray(data.education)) {
+      errors.push(
+        `\`'education' must be an array, got \`${typeof data.education}\``,
+      );
+    } else {
+      data.education.forEach((entry, i) =>
+        validateEducationEntry(entry, i, errors),
+      );
+    }
+  }
+
+  if (data.researchInterests !== undefined) {
+    if (!Array.isArray(data.researchInterests)) {
+      errors.push(
+        `\`'researchInterests' must be an array, got \`${typeof data.researchInterests}\``,
+      );
+    } else {
+      data.researchInterests.forEach((entry, i) =>
+        validateResearchInterestEntry(entry, i, errors),
+      );
+    }
+  }
+
+  if (data.skills !== undefined) {
+    if (!Array.isArray(data.skills)) {
+      errors.push(`\`'skills' must be an array, got \`${typeof data.skills}\``);
+    } else {
+      data.skills.forEach((entry, i) => validateSkillEntry(entry, i, errors));
+    }
+  }
+
+  if (errors.length > 0) {
+    throw new Error(
+      `Invalid profile.md nested data:\n  ${errors.join("\n  ")}`,
+    );
+  }
+}
+
+/**
  * Parse a raw profile.md string into structured profile data.
  *
  * This is a pure function: it takes the file content (frontmatter + body)
@@ -133,6 +275,7 @@ function validateProfileFrontmatter(data: Record<string, unknown>): void {
 export function parseProfile(content: string): ProfileData {
   const { data, content: markdownBody } = matter(content);
   validateProfileFrontmatter(data);
+  validateProfileNestedData(data);
 
   const image =
     typeof data.image === "string" && data.image.trim() !== ""

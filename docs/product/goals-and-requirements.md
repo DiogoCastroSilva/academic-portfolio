@@ -73,7 +73,7 @@ The repository should demonstrate:
 
 | Criterion                                                                                                   | Status / next action                                                                                                                              |
 | ----------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Markdown/frontmatter validation has positive and negative tests                                             | Implemented; recheck coverage for malformed nested values and array entries                                                                       |
+| Markdown/frontmatter validation has positive and negative tests                                             | Implemented; coverage includes content frontmatter and profile nested collections (education, researchInterests, skills); malformed values and array entries throw actionable errors |
 | Deployment URL substitution works                                                                           | Previously verified; retain regression coverage                                                                                                   |
 | Relative links and images support GitHub Pages base paths                                                   | Previously verified; retain regression coverage                                                                                                   |
 | Missing images have deliberate fallback behavior                                                            | Implemented; verify fallback is distinguishable from real content                                                                                 |
@@ -81,7 +81,7 @@ The repository should demonstrate:
 | Empty collections and unknown slugs have deliberate behavior                                                | Implemented; retain regression coverage                                                                                                           |
 | Draft content is excluded from published lists, detail routes, sitemap, and generated metadata              | Implemented; regression tests cover `getAll()`, `getBySlug()`, and `getContentBySlug()` draft filtering; sitemap/JSON-LD draft exclusion verified |
 | Slug generation and lookup use one consistent rule                                                          | Done; resolved — directory names are authoritative across `getAll()`, `getBySlug()`, sitemap, and canonical metadata                              |
-| Profile and nested collections reject malformed values instead of silently dropping or rendering empty data | Roadmap item                                                                                                                                      |
+| Profile and nested collections reject malformed values instead of silently dropping or rendering empty data | Implemented; profile.ts validates education, researchInterests, and skills structure (non-array, non-object entries, non-string fields) and throws actionable errors |
 | Owner-editable information is documented in one obvious index                                               | Roadmap item                                                                                                                                      |
 | Sample content is clearly labelled and safe for a fresh fork                                                | Roadmap item; this replaces any expectation that the template must contain the owner's final real content                                         |
 | Content author can add/edit/remove entries without changing app code                                        | Must be demonstrated in clean-fork test                                                                                                           |
@@ -204,10 +204,11 @@ The current shared `ContentCardSection` defaults to showing six items via `items
 - `Pagination` component updated for path-based URLs (`/blog/`, `/blog/page/2/`)
 - `ContentCardSection` `limit` prop made optional — when omitted, all items are shown
 - `blog/page.tsx`, `projects/page.tsx`, `publications/page.tsx` render page 1 server-side with `ContentCardSection` + `Pagination`
-- `blog/page/page.tsx`, `projects/page/page.tsx`, `publications/page/page.tsx` handle pages 2+ via `generateStaticParams`
+- `blog/page/[page]/page.tsx`, `projects/page/[page]/page.tsx`, `publications/page/[page]/page.tsx` handle pages 1..N via `generateStaticParams`
+- All pagination routes use `dynamicParams = false` so only build-time-generated params are reachable
 - Page 1 served directly by `page.tsx` (avoids ambiguity with `[slug]` dynamic routes)
-- Pages 2..N generated at build time using static segment `page` (not `[page]`, to avoid route ambiguity with `[slug]`)
-- `generateStaticParams` uses `Math.max(1, totalPages)` so no pagination routes are pre-rendered when the collection fits on a single page — prevents dead links in sitemap.xml
+- Pages 1..N generated at build time using dynamic segment `[page]` with `dynamicParams = false`; page 1 redirects to the collection root via `withPublicBasePath()`
+- `generateStaticParams` returns at least `[{ page: "1" }]` — Next.js `output: export` requires ≥1 static param per dynamic route. When the collection fits on one page, page 1 is generated as a redirect to the collection root.
 
 ### Phase 5 — SEO, metadata, and repository hygiene
 

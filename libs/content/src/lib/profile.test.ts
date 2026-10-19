@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 
-import { parseProfile } from "./profile.js";
+import { parseProfile, validateProfileNestedData } from "./profile.js";
 
 const VALID_PROFILE = `---
 name: "Kathleen Miller"
@@ -144,5 +144,172 @@ describe("parseProfile", () => {
     expect(result).toHaveProperty("researchInterests");
     expect(result).toHaveProperty("skills");
     expect(result).toHaveProperty("biography");
+  });
+
+  // ---------------------------------------------------------------------------
+  // Nested collection validation tests (Phase 3)
+  // ---------------------------------------------------------------------------
+
+  it("validateProfileNestedData passes when collections are absent", () => {
+    expect(() => validateProfileNestedData({})).not.toThrow();
+  });
+
+  it("validateProfileNestedData passes when collections are undefined", () => {
+    expect(() =>
+      validateProfileNestedData({
+        education: undefined,
+        researchInterests: undefined,
+        skills: undefined,
+      }),
+    ).not.toThrow();
+  });
+
+  it("throws when education is not an array", () => {
+    const content = VALID_PROFILE.replace(
+      /education:[\s\S]*?(?=\nresearchInterests)/,
+      'education: "not-an-array"\n',
+    );
+    expect(() => parseProfile(content)).toThrow(
+      /`'education' must be an array/,
+    );
+  });
+
+  it("throws when education entry is not an object", () => {
+    const content = VALID_PROFILE.replace(
+      /education:[\s\S]*?(?=\nresearchInterests)/,
+      'education:\n  - "not-an-object"\n',
+    );
+    expect(() => parseProfile(content)).toThrow(
+      /`'education\[0\]' must be an object/,
+    );
+  });
+
+  it("throws when education entry has non-string degree", () => {
+    const content = VALID_PROFILE.replace('degree: "PhD"', "degree: 123");
+    expect(() => parseProfile(content)).toThrow(
+      /`'education\[0\].degree' must be a non-empty string/,
+    );
+  });
+
+  it("throws when education entry has empty degree", () => {
+    const content = VALID_PROFILE.replace('degree: "PhD"', 'degree: ""');
+    expect(() => parseProfile(content)).toThrow(
+      /`'education\[0\].degree' must be a non-empty string/,
+    );
+  });
+
+  it("throws when education details is not an array", () => {
+    const content = VALID_PROFILE.replace(
+      /details:\n\s+- "Item 1"\n\s+- "Item 2"/,
+      'details: "not-an-array"',
+    );
+    expect(() => parseProfile(content)).toThrow(
+      /`'education\[0\].details' must be an array/,
+    );
+  });
+
+  it("throws when education detail item is not a string", () => {
+    const content = VALID_PROFILE.replace('- "Item 1"', "- 42");
+    expect(() => parseProfile(content)).toThrow(
+      /`'education\[0\].details\[0\]' must be a string/,
+    );
+  });
+
+  it("throws when researchInterests is not an array", () => {
+    const content = VALID_PROFILE.replace(
+      /researchInterests:[\s\S]*?(?=\nskills)/,
+      'researchInterests: "not-an-array"\n',
+    );
+    expect(() => parseProfile(content)).toThrow(
+      /`'researchInterests' must be an array/,
+    );
+  });
+
+  it("throws when researchInterest entry is not an object", () => {
+    const content = VALID_PROFILE.replace(
+      /researchInterests:[\s\S]*?(?=\nskills)/,
+      'researchInterests:\n  - "bare-string"\n',
+    );
+    expect(() => parseProfile(content)).toThrow(
+      /`'researchInterests\[0\]' must be an object/,
+    );
+  });
+
+  it("throws when researchInterest entry has non-string title", () => {
+    const content = VALID_PROFILE.replace('title: "Satellites"', "title: 123");
+    expect(() => parseProfile(content)).toThrow(
+      /`'researchInterests\[0\].title' must be a non-empty string/,
+    );
+  });
+
+  it("throws when researchInterest icon is not a string", () => {
+    const content = VALID_PROFILE.replace('icon: "&#128680;"', "icon: 123");
+    expect(() => parseProfile(content)).toThrow(
+      /`'researchInterests\[0\].icon' must be a string or undefined/,
+    );
+  });
+
+  it("throws when skills is not an array", () => {
+    const content = VALID_PROFILE.replace(
+      /skills:[\s\S]*?(?=\n---)/,
+      'skills: "not-an-array"\n',
+    );
+    expect(() => parseProfile(content)).toThrow(/`'skills' must be an array/);
+  });
+
+  it("throws when skill entry is not an object", () => {
+    const content = VALID_PROFILE.replace(
+      /skills:[\s\S]*?(?=\n---)/,
+      "skills:\n  - 42\n",
+    );
+    expect(() => parseProfile(content)).toThrow(
+      /`'skills\[0\]' must be an object/,
+    );
+  });
+
+  it("throws when skill category is not a string", () => {
+    const content = VALID_PROFILE.replace(
+      'category: "Programming"',
+      "category: 123",
+    );
+    expect(() => parseProfile(content)).toThrow(
+      /`'skills\[0\].category' must be a non-empty string/,
+    );
+  });
+
+  it("throws when skill category is empty", () => {
+    const content = VALID_PROFILE.replace(
+      'category: "Programming"',
+      'category: ""',
+    );
+    expect(() => parseProfile(content)).toThrow(
+      /`'skills\[0\].category' must be a non-empty string/,
+    );
+  });
+
+  it("throws when skill item is not a string", () => {
+    const content = VALID_PROFILE.replace(
+      'items: ["Python", "R"]',
+      'items: ["Python", 42]',
+    );
+    expect(() => parseProfile(content)).toThrow(
+      /`'skills\[0\].items\[1\]' must be a string/,
+    );
+  });
+
+  it("collects multiple validation errors in a single throw", () => {
+    const content = VALID_PROFILE.replace('degree: "PhD"', "degree: 123")
+      .replace('title: "Satellites"', "title: 456")
+      .replace('category: "Programming"', "category: 789");
+    let errorMsg = "";
+    try {
+      parseProfile(content);
+    } catch (e) {
+      errorMsg = (e as Error).message;
+    }
+    expect(errorMsg).toMatch(/Invalid profile\.md nested data/);
+    expect(errorMsg).toContain("degree");
+    expect(errorMsg).toContain("title");
+    expect(errorMsg).toContain("category");
   });
 });
