@@ -11,11 +11,11 @@
   `docs/product/goals-and-requirements.md`.
 - **Decision:** Three tiers of licensing are declared:
 
-  | Category | Path | License | Notes |
-  |---|---|---|---|
-  | **Repository code and configuration** | Everything outside `libs/*/src/md/` — Next.js app, Nx workspace config, scripts, ESLint/Prettier configs, CI workflows, `site-config.ts` | [MIT](./LICENSE) | Reuse the template skeleton freely. |
-  | **Sample portfolio content** | `libs/content/src/md/`, `libs/projects/src/md/`, `libs/publications/src/md/`, `libs/blog/src/md/` | [CC BY-NC-ND 4.0](https://creativecommons.org/licenses/by-nc-nd/4.0/) | Example content only. Do not copy sample content into your own portfolio. Replace with your own. |
-  | **Owner-supplied content** | Content added or replaced after forking | No license imposed by the template | Fork owners may license their own content however they choose. The template does not claim any rights over content you write. |
+  | Category                              | Path                                                                                                                                     | License                                                               | Notes                                                                                                                         |
+  | ------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------- |
+  | **Repository code and configuration** | Everything outside `libs/*/src/md/` — Next.js app, Nx workspace config, scripts, ESLint/Prettier configs, CI workflows, `site-config.ts` | [MIT](./LICENSE)                                                      | Reuse the template skeleton freely.                                                                                           |
+  | **Sample portfolio content**          | `libs/content/src/md/`, `libs/projects/src/md/`, `libs/publications/src/md/`, `libs/blog/src/md/`                                        | [CC BY-NC-ND 4.0](https://creativecommons.org/licenses/by-nc-nd/4.0/) | Example content only. Do not copy sample content into your own portfolio. Replace with your own.                              |
+  | **Owner-supplied content**            | Content added or replaced after forking                                                                                                  | No license imposed by the template                                    | Fork owners may license their own content however they choose. The template does not claim any rights over content you write. |
 
   The site-config values `repoLicenseName` ("MIT") and `contentLicenseName`
   ("CC BY-NC-ND 4.0") drive the footer/structured-data license display and
@@ -26,6 +26,7 @@
   `apps/main/src/configs/site-config.ts` (`contentLicenseName` and
   `contentLicenseUrl`). If you replace all sample content with your own, you
   may also change or remove the CC BY-NC-ND attribution.
+
 - **Alternatives considered:**
   - **Single license for everything (MIT only):** Simpler, but does not protect
     the original author's sample content (biography text, publication details,
