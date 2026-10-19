@@ -71,21 +71,21 @@ The repository should demonstrate:
 
 ## Acceptance Criteria — Content and authoring
 
-| Criterion                                                                                                   | Status / next action                                                                                                                                                                 |
-| ----------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| Markdown/frontmatter validation has positive and negative tests                                             | Implemented; coverage includes content frontmatter and profile nested collections (education, researchInterests, skills); malformed values and array entries throw actionable errors |
-| Deployment URL substitution works                                                                           | Previously verified; retain regression coverage                                                                                                                                      |
-| Relative links and images support GitHub Pages base paths                                                   | Previously verified; retain regression coverage                                                                                                                                      |
-| Missing images have deliberate fallback behavior                                                            | Implemented; verify fallback is distinguishable from real content                                                                                                                    |
-| Invalid metadata produces actionable messages                                                               | Implemented; strengthen gaps listed in the roadmap                                                                                                                                   |
-| Empty collections and unknown slugs have deliberate behavior                                                | Implemented; retain regression coverage                                                                                                                                              |
-| Draft content is excluded from published lists, detail routes, sitemap, and generated metadata              | Implemented; regression tests cover `getAll()`, `getBySlug()`, and `getContentBySlug()` draft filtering; sitemap/JSON-LD draft exclusion verified                                    |
-| Slug generation and lookup use one consistent rule                                                          | Done; resolved — directory names are authoritative across `getAll()`, `getBySlug()`, sitemap, and canonical metadata                                                                 |
-| Profile and nested collections reject malformed values instead of silently dropping or rendering empty data | Implemented; profile.ts validates education, researchInterests, and skills structure (non-array, non-object entries, non-string fields) and throws actionable errors                 |
-| Owner-editable information is documented in one obvious index                                               | Roadmap item                                                                                                                                                                         |
-| Sample content is clearly labelled and safe for a fresh fork                                                | Roadmap item; this replaces any expectation that the template must contain the owner's final real content                                                                            |
-| Content author can add/edit/remove entries without changing app code                                        | Must be demonstrated in clean-fork test                                                                                                                                              |
-| Images and inline Markdown references are validated with useful errors                                      | Verify current implementation and document its exact guarantees                                                                                                                      |
+| Criterion                                                                                                   | Status / next action                                                                                                                                                                                 |
+| ----------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Markdown/frontmatter validation has positive and negative tests                                             | Implemented; coverage includes content frontmatter and profile nested collections (education, researchInterests, skills); malformed values and array entries throw actionable errors                 |
+| Deployment URL substitution works                                                                           | Previously verified; retain regression coverage                                                                                                                                                      |
+| Relative links and images support GitHub Pages base paths                                                   | Previously verified; retain regression coverage                                                                                                                                                      |
+| Missing images have deliberate fallback behavior                                                            | Implemented; verify fallback is distinguishable from real content                                                                                                                                    |
+| Invalid metadata produces actionable messages                                                               | Implemented; strengthen gaps listed in the roadmap                                                                                                                                                   |
+| Empty collections and unknown slugs have deliberate behavior                                                | Implemented; retain regression coverage                                                                                                                                                              |
+| Draft content is excluded from published lists, detail routes, sitemap, and generated metadata              | Implemented; regression tests cover `getAll()`, `getBySlug()`, and `getContentBySlug()` draft filtering; sitemap/JSON-LD draft exclusion verified                                                    |
+| Slug generation and lookup use one consistent rule                                                          | Done; resolved — directory names are authoritative across `getAll()`, `getBySlug()`, sitemap, and canonical metadata                                                                                 |
+| Profile and nested collections reject malformed values instead of silently dropping or rendering empty data | Implemented; profile.ts validates education, researchInterests, and skills structure (non-array, non-object entries, non-string fields) and throws actionable errors                                 |
+| Owner-editable information is documented in one obvious index                                               | ✅ Done — Quick Reference table maps every task to its source file/fields in `docs/product/content-authoring.md`; profile placeholder comments guide fork owners to replace sample data              |
+| Sample content is clearly labelled and safe for a fresh fork                                                | ✅ Done — profile.md has a "TEMPLATE PLACEHOLDER" comment block, email uses the reserved example.com domain, optional contact fields are documented as replaceable, draft entries are clearly marked |
+| Content author can add/edit/remove entries without changing app code                                        | Must be demonstrated in clean-fork test                                                                                                                                                              |
+| Images and inline Markdown references are validated with useful errors                                      | Verify current implementation and document its exact guarantees                                                                                                                                      |
 
 ## Acceptance Criteria — Engineering
 
@@ -150,13 +150,16 @@ This roadmap is ordered by user impact and correctness, not by adding more featu
 - Move hardcoded personal names and page descriptions into profile/site configuration or editable content where appropriate.
   - ✅ Added owner-editable `description` field for SEO (see Phase 5)
   - ✅ Made `email`, `linkedInUrl`, `githubUrl` optional in profile frontmatter — contact/social links are now cleanly omitted from UI, metadata, and structured data when absent
-- Make the editing guide the single entry point for personal changes, with a table mapping each task to the exact file/directory and required fields.
-- Document how to edit the profile, education, research interests, skills, social/contact links, projects, publications, blog, images, site title/description, deployment URL/base path, and optional analytics.
-- Prefer README/Markdown files for content collections; keep technical deployment settings separate and explain any settings that still require editing a configuration file.
-- Supply clearly labelled, realistic-but-generic sample entries and copyable templates. Mark unfinished examples as drafts where appropriate; do not publish invented credentials, publications, or personal claims as if they were real.
-- Explain how to add, edit, reorder (where supported), and remove entries and assets.
-- Make empty states useful and intentional when the owner deletes all examples.
-- Keep Decap CMS documented as a future option only; no CMS or login implementation in this phase.
+- ✅ Make the editing guide the single entry point for personal changes, with a table mapping each task to the exact file/directory and required fields.
+- ✅ Document how to edit the profile, education, research interests, skills, social/contact links, projects, publications, blog, images, site title/description, deployment URL/base path, and optional analytics.
+- ✅ Prefer README/Markdown files for content collections; keep technical deployment settings separate and explain any settings that still require editing a configuration file.
+  - Document site configuration in `docs/product/content-authoring.md` (Site Configuration section) and `docs/operations/deployment.md` (Analytics section)
+- ✅ Supply clearly labelled, realistic-but-generic sample entries and copyable templates. Mark unfinished examples as drafts where appropriate; do not publish invented credentials, publications, or personal claims as if they were real.
+  - `profile.md` has "TEMPLATE PLACEHOLDER" comment block, `example.com` email domain, optional fields documented
+  - `second-project/README.md` is `draft: true` with TODO comments; `publication-placeholder.svg` is a placeholder asset
+- ✅ Explain how to add, edit, reorder (where supported), and remove entries and assets.
+- ✅ Make empty states useful and intentional when the owner deletes all examples.
+- ✅ Keep Decap CMS documented as a future option only; no CMS or login implementation in this phase.
 
 **Exit criteria:** A non-frontend owner can find every editable detail from the main README and make routine content changes without touching React/Next.js components.
 
@@ -222,7 +225,10 @@ The shared `ContentCardSection` defaults to showing six items on the homepage vi
   - Fixed title duplication: page titles now use just the page name (e.g. "About"), the layout template appends `| ${siteConfig.name}`
 - ✅ Fix/test Open Graph selection: use a real content cover when present and generated title-based imagery when absent
 - ✅ Verify canonical URLs, sitemap entries, robots rules, and social image paths under both root-domain and GitHub Pages project-site/base-path deployments
+  - Sitemap excludes page-1 redirect stubs (`/{collection}/page/1/`) — not content pages, excluded by the sitemap generator
+  - Sitemap verified for both root-domain (relative URLs) and project-site (absolute URLs with base path) deployments
 - ✅ Ensure draft entries never appear in generated SEO output
+  - Verified at build time and in sitemap.xml via exclusion logic in `tools/generate-sitemap.mjs`
 - ✅ Ignore and remove generated TypeScript build-info/cache artifacts from version control
 - ✅ Refresh dependency/security documentation using a new audit; clearly separate current findings from old audit counts
 - ✅ ~~Resolve the repository-code license versus portfolio-content license/template-reuse documentation mismatch. State separately what license applies to code, sample content, and owner-supplied content.~~ — ADR-0007 created — MIT for code, CC BY-NC-ND 4.0 for sample content, no license imposed on owner-supplied content
