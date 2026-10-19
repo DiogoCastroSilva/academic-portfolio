@@ -4,7 +4,7 @@ name: "Kathleen Miller"
 role: "PhD Researcher | Earth Observation | Climate Solutions"
 email: "katie.miller6572@gmail.com"
 linkedInUrl: "https://www.linkedin.com/in/kathleen-rose-miller/"
-githubUrl: "https://github.com/kathleen-miller"
+githubUrl: "https://github.com/katiemiller17"
 location: "Ithaca, NY"
 image: "profile.jpeg"
 education:
