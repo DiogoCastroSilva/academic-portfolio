@@ -58,7 +58,7 @@ export const AboutHero = ({ profile }: AboutHeroProps) => {
                 <h1 className="text-3xl font-bold md:text-4xl lg:text-5xl">
                   {profile.name}
                 </h1>
-                <p className="mt-2 text-xl text-gray-700 dark:text-gray-700">
+                <p className="mt-2 text-xl text-gray-600 dark:text-gray-600">
                   {profile.role}
                 </p>
               </div>
@@ -88,7 +88,7 @@ export const AboutHero = ({ profile }: AboutHeroProps) => {
           <h2 className="text-2xl font-bold md:text-3xl">About Me</h2>
           <div
             dangerouslySetInnerHTML={{ __html: profile.biography }}
-            className="prose prose-lg dark:prose-invert prose-p:leading-7 prose-p:my-4 prose-headings:font-bold prose-a:text-blue-600 dark:prose-a:text-blue-400 prose-a:no-underline prose-a:hover:underline max-w-none text-gray-800 dark:text-gray-700"
+            className="prose prose-lg prose-p:leading-7 prose-p:my-4 prose-headings:font-bold prose-a:text-blue-600 dark:prose-a:text-blue-700 prose-a:no-underline prose-a:hover:underline max-w-none text-gray-800 dark:text-gray-600"
           />
         </MotionDiv>
       </MotionDiv>

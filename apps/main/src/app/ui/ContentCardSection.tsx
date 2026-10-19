@@ -67,7 +67,7 @@ export function ContentCardSection({
         {heading}
       </HeadingTag>
       {visibleItems.length === 0 && emptyMessage ? (
-        <p className="text-slate-700 dark:text-gray-700">{emptyMessage}</p>
+        <p className="text-slate-600 dark:text-slate-600">{emptyMessage}</p>
       ) : (
         <>
           <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
@@ -103,7 +103,7 @@ export function ContentCardSection({
                           {item.tags?.slice(0, tagsLimit).map((tag) => (
                             <li
                               key={tag}
-                              className="rounded-full border border-zinc-200 px-2.5 py-1 text-xs font-medium text-zinc-600 dark:border-zinc-700 dark:text-zinc-400"
+                              className="rounded-full border border-zinc-200 px-2.5 py-1 text-xs font-medium text-zinc-600 dark:border-zinc-500 dark:text-zinc-600"
                             >
                               {tag}
                             </li>

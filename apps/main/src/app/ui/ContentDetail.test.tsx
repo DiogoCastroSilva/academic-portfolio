@@ -192,3 +192,45 @@ describe("ContentDetail accessibility — figures and galleries", () => {
     await expectNoA11yViolations(container);
   });
 });
+
+describe("ContentDetail theme contrast (dark mode on light-blue surfaces)", () => {
+  it("prose container does not use dark:prose-invert (light text on light blue = poor contrast)", () => {
+    const { container } = render(<ContentDetail content={mockContent} />);
+    const proseDiv = Array.from(container.querySelectorAll("div")).find((d) =>
+      d.className.includes("prose"),
+    );
+    expect(proseDiv).toBeDefined();
+    const className = proseDiv?.className || "";
+    // prose-invert makes text light for dark surfaces; our prose sits on
+    // bg-sky-50 (light blue) in dark mode, so light text would have poor contrast.
+    expect(className).not.toMatch(/dark:prose-invert/);
+  });
+
+  it("prose links use a blue-700 variant in dark mode for contrast on light-blue surfaces", () => {
+    const { container } = render(<ContentDetail content={mockContent} />);
+    const proseDiv = Array.from(container.querySelectorAll("div")).find((d) =>
+      d.className.includes("prose"),
+    );
+    const className = proseDiv?.className || "";
+    expect(className).toMatch(/dark:prose-a:text-blue-700/);
+    expect(className).not.toMatch(/dark:prose-a:text-blue-400/);
+  });
+
+  it("tag list items use readable text color in dark mode", () => {
+    render(<ContentDetail content={mockContent} />);
+    const tagItems = document.querySelectorAll("li");
+    tagItems.forEach((li) => {
+      const className = li.className;
+      // zinc-400 is too light on the light-blue surface; use zinc-600
+      expect(className).not.toMatch(/dark:text-zinc-400/);
+    });
+  });
+
+  it("time element uses gray-600 in dark mode for readable contrast", () => {
+    const { container } = render(<ContentDetail content={mockContent} />);
+    const timeEl = container.querySelector("time");
+    expect(timeEl).toBeDefined();
+    const className = timeEl?.className || "";
+    expect(className).toMatch(/dark:text-gray-600/);
+  });
+});

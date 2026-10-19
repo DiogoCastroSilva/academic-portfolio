@@ -20,7 +20,7 @@ export const AboutSection = ({ profile }: AboutSectionProps) => {
           />
           <div className="flex flex-col items-center justify-center text-wrap">
             <h1 className="text-2xl font-bold lg:text-3xl">{profile.name}</h1>
-            <p className="items-center text-center text-lg text-gray-700 dark:text-gray-700">
+            <p className="items-center text-center text-lg text-gray-600 dark:text-gray-600">
               {profile.role}
             </p>
           </div>
@@ -29,7 +29,7 @@ export const AboutSection = ({ profile }: AboutSectionProps) => {
           <h2 className="text-xl font-bold lg:text-2xl">About Me</h2>
           <div
             dangerouslySetInnerHTML={{ __html: profile.biography }}
-            className="prose prose-sm dark:prose-invert prose-p:leading-6 prose-a:text-blue-600 dark:prose-a:text-blue-400 prose-a:no-underline prose-a:hover:underline mt-4 max-w-none text-gray-800 dark:text-gray-700"
+            className="prose prose-sm prose-p:leading-6 prose-a:text-blue-600 dark:prose-a:text-blue-700 prose-a:no-underline prose-a:hover:underline mt-4 max-w-none text-gray-800 dark:text-gray-600"
           />
         </div>
       </div>
