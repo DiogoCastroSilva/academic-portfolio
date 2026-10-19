@@ -70,9 +70,9 @@ export function Pagination({
           </li>
         )}
 
-        {pages.map((page) =>
+        {pages.map((page, index) =>
           page === "..." ? (
-            <li key="ellipsis" aria-hidden="true">
+            <li key={`ellipsis-${index}`} aria-hidden="true">
               <span className="px-2 py-1 text-sm text-zinc-500 dark:text-zinc-400">
                 …
               </span>

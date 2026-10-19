@@ -180,7 +180,7 @@ Content`,
     cleanup();
   });
 
-  it("uses slug from frontmatter when present", () => {
+  it("ignores frontmatter slug — directory name is authoritative", () => {
     const { lib, cleanup } = makeLibrary({
       _files: {
         "dir-name/README.md": `---
@@ -195,8 +195,8 @@ Content`,
     });
 
     const items = lib.getAll();
-    expect(items[0].slug).toBe("custom-slug");
-    expect(items[0].href).toBe("/test/custom-slug");
+    expect(items[0].slug).toBe("dir-name");
+    expect(items[0].href).toBe("/test/dir-name");
 
     cleanup();
   });
@@ -339,6 +339,33 @@ Content`,
     cleanup();
   });
 
+  it("excludes drafts from getBySlug", () => {
+    const { lib, cleanup } = makeLibrary({
+      _files: {
+        "draft/README.md": `---\ntitle: "Draft"\ndate: "2024-06-10"\ndraft: true\n---\nContent`,
+      },
+      publicPrefix: "/test",
+      placeholderFilename: "placeholder.svg",
+    });
+
+    expect(lib.getBySlug("draft")).toBeUndefined();
+    cleanup();
+  });
+
+  it("excludes drafts from getContentBySlug", async () => {
+    const { lib, cleanup } = makeLibrary({
+      _files: {
+        "draft/README.md": `---\ntitle: "Draft"\ndate: "2024-06-10"\ndraft: true\n---\nContent`,
+      },
+      publicPrefix: "/test",
+      placeholderFilename: "placeholder.svg",
+    });
+
+    const result = await lib.getContentBySlug("draft");
+    expect(result).toBeUndefined();
+    cleanup();
+  });
+
   it("ignores directories starting with underscore", () => {
     const { lib, cleanup } = makeLibrary({
       _files: {
@@ -371,7 +398,7 @@ Content`,
     cleanup();
   });
 
-  it("throws when duplicate slugs are found in different directories", () => {
+  it("ignores frontmatter slug for duplicate detection — directory names are unique", () => {
     const { lib, cleanup } = makeLibrary({
       _files: {
         "dir-a/README.md":
@@ -383,7 +410,10 @@ Content`,
       placeholderFilename: "placeholder.svg",
     });
 
-    expect(() => lib.getAll()).toThrow(/Duplicate slug/);
+    // Both entries have the same frontmatter slug, but directory names
+    // are authoritative so they get distinct slugs — no collision.
+    const items = lib.getAll();
+    expect(items.map((i) => i.slug).sort()).toEqual(["dir-a", "dir-b"]);
 
     cleanup();
   });
@@ -1078,7 +1108,7 @@ describe("frontmatter validation", () => {
     cleanup();
   });
 
-  it("accepts valid frontmatter with slug in frontmatter", () => {
+  it("ignores frontmatter slug — directory name is authoritative", () => {
     const { lib, cleanup } = makeLibrary({
       _files: {
         "dir-name/README.md": `---
@@ -1092,12 +1122,12 @@ Content`,
       placeholderFilename: "placeholder.svg",
     });
 
-    // getBySlug uses the directory name; the slug from frontmatter is
-    // returned in the metadata.
+    // Directory name is the slug; frontmatter `slug` is accepted but
+    // ignored for routing, href, and canonical metadata.
     const item = lib.getBySlug("dir-name");
     expect(item).toBeDefined();
-    expect(item!.slug).toBe("custom-slug");
-    expect(item!.href).toBe("/test/custom-slug");
+    expect(item!.slug).toBe("dir-name");
+    expect(item!.href).toBe("/test/dir-name");
 
     cleanup();
   });
@@ -1345,6 +1375,95 @@ Content`,
     });
 
     expect(() => lib.getAll()).toThrow(/`image` must be a string/);
+
+    cleanup();
+  });
+
+  it("rejects array image field (image: [])", () => {
+    const { lib, cleanup } = makeLibrary({
+      _files: {
+        "post/README.md": `---\ntitle: "Test"\ndate: "2024-06-10"\nimage: []\n---\nContent`,
+      },
+      publicPrefix: "/test",
+      placeholderFilename: "placeholder.svg",
+    });
+
+    expect(() => lib.getAll()).toThrow(
+      /`image` must be a string, null, or undefined/,
+    );
+
+    cleanup();
+  });
+
+  it("accepts null image field (uses placeholder)", () => {
+    const { lib, cleanup } = makeLibrary({
+      _files: {
+        "post/README.md": `---\ntitle: "Test"\ndate: "2024-06-10"\nimage: null\n---\nContent`,
+      },
+      publicPrefix: "/test",
+      placeholderFilename: "placeholder.svg",
+    });
+
+    const item = lib.getBySlug("post");
+    expect(item).toBeDefined();
+    expect(item!.image).toBeUndefined();
+    expect(item!.imageType).toBe("placeholder");
+
+    cleanup();
+  });
+
+  it("rejects non-string element in tags array", () => {
+    const { lib, cleanup } = makeLibrary({
+      _files: {
+        "post/README.md": `---\ntitle: "Test"\ndate: "2024-06-10"\ntags: ["valid", 123]\n---\nContent`,
+      },
+      publicPrefix: "/test",
+      placeholderFilename: "placeholder.svg",
+    });
+
+    expect(() => lib.getAll()).toThrow(/`tags\[1\]` must be a string/);
+
+    cleanup();
+  });
+
+  it("rejects non-string element in links array", () => {
+    const { lib, cleanup } = makeLibrary({
+      _files: {
+        "post/README.md": `---\ntitle: "Test"\ndate: "2024-06-10"\nlinks: [123, "valid"]\n---\nContent`,
+      },
+      publicPrefix: "/test",
+      placeholderFilename: "placeholder.svg",
+    });
+
+    expect(() => lib.getAll()).toThrow(/`links\[0\]` must be a string/);
+
+    cleanup();
+  });
+
+  it("rejects non-string element in authors array", () => {
+    const { lib, cleanup } = makeLibrary({
+      _files: {
+        "post/README.md": `---\ntitle: "Test"\ndate: "2024-06-10"\nauthors: [123, "Valid Author"]\n---\nContent`,
+      },
+      publicPrefix: "/test",
+      placeholderFilename: "placeholder.svg",
+    });
+
+    expect(() => lib.getAll()).toThrow(/`authors\[0\]` must be a string/);
+
+    cleanup();
+  });
+
+  it("rejects empty title string", () => {
+    const { lib, cleanup } = makeLibrary({
+      _files: {
+        "post/README.md": `---\ntitle: ""\ndate: "2024-06-10"\n---\nContent`,
+      },
+      publicPrefix: "/test",
+      placeholderFilename: "placeholder.svg",
+    });
+
+    expect(() => lib.getAll()).toThrow(/`title` must not be an empty string/);
 
     cleanup();
   });

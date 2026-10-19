@@ -1,19 +1,30 @@
 import { notFound } from "next/navigation";
 
 import { getAllProjects } from "@katie-portfolio/projects";
+import { withPublicBasePath } from "@katie-portfolio/content";
 
-import { paginate, parsePageParam, PAGE_SIZE } from "../../lib/pagination";
-import { ContentCardSection } from "../../ui/ContentCardSection";
-import { Pagination } from "../../ui/Pagination";
+import { paginate, parsePageParam, PAGE_SIZE } from "../../../lib/pagination";
+import { ContentCardSection } from "../../../ui/ContentCardSection";
+import { Pagination } from "../../../ui/Pagination";
+
+/**
+ * Only pre-render routes that `generateStaticParams` returns.
+ * Non-numeric or out-of-range page params fall through to `notFound()`.
+ */
+export const dynamicParams = false;
 
 /** Generate static page routes at build time for all pagination pages. */
 export async function generateStaticParams() {
   const projects = getAllProjects();
   const totalPages = Math.max(1, Math.ceil(projects.length / PAGE_SIZE));
-  // Pages 2..totalPages get static HTML; page 1 is served by /projects/page.tsx.
-  // Only generate pagination routes when there are multiple pages.
-  return Array.from({ length: totalPages - 1 }, (_, i) => ({
-    page: String(i + 2),
+  // Pages 1..totalPages get static HTML. Page 1 redirects to /projects/
+  // for canonical-URL correctness; pages 2..N render real content.
+  // Next.js output:export requires at least one static param, so when
+  // there is only one page we still emit page 1 (which redirects to the
+  // collection root).
+  if (totalPages === 1) return [{ page: "1" }];
+  return Array.from({ length: totalPages }, (_, i) => ({
+    page: String(i + 1),
   }));
 }
 
@@ -30,7 +41,7 @@ export default async function ProjectsPage({ params }: ProjectsPageProps) {
 
   // Page 1 is served by /projects/page.tsx — redirect /projects/page/1/ there.
   if (currentPage === 1) {
-    const destination = "/projects/";
+    const destination = withPublicBasePath("/projects/");
     return <meta httpEquiv="refresh" content={`0;url=${destination}`} />;
   }
 

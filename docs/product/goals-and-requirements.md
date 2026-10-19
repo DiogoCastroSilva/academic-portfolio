@@ -71,21 +71,21 @@ The repository should demonstrate:
 
 ## Acceptance Criteria — Content and authoring
 
-| Criterion                                                                                                   | Status / next action                                                                                      |
-| ----------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------- |
-| Markdown/frontmatter validation has positive and negative tests                                             | Implemented; recheck coverage for malformed nested values and array entries                               |
-| Deployment URL substitution works                                                                           | Previously verified; retain regression coverage                                                           |
-| Relative links and images support GitHub Pages base paths                                                   | Previously verified; retain regression coverage                                                           |
-| Missing images have deliberate fallback behavior                                                            | Implemented; verify fallback is distinguishable from real content                                         |
-| Invalid metadata produces actionable messages                                                               | Implemented; strengthen gaps listed in the roadmap                                                        |
-| Empty collections and unknown slugs have deliberate behavior                                                | Implemented; retain regression coverage                                                                   |
-| Draft content is excluded from published lists, detail routes, sitemap, and generated metadata              | Implemented; regression tests cover `getAll()` draft filtering; sitemap/JSON-LD draft exclusion verified  |
-| Slug generation and lookup use one consistent rule                                                          | Audit finding: verify/fix mismatch between frontmatter slug and directory lookup                          |
-| Profile and nested collections reject malformed values instead of silently dropping or rendering empty data | Roadmap item                                                                                              |
-| Owner-editable information is documented in one obvious index                                               | Roadmap item                                                                                              |
-| Sample content is clearly labelled and safe for a fresh fork                                                | Roadmap item; this replaces any expectation that the template must contain the owner's final real content |
-| Content author can add/edit/remove entries without changing app code                                        | Must be demonstrated in clean-fork test                                                                   |
-| Images and inline Markdown references are validated with useful errors                                      | Verify current implementation and document its exact guarantees                                           |
+| Criterion                                                                                                   | Status / next action                                                                                                                              |
+| ----------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Markdown/frontmatter validation has positive and negative tests                                             | Implemented; recheck coverage for malformed nested values and array entries                                                                       |
+| Deployment URL substitution works                                                                           | Previously verified; retain regression coverage                                                                                                   |
+| Relative links and images support GitHub Pages base paths                                                   | Previously verified; retain regression coverage                                                                                                   |
+| Missing images have deliberate fallback behavior                                                            | Implemented; verify fallback is distinguishable from real content                                                                                 |
+| Invalid metadata produces actionable messages                                                               | Implemented; strengthen gaps listed in the roadmap                                                                                                |
+| Empty collections and unknown slugs have deliberate behavior                                                | Implemented; retain regression coverage                                                                                                           |
+| Draft content is excluded from published lists, detail routes, sitemap, and generated metadata              | Implemented; regression tests cover `getAll()`, `getBySlug()`, and `getContentBySlug()` draft filtering; sitemap/JSON-LD draft exclusion verified |
+| Slug generation and lookup use one consistent rule                                                          | Done; resolved — directory names are authoritative across `getAll()`, `getBySlug()`, sitemap, and canonical metadata                              |
+| Profile and nested collections reject malformed values instead of silently dropping or rendering empty data | Roadmap item                                                                                                                                      |
+| Owner-editable information is documented in one obvious index                                               | Roadmap item                                                                                                                                      |
+| Sample content is clearly labelled and safe for a fresh fork                                                | Roadmap item; this replaces any expectation that the template must contain the owner's final real content                                         |
+| Content author can add/edit/remove entries without changing app code                                        | Must be demonstrated in clean-fork test                                                                                                           |
+| Images and inline Markdown references are validated with useful errors                                      | Verify current implementation and document its exact guarantees                                                                                   |
 
 ## Acceptance Criteria — Engineering
 
@@ -132,12 +132,12 @@ This roadmap is ordered by user impact and correctness, not by adding more featu
 
 **Priority: P1 — do first**
 
-- Resolve the slug contract: either directory names are authoritative, or custom slugs must be mapped consistently for both list generation and detail-page lookup. Prefer directory-authoritative slugs for simplicity unless a real use case requires overrides.
+- ~~Resolve the slug contract: either directory names are authoritative, or custom slugs must be mapped consistently for both list generation and detail-page lookup. Prefer directory-authoritative slugs for simplicity unless a real use case requires overrides.~~ ✅ Done — directory names are the authoritative slug; frontmatter `slug` is accepted but ignored.
 - Strengthen frontmatter validation for images, links, tags, authors, dates, and other nested arrays/objects. Do not silently filter malformed values if doing so hides an authoring mistake.
 - Validate profile data as carefully as collection entries, including research interests, education, skills, social/contact links, and optional fields.
-- Verify drafts cannot leak into list pages, static detail routes, sitemap, JSON-LD, or Open Graph metadata.
+- ~~Verify drafts cannot leak into list pages, static detail routes, sitemap, JSON-LD, or Open Graph metadata.~~ ✅ Done — draft exclusion added to `getBySlug()` and `getContentBySlug()` in addition to `getAll()`.
 - Ensure collection ordering is deterministic: sort newest-first by publication date with a slug-based tie-breaker for identical dates, so filesystem readdir order does not affect output.
-- Add regression tests for malformed data, duplicate slugs, unknown slugs, missing assets, and base-path URL handling.
+- ~~Add regression tests for malformed data, duplicate slugs, unknown slugs, missing assets, and base-path URL handling.~~ ✅ Done — validation tests added for `image: []`, array element types, empty `title`; duplicate slug tests updated for directory-authoritative behavior; draft exclusion tests added for `getBySlug()` and `getContentBySlug()`.
 - Ensure validation errors identify the file, field, expected format, and a useful correction.
 
 **Exit criteria:** Valid content builds reliably; invalid content fails with actionable errors; public routes and generated metadata agree on slugs and draft status.

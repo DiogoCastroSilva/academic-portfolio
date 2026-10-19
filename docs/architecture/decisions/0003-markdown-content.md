@@ -14,9 +14,9 @@
   - `marked` does not sanitize HTML by default. The HTML security policy is addressed in ADR-0004.
   - Raw HTML in Markdown (e.g., `<figure>`, `<b>`) is preserved by `marked` and then processed by the `hooks.postprocess` hook for URL resolution and external link attributes. This is a deliberate choice for academic content that needs precise formatting.
   - URL resolution is split into two phases: `walkTokens` handles Markdown-native `href`/`src` tokens (image and link); `hooks.postprocess` handles raw HTML attributes. The two paths use complementary regex patterns with a negative lookahead to prevent double-processing.
-  - Slugs are derived from filenames, with an optional frontmatter `slug` override.
+  - Slugs are derived from directory names; frontmatter `slug` is accepted but ignored.
 - **Evidence or validation:**
-  - 73 tests in `libs/content/src/lib/create-content-library.test.ts` cover frontmatter parsing, validation, image resolution, link rewriting, DEPLOYMENT_URL handling, empty/missing-content cases, and publication-specific fields (`authors`, `venue`, `doi`, `paperUrl`).
+  - 87 tests in `libs/content/src/lib/create-content-library.test.ts` cover frontmatter parsing, validation, image resolution, link rewriting, DEPLOYMENT_URL handling, empty/missing-content cases, and publication-specific fields (`authors`, `venue`, `doi`, `paperUrl`).
   - 12 tests in `libs/content/src/lib/profile.test.ts` cover profile frontmatter parsing, validation of required fields, structured data parsing (education, research interests, skills), biography rendering, and image URL resolution.
   - 32 tests in `libs/content/src/lib/marked-extensions.test.ts` cover the `resolveHref` URL resolver, image rendering (`<figure>`/`<figcaption>`), link rendering (external link attributes), gallery detection, raw HTML postprocess (DEPLOYMENT_URL replacement, relative path prefixing, double-processing prevention), and integration of all features together.
   - The content pipeline runs at build time (SSG), not at request time.

@@ -81,7 +81,7 @@ validateFrontmatter() - checks required fields (title, date),
   field types, date format (YYYY-MM-DD)
     |
     v
-toContentMeta() - resolves slug (frontmatter or filename),
+toContentMeta() - resolves slug (directory name),
   resolves image (explicit, glob by slug, or placeholder)
     |
     v

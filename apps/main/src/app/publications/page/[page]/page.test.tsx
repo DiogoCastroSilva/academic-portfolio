@@ -3,10 +3,10 @@ import "@testing-library/jest-dom";
 
 import React from "react";
 import { render } from "@testing-library/react";
-import { describe, expect, it, vi } from "vitest";
+import { afterEach, describe, expect, it, vi } from "vitest";
 
 import type { ContentMeta } from "@katie-portfolio/content";
-import { PAGE_SIZE } from "../../lib/pagination.js";
+import { PAGE_SIZE } from "../../../lib/pagination.js";
 
 import PublicationsPage, { generateStaticParams } from "./page";
 
@@ -24,6 +24,19 @@ const mockPublications: ContentMeta[] = [
   },
 ];
 
+afterEach(() => {
+  vi.unstubAllEnvs();
+});
+
+vi.mock("@katie-portfolio/content", () => ({
+  withPublicBasePath: (p: string) => {
+    if (!p.startsWith("/")) return p;
+    const bp = process.env.NEXT_PUBLIC_BASE_PATH;
+    if (!bp || bp === "/" || bp.trim() === "") return p;
+    return `/${bp.trim().replace(/^\/+|\/+$/g, "")}${p}`;
+  },
+}));
+
 vi.mock("@katie-portfolio/publications", () => ({
   getAllPublications: () => mockPublications,
   getPublicationContentBySlug: vi.fn(),
@@ -33,7 +46,7 @@ vi.mock("@katie-portfolio/navigation", () => ({
   NavBar: () => null,
 }));
 
-vi.mock("../../configs/site-config", () => ({
+vi.mock("../../../configs/site-config", () => ({
   siteConfig: {
     name: "Kathleen Miller",
     deploymentUrl: undefined,
@@ -45,7 +58,7 @@ vi.mock("../../configs/site-config", () => ({
   },
 }));
 
-vi.mock("../../ui/Pagination", () => ({
+vi.mock("../../../ui/Pagination", () => ({
   Pagination: ({
     currentPage,
     totalPages,
@@ -63,7 +76,7 @@ vi.mock("../../ui/Pagination", () => ({
   ),
 }));
 
-vi.mock("../../lib/og-image", () => ({
+vi.mock("../../../lib/og-image", () => ({
   ogImageRef: (path: string) => `/og/${path}`,
 }));
 
@@ -74,13 +87,14 @@ vi.mock("next/navigation", () => ({
 }));
 
 describe("PublicationsPage generateStaticParams", () => {
-  it("returns no pages when collection fits on one page", async () => {
+  it("emits page 1 when collection fits on one page", async () => {
     mockPublications.length = 0;
     const params = await generateStaticParams();
-    expect(params).toEqual([]);
+    // Page 1 redirects to /publications/ for canonical-URL correctness
+    expect(params).toEqual([{ page: "1" }]);
   });
 
-  it("generates pages 2..N for multi-page collections", async () => {
+  it("generates pages 1..N for multi-page collections", async () => {
     mockPublications.length = 0;
     mockPublications.push(
       ...Array.from({ length: PAGE_SIZE * 2 + 1 }, (_, i) => ({
@@ -97,10 +111,11 @@ describe("PublicationsPage generateStaticParams", () => {
     );
     const params = (await generateStaticParams()) as Array<{ page: string }>;
     const pageNumbers = params.map((p) => p.page);
-    expect(pageNumbers).toEqual(["2", "3"]);
+    // Page 1 is included so /publications/page/1/ can redirect to /publications/
+    expect(pageNumbers).toEqual(["1", "2", "3"]);
   });
 
-  it("generates page 2 for exactly PAGE_SIZE + 1 items", async () => {
+  it("generates pages 1 and 2 for exactly PAGE_SIZE + 1 items", async () => {
     mockPublications.length = 0;
     mockPublications.push(
       ...Array.from({ length: PAGE_SIZE + 1 }, (_, i) => ({
@@ -116,7 +131,7 @@ describe("PublicationsPage generateStaticParams", () => {
       })),
     );
     const params = (await generateStaticParams()) as Array<{ page: string }>;
-    expect(params).toEqual([{ page: "2" }]);
+    expect(params).toEqual([{ page: "1" }, { page: "2" }]);
   });
 });
 
@@ -142,6 +157,29 @@ describe("PublicationsPage page rendering", () => {
     expect((result as React.JSX.Element).props["httpEquiv"]).toBe("refresh");
     expect((result as React.JSX.Element).props.content).toBe(
       "0;url=/publications/",
+    );
+  });
+
+  it("respects basePath in page-1 redirect", async () => {
+    vi.stubEnv("NEXT_PUBLIC_BASE_PATH", "/portfolio");
+    mockPublications.length = 0;
+    mockPublications.push({
+      slug: "pub-0",
+      href: "/publications/pub-0",
+      title: "Pub 0",
+      date: "2024-09-01",
+      tags: ["test"],
+      authors: ["Test Author"],
+      venue: "Journal of Examples",
+      imageSrc: "/publications/placeholder.svg",
+      imageType: "cover",
+    });
+    const { default: PageWithBase } = await import("./page");
+    const result = await PageWithBase({
+      params: Promise.resolve({ page: "1" }),
+    });
+    expect((result as React.JSX.Element).props.content).toBe(
+      "0;url=/portfolio/publications/",
     );
   });
 

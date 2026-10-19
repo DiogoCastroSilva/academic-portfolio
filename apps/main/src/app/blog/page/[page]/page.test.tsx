@@ -5,10 +5,10 @@ import "@testing-library/jest-dom";
 
 import React from "react";
 import { render } from "@testing-library/react";
-import { describe, expect, it, vi } from "vitest";
+import { afterEach, describe, expect, it, vi } from "vitest";
 
 import type { ContentMeta } from "@katie-portfolio/content";
-import { PAGE_SIZE } from "../../lib/pagination.js";
+import { PAGE_SIZE } from "../../../lib/pagination.js";
 
 import BlogPage, { generateStaticParams } from "./page";
 
@@ -24,6 +24,19 @@ const mockPosts: ContentMeta[] = [
   },
 ];
 
+afterEach(() => {
+  vi.unstubAllEnvs();
+});
+
+vi.mock("@katie-portfolio/content", () => ({
+  withPublicBasePath: (p: string) => {
+    if (!p.startsWith("/")) return p;
+    const bp = process.env.NEXT_PUBLIC_BASE_PATH;
+    if (!bp || bp === "/" || bp.trim() === "") return p;
+    return `/${bp.trim().replace(/^\/+|\/+$/g, "")}${p}`;
+  },
+}));
+
 vi.mock("@katie-portfolio/blog", () => ({
   getAllBlogPosts: () => mockPosts,
   getBlogPostContentBySlug: vi.fn(),
@@ -33,7 +46,7 @@ vi.mock("@katie-portfolio/navigation", () => ({
   NavBar: () => null,
 }));
 
-vi.mock("../../configs/site-config", () => ({
+vi.mock("../../../configs/site-config", () => ({
   siteConfig: {
     name: "Kathleen Miller",
     deploymentUrl: undefined,
@@ -41,7 +54,7 @@ vi.mock("../../configs/site-config", () => ({
   },
 }));
 
-vi.mock("../../ui/Pagination", () => ({
+vi.mock("../../../ui/Pagination", () => ({
   Pagination: ({
     currentPage,
     totalPages,
@@ -59,7 +72,7 @@ vi.mock("../../ui/Pagination", () => ({
   ),
 }));
 
-vi.mock("../../lib/og-image", () => ({
+vi.mock("../../../lib/og-image", () => ({
   ogImageRef: (path: string) => `/og/${path}`,
 }));
 
@@ -70,13 +83,14 @@ vi.mock("next/navigation", () => ({
 }));
 
 describe("BlogPage generateStaticParams", () => {
-  it("returns no pages when collection fits on one page", async () => {
+  it("emits page 1 when collection fits on one page", async () => {
     mockPosts.length = 0;
     const params = await generateStaticParams();
-    expect(params).toEqual([]);
+    // Page 1 redirects to /blog/ for canonical-URL correctness
+    expect(params).toEqual([{ page: "1" }]);
   });
 
-  it("generates pages 2..N for multi-page collections", async () => {
+  it("generates pages 1..N for multi-page collections", async () => {
     // Set up enough posts for 3 pages
     mockPosts.length = 0;
     mockPosts.push(
@@ -92,10 +106,11 @@ describe("BlogPage generateStaticParams", () => {
     );
     const params = (await generateStaticParams()) as Array<{ page: string }>;
     const pageNumbers = params.map((p) => p.page);
-    expect(pageNumbers).toEqual(["2", "3"]);
+    // Page 1 is included so /blog/page/1/ can redirect to /blog/
+    expect(pageNumbers).toEqual(["1", "2", "3"]);
   });
 
-  it("generates pages 2..N for exactly 2 pages of content", async () => {
+  it("generates pages 1 and 2 for exactly PAGE_SIZE + 1 items", async () => {
     mockPosts.length = 0;
     mockPosts.push(
       ...Array.from({ length: PAGE_SIZE + 1 }, (_, i) => ({
@@ -109,7 +124,30 @@ describe("BlogPage generateStaticParams", () => {
       })),
     );
     const params = (await generateStaticParams()) as Array<{ page: string }>;
-    expect(params).toEqual([{ page: "2" }]);
+    expect(params).toEqual([{ page: "1" }, { page: "2" }]);
+  });
+
+  it("respects basePath in page-1 redirect", async () => {
+    vi.stubEnv("NEXT_PUBLIC_BASE_PATH", "/portfolio");
+    mockPosts.length = 0;
+    mockPosts.push({
+      slug: "post-0",
+      href: "/blog/post-0",
+      title: "Post 0",
+      date: "2025-01-01",
+      tags: ["test"],
+      imageSrc: "/blog/placeholder.svg",
+      imageType: "cover",
+    });
+    // Re-import with basePath stubbed
+    const { default: PageWithBase } = await import("./page");
+    const result = await PageWithBase({
+      params: Promise.resolve({ page: "1" }),
+    });
+    expect((result as React.JSX.Element).props.content).toBe(
+      "0;url=/portfolio/blog/",
+    );
+    vi.unstubAllEnvs();
   });
 });
 

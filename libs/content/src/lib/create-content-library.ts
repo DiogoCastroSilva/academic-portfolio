@@ -212,6 +212,8 @@ function validateFrontmatter(
     errors.push("`title` is required");
   } else if (typeof data.title !== "string") {
     errors.push(`\`title\` must be a string, got ${typeof data.title}`);
+  } else if (data.title.trim() === "") {
+    errors.push(`\`title\` must not be an empty string`);
   }
 
   if (data.date === undefined) {
@@ -224,34 +226,69 @@ function validateFrontmatter(
     );
   }
 
+  // `slug` in frontmatter is accepted for type-safety but is ignored
+  // for routing — directory names are authoritative (see getAll()).
   if (data.slug !== undefined && typeof data.slug !== "string") {
     errors.push(`\`slug\` must be a string, got ${typeof data.slug}`);
   }
 
+  // image: null/undefined means "no cover image" (use placeholder).
+  // Arrays and objects are rejected — `image: []` used to silently pass
+  // because `typeof [] === "object"`.
   if (
     data.image !== undefined &&
-    typeof data.image !== "string" &&
-    typeof data.image !== "object"
-  ) {
-    errors.push(`\`image\` must be a string, got ${typeof data.image}`);
-  }
-
-  if (data.tags !== undefined && !Array.isArray(data.tags)) {
-    errors.push(`\`tags\` must be an array, got ${typeof data.tags}`);
-  }
-
-  if (data.links !== undefined && !Array.isArray(data.links)) {
-    errors.push(`\`links\` must be an array, got ${typeof data.links}`);
-  }
-
-  if (
-    data.authors !== undefined &&
-    typeof data.authors !== "string" &&
-    !Array.isArray(data.authors)
+    data.image !== null &&
+    typeof data.image !== "string"
   ) {
     errors.push(
-      `\`authors\` must be a string or an array, got ${typeof data.authors}`,
+      `\`image\` must be a string, null, or undefined, got ${typeof data.image}`,
     );
+  }
+
+  if (data.tags !== undefined) {
+    if (!Array.isArray(data.tags)) {
+      errors.push(`\`tags\` must be an array, got ${typeof data.tags}`);
+    } else {
+      for (const [i, tag] of data.tags.entries()) {
+        if (typeof tag !== "string") {
+          errors.push(`\`tags[${i}]\` must be a string, got ${typeof tag}`);
+        } else if (tag.trim() === "") {
+          errors.push(`\`tags[${i}]\` must not be an empty string`);
+        }
+      }
+    }
+  }
+
+  if (data.links !== undefined) {
+    if (!Array.isArray(data.links)) {
+      errors.push(`\`links\` must be an array, got ${typeof data.links}`);
+    } else {
+      for (const [i, link] of data.links.entries()) {
+        if (typeof link !== "string") {
+          errors.push(`\`links[${i}]\` must be a string, got ${typeof link}`);
+        } else if (link.trim() === "") {
+          errors.push(`\`links[${i}]\` must not be an empty string`);
+        }
+      }
+    }
+  }
+
+  if (data.authors !== undefined) {
+    if (typeof data.authors !== "string" && !Array.isArray(data.authors)) {
+      errors.push(
+        `\`authors\` must be a string or an array, got ${typeof data.authors}`,
+      );
+    } else if (Array.isArray(data.authors)) {
+      for (const [i, author] of data.authors.entries()) {
+        if (typeof author !== "string") {
+          errors.push(
+            `\`authors[${i}]\` must be a string, got ${typeof author}`,
+          );
+        } else if (author.trim() === "") {
+          errors.push(`\`authors[${i}]\` must not be an empty string`);
+        }
+      }
+    }
   }
 
   if (data.venue !== undefined && typeof data.venue !== "string") {
@@ -398,10 +435,11 @@ export function createContentLibrary(
       .map(({ entryDir, dir, filePath }) => {
         const content = fs.readFileSync(filePath, "utf-8");
         const { data } = matter(content);
-        const slug =
-          typeof data.slug === "string" && (data.slug as string).trim() !== ""
-            ? (data.slug as string)
-            : dir;
+        // Directory name is the authoritative slug. Frontmatter `slug`
+        // is accepted but ignored for routing to ensure consistency
+        // across getAll(), getBySlug(), generateStaticParams, sitemap,
+        // and canonical metadata.
+        const slug = dir;
 
         return toContentMeta(
           entryDir,
@@ -458,10 +496,14 @@ export function createContentLibrary(
       }
       const content = fs.readFileSync(currentPath, "utf-8");
       const { data } = matter(content);
-      const resolvedSlug =
-        typeof data.slug === "string" && (data.slug as string).trim() !== ""
-          ? (data.slug as string)
-          : slug;
+      // Draft entries are not accessible via direct slug lookup —
+      // they are excluded from getAll(), getBySlug(), and getContentBySlug().
+      if (data.draft === true) {
+        return undefined;
+      }
+      // Directory name is the authoritative slug; frontmatter `slug`
+      // is accepted but not used for routing.
+      const resolvedSlug = slug;
 
       return toContentMeta(
         entryDir,
@@ -495,10 +537,13 @@ export function createContentLibrary(
         }
         const content = fs.readFileSync(currentPath, "utf-8");
         const { data, content: body } = matter(content);
-        const resolvedSlug =
-          typeof data.slug === "string" && (data.slug as string).trim() !== ""
-            ? (data.slug as string)
-            : slug;
+        // Draft entries are not accessible via direct slug lookup.
+        if (data.draft === true) {
+          return undefined;
+        }
+        // Directory name is the authoritative slug; frontmatter `slug`
+        // is accepted but not used for routing.
+        const resolvedSlug = slug;
 
         // Use an entry-specific public prefix so body images resolve to
         // /projects/<slug>/<image> instead of /projects/<image>.

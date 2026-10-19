@@ -11,7 +11,7 @@ This guide explains how to add and edit projects, publications, and profile cont
 | Publications | `libs/publications/src/md/`      |
 | Blog         | `libs/blog/src/md/` (optional)   |
 
-Each item lives in its own directory named `{slug}` containing a `README.md` file with YAML frontmatter at the top. The directory name becomes the slug (URL path) unless overridden in the frontmatter.
+Each item lives in its own directory named `{slug}` containing a `README.md` file with YAML frontmatter at the top. The directory name is the authoritative slug (URL path). Frontmatter `slug` is accepted but ignored for routing.
 
 ## File Naming
 
@@ -138,7 +138,7 @@ Projects are academic or professional work items (research projects, software, e
 
 | Field     | Type             | Description                                                 |
 | --------- | ---------------- | ----------------------------------------------------------- |
-| `slug`    | string           | URL-friendly identifier; defaults to directory name |
+| `slug`    | string           | Accepted but ignored; directory name is authoritative |
 | `tags`    | array of strings | Tags shown on cards (e.g., technologies used)               |
 | `excerpt` | string           | Short summary for the project card                          |
 | `team`    | string           | Team or collaborator name(s)                                |
@@ -202,18 +202,18 @@ Publications are academic papers, preprints, presentations, and similar works. T
 
 ### Optional Fields (Publications)
 
-| Field      | Type             | Description                                         |
-| ---------- | ---------------- | --------------------------------------------------- |
-| `slug`     | string           | URL-friendly identifier; defaults to directory name |
-| `tags`     | array of strings | Tags shown on cards (e.g., research areas)          |
-| `excerpt`  | string           | Brief abstract for the publication card             |
-| `authors`  | array of strings | List of author names                                |
-| `venue`    | string           | Journal, conference, or preprint server name        |
-| `doi`      | string           | Digital Object Identifier                           |
-| `paperUrl` | string           | Direct URL to the paper or preprint                 |
-| `image`    | string           | Cover image filename (same directory)               |
-| `links`    | array of URLs    | Supplementary links (presentation, code, etc.)      |
-| `draft`    | boolean          | Set to `true` to exclude from the listing           |
+| Field      | Type             | Description                                           |
+| ---------- | ---------------- | ----------------------------------------------------- |
+| `slug`     | string           | Accepted but ignored; directory name is authoritative |
+| `tags`     | array of strings | Tags shown on cards (e.g., research areas)            |
+| `excerpt`  | string           | Brief abstract for the publication card               |
+| `authors`  | array of strings | List of author names                                  |
+| `venue`    | string           | Journal, conference, or preprint server name          |
+| `doi`      | string           | Digital Object Identifier                             |
+| `paperUrl` | string           | Direct URL to the paper or preprint                   |
+| `image`    | string           | Cover image filename (same directory)                 |
+| `links`    | array of URLs    | Supplementary links (presentation, code, etc.)        |
+| `draft`    | boolean          | Set to `true` to exclude from the listing             |
 
 ### Publication Template
 
@@ -364,7 +364,7 @@ Set `draft: true` to create a placeholder entry that will not appear on the live
 
 Draft items are:
 
-- Excluded from listing pages (`getAll()`)
+- Excluded from listing pages (`getAll()`), detail lookups (`getBySlug()`, `getContentBySlug()`)
 - Not rendered in the static build (no route generated)
 - Excluded from the sitemap and robots.txt
 - Excluded from Open Graph image generation
@@ -376,7 +376,7 @@ Draft items are:
 - **Invalid `date` format:** The build fails. Must be `YYYY-MM-DD` (e.g., `2025-11-01`) and must be a real calendar date (e.g., `2025-02-30` is rejected).
 - **Non-string `title` or `date`:** The build fails.
 - **Non-string `slug`:** The build fails.
-- **Duplicate slug:** The build fails. Each entry must have a unique slug (either the directory name or the `slug` frontmatter override). Two entries with the same slug would create conflicting static routes.
+- **Duplicate slug:** The build fails. Each entry must have a unique slug (the directory name). Frontmatter `slug` is accepted but ignored.
 - **Invalid type for optional fields** (`image`, `tags`, `links`, `authors`, `venue`, `doi`, `paperUrl`): The build fails with a message identifying the file and field.
 - **Missing images:** Explicitly-specified `image:` fields that don't exist fail the build with an error identifying the file and path. Remove the `image` field or add the file to use the placeholder fallback.
 - **Malformed Markdown:** Passed through by `marked` — invalid Markdown renders as plain text.
