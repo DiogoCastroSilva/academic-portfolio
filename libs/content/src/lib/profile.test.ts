@@ -36,7 +36,7 @@ describe("parseProfile", () => {
     const result = parseProfile(VALID_PROFILE);
     expect(result.name).toBe("Dr. Jane Doe");
     expect(result.role).toBe("PhD Researcher");
-    expect(result.email).toBe("katie@example.com");
+    expect(result.email).toBe("jane@example.com");
     expect(result.linkedInUrl).toBe("https://linkedin.com/in/jane");
     expect(result.githubUrl).toBe("https://github.com/jane");
   });
