@@ -29,28 +29,34 @@ export function Footer() {
             .
           </p>
           <div className="flex flex-wrap gap-4 text-sm">
-            <a
-              href={siteConfig.linkedInUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="underline transition-colors duration-200 hover:text-slate-900 dark:hover:text-slate-100"
-            >
-              LinkedIn
-            </a>
-            <a
-              href={siteConfig.githubUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="underline transition-colors duration-200 hover:text-slate-900 dark:hover:text-slate-100"
-            >
-              GitHub
-            </a>
-            <a
-              href={`mailto:${siteConfig.email}`}
-              className="underline transition-colors duration-200 hover:text-slate-900 dark:hover:text-slate-100"
-            >
-              Email
-            </a>
+            {siteConfig.linkedInUrl ? (
+              <a
+                href={siteConfig.linkedInUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="underline transition-colors duration-200 hover:text-slate-900 dark:hover:text-slate-100"
+              >
+                LinkedIn
+              </a>
+            ) : null}
+            {siteConfig.githubUrl ? (
+              <a
+                href={siteConfig.githubUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="underline transition-colors duration-200 hover:text-slate-900 dark:hover:text-slate-100"
+              >
+                GitHub
+              </a>
+            ) : null}
+            {siteConfig.email ? (
+              <a
+                href={`mailto:${siteConfig.email}`}
+                className="underline transition-colors duration-200 hover:text-slate-900 dark:hover:text-slate-100"
+              >
+                Email
+              </a>
+            ) : null}
           </div>
         </div>
       </div>

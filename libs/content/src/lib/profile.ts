@@ -33,11 +33,19 @@ export interface SkillCategory {
 
 /** Structured metadata for the profile, parsed from YAML frontmatter. */
 export interface ProfileMeta {
+  /** Display name used in titles, headings, and structured data. */
   name: string;
+  /** Professional role or headline, e.g. "PhD Candidate in Computer Science". */
   role: string;
-  email: string;
-  linkedInUrl: string;
-  githubUrl: string;
+  /** Concise, owner-editable SEO description for the site. */
+  description?: string;
+  /** Contact email address. Optional — forks may omit this. */
+  email?: string;
+  /** LinkedIn profile URL. Optional — forks may omit this. */
+  linkedInUrl?: string;
+  /** GitHub profile URL. Optional — forks may omit this. */
+  githubUrl?: string;
+  /** Geographic location, e.g. "Ithaca, NY". */
   location?: string;
   /** Filename of the profile image in the content `md` folder. */
   image: string;
@@ -108,7 +116,9 @@ function parseSkills(data: unknown): SkillCategory[] {
 /** Validate required profile frontmatter fields. */
 function validateProfileFrontmatter(data: Record<string, unknown>): void {
   const errors: string[] = [];
-  const required = ["name", "role", "email", "linkedInUrl", "githubUrl"];
+  // Only name and role are genuinely required; everything else is optional
+  // so the template supports forks that omit contact or social links.
+  const required = ["name", "role"];
 
   for (const field of required) {
     if (typeof data[field] !== "string" || data[field].trim() === "") {
@@ -288,9 +298,22 @@ export function parseProfile(content: string): ProfileData {
   return {
     name: data.name as string,
     role: data.role as string,
-    email: data.email as string,
-    linkedInUrl: data.linkedInUrl as string,
-    githubUrl: data.githubUrl as string,
+    description:
+      typeof data.description === "string"
+        ? data.description.trim()
+        : undefined,
+    email:
+      typeof data.email === "string" && data.email.trim() !== ""
+        ? data.email.trim()
+        : undefined,
+    linkedInUrl:
+      typeof data.linkedInUrl === "string" && data.linkedInUrl.trim() !== ""
+        ? data.linkedInUrl.trim()
+        : undefined,
+    githubUrl:
+      typeof data.githubUrl === "string" && data.githubUrl.trim() !== ""
+        ? data.githubUrl.trim()
+        : undefined,
     location: typeof data.location === "string" ? data.location : undefined,
     image,
     imageSrc,

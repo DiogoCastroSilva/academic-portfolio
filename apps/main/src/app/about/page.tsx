@@ -12,7 +12,7 @@ import { ogImageRef } from "../lib/og-image";
 const aboutCanonical = getFullUrl("/about/");
 
 export const metadata = {
-  title: `About | ${siteConfig.name}`,
+  title: "About",
   description: `Learn more about ${siteConfig.name}, their research, and background.`,
   openGraph: {
     title: `About | ${siteConfig.name}`,

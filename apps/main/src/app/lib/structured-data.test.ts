@@ -17,6 +17,7 @@ vi.mock("@katie-portfolio/content", async (importOriginal) => {
     getProfile: () => ({
       name: "Dr. Jane Doe",
       role: "PhD Researcher | Earth Observation | Climate Solutions",
+      description: "Climate researcher studying remote sensing applications.",
       email: "jane@example.com",
       linkedInUrl: "https://linkedin.com/in/jane",
       githubUrl: "https://github.com/jane",
@@ -39,6 +40,7 @@ vi.mock("@katie-portfolio/content", async (importOriginal) => {
 const mockProfile: ProfileData = {
   name: "Dr. Jane Doe",
   role: "PhD Researcher | Earth Observation",
+  description: "Climate researcher studying remote sensing applications.",
   email: "jane@example.com",
   linkedInUrl: "https://linkedin.com/in/jane",
   githubUrl: "https://github.com/jane",
@@ -89,6 +91,16 @@ describe("buildPersonSchema", () => {
     const schema = buildPersonSchema(profileNoLocation);
 
     expect(schema).not.toHaveProperty("location");
+  });
+
+  it("omits email when not provided", () => {
+    const profileNoEmail: ProfileData = {
+      ...mockProfile,
+      email: undefined,
+    };
+    const schema = buildPersonSchema(profileNoEmail);
+
+    expect(schema).not.toHaveProperty("email");
   });
 });
 
@@ -199,7 +211,7 @@ describe("buildWebSiteSchema", () => {
   it("includes description", () => {
     const schema = buildWebSiteSchema();
 
-    expect(schema.description).toContain("science");
+    expect(schema.description).toBeTruthy();
   });
 });
 

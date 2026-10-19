@@ -5,6 +5,7 @@ import { parseProfile, validateProfileNestedData } from "./profile.js";
 const VALID_PROFILE = `---
 name: "Dr. Jane Doe"
 role: "PhD Researcher"
+description: "Climate researcher studying remote sensing applications."
 email: "jane@example.com"
 linkedInUrl: "https://linkedin.com/in/jane"
 githubUrl: "https://github.com/jane"
@@ -46,6 +47,31 @@ describe("parseProfile", () => {
     expect(result.location).toBe("Ithaca, NY");
     expect(result.image).toBe("profile.jpeg");
     expect(result.imageSrc).toBe("/images/profile.jpeg");
+  });
+
+  it("parses description when provided", () => {
+    const result = parseProfile(VALID_PROFILE);
+    expect(result.description).toBe(
+      "Climate researcher studying remote sensing applications.",
+    );
+  });
+
+  it("description is undefined when not provided", () => {
+    const content = VALID_PROFILE.replace(/description: "[^"]*"\n/, "");
+    const result = parseProfile(content);
+    expect(result.description).toBeUndefined();
+  });
+
+  it("allows profile without email, linkedInUrl, or githubUrl", () => {
+    const content = VALID_PROFILE.replace(/email: "jane@example\.com"\n/, "")
+      .replace(/linkedInUrl: "https:\/\/linkedin\.com\/in\/jane"\n/, "")
+      .replace(/githubUrl: "https:\/\/github\.com\/jane"\n/, "");
+    const result = parseProfile(content);
+    expect(result.email).toBeUndefined();
+    expect(result.linkedInUrl).toBeUndefined();
+    expect(result.githubUrl).toBeUndefined();
+    expect(result.name).toBe("Dr. Jane Doe");
+    expect(result.role).toBe("PhD Researcher");
   });
 
   it("defaults image to profile.jpeg when not provided", () => {
@@ -114,6 +140,20 @@ describe("parseProfile", () => {
   it("throws when required field is missing", () => {
     const content = VALID_PROFILE.replace('name: "Dr. Jane Doe"\n', "");
     expect(() => parseProfile(content)).toThrow(/`name` is required/);
+  });
+
+  it("does not require email or social URLs", () => {
+    const minimal = `---
+name: "Dr. Minimal"
+role: "Researcher"
+---
+Bio`;
+    const result = parseProfile(minimal);
+    expect(result.name).toBe("Dr. Minimal");
+    expect(result.role).toBe("Researcher");
+    expect(result.email).toBeUndefined();
+    expect(result.linkedInUrl).toBeUndefined();
+    expect(result.githubUrl).toBeUndefined();
   });
 
   it("throws when required field is empty", () => {

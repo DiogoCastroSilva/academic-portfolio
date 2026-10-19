@@ -148,6 +148,8 @@ This roadmap is ordered by user impact and correctness, not by adding more featu
 
 - Inventory every user-facing personal detail and identify its single source of truth.
 - Move hardcoded personal names and page descriptions into profile/site configuration or editable content where appropriate.
+  - ✅ Added owner-editable `description` field for SEO (see Phase 5)
+  - ✅ Made `email`, `linkedInUrl`, `githubUrl` optional in profile frontmatter — contact/social links are now cleanly omitted from UI, metadata, and structured data when absent
 - Make the editing guide the single entry point for personal changes, with a table mapping each task to the exact file/directory and required fields.
 - Document how to edit the profile, education, research interests, skills, social/contact links, projects, publications, blog, images, site title/description, deployment URL/base path, and optional analytics.
 - Prefer README/Markdown files for content collections; keep technical deployment settings separate and explain any settings that still require editing a configuration file.
@@ -215,6 +217,9 @@ The shared `ContentCardSection` defaults to showing six items on the homepage vi
 **Priority: P2**
 
 - ✅ Make page titles and descriptions derive from the editable site/profile data, not a specific person's name
+  - Added owner-editable `description` field to profile frontmatter (SEO description)
+  - Replaced hardcoded site description in layout metadata and WebSite JSON-LD with `siteConfig.description`
+  - Fixed title duplication: page titles now use just the page name (e.g. "About"), the layout template appends `| ${siteConfig.name}`
 - ✅ Fix/test Open Graph selection: use a real content cover when present and generated title-based imagery when absent
 - ✅ Verify canonical URLs, sitemap entries, robots rules, and social image paths under both root-domain and GitHub Pages project-site/base-path deployments
 - ✅ Ensure draft entries never appear in generated SEO output

@@ -1,8 +1,7 @@
 import Link from "next/link";
-import { siteConfig } from "../configs/site-config";
 
 export const metadata = {
-  title: `Page Not Found | ${siteConfig.name}`,
+  title: "Page Not Found",
   description: "The page you are looking for does not exist.",
 };
 

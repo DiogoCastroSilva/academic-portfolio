@@ -34,19 +34,20 @@ The About page (`/about`) and home page are driven by a profile content file con
 
 ### Profile Frontmatter
 
-| Field               | Type   | Required | Description                                              |
-| ------------------- | ------ | -------- | -------------------------------------------------------- |
-| `title`             | string | yes      | Always `"Profile"` to identify the file type             |
-| `name`              | string | yes      | Your full name (shown in page titles and NavBar)         |
-| `role`              | string | yes      | Your professional title (e.g. `"PhD Researcher"`)        |
-| `email`             | string | yes      | Contact email address                                    |
-| `linkedInUrl`       | string | yes      | Full LinkedIn profile URL                                |
-| `githubUrl`         | string | yes      | Full GitHub profile URL                                  |
-| `location`          | string | no       | City, Country                                            |
-| `image`             | string | no       | Filename of your profile photo (default: `profile.jpeg`) |
-| `education`         | array  | no       | List of education entries (see below)                    |
-| `researchInterests` | array  | no       | List of research interest entries (see below)            |
-| `skills`            | array  | no       | List of skill categories (see below)                     |
+| Field               | Type   | Required | Description                                                                        |
+| ------------------- | ------ | -------- | ---------------------------------------------------------------------------------- |
+| `title`             | string | yes      | Always `"Profile"` to identify the file type                                       |
+| `name`              | string | yes      | Your full name (shown in page titles and NavBar)                                   |
+| `role`              | string | yes      | Your professional title (e.g. `"PhD Researcher"`)                                  |
+| `description`       | string | no       | Concise SEO description for the site (shown in search results and social previews) |
+| `email`             | string | no       | Contact email address                                                              |
+| `linkedInUrl`       | string | no       | Full LinkedIn profile URL                                                          |
+| `githubUrl`         | string | no       | Full GitHub profile URL                                                            |
+| `location`          | string | no       | City, Country                                                                      |
+| `image`             | string | no       | Filename of your profile photo (default: `profile.jpeg`)                           |
+| `education`         | array  | no       | List of education entries (see below)                                              |
+| `researchInterests` | array  | no       | List of research interest entries (see below)                                      |
+| `skills`            | array  | no       | List of skill categories (see below)                                               |
 
 ### Education Entries
 

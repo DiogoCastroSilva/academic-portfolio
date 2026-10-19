@@ -46,4 +46,18 @@ describe("site-config", () => {
       expect(configField).toBeUndefined();
     }
   });
+
+  it("has an SEO description", () => {
+    expect(typeof siteConfig.description).toBe("string");
+    expect(siteConfig.description).not.toContain("undefined");
+  });
+
+  it("has optional contact and social fields", () => {
+    // email/linkedInUrl/githubUrl come from the profile; they may be present
+    // or absent depending on the fork owner's configuration.
+    const type = (v: unknown) => typeof v;
+    expect(["string", "undefined"]).toContain(type(siteConfig.email));
+    expect(["string", "undefined"]).toContain(type(siteConfig.linkedInUrl));
+    expect(["string", "undefined"]).toContain(type(siteConfig.githubUrl));
+  });
 });

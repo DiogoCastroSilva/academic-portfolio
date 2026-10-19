@@ -7,7 +7,7 @@ import { ContentCardSection } from "../ui/ContentCardSection";
 import { Pagination } from "../ui/Pagination";
 
 export const metadata = {
-  title: `Projects | ${siteConfig.name}`,
+  title: "Projects",
   description: `Projects by ${siteConfig.name}.`,
   openGraph: {
     title: `Projects | ${siteConfig.name}`,

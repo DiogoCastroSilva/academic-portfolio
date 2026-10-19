@@ -21,7 +21,7 @@ export function buildPersonSchema(profile: ProfileData): JsonLdData {
     ...(profileImage ? { image: profileImage } : {}),
     ...(profile.location ? { location: profile.location } : {}),
     jobTitle: profile.role,
-    email: profile.email,
+    ...(profile.email ? { email: profile.email } : {}),
     url: getFullUrl("/about/"),
     sameAs: [profile.linkedInUrl, profile.githubUrl].filter(Boolean),
   };
@@ -72,7 +72,9 @@ export function buildArticleSchema(content: ContentItemMeta): JsonLdData {
 
 /** WebSite schema for the homepage. */
 export function buildWebSiteSchema(): JsonLdData {
-  const description = `Portfolio of ${siteConfig.name} — science, nature-based solutions, projects, and publications.`;
+  const description =
+    siteConfig.description ??
+    `Portfolio of ${siteConfig.name} — science, nature-based solutions, projects, and publications.`;
 
   return {
     "@context": "https://schema.org",

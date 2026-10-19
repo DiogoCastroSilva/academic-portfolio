@@ -8,6 +8,7 @@ const profile: ProfileData = getProfile();
 export const siteConfig = {
   name: profile.name,
   role: profile.role,
+  description: profile.description,
   email: profile.email,
   linkedInUrl: profile.linkedInUrl,
   githubUrl: profile.githubUrl,
