@@ -15,11 +15,11 @@ vi.mock("@katie-portfolio/content", async (importOriginal) => {
   return {
     ...actual,
     getProfile: () => ({
-      name: "Kathleen Miller",
+      name: "Dr. Jane Doe",
       role: "PhD Researcher | Earth Observation | Climate Solutions",
-      email: "katie@example.com",
-      linkedInUrl: "https://linkedin.com/in/kathleen",
-      githubUrl: "https://github.com/kathleen",
+      email: "jane@example.com",
+      linkedInUrl: "https://linkedin.com/in/jane",
+      githubUrl: "https://github.com/jane",
       location: "Ithaca, NY",
       image: "profile.jpeg",
       imageSrc: "/images/profile.jpeg",
@@ -37,11 +37,11 @@ vi.mock("@katie-portfolio/content", async (importOriginal) => {
 });
 
 const mockProfile: ProfileData = {
-  name: "Kathleen Miller",
+  name: "Dr. Jane Doe",
   role: "PhD Researcher | Earth Observation",
-  email: "katie@example.com",
-  linkedInUrl: "https://linkedin.com/in/kathleen",
-  githubUrl: "https://github.com/kathleen",
+  email: "jane@example.com",
+  linkedInUrl: "https://linkedin.com/in/jane",
+  githubUrl: "https://github.com/jane",
   location: "Ithaca, NY",
   image: "profile.jpeg",
   imageSrc: "/images/profile.jpeg",
@@ -57,9 +57,9 @@ describe("buildPersonSchema", () => {
 
     expect(schema["@context"]).toBe("https://schema.org");
     expect(schema["@type"]).toBe("Person");
-    expect(schema.name).toBe("Kathleen Miller");
+    expect(schema.name).toBe("Dr. Jane Doe");
     expect(schema.jobTitle).toBe("PhD Researcher | Earth Observation");
-    expect(schema.email).toBe("katie@example.com");
+    expect(schema.email).toBe("jane@example.com");
     expect(schema.url).toBe("https://example.com/portfolio/about/");
   });
 
@@ -76,8 +76,8 @@ describe("buildPersonSchema", () => {
     const schema = buildPersonSchema(mockProfile);
 
     expect(schema.sameAs).toEqual([
-      "https://linkedin.com/in/kathleen",
-      "https://github.com/kathleen",
+      "https://linkedin.com/in/jane",
+      "https://github.com/jane",
     ]);
   });
 
@@ -192,7 +192,7 @@ describe("buildWebSiteSchema", () => {
 
     expect(schema["@context"]).toBe("https://schema.org");
     expect(schema["@type"]).toBe("WebSite");
-    expect(schema.name).toBe("Kathleen Miller");
+    expect(schema.name).toBe("Dr. Jane Doe");
     expect(schema.url).toBe("https://example.com/portfolio/");
   });
 
@@ -206,13 +206,13 @@ describe("buildWebSiteSchema", () => {
 describe("buildSiteAuthorSchema", () => {
   it("generates a Person schema with name and image", () => {
     const schema = buildSiteAuthorSchema(
-      "Kathleen Miller",
+      "Dr. Jane Doe",
       "/images/profile.jpeg",
     );
 
     expect(schema["@context"]).toBe("https://schema.org");
     expect(schema["@type"]).toBe("Person");
-    expect(schema.name).toBe("Kathleen Miller");
+    expect(schema.name).toBe("Dr. Jane Doe");
     expect(schema.image).toBe(
       "https://example.com/portfolio/images/profile.jpeg",
     );
@@ -220,7 +220,7 @@ describe("buildSiteAuthorSchema", () => {
   });
 
   it("omits image when not provided", () => {
-    const schema = buildSiteAuthorSchema("Kathleen Miller", undefined);
+    const schema = buildSiteAuthorSchema("Dr. Jane Doe", undefined);
 
     expect(schema).not.toHaveProperty("image");
   });

@@ -2,7 +2,7 @@ import { siteConfig } from "../configs/site-config";
 
 describe("site-config", () => {
   it("has a valid name", () => {
-    expect(siteConfig.name).toBe("Kathleen Miller");
+    expect(siteConfig.name).toBe("Dr. Alex Morgan");
   });
 
   it("has social media URLs", () => {

@@ -14,11 +14,11 @@ import type { ProfileData } from "@katie-portfolio/content";
 import { AboutHero } from "./AboutHero.js";
 
 const mockProfile: ProfileData = {
-  name: "Kathleen Miller",
+  name: "Dr. Jane Doe",
   role: "PhD Researcher | Earth Observation | Climate Solutions",
-  email: "katie.miller6572@gmail.com",
-  linkedInUrl: "https://www.linkedin.com/in/kathleen-rose-miller/",
-  githubUrl: "https://github.com/kathleen-miller",
+  email: "jane.doe@example.com",
+  linkedInUrl: "https://www.linkedin.com/in/jane-doe/",
+  githubUrl: "https://github.com/jane-doe",
   location: "Ithaca, NY",
   image: "profile.jpeg",
   imageSrc: "/images/profile.jpeg",

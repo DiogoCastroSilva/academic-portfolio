@@ -14,7 +14,7 @@ import { Footer } from "./Footer.js";
 // Mock the site config since it uses process.env
 vi.mock("../../configs/site-config", () => ({
   siteConfig: {
-    name: "Kathleen Miller",
+    name: "Dr. Jane Doe",
     linkedInUrl: "https://www.linkedin.com/in/test",
     githubUrl: "https://github.com/test",
     email: "test@example.com",

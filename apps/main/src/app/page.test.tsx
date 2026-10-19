@@ -12,7 +12,7 @@ import type { ContentMeta, ProfileData } from "@katie-portfolio/content";
 
 // Shared mock data
 const mockProfile: ProfileData = {
-  name: "Kathleen Miller",
+  name: "Dr. Jane Doe",
   role: "PhD Researcher | Earth Observation",
   email: "test@example.com",
   linkedInUrl: "https://linkedin.com/in/test",
@@ -96,7 +96,7 @@ vi.mock("@katie-portfolio/navigation", () => ({
 
 vi.mock("../configs/site-config", () => ({
   siteConfig: {
-    name: "Kathleen Miller",
+    name: "Dr. Jane Doe",
     role: "PhD",
     email: "test@example.com",
     linkedInUrl: "https://linkedin.com/in/test",

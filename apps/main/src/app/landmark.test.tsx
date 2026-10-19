@@ -13,7 +13,7 @@ import type { ContentMeta, ProfileData } from "@katie-portfolio/content";
 
 // Mock content libraries to isolate page-level structure.
 const mockProfile: ProfileData = {
-  name: "Kathleen Miller",
+  name: "Dr. Jane Doe",
   role: "PhD Researcher | Earth Observation",
   email: "test@example.com",
   linkedInUrl: "https://linkedin.com/in/test",
@@ -67,7 +67,7 @@ vi.mock("@katie-portfolio/navigation", () => ({
 // Mock the site-config module (it uses process.env).
 vi.mock("../configs/site-config", () => ({
   siteConfig: {
-    name: "Kathleen Miller",
+    name: "Dr. Jane Doe",
     linkedInUrl: "https://linkedin.com/in/test",
     githubUrl: "https://github.com/test",
     email: "test@example.com",

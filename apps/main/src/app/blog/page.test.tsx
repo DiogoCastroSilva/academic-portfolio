@@ -46,7 +46,7 @@ vi.mock("@katie-portfolio/navigation", () => ({
 
 vi.mock("../configs/site-config", () => ({
   siteConfig: {
-    name: "Kathleen Miller",
+    name: "Dr. Jane Doe",
     deploymentUrl: undefined,
     analytics: { cloudflare: { token: "test", enabled: false } },
   },

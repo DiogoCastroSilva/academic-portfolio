@@ -33,11 +33,11 @@ vi.mock("motion/react", async (importOriginal) => {
 });
 
 const mockProfile: ProfileData = {
-  name: "Kathleen Miller",
+  name: "Dr. Jane Doe",
   role: "PhD Researcher",
-  email: "katie@example.com",
-  linkedInUrl: "https://linkedin.com/in/kathleen",
-  githubUrl: "https://github.com/kathleen",
+  email: "jane@example.com",
+  linkedInUrl: "https://linkedin.com/in/jane",
+  githubUrl: "https://github.com/jane",
   location: "Ithaca, NY",
   image: "profile.jpeg",
   imageSrc: "/images/profile.jpeg",
@@ -51,7 +51,7 @@ describe("Reduced motion support", () => {
   it("AboutHero renders correctly without animations", () => {
     render(<AboutHero profile={mockProfile} />);
     expect(screen.getByRole("heading", { level: 1 })).toHaveTextContent(
-      "Kathleen Miller",
+      "Dr. Jane Doe",
     );
     expect(screen.getByRole("heading", { level: 2 })).toHaveTextContent(
       "About Me",
@@ -61,7 +61,7 @@ describe("Reduced motion support", () => {
   it("AboutSection renders correctly without animations", () => {
     render(<AboutSection profile={mockProfile} />);
     expect(screen.getByRole("heading", { level: 1 })).toHaveTextContent(
-      "Kathleen Miller",
+      "Dr. Jane Doe",
     );
   });
 

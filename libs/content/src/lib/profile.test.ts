@@ -3,11 +3,11 @@ import { describe, expect, it } from "vitest";
 import { parseProfile, validateProfileNestedData } from "./profile.js";
 
 const VALID_PROFILE = `---
-name: "Kathleen Miller"
+name: "Dr. Jane Doe"
 role: "PhD Researcher"
-email: "katie@example.com"
-linkedInUrl: "https://linkedin.com/in/kathleen"
-githubUrl: "https://github.com/kathleen"
+email: "jane@example.com"
+linkedInUrl: "https://linkedin.com/in/jane"
+githubUrl: "https://github.com/jane"
 location: "Ithaca, NY"
 image: "profile.jpeg"
 education:
@@ -34,11 +34,11 @@ This is the biography content.`;
 describe("parseProfile", () => {
   it("parses required frontmatter fields", () => {
     const result = parseProfile(VALID_PROFILE);
-    expect(result.name).toBe("Kathleen Miller");
+    expect(result.name).toBe("Dr. Jane Doe");
     expect(result.role).toBe("PhD Researcher");
     expect(result.email).toBe("katie@example.com");
-    expect(result.linkedInUrl).toBe("https://linkedin.com/in/kathleen");
-    expect(result.githubUrl).toBe("https://github.com/kathleen");
+    expect(result.linkedInUrl).toBe("https://linkedin.com/in/jane");
+    expect(result.githubUrl).toBe("https://github.com/jane");
   });
 
   it("parses optional fields", () => {
@@ -112,15 +112,12 @@ describe("parseProfile", () => {
   });
 
   it("throws when required field is missing", () => {
-    const content = VALID_PROFILE.replace('name: "Kathleen Miller"\n', "");
+    const content = VALID_PROFILE.replace('name: "Dr. Jane Doe"\n', "");
     expect(() => parseProfile(content)).toThrow(/`name` is required/);
   });
 
   it("throws when required field is empty", () => {
-    const content = VALID_PROFILE.replace(
-      'name: "Kathleen Miller"',
-      'name: ""',
-    );
+    const content = VALID_PROFILE.replace('name: "Dr. Jane Doe"', 'name: ""');
     expect(() => parseProfile(content)).toThrow(/`name` is required/);
   });
 

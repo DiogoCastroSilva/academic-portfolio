@@ -1,10 +1,10 @@
 ---
 title: "Profile"
-name: "Kathleen Miller"
+name: "Dr. Alex Morgan"
 role: "PhD Researcher | Earth Observation | Climate Solutions"
-email: "katie.miller6572@gmail.com"
-linkedInUrl: "https://www.linkedin.com/in/kathleen-rose-miller/"
-githubUrl: "https://github.com/katiemiller17"
+email: "alex.morgan@example.com"
+linkedInUrl: "https://www.linkedin.com/in/alex-morgan"
+githubUrl: "https://github.com/alex-morgan"
 location: "Ithaca, NY"
 image: "profile.jpeg"
 education:

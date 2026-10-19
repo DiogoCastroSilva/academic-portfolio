@@ -19,7 +19,7 @@ The team assessed how and where the spectral signatures might differ between are
 
 EMIT random forest model predictions for GLRaV-3 symptomatic classes. Model predictions were made by applying the best performing random forest model to PCA-transformed EMIT imagery of Lodi vineyards from August and September, 2022–2024.
 
-**Team:** Audrey Chin, Noah Larkin, Derek Gonzalez, Monica Napoles Serrano, [Kathleen Miller (Lead)](DEPLOYMENT_URL)
+**Team:** Audrey Chin, Noah Larkin, Derek Gonzalez, Monica Napoles Serrano, [Dr. Alex Morgan (Lead)](DEPLOYMENT_URL)
 
 **Paper:** [https://ntrs.nasa.gov/citations/20250011141](https://ntrs.nasa.gov/citations/20250011141)
 
