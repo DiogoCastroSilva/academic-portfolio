@@ -60,15 +60,16 @@ vi.mock("../ui/Pagination", () => ({
   }: {
     currentPage: number;
     totalPages: number;
-  }) => (
-    <nav
-      data-testid="pagination"
-      data-current={currentPage}
-      data-total={totalPages}
-    >
-      Pagination
-    </nav>
-  ),
+  }) =>
+    totalPages <= 1 ? null : (
+      <nav
+        data-testid="pagination"
+        data-current={currentPage}
+        data-total={totalPages}
+      >
+        Pagination
+      </nav>
+    ),
 }));
 
 vi.mock("../lib/og-image", () => ({
@@ -97,16 +98,18 @@ describe("PublicationsPage", () => {
     expect(article?.textContent).toContain("First Publication");
   });
 
-  it("renders pagination nav", () => {
+  it("does not render pagination nav when collection fits on one page", () => {
     render(<PublicationsPage />);
-    expect(screen.getByTestId("pagination")).toBeInTheDocument();
+    expect(screen.queryByTestId("pagination")).toBeNull();
   });
 
-  it("passes page 1 and correct total to pagination", () => {
+  it("renders pagination with correct props when multiple pages", () => {
+    mockPublications.length = 0;
+    mockPublications.push(...buildMockPublications(PAGE_SIZE + 1));
     render(<PublicationsPage />);
     const pagination = screen.getByTestId("pagination");
     expect(pagination).toHaveAttribute("data-current", "1");
-    expect(pagination).toHaveAttribute("data-total", "1");
+    expect(pagination).toHaveAttribute("data-total", "2");
   });
 });
 
@@ -144,19 +147,19 @@ describe("PublicationsPage multi-item pagination", () => {
   it("shows 1 page for 0 items", () => {
     mockPublications.length = 0;
     render(<PublicationsPage />);
-    expect(screen.getByTestId("pagination")).toHaveAttribute("data-total", "1");
+    expect(screen.queryByTestId("pagination")).toBeNull();
   });
 
   it("shows 1 page for 1 item", () => {
     render(<PublicationsPage />);
-    expect(screen.getByTestId("pagination")).toHaveAttribute("data-total", "1");
+    expect(screen.queryByTestId("pagination")).toBeNull();
   });
 
   it("shows 1 page for exactly PAGE_SIZE items", () => {
     mockPublications.length = 0;
     mockPublications.push(...buildMockPublications(PAGE_SIZE));
     render(<PublicationsPage />);
-    expect(screen.getByTestId("pagination")).toHaveAttribute("data-total", "1");
+    expect(screen.queryByTestId("pagination")).toBeNull();
   });
 
   it("shows 2 pages for PAGE_SIZE + 1 items", () => {
@@ -178,5 +181,12 @@ describe("PublicationsPage multi-item pagination", () => {
     mockPublications.push(...buildMockPublications(PAGE_SIZE * 2 + 1));
     render(<PublicationsPage />);
     expect(screen.getByTestId("pagination")).toHaveAttribute("data-total", "3");
+  });
+
+  it("renders no pagination controls when totalPages is 1", () => {
+    mockPublications.length = 0;
+    mockPublications.push(...buildMockPublications(PAGE_SIZE));
+    render(<PublicationsPage />);
+    expect(screen.queryByTestId("pagination")).toBeNull();
   });
 });

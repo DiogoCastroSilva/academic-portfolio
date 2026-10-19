@@ -8,7 +8,7 @@ import { render } from "@testing-library/react";
 import { afterEach, describe, expect, it, vi } from "vitest";
 
 import type { ContentMeta } from "@katie-portfolio/content";
-import { PAGE_SIZE } from "../../../lib/pagination.js";
+import { PAGE_SIZE, paginate } from "../../../lib/pagination.js";
 
 import BlogPage, { generateStaticParams } from "./page";
 
@@ -61,15 +61,16 @@ vi.mock("../../../ui/Pagination", () => ({
   }: {
     currentPage: number;
     totalPages: number;
-  }) => (
-    <nav
-      data-testid="pagination"
-      data-current={currentPage}
-      data-total={totalPages}
-    >
-      Pagination
-    </nav>
-  ),
+  }) =>
+    totalPages <= 1 ? null : (
+      <nav
+        data-testid="pagination"
+        data-current={currentPage}
+        data-total={totalPages}
+      >
+        Pagination
+      </nav>
+    ),
 }));
 
 vi.mock("../../../lib/og-image", () => ({
@@ -151,6 +152,55 @@ describe("BlogPage generateStaticParams", () => {
   });
 });
 
+it("emits page 1 when collection has exactly 1 item", async () => {
+  mockPosts.length = 0;
+  mockPosts.push({
+    slug: "only-item",
+    href: "/items/only-item",
+    title: "Only Item",
+    date: "2024-01-01",
+    tags: ["test"],
+    imageSrc: "/placeholder.svg",
+    imageType: "cover" as const,
+  });
+  const params = (await generateStaticParams()) as Array<{ page: string }>;
+  expect(params).toEqual([{ page: "1" }]);
+});
+
+it("emits page 1 when collection has exactly PAGE_SIZE items", async () => {
+  mockPosts.length = 0;
+  mockPosts.push(
+    ...Array.from({ length: PAGE_SIZE }, (_, i) => ({
+      slug: `item-${i}`,
+      href: `/items/item-${i}`,
+      title: `Item ${i}`,
+      date: "2024-01-01",
+      tags: ["test"],
+      imageSrc: "/placeholder.svg",
+      imageType: "cover" as const,
+    })),
+  );
+  const params = (await generateStaticParams()) as Array<{ page: string }>;
+  expect(params).toEqual([{ page: "1" }]);
+});
+
+it("emits pages 1 and 2 when collection has exactly PAGE_SIZE * 2 items", async () => {
+  mockPosts.length = 0;
+  mockPosts.push(
+    ...Array.from({ length: PAGE_SIZE * 2 }, (_, i) => ({
+      slug: `item-${i}`,
+      href: `/items/item-${i}`,
+      title: `Item ${i}`,
+      date: "2024-01-01",
+      tags: ["test"],
+      imageSrc: "/placeholder.svg",
+      imageType: "cover" as const,
+    })),
+  );
+  const params = (await generateStaticParams()) as Array<{ page: string }>;
+  expect(params).toEqual([{ page: "1" }, { page: "2" }]);
+});
+
 describe("BlogPage page rendering", () => {
   it("redirects page 1 to /blog/ via meta refresh", async () => {
     mockPosts.length = 0;
@@ -210,5 +260,22 @@ describe("BlogPage page rendering", () => {
     await expect(
       BlogPage({ params: Promise.resolve({ page: "5" }) }),
     ).rejects.toThrow("NOT_FOUND");
+  });
+
+  it("every published item appears exactly once across all pages", () => {
+    const items = Array.from({ length: PAGE_SIZE * 2 + 1 }, (_, i) => ({
+      slug: `item-${i}`,
+      title: `Item ${i}`,
+    }));
+    const totalPages = Math.max(1, Math.ceil(items.length / PAGE_SIZE));
+    const allSeen: string[] = [];
+    for (let page = 1; page <= totalPages; page++) {
+      const { items: pageItems } = paginate(items, page);
+      pageItems.forEach((item) => allSeen.push(item.slug));
+    }
+    // Every item appears exactly once across all pages
+    expect(allSeen).toHaveLength(items.length);
+    expect(new Set(allSeen).size).toBe(items.length);
+    expect(allSeen.sort()).toEqual(items.map((i) => i.slug).sort());
   });
 });
