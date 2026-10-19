@@ -292,7 +292,6 @@ describe("ContentCardSection heading hierarchy", () => {
   });
 });
 
-
 describe("ContentCardSection empty state", () => {
   it("renders an icon alongside the empty message", () => {
     const { container } = render(

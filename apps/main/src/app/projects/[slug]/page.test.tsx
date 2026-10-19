@@ -37,7 +37,8 @@ vi.mock("@katie-portfolio/projects", () => ({
 }));
 
 vi.mock("@katie-portfolio/content", async (importOriginal) => {
-  const actual = await importOriginal<typeof import("@katie-portfolio/content")>();
+  const actual =
+    await importOriginal<typeof import("@katie-portfolio/content")>();
   return {
     ...actual,
     getFullAssetUrl: (path: string) =>

@@ -8,7 +8,7 @@
   3. Validate types of optional fields (`image`, `tags`, `links`, `authors`, `venue`, `doi`, `paperUrl`) — if provided, they must be the correct type (string, string[], string[], string[], string, string, string respectively).
   4. Fail the build with an actionable error message identifying the file and field when content is invalid — never silently invent defaults.
   5. Establish a trust model for HTML: content is authored by the repository maintainer (trusted). No HTML sanitizer is introduced now, but the trust boundary is documented.
-  5a. Apply the same "fail fast" pattern to profile.md nested collections (`education`, `researchInterests`, `skills`): validate entry objects and string fields, throw with actionable messages instead of silently dropping entries or rendering empty data.
+     5a. Apply the same "fail fast" pattern to profile.md nested collections (`education`, `researchInterests`, `skills`): validate entry objects and string fields, throw with actionable messages instead of silently dropping entries or rendering empty data.
 - **Alternatives considered:**
   - **`zod` or `ajv` for schema validation:** Would add a runtime dependency. The hand-rolled validator is small (~40 lines), well-tested, and sufficient for the current frontmatter schema.
   - **HTML sanitizer (`DOMPurify`, `@html-validate/sanitize`):** Not needed for trusted maintainer-authored content. Would add bundle size and runtime overhead. Documented as a future requirement if external submissions are enabled.
