@@ -31,7 +31,7 @@ export const AboutSection = ({ profile }: AboutSectionProps) => {
           <h2 className="mb-4 text-2xl font-bold md:text-3xl">About Me</h2>
           <div
             dangerouslySetInnerHTML={{ __html: profile.biography }}
-            className="prose prose-sm prose-p:leading-6 prose-a:text-blue-600 dark:prose-a:text-blue-700 prose-a:no-underline prose-a:hover:underline mt-4 max-w-none text-gray-800 dark:text-gray-600"
+            className="prose prose-sm prose-p:leading-6 prose-a:text-blue-600 prose-a:break-words dark:prose-a:text-blue-700 prose-a:no-underline prose-a:hover:underline mt-4 max-w-none text-gray-800 dark:text-gray-600"
           />
         </div>
       </div>

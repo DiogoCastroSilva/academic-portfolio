@@ -248,3 +248,24 @@ describe("ContentDetail theme contrast (dark mode on light-blue surfaces)", () =
     expect(imgContainer).not.toHaveClass("dark:bg-stone-700");
   });
 });
+
+describe("ContentDetail responsive link wrapping", () => {
+  it("prose links have break-words to prevent overflow on small screens", () => {
+    const { container } = render(<ContentDetail content={mockContent} />);
+    const proseDiv = Array.from(container.querySelectorAll("div")).find((d) =>
+      d.className.includes("prose"),
+    );
+    expect(proseDiv).toBeDefined();
+    const className = proseDiv?.className || "";
+    expect(className).toMatch(/prose-a:break-words/);
+  });
+
+  it("prose paragraphs have break-words for inline long content", () => {
+    const { container } = render(<ContentDetail content={mockContent} />);
+    const proseDiv = Array.from(container.querySelectorAll("div")).find((d) =>
+      d.className.includes("prose"),
+    );
+    const className = proseDiv?.className || "";
+    expect(className).toMatch(/prose-p:break-words/);
+  });
+});
