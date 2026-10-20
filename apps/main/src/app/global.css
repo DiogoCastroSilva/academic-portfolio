@@ -9,8 +9,8 @@
   standalone design-system package — and rely on Tailwind for layout and
   spacing primitives.
 
-  See docs/architecture/decisions/0006-shared-frontend-tooling.md for design
-  rationale.
+  See docs/architecture/frontend-design-principles.md for the intended UI
+  contract and docs/product/goals-and-requirements.md for remaining alignment work.
 */
 :root {
   /* ── Surface tokens ────────────────────────── */
