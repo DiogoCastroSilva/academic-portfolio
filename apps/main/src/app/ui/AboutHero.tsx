@@ -66,7 +66,7 @@ export const AboutHero = ({ profile }: AboutHeroProps) => {
                 {profile.email ? (
                   <a
                     href={`mailto:${profile.email}`}
-                    className="rounded-full border-2 border-sky-600 px-6 py-2 font-medium text-sky-600 transition-all hover:bg-sky-600 hover:text-white dark:text-sky-600"
+                    className="rounded-full border-2 border-sky-600 px-6 py-2 font-medium text-sky-600 transition-all hover:bg-sky-600 hover:text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-600 dark:text-sky-600"
                   >
                     Get in Touch
                   </a>
