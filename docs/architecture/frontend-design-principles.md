@@ -23,7 +23,7 @@ Every collection follows the same pattern:
 ## 3. Typography / Spacing / Content Widths
 
 - **Base font:** `text-slate-900` body at `prose prose-lg` on detail pages, `prose prose-sm` on homepage AboutSection (condensed preview).
-- **Page title (H1):** `text-3xl font-bold md:text-4xl lg:text-5xl`
+- **Page title (H1):** `.profile-name` — `1.875rem` (30px) base, `2.25rem` (36px) at `md`, `2.5rem` (40px) at `lg`
 - **Section headings (H2):** `text-2xl font-bold md:text-3xl`
 - **Card titles (H3):** `text-xl font-semibold` with `line-clamp-2`
 - **Maximum content width:** `max-w-3xl` on detail pages; `max-w-6xl` on layout.
