@@ -372,7 +372,6 @@ Use these as references, not as designs to copy wholesale. Preserve the template
 
 The useful pattern from these examples is not extra animation or decoration: make the research and outputs easy to understand, provide direct evidence/links, keep dates and context visible, and make the site easy to maintain over multiple career stages.
 
-
 ## External Accessibility Audit — TypeUI
 
 TypeUI's free audit reported an overall score of 90 and three actionable
