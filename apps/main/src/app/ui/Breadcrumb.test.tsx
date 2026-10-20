@@ -104,4 +104,15 @@ describe("Breadcrumb", () => {
     // aria-current still set
     expect(current).toHaveAttribute("aria-current", "page");
   });
+
+  it("has padding around the breadcrumb for card spacing", () => {
+    const { container } = render(
+      <Breadcrumb items={[{ label: "Home" }, { label: "My Project" }]} />,
+    );
+    const nav = container.querySelector("nav");
+    // px-4 provides horizontal spacing so text doesn't touch card edges
+    expect(nav?.className).toMatch(/px-4/);
+    // py-2 provides vertical spacing between breadcrumb and content
+    expect(nav?.className).toMatch(/py-2/);
+  });
 });
