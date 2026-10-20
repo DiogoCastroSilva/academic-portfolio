@@ -368,3 +368,19 @@ describe("ContentCardSection dark-mode surface consistency", () => {
     expect(section).toHaveClass("bg-white");
   });
 });
+
+describe("ContentCardSection reduced-motion compliance", () => {
+  it("articles include motion-reduce:animate-none class to respect prefers-reduced-motion", () => {
+    const { container } = render(
+      <ContentCardSection
+        heading="Projects"
+        headingId="projects-heading"
+        items={mockItems}
+        hrefPrefix="/projects"
+      />,
+    );
+    const article = container.querySelector("article");
+    expect(article).toHaveClass("motion-reduce:animate-none");
+    expect(article).toHaveClass("animate-fadeInUp");
+  });
+});
