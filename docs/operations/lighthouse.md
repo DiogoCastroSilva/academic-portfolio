@@ -49,7 +49,7 @@ threshold. In the current CI workflow (`ci.yml`), the Lighthouse job is a
 **report-only** step — it runs after `ci` but does **not** block the `deploy`
 job (deploy depends only on `ci`). This means the budgets are enforced as
 advisory checks that produce visible failures in GitHub Actions, but do not
-gate releases. Audited routes (`/, /about/, /projects/`) are intended to be prerendered as static pages and exist in the `public/` build artifact. Audit only published routes: draft content is intentionally excluded from static output, so a draft detail route such as `/projects/first-project/` returns 404 and causes Lighthouse collection to fail before budget assertions run.
+gate releases. Audited routes (`/, /about/, /projects/`) are intended to be prerendered as static pages and exist in the `public/` build artifact. Audit only published routes. Draft detail routes are intentionally excluded from static output and will return 404; choose a currently published route from the build output. The original failure on `/projects/first-project/` was fixed by auditing `/`, `/about/`, and `/projects/` instead. Commit `5d02913` later published the clearly synthetic first-project example, and its CI run passed the Lighthouse job.
 
 ## Key optimizations
 
@@ -57,5 +57,5 @@ gate releases. Audited routes (`/, /about/, /projects/`) are intended to be prer
 - **Image resizing** — the sync script (`tools/sync-content-assets.mjs`) resizes images to a max width of 1200px using `sharp`.
 - **WebP with JPEG fallback** — all JPEG/PNG images have WebP variants served via `<picture>` elements.
 - **`fetchPriority="high"`** — applied to LCP images (profile picture).
-- **`<link rel="preload">`** — for the profile WebP image to start loading before DOM parsing.
+- **`<link rel="preload">`** — for the profile SVG image to start loading before DOM parsing (the profile asset was changed from WebP/JPEG to SVG in commit `5d02913`).
 - **Cloudflare Analytics** — disabled when no token is configured to avoid CORS errors on localhost.
