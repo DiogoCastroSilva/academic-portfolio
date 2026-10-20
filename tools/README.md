@@ -11,7 +11,8 @@ Copies images from `libs/*/src/md/` into `apps/main/public/` while preserving en
 Nx targets:
 
 - `npx nx run main:sync-content-assets` — normal asset sync for build/test.
-- `npx nx run main:sync-content-assets-dev` — skips resize and WebP generation for faster local development.
+- `npx nx run main:sync-content-assets-dev` — skips resize and WebP generation for
+  faster local development.
 
 Environment variables:
 
@@ -35,7 +36,10 @@ It excludes error routes, draft content (which should not have generated pages),
 
 ## Maintenance rules
 
-- Treat generated assets in root `public/` as build output; do not edit them by hand.
-- Keep file paths and output directories aligned with the Nx targets in `apps/main/package.json` and `apps/main/project.json`.
+- Treat generated assets in root `public/` as build output; do not edit them
+  by hand.
+- Keep file paths and output directories aligned with the Nx targets in
+  `apps/main/package.json` and `apps/main/project.json`.
 - Preserve base-path support for GitHub Pages project sites.
-- If a script's behavior or environment variables change, update this guide and the related operations documentation.
+- If a script's behavior or environment variables change, update this guide and
+  the related operations documentation.
