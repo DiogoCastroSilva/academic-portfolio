@@ -1,5 +1,5 @@
-:HL["/academic-portfolio/_next/static/css/23c86919631db973.css","style"]
-:HL["/images/profile.webp","image",{"type":"image/webp"}]
+:HL["/academic-portfolio/_next/static/css/ca6bec190dc3373e.css","style"]
+:HL["/images/profile.svg","image",{"type":"image/svg+xml"}]
 2:[["children",{"s":"__PAGE__","h":160}]]
 1:[["children",{"s":"publications","h":96,"c":"$Q2"}]]
-0:{"b":"qbAEJVDqdw71VVLcTOwTQ","t":{"t":{"s":"","h":80,"c":"$Q1"}}}
+0:{"b":"iXfqMLIf2bpgtLxEqM071","t":{"t":{"s":"","h":80,"c":"$Q1"}}}
