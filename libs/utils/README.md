@@ -14,4 +14,4 @@ import { dates } from "@academic-portfolio/utils";
 const formatted = dates.formatISODate("2025-11-01");
 ```
 
-This library has no UI components. It is a pure TypeScript utility library and has no tests.
+This library has no UI components. Its date-formatting utility is pure TypeScript; the test-helper modules have their own tests under `src/test-helpers/`. Add focused tests for date formatting as its behavior becomes more complex or more date cases are supported.
