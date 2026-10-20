@@ -170,7 +170,7 @@ describe("MobileNavLinks accessibility", () => {
     expect(projectsLink).toHaveAttribute("aria-current", "page");
     const className = projectsLink.getAttribute("class") || "";
     // White border is invisible on light backgrounds in light mode
-    expect(className).toMatch(/aria-current\/page:border-cyan-500/);
+    expect(className).toMatch(/aria-current\/page:border-sky-600/);
     expect(className).not.toMatch(/aria-current\/page:border-white/);
   });
 });

@@ -3,8 +3,15 @@ title: "Grapevine virus detection in Lodi, California"
 date: "2025-11-01"
 tags: ["intro", "welcome"]
 excerpt: "Field notes from grapevine virus screening in Lodi, California."
+draft: true
 image: first-project.jpeg
 ---
+
+<!-- TODO(owner): This is a sample/template project. Replace this content
+     with your real project description, add your own images, and remove
+     the `draft: true` line after filling in the details. This sample
+     references a real NASA DEVELOP project for illustration only;
+     do not present it as your own work without replacing it. -->
 
 ## Summary
 

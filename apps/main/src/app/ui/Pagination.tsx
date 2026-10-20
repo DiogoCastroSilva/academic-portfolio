@@ -38,7 +38,7 @@ function buildPageUrl(baseUrl: string, page: number): string {
 }
 
 const btnBase =
-  "flex h-11 w-11 items-center justify-center rounded-lg border border-zinc-200 bg-white text-slate-700 hover:bg-zinc-100 hover:text-slate-900 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-600 dark:border-zinc-700 dark:bg-slate-800 dark:text-gray-300 dark:hover:bg-slate-700 dark:hover:text-gray-100";
+  "flex h-11 w-11 items-center justify-center rounded-lg border border-zinc-200 bg-white text-slate-700 hover:bg-zinc-100 hover:text-slate-900 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-600 dark:border-zinc-600 dark:bg-sky-50 dark:text-slate-700 dark:hover:bg-sky-100 dark:hover:text-slate-900";
 
 export function Pagination({
   currentPage,

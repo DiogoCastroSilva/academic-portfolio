@@ -14,24 +14,22 @@ export const AboutSection = ({ profile }: AboutSectionProps) => {
           <ContentImage
             src={profile.imageSrc}
             alt={`Profile picture of ${profile.name}`}
-            className="h-42 w-42 rounded-full sm:h-62 sm:w-62 md:h-30 md:w-30 lg:h-62 lg:w-62"
-            sizes="(max-width: 640px) 160px, 120px"
+            className="h-32 w-32 rounded-full sm:h-40 sm:w-40 md:h-48 md:w-48"
+            sizes="(max-width: 640px) 140px, (max-width: 768px) 180px, 200px"
             priority
           />
           <div className="flex flex-col items-center justify-center text-wrap">
             <h1 className="text-3xl font-bold md:text-4xl lg:text-5xl">
               {profile.name}
             </h1>
-            <p className="items-center text-center text-lg text-gray-600 dark:text-gray-600">
-              {profile.role}
-            </p>
+            <p className="text-center text-lg text-gray-600">{profile.role}</p>
           </div>
         </div>
         <div className="flex flex-12 flex-col gap-2 pt-2">
           <h2 className="mb-4 text-2xl font-bold md:text-3xl">About Me</h2>
           <div
             dangerouslySetInnerHTML={{ __html: profile.biography }}
-            className="prose prose-sm prose-p:leading-6 prose-a:text-blue-600 prose-a:break-words dark:prose-a:text-blue-700 prose-a:no-underline prose-a:hover:underline mt-4 max-w-none text-gray-800 dark:text-gray-600"
+            className="prose prose-sm prose-p:leading-6 prose-p:my-4 prose-headings:font-bold prose-a:break-words max-w-none text-gray-800"
           />
         </div>
       </div>

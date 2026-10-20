@@ -82,7 +82,7 @@ export function ContentCardSection({
               d="M9 12h6m-6 2h6m2 6a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2zM9 9h.01M9 9a.75.75 0 11-1.5 0V8a.75.75 0 011.5 0v1z"
             />
           </svg>
-          <p className="text-slate-600 dark:text-slate-600">{emptyMessage}</p>
+          <p className="text-slate-600">{emptyMessage}</p>
         </div>
       ) : (
         <>
@@ -112,14 +112,17 @@ export function ContentCardSection({
                     </div>
                     <div className="p-4">
                       <div className="flex min-w-0 flex-wrap items-center gap-2">
-                        <time dateTime={item.date}>
+                        <time
+                          dateTime={item.date}
+                          className="text-sm text-zinc-600 dark:text-zinc-500"
+                        >
                           {dates.formatISODate(item.date)}
                         </time>
                         <ul className="flex flex-wrap items-center gap-2">
                           {item.tags?.slice(0, tagsLimit).map((tag) => (
                             <li
                               key={tag}
-                              className="rounded-full border border-zinc-200 px-2.5 py-1 text-xs font-medium text-zinc-600 dark:border-zinc-500 dark:text-zinc-600"
+                              className="min-w-0 rounded-full border border-zinc-200 px-2.5 py-1 text-xs font-medium text-zinc-600 dark:border-zinc-400 dark:text-zinc-600"
                             >
                               {tag}
                             </li>
@@ -127,7 +130,7 @@ export function ContentCardSection({
                           {item.tags && item.tags.length > tagsLimit && (
                             <li
                               aria-label={`${item.tags.length - tagsLimit} more tags`}
-                              className="text-xs font-medium text-zinc-500 dark:text-zinc-500"
+                              className="text-xs font-medium text-zinc-500"
                             >
                               +{item.tags.length - tagsLimit} more
                             </li>
@@ -135,11 +138,11 @@ export function ContentCardSection({
                         </ul>
                       </div>
                       <div className="flex min-w-0 flex-1 flex-col">
-                        <h3 className="mb-2 line-clamp-2 text-xl leading-tight font-semibold tracking-tight transition-all duration-300 group-hover:-translate-y-1 group-hover:underline">
+                        <h3 className="mb-2 line-clamp-2 text-xl leading-tight font-semibold tracking-tight group-hover:underline">
                           {item.title}
                         </h3>
                         {item.excerpt ? (
-                          <p className="line-clamp-3 text-sm leading-6 text-zinc-600 dark:text-gray-400">
+                          <p className="line-clamp-3 text-sm leading-6 text-zinc-600 dark:text-zinc-500">
                             {item.excerpt}
                           </p>
                         ) : null}

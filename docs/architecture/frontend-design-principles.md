@@ -44,18 +44,42 @@ Every collection follows the same pattern:
 - All cards and sections use responsive padding to avoid horizontal scroll at 320 CSS px.
 - `flex min-w-0` on flex children prevents flex items from forcing minimum width and causing overflow of long URLs/titles.
 
-## 6. Theme / Semantic Color Choices
+## 6. Theme / Semantic Color System
 
-- **Light mode:** white surfaces, `text-slate-900` body, `text-zinc-600` metadata.
-- **Dark mode:** light-blue surfaces (`dark:bg-sky-50`), `text-slate-900` headings (high contrast on light-blue), `text-zinc-600` metadata.
-- **Accent color:** `sky-600` for links and focus rings, with `dark:text-sky-400` hover variant.
+### Semantic Token Layer
+
+A lightweight set of CSS custom properties in `apps/main/src/app/global.css` provides a single source of truth for semantic colors. These are defined under `:root` and overridden in `@media (prefers-color-scheme: dark)`. Tailwind's spacing scale is used for layout primitives — no competing scale is introduced.
+
+| Token                     | Light         | Dark          | Purpose                          |
+| ------------------------- | ------------- | ------------- | -------------------------------- |
+| `--color-surface-page`    | `#ffffff`     | `#1e293b`     | Page background                  |
+| `--color-surface-card`    | `#ffffff`     | `#f0f9ff`     | Card/surface background          |
+| `--color-text-primary`   | `#171717`     | `#f9fafb`     | Primary body text                |
+| `--color-text-muted`     | `#6b7280`     | `#9ca3af`     | Secondary/metadata text          |
+| `--color-border`          | `#e5e7eb`     | `#3f3f46`     | Default borders                  |
+| `--color-accent`          | `#0284c7`     | `#60a5fa`     | Links (sky-600 / sky-400)        |
+| `--color-accent-hover`   | `#0369a1`     | `#93c5fd`     | Link hover (sky-700 / sky-300)   |
+| `--color-focus`           | `#0284c7`     | `#60a5fa`     | Focus rings (sky-600 / sky-400)  |
+| `--color-code-bg`         | `#f3f4f6`     | `#1e293b`     | Inline code background           |
+| `--color-pre-bg`          | `#171717`     | `#0f172a`     | Preformatted block background    |
+| `--color-pre-text`        | `#f9fafb`     | `#f1f5f9`     | Preformatted block text          |
+
+Components set their own surface classes directly (e.g. `bg-white dark:bg-sky-50`) because those values are stable and intentional; the token layer is consumed primarily by prose/markdown rendered content via `global.css` rules (`.prose a { color: var(--color-accent); }`).
+
+### Applied Theme Rules
+
+- **Light mode:** white surfaces, `text-slate-900` body on cards, `text-gray-800` on prose, `text-zinc-600` metadata.
+- **Dark mode:** light-blue surfaces (`dark:bg-sky-50`), `text-slate-900` headings (high contrast on light-blue), `text-zinc-500` metadata.
+- **Accent color:** `sky-600` (`--color-accent`) for links and focus rings; `sky-400` in dark mode via token overrides.
+- Prose link colors are controlled by the global CSS token, not by per-component Tailwind `prose-a:text-*` utilities — this avoids drift.
 - All colors are chosen for WCAG 2.2 AA contrast on the appropriate surface.
 
 ## 7. Navigation and Breadcrumbs
 
 - NavBar uses segment-aware prefix matching (`isPathActive`) — `/projects/example/` matches "Projects" but not unrelated paths.
-- Active state: bottom border `border-cyan-500` + `aria-current="page"` (color-only is not sufficient).
-- Breadcrumb on detail pages: `Home / Collection / Entry-title` — the last item is the current page.
+- Active state: bottom border `border-sky-600` (light) / `border-sky-400` (dark) + `aria-current="page"` (color-only is not sufficient). A transparent `border-b-2` is always present on nav links to reserve space and prevent layout shift when the active border appears.
+- Breadcrumb on detail pages: `Collection / Entry-title` — the last item is the current page (no "Home" link in the breadcrumb per the "do not add content entries to global navigation" rule).
+- Breadcrumb sits inside the same card surface as `ContentDetail` (`mx-4 rounded-2xl dark:bg-sky-50 gap-4`), with `text-slate-900 dark:text-slate-900` for the current page — preventing dark-text-on-dark-surface contrast failures.
 - Focus ring: `focus-visible:outline-2 focus-visible:outline-sky-600` on all interactive elements.
 
 ## 8. Keyboard / Focus Behavior
@@ -68,8 +92,8 @@ Every collection follows the same pattern:
 
 - CSS animations only under `@media (prefers-reduced-motion: no-preference)` — global disable in `global.css`.
 - `motion-reduce:animate-none` on individual animated elements.
-- `motion/react` used only on the About page (`AboutHero`) where `useReducedMotion()` swaps `motion.div` for a plain `div`.
-- Card entrance: staggered `fadeInUp` (0.5s) with `animationDelay` per index.
+- `motion/react` used on the About page (`AboutHero`) and on the homepage sections (`EducationTimeline`, `ResearchInterests`, `SkillsGrid`) where `useReducedMotion()` swaps `motion.div`/`motion.span` for plain `div`/`span`.
+- Card entrance: staggered `fadeInUp` (0.5s) with `animationDelay` per index. Card title: no positional transform on hover (previously had `-translate-y-1`); only underline on hover for affordance. Card image uses a subtle `scale-105` via CSS (`group-hover:scale-105`) which is disabled by the global `prefers-reduced-motion` rule.
 - No animation on hover/focus; no auto-playing carousels.
 
 ## 10. Static Delivery / Performance

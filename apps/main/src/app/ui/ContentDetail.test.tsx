@@ -222,14 +222,17 @@ describe("ContentDetail theme contrast (dark mode on light-blue surfaces)", () =
     expect(className).not.toMatch(/dark:prose-invert/);
   });
 
-  it("prose links use a blue-700 variant in dark mode for contrast on light-blue surfaces", () => {
+  it("prose links use semantic accent token instead of hardcoded blue variant", () => {
     const { container } = render(<ContentDetail content={mockContent} />);
     const proseDiv = Array.from(container.querySelectorAll("div")).find((d) =>
       d.className.includes("prose"),
     );
     const className = proseDiv?.className || "";
-    expect(className).toMatch(/dark:prose-a:text-blue-700/);
-    expect(className).not.toMatch(/dark:prose-a:text-blue-400/);
+    // After moving to CSS semantic tokens, prose link colors are controlled
+    // by the global .prose a { color: var(--color-accent) } rule, not by
+    // Tailwind prose-a utilities on the className.
+    expect(className).not.toMatch(/dark:prose-a:text-blue-700/);
+    expect(className).not.toMatch(/prose-a:text-blue-600/);
   });
 
   it("tag list items use readable text color in dark mode", () => {
@@ -242,12 +245,14 @@ describe("ContentDetail theme contrast (dark mode on light-blue surfaces)", () =
     });
   });
 
-  it("time element uses gray-600 in dark mode for readable contrast", () => {
+  it("time element uses readable text color in dark mode for contrast on light-blue surfaces", () => {
     const { container } = render(<ContentDetail content={mockContent} />);
     const timeEl = container.querySelector("time");
     expect(timeEl).toBeDefined();
     const className = timeEl?.className || "";
-    expect(className).toMatch(/dark:text-gray-600/);
+    // Uses zinc-600 (muted) in both light and dark mode for consistent readability
+    expect(className).toMatch(/dark:text-zinc-600/);
+    expect(className).not.toMatch(/dark:text-gray-600/);
   });
 
   it("article has light-blue surface background in dark mode (consistent with sections)", () => {
