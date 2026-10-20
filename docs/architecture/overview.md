@@ -35,7 +35,7 @@ apps/main/src/app/
 | `/publications/[slug]/` | SSG    | One static page per publication           |
 | `/blog/`                | Static | Lists all blog posts (or placeholder)     |
 | `/blog/[slug]/`         | SSG    | One static page per blog post             |
-| Static 404 document     | Static | Static host's 404 fallback                |
+| `/_not-found/`          | Static | Fallback 404 page                         |
 
 ## Content Directories and Package Boundaries
 
