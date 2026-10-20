@@ -374,17 +374,9 @@ The useful pattern from these examples is not extra animation or decoration: mak
 
 ## External Accessibility Audit — TypeUI
 
-TypeUI's free audit reported an overall score of 90 and three actionable
-findings on the homepage: medium-severity typography, medium-severity missing
-skip link, and high-severity crowded interaction targets. Treat this as an
-external heuristic audit, not proof of WCAG conformance.
+TypeUI's free audit reported an overall score of 90 and three actionable findings on the homepage: medium-severity typography, medium-severity missing skip link, and high-severity crowded interaction targets. Treat this as an external heuristic audit, not proof of WCAG conformance.
 
-- [x] Add a first-focusable “Skip to main content” link and a matching
-  `main#main-content` target.
-- [x] Increase desktop brand/navigation links to at least 44px high; make mobile
-  navigation links at least 44px high and the menu button 44×44px.
-- [x] Set a readable default paragraph line height and tighten the homepage
-  name/occupation typography for long names and role strings.
-- [ ] Re-run TypeUI and keyboard/manual checks after deployment. Confirm the
-  three findings clear in the rendered site; keep any remaining findings as
-  tracked work rather than assuming CSS class changes alone resolve them.
+- [x] Add a first-focusable “Skip to main content” link and a matching `main#main-content` target.
+- [x] Increase desktop brand/navigation links to at least 44px high; make mobile navigation links at least 44px high and the menu button 44×44px.
+- [x] Set a readable default paragraph line height and tighten the homepage name/occupation typography for long names and role strings.
+- [ ] Re-run TypeUI and keyboard/manual checks after deployment. Confirm the three findings clear in the rendered site; keep any remaining findings as tracked work rather than assuming CSS class changes alone resolve them.
