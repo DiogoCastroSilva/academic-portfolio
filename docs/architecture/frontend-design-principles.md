@@ -50,19 +50,19 @@ Every collection follows the same pattern:
 
 A lightweight set of CSS custom properties in `apps/main/src/app/global.css` provides a single source of truth for semantic colors. These are defined under `:root` and overridden in `@media (prefers-color-scheme: dark)`. Tailwind's spacing scale is used for layout primitives — no competing scale is introduced.
 
-| Token                     | Light         | Dark          | Purpose                          |
-| ------------------------- | ------------- | ------------- | -------------------------------- |
-| `--color-surface-page`    | `#ffffff`     | `#1e293b`     | Page background                  |
-| `--color-surface-card`    | `#ffffff`     | `#f0f9ff`     | Card/surface background          |
-| `--color-text-primary`   | `#171717`     | `#f9fafb`     | Primary body text                |
-| `--color-text-muted`     | `#6b7280`     | `#9ca3af`     | Secondary/metadata text          |
-| `--color-border`          | `#e5e7eb`     | `#3f3f46`     | Default borders                  |
-| `--color-accent`          | `#0284c7`     | `#60a5fa`     | Links (sky-600 / sky-400)        |
-| `--color-accent-hover`   | `#0369a1`     | `#93c5fd`     | Link hover (sky-700 / sky-300)   |
-| `--color-focus`           | `#0284c7`     | `#60a5fa`     | Focus rings (sky-600 / sky-400)  |
-| `--color-code-bg`         | `#f3f4f6`     | `#1e293b`     | Inline code background           |
-| `--color-pre-bg`          | `#171717`     | `#0f172a`     | Preformatted block background    |
-| `--color-pre-text`        | `#f9fafb`     | `#f1f5f9`     | Preformatted block text          |
+| Token                  | Light     | Dark      | Purpose                         |
+| ---------------------- | --------- | --------- | ------------------------------- |
+| `--color-surface-page` | `#ffffff` | `#1e293b` | Page background                 |
+| `--color-surface-card` | `#ffffff` | `#f0f9ff` | Card/surface background         |
+| `--color-text-primary` | `#171717` | `#f9fafb` | Primary body text               |
+| `--color-text-muted`   | `#6b7280` | `#9ca3af` | Secondary/metadata text         |
+| `--color-border`       | `#e5e7eb` | `#3f3f46` | Default borders                 |
+| `--color-accent`       | `#0284c7` | `#60a5fa` | Links (sky-600 / sky-400)       |
+| `--color-accent-hover` | `#0369a1` | `#93c5fd` | Link hover (sky-700 / sky-300)  |
+| `--color-focus`        | `#0284c7` | `#60a5fa` | Focus rings (sky-600 / sky-400) |
+| `--color-code-bg`      | `#f3f4f6` | `#1e293b` | Inline code background          |
+| `--color-pre-bg`       | `#171717` | `#0f172a` | Preformatted block background   |
+| `--color-pre-text`     | `#f9fafb` | `#f1f5f9` | Preformatted block text         |
 
 Components set their own surface classes directly (e.g. `bg-white dark:bg-sky-50`) because those values are stable and intentional; the token layer is consumed primarily by prose/markdown rendered content via `global.css` rules (`.prose a { color: var(--color-accent); }`).
 
