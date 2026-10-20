@@ -61,4 +61,47 @@ describe("Breadcrumb", () => {
     const nav = container.querySelector("nav");
     expect(nav).toHaveAttribute("aria-label", "Breadcrumb");
   });
+
+  it("applies truncation classes to breadcrumb items for long titles", () => {
+    const { container } = render(
+      <Breadcrumb
+        items={[
+          { label: "Home", href: "/" },
+          {
+            label:
+              "Very Long Blog Post Title That Would Overflow On Mobile Screens",
+            href: "/blog/long",
+          },
+        ]}
+      />,
+    );
+
+    const items = container.querySelectorAll("li");
+    items.forEach((li) => {
+      // min-w-0 allows the flex child to shrink below content min-width
+      expect(li.className).toMatch(/min-w-0/);
+    });
+
+    // All links and spans should have truncate + responsive max-width
+    const links = container.querySelectorAll("a, span[aria-current='page']");
+    links.forEach((el) => {
+      expect(el.className).toMatch(/truncate/);
+      expect(el.className).toMatch(/max-w-/);
+    });
+  });
+
+  it("shows full title when it fits (truncate only hides overflow)", () => {
+    render(
+      <Breadcrumb
+        items={[{ label: "Short", href: "/" }, { label: "Project" }]}
+      />,
+    );
+
+    const current = screen.getByText("Project");
+    // truncate is present so long titles will be cut with ellipsis
+    expect(current.className).toMatch(/truncate/);
+    expect(current.textContent).toBe("Project");
+    // aria-current still set
+    expect(current).toHaveAttribute("aria-current", "page");
+  });
 });

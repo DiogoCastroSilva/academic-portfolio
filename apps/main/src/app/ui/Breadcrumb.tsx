@@ -22,7 +22,7 @@ export function Breadcrumb({ items }: BreadcrumbProps) {
     <nav aria-label="Breadcrumb">
       <ol className="flex items-center gap-1 text-sm text-zinc-600 dark:text-zinc-500">
         {items.map((item, index) => (
-          <li key={index} className="flex items-center gap-1">
+          <li key={index} className="flex min-w-0 items-center gap-1">
             {index > 0 && (
               <ChevronIcon
                 className="h-4 w-4 text-zinc-400 dark:text-zinc-600"
@@ -32,7 +32,7 @@ export function Breadcrumb({ items }: BreadcrumbProps) {
             {item.href && index < items.length - 1 ? (
               <Link
                 href={item.href}
-                className="text-zinc-600 hover:text-sky-600 hover:underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-600 dark:text-zinc-500 dark:hover:text-sky-400"
+                className="block max-w-[100px] truncate text-zinc-600 hover:text-sky-600 hover:underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-600 sm:max-w-[150px] md:max-w-xs dark:text-zinc-500 dark:hover:text-sky-400"
               >
                 {item.label}
               </Link>
@@ -40,14 +40,14 @@ export function Breadcrumb({ items }: BreadcrumbProps) {
               <Link
                 href={item.href}
                 aria-current="page"
-                className="font-medium text-slate-900 dark:text-slate-900"
+                className="block max-w-[100px] truncate font-medium text-slate-900 sm:max-w-[150px] md:max-w-xs dark:text-slate-900"
               >
                 {item.label}
               </Link>
             ) : (
               <span
                 aria-current="page"
-                className="font-medium text-slate-900 dark:text-slate-900"
+                className="block max-w-[100px] truncate font-medium text-slate-900 sm:max-w-[150px] md:max-w-xs dark:text-slate-900"
               >
                 {item.label}
               </span>
