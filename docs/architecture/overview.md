@@ -35,7 +35,7 @@ apps/main/src/app/
 | `/publications/[slug]/` | SSG    | One static page per publication           |
 | `/blog/`                | Static | Lists all blog posts (or placeholder)     |
 | `/blog/[slug]/`         | SSG    | One static page per blog post             |
-| `/_not-found/`          | Static | Fallback 404 page                         |
+| Static 404 document     | Static | Fallback produced from `not-found.tsx`; not a normal content route |
 
 ## Content Directories and Package Boundaries
 
@@ -71,7 +71,7 @@ This enforces the dependency layers: app → content-layer → foundation → ex
 ## Markdown Parsing, Validation, and Rendering Flow
 
 ```
-Markdown file (.md) in libs/{projects|publications}/src/md/
+Markdown entry `README.md` in libs/{projects|publications|blog}/src/md/{slug}/
     |
     v
 gray-matter parses YAML frontmatter -> { data, content }
@@ -108,7 +108,7 @@ Rendered by ContentDetail (server component) via dangerouslySetInnerHTML
 
 ## Static Generation and Asset Handling
 
-Cover images are stored alongside Markdown files in `libs/{projects|publications}/src/md/`. A Node.js script (`tools/sync-content-assets.mjs`) copies them to `apps/main/public/{projects,publications}/` before build or dev:
+Cover images are stored alongside each entry's `README.md` in `libs/{projects|publications|blog}/src/md/{slug}/`. A Node.js script (`tools/sync-content-assets.mjs`) copies them to `apps/main/public/{projects,publications}/` before build or dev:
 
 ```
 npx nx run main:sync-content-assets

@@ -10,7 +10,7 @@ This package owns routes, page composition, reusable page-level UI, metadata/str
 - `/about/` — profile, education, research interests, and skills.
 - `/projects/`, `/publications/`, `/blog/` — collection pages with pagination where needed.
 - `/{collection}/{slug}/` — statically generated detail pages for published entries.
-- `/404/` — not-found page for static hosting.
+- Static 404 fallback — rendered from `src/app/not-found.tsx` and emitted for the static host; it is not a normal content route.
 
 Routes are generated at build time. Draft entries are excluded. The app uses Next.js App Router with `output: "export"`, so request-time server features are not available; see the [Next.js static export guide](https://nextjs.org/docs/app/guides/static-exports).
 

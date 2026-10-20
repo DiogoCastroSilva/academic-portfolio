@@ -24,10 +24,12 @@ The workflow is in `.github/workflows/ci.yml`:
    - `npx nx run-many -t lint test typecheck build`
    - `npx nx fix-ci` (Nx Cloud suggestions, if available)
 
-2. **`deploy` job:** Runs only on push to `main` (or manual dispatch), after `ci` passes.
+2. **`perf-audit` job:** Runs after CI on pushes and pull requests. It reuses the pinned Lighthouse workflow, audits published routes, and reports budget failures without blocking deployment.
+3. **`deploy` job:** Runs only on push to `main` (or manual dispatch), after `ci` passes.
    - Derives `NEXT_PUBLIC_BASE_PATH` and `NEXT_PUBLIC_DEPLOYMENT_URL` from `GITHUB_REPOSITORY`
    - `npm ci`
-   - `npx nx build main` (builds static site into `public/`)
+   - `npx nx build main` (builds the static site into `public/` and syncs content assets)
+   - `npx nx run main:generate-sitemap` (writes `sitemap.xml` and `robots.txt` after the build)
    - Deploys `public/` to GitHub Pages via `peaceiris/actions-gh-pages`
 
 ## GitHub Pages Setup
@@ -41,7 +43,7 @@ The workflow is in `.github/workflows/ci.yml`:
 
 ### For a fork
 
-When you fork this repository into your own GitHub account:
+The repository is not currently marked as a GitHub template, so **fork it for now**. The owner can enable GitHub's “Template repository” setting later to expose the “Use this template” button as an additional path. When you fork this repository into your own GitHub account:
 
 1. **Repository name:** If you name it `{username}.github.io`, the site will be served at `https://{username}.github.io/` with no base path.
 2. **Base path:** The CI workflow automatically detects this case and sets `NEXT_PUBLIC_BASE_PATH=""`.
@@ -105,7 +107,7 @@ application code.
 
 ### Fork and deploy
 
-- [ ] Use "Use this template" to create a new repository (e.g., `username.github.io`)
+- [ ] Fork the repository into your account (or use "Use this template" after that repository setting has been enabled)
 - [ ] Enable GitHub Pages: **Settings → Pages → Source: Deploy from a branch → `gh-pages` → `/ (root)`**
 - [ ] Push to `main` triggers CI → site deploys to GitHub Pages automatically
 - [ ] No manually-set secrets are required

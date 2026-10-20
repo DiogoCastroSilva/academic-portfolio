@@ -5,7 +5,7 @@
 This is an Nx workspace containing a Next.js 16 static-export portfolio site.
 
 - **App:** `apps/main/` — Next.js App Router, static export to GitHub Pages
-- **Libraries:** `libs/content/`, `libs/navigation/`, `libs/projects/`, `libs/publications/`, `libs/utils/`
+- **Libraries:** `libs/content/`, `libs/navigation/`, `libs/projects/`, `libs/publications/`, `libs/blog/`, `libs/utils/`
 - **Tests:** Vitest, run via `npx nx run-many --target=test --all`
 - **Lint:** ESLint 9 with shared `@diogozx-org/eslint-config` + Nx module boundaries
 - **Formatting:** Prettier 3 with shared `@diogozx-org/prettier-config`
@@ -76,9 +76,9 @@ See [docs/architecture/decisions/](docs/architecture/decisions/) for ADRs on:
 - **next.config.mjs** — static export, base path, transpile packages. Converted from CommonJS to ESM.
 - **eslint.config.mjs** — composes `@diogozx-org/eslint-config/next` with `@nx/enforce-module-boundaries`
 - **prettier.config.mjs** — extends `@diogozx-org/prettier-config`, adds Tailwind CSS plugin
-- **global.css** — semantic CSS tokens (`:root`), dark-mode overrides, `prefers-reduced-motion` global reset
+- **global.css** — partial semantic CSS tokens (`:root`), dark-mode overrides, `prefers-reduced-motion` global reset; see the design-principles doc for the intended contract and current gaps
 - **ContentDetail** — server component (no `'use client'`), uses `dangerouslySetInnerHTML`
-- **ContentCardSection** — client component with `motion/react` animations, respects `prefers-reduced-motion` via `useReducedMotion()`
+- **ContentCardSection** — server component with CSS entrance animation and a reduced-motion fallback; `motion/react` is used by About-page components
 - **.swcrc removed** — no decorators used, SWC CLI removed; Next.js uses its own SWC config
 - **NX.md removed** — stale generated documentation, replaced by docs/ directory
 
