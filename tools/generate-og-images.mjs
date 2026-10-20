@@ -188,7 +188,7 @@ async function main() {
 
     writeOgImage(listingImage, {
       title: listingTitle,
-      subtitle: `${siteName} — Field notes`,
+      subtitle: siteName,
     });
 
     for (const entry of entries) {
