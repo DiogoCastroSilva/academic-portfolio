@@ -92,6 +92,10 @@
   color utility to any element that depends on these defaults.
 */
 @layer base {
+  p {
+    line-height: 1.5;
+  }
+
   *,
   ::after,
   ::before,

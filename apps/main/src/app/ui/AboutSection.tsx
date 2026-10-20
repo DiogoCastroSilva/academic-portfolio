@@ -19,10 +19,10 @@ export const AboutSection = ({ profile }: AboutSectionProps) => {
             priority
           />
           <div className="flex flex-col items-center justify-center text-wrap">
-            <h1 className="text-3xl font-bold md:text-4xl lg:text-5xl">
+            <h1 className="max-w-full text-balance text-3xl leading-tight font-bold tracking-tight break-words md:text-4xl lg:text-5xl">
               {profile.name}
             </h1>
-            <p className="text-center text-lg text-gray-600">{profile.role}</p>
+            <p className="text-center text-lg leading-relaxed text-gray-600">{profile.role}</p>
           </div>
         </div>
         <div className="flex flex-12 flex-col gap-2 pt-2">
