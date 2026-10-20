@@ -56,6 +56,13 @@ describe("MobileMenuButton accessibility", () => {
     expect(button).toHaveAttribute("aria-expanded", "true");
   });
 
+  it("uses a 44-pixel square interaction target", () => {
+    const onToggleMenu = vi.fn();
+    render(<MobileMenuButton isMenuOpen={false} onToggleMenu={onToggleMenu} />);
+
+    expect(screen.getByRole("button").className).toContain("size-11");
+  });
+
   it("has accessible label for screen readers", () => {
     const onToggleMenu = vi.fn();
     render(<MobileMenuButton isMenuOpen={false} onToggleMenu={onToggleMenu} />);

@@ -129,6 +129,18 @@ describe("NavBar accessibility", () => {
     });
   });
 
+  it("provides comfortably sized brand and desktop navigation targets", () => {
+    render(<NavBar currentPath="/projects" name="Test Portfolio" />);
+
+    const homeLink = screen.getByText("Test Portfolio");
+    expect(homeLink.className).toContain("min-h-11");
+    expect(homeLink.className).toContain("items-center");
+
+    const projectsLink = screen.getAllByText("Projects")[0];
+    expect(projectsLink.className).toContain("min-h-11");
+    expect(projectsLink.className).toContain("px-3");
+  });
+
   it("brand link active indicator uses visible border color", () => {
     render(<NavBar currentPath="/" name="Test Portfolio" />);
     const homeLink = screen.getByText("Test Portfolio");
