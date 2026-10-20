@@ -25,4 +25,7 @@
 ### CSS architecture
 
 - **`apps/main/src/app/global.css`** defines a minimal set of semantic CSS custom properties (design tokens) for colours, borders, and text in `:root`, with `@media (prefers-color-scheme: dark)` overrides for dark mode. There is no standalone design-system package — tokens are intentionally lightweight.
-- **`@media (prefers-reduced-motion: reduce)`** is honoured via a global rule that neutralises animation and transition durations with `!important`, and via `useReducedMotion()` in `ContentCardSection` which swaps `motion.div`/`motion.article` for plain `div`/`article` elements when reduced motion is requested.
+- **`@media (prefers-reduced-motion: reduce)`** is honoured in two ways:
+  1. _Global CSS_ (`global.css`): a `@media (prefers-reduced-motion: reduce)` rule neutralises all animation and transition durations with `!important`, and `@media (prefers-reduced-motion: no-preference)` guards CSS keyframe animations and gallery transitions so they only run when motion is not restricted.
+  2. _Per-component_ (`AboutHero`, `EducationTimeline`, `ResearchInterests`, `SkillsGrid`): these use `useReducedMotion()` from `motion/react` to swap `motion.div`/`motion.span` elements for plain `div`/`span` when the user prefers reduced motion, avoiding any animation entirely.
+  3. _`ContentCardSection`_: does **not** use `motion/react`. Card entry animations use the CSS `animate-fadeInUp` utility with `motion-reduce:animate-none` as a Tailwind fallback.
