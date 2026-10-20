@@ -1,10 +1,10 @@
+import { getFullAssetUrl, getFullUrl } from "@academic-portfolio/content";
+import { Breadcrumb } from "@academic-portfolio/design-system";
 import {
   getAllPublications,
   getPublicationContentBySlug,
 } from "@academic-portfolio/publications";
-import { getFullAssetUrl, getFullUrl } from "@academic-portfolio/content";
 import { notFound } from "next/navigation";
-import { Breadcrumb } from "@academic-portfolio/design-system";
 import { ContentDetail } from "../../../features/content/ContentDetail";
 import { ogImageRef } from "../../lib/og-image";
 

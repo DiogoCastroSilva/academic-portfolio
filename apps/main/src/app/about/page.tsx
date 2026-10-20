@@ -39,7 +39,7 @@ export default function AboutPage() {
       <AboutHero profile={profile} />
       <ResearchInterests items={profile.researchInterests} />
       <EducationTimeline items={profile.education} />
-      <SkillsGrid categories={profile.skills} />
+      {profile.skills.length > 0 && <SkillsGrid categories={profile.skills} />}
     </div>
   );
 }
