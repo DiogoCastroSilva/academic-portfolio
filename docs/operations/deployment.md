@@ -35,8 +35,8 @@ The workflow is in `.github/workflows/ci.yml`:
 ### For the original repository
 
 1. Go to **Settings → Pages** in the GitHub repository.
-2. Under **Source**, select **Deploy from a workflow**.
-3. Choose the workflow `CI & Deploy` and branch `main`.
+2. Under **Source**, select **Deploy from a branch**.
+3. Choose the `gh-pages` branch and the `/ (root)` folder.
 4. Wait for the first deployment to complete.
 
 ### For a fork
@@ -46,8 +46,8 @@ When you fork this repository into your own GitHub account:
 1. **Repository name:** If you name it `{username}.github.io`, the site will be served at `https://{username}.github.io/` with no base path.
 2. **Base path:** The CI workflow automatically detects this case and sets `NEXT_PUBLIC_BASE_PATH=""`.
 3. **Deployment URL:** The CI workflow sets `NEXT_PUBLIC_DEPLOYMENT_URL` to the correct URL.
-4. **GitHub Pages settings:** Must be configured in the fork's Settings → Pages.
-5. **Permissions:** The `peaceiris/actions-gh-pages` action uses `GITHUB_TOKEN` which has write permissions to the `gh-pages` branch by default.
+4. **GitHub Pages settings:** After the first deployment, configure **Settings → Pages → Source: Deploy from a branch → gh-pages → / (root)**.
+5. **Permissions:** The `peaceiris/actions-gh-pages` action uses `GITHUB_TOKEN`, which needs `contents: write` permission (already set in the workflow) to push to the `gh-pages` branch. No manually-set secrets or paid features are required.
 
 ### Base path behavior
 
@@ -106,7 +106,7 @@ application code.
 ### Fork and deploy
 
 - [ ] Use "Use this template" to create a new repository (e.g., `username.github.io`)
-- [ ] Enable GitHub Pages: **Settings → Pages → Deploy from a workflow → `CI & Deploy` → `main`**
+- [ ] Enable GitHub Pages: **Settings → Pages → Source: Deploy from a branch → `gh-pages` → `/ (root)`**
 - [ ] Push to `main` triggers CI → site deploys to GitHub Pages automatically
 - [ ] No manually-set secrets are required
 

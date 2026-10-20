@@ -60,4 +60,17 @@ describe("site-config", () => {
     expect(["string", "undefined"]).toContain(type(siteConfig.linkedInUrl));
     expect(["string", "undefined"]).toContain(type(siteConfig.githubUrl));
   });
+
+  it("googleSiteVerification is undefined by default (no env var set)", () => {
+    const type = typeof siteConfig.googleSiteVerification;
+    expect(["string", "undefined"]).toContain(type);
+    // When no env var is set, it should be undefined
+    if (process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION) {
+      expect(siteConfig.googleSiteVerification).toBe(
+        process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION,
+      );
+    } else {
+      expect(siteConfig.googleSiteVerification).toBeUndefined();
+    }
+  });
 });

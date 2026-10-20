@@ -18,6 +18,11 @@ export const siteConfig = {
   repoLicenseUrl: "https://opensource.org/licenses/MIT",
   /** Canonical deployment URL. Set by CI from GITHUB_REPOSITORY. */
   deploymentUrl: process.env.NEXT_PUBLIC_DEPLOYMENT_URL || undefined,
+  /** Optional Google Search Console verification token.
+      Set via NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION env var.
+      When empty/undefined, no meta tag is emitted — not a template-readiness dependency. */
+  googleSiteVerification:
+    process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION || undefined,
   analytics: {
     cloudflare: {
       // Analytics must be explicitly configured via environment variable.

@@ -41,6 +41,17 @@ npx serve public -l 3500
 npx lighthouse http://localhost:3500 --chrome-flags="--headless"
 ```
 
+## Budget enforcement
+
+The budgets in `.lighthouserc.json` assert `error` level (not `warning`), which
+means Lighthouse CI **will report failures** when any category falls below its
+threshold. In the current CI workflow (`ci.yml`), the Lighthouse job is a
+**report-only** step — it runs after `ci` but does **not** block the `deploy`
+job (deploy depends only on `ci`). This means the budgets are enforced as
+advisory checks that produce visible failures in GitHub Actions, but do not
+gate releases. Audited routes (`/, /about/, /projects/first-project/`) are
+prerendered as static pages and exist in the `public/` build artifact.
+
 ## Key optimizations
 
 - **`motion/react` removed from home page** — CSS animations replace JS animations for the home page (AboutSection, ContentCardSection). The library remains only on the About page (AboutHero).

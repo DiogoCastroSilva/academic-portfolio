@@ -16,9 +16,12 @@ is creative work that the content author may wish to reserve for their own use.
 
 1. Fork or duplicate this repository.
 2. Replace `libs/content/src/md/profile.md` with your own biography and profile.
-3. Replace or delete the sample content under `libs/projects/src/md/`, `libs/publications/src/md/`, and `libs/blog/src/md/`.
+   All personal information (name, role, description, contact links, education,
+   research interests, skills) lives in this single file — `site-config.ts` loads
+   it at build time, so you do not need to edit any application code.
+3. Replace or delete the sample content under `libs/projects/src/md/`,
+   `libs/publications/src/md/`, and `libs/blog/src/md/`.
 4. Delete `draft: true` from any frontmatter to publish an entry.
-5. Update site metadata in `apps/main/src/configs/site-config.ts` as needed.
-6. Run `npx nx run main:dev` to preview locally, then push to deploy via GitHub Actions.
+5. Run `npx nx run main:dev` to preview locally, then push to deploy via GitHub Actions.
 
 See [docs/operations/deployment.md](docs/operations/deployment.md) for detailed fork/deployment instructions.

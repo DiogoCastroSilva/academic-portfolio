@@ -55,6 +55,11 @@ export const metadata = {
   alternates: siteConfig.deploymentUrl
     ? { canonical: getSiteUrl() }
     : undefined,
+  ...(siteConfig.googleSiteVerification
+    ? {
+        googleSiteVerification: siteConfig.googleSiteVerification,
+      }
+    : {}),
 };
 
 function getSiteUrl(path = ""): string | undefined {
