@@ -1,4 +1,3 @@
-"use client";
 import type { ContentMeta } from "@academic-portfolio/content";
 import { dates } from "@academic-portfolio/utils";
 import Link from "next/link";
@@ -57,7 +56,7 @@ export function ContentCardSection({
   const HeadingTag: "h1" | "h2" = headingLevel;
   return (
     <section
-      className="mx-4 rounded-2xl bg-white p-12 text-slate-900 shadow-sm dark:bg-sky-50"
+      className="mx-4 rounded-2xl bg-white p-6 text-slate-900 shadow-sm sm:p-10 lg:p-12 dark:bg-sky-50"
       aria-labelledby={headingId ?? heading}
     >
       <HeadingTag
@@ -112,11 +111,11 @@ export function ContentCardSection({
                       />
                     </div>
                     <div className="p-4">
-                      <div className="flex gap-2">
+                      <div className="flex min-w-0 flex-wrap items-center gap-2">
                         <time dateTime={item.date}>
                           {dates.formatISODate(item.date)}
                         </time>
-                        <ul className="flex flex-wrap gap-2">
+                        <ul className="flex flex-wrap items-center gap-2">
                           {item.tags?.slice(0, tagsLimit).map((tag) => (
                             <li
                               key={tag}
@@ -125,9 +124,17 @@ export function ContentCardSection({
                               {tag}
                             </li>
                           ))}
+                          {item.tags && item.tags.length > tagsLimit && (
+                            <li
+                              aria-label={`${item.tags.length - tagsLimit} more tags`}
+                              className="text-xs font-medium text-zinc-500 dark:text-zinc-500"
+                            >
+                              +{item.tags.length - tagsLimit} more
+                            </li>
+                          )}
                         </ul>
                       </div>
-                      <div className="flex flex-1 flex-col">
+                      <div className="flex min-w-0 flex-1 flex-col">
                         <h3 className="mb-2 line-clamp-2 text-xl leading-tight font-semibold tracking-tight transition-all duration-300 group-hover:-translate-y-1 group-hover:underline">
                           {item.title}
                         </h3>

@@ -4,6 +4,7 @@ import {
 } from "@academic-portfolio/projects";
 import { getFullAssetUrl, getFullUrl } from "@academic-portfolio/content";
 import { notFound } from "next/navigation";
+import { Breadcrumb } from "../../ui/Breadcrumb";
 import { ContentDetail } from "../../ui/ContentDetail";
 import { ogImageRef } from "../../lib/og-image";
 
@@ -77,6 +78,12 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
 
   return (
     <div className="mx-4 flex grow flex-col rounded-2xl dark:bg-sky-50">
+      <Breadcrumb
+        items={[
+          { label: "Projects", href: "/projects/" },
+          { label: project.title },
+        ]}
+      />
       <ContentDetail content={project} />
     </div>
   );

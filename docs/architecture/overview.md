@@ -153,3 +153,7 @@ Each page sets `<title>` and `<meta name="description">`:
 - `next/image` uses `unoptimized: true`.
 - `trailingSlash: true` — all routes end with `/`.
 - `distDir: "../../public"` — build output at workspace root `public/`.
+
+## Frontend Design Principles
+
+See [`frontend-design-principles.md`](frontend-design-principles.md) for the cross-cutting design language: information architecture, typography/spacing, card/tag rules, responsive behavior, theme/semantic colors, navigation/breadcrumbs, keyboard/focus, motion/reduced-motion, and constraints against unnecessary abstraction.

@@ -384,3 +384,93 @@ describe("ContentCardSection reduced-motion compliance", () => {
     expect(article).toHaveClass("animate-fadeInUp");
   });
 });
+describe("ContentCardSection tag overflow", () => {
+  it("shows a +N more indicator when tags exceed tagsLimit", () => {
+    const items: ContentMeta[] = [
+      {
+        slug: "project-1",
+        title: "Project One",
+        date: "2024-01-15",
+        tags: ["TypeScript", "React", "Next.js", "Tailwind"],
+        excerpt: "A description.",
+        imageSrc: "/projects/project-1.webp",
+      },
+    ];
+
+    render(
+      <ContentCardSection
+        heading="Projects"
+        headingId="projects-heading"
+        items={items}
+        hrefPrefix="/projects"
+        tagsLimit={2}
+      />,
+    );
+
+    // Should show first 2 tags
+    expect(screen.getByText("TypeScript")).toBeInTheDocument();
+    expect(screen.getByText("React")).toBeInTheDocument();
+
+    // Should show the "+2 more" indicator
+    const moreIndicator = screen.getByText("+2 more");
+    expect(moreIndicator).toBeInTheDocument();
+    expect(moreIndicator).toHaveAttribute("aria-label", "2 more tags");
+  });
+
+  it("does not show a +N indicator when tags fit within tagsLimit", () => {
+    const items: ContentMeta[] = [
+      {
+        slug: "project-1",
+        title: "Project One",
+        date: "2024-01-15",
+        tags: ["TypeScript", "React"],
+        excerpt: "A description.",
+        imageSrc: "/projects/project-1.webp",
+      },
+    ];
+
+    render(
+      <ContentCardSection
+        heading="Projects"
+        headingId="projects-heading"
+        items={items}
+        hrefPrefix="/projects"
+        tagsLimit={2}
+      />,
+    );
+
+    expect(screen.queryByText("+2 more")).not.toBeInTheDocument();
+  });
+});
+
+describe("ContentCardSection responsive spacing", () => {
+  it("uses responsive padding (p-6 on mobile, larger on desktop)", () => {
+    const { container } = render(
+      <ContentCardSection
+        heading="Projects"
+        headingId="projects-heading"
+        items={mockItems}
+        hrefPrefix="/projects"
+      />,
+    );
+    const section = container.querySelector("section");
+    expect(section).toHaveClass("p-6");
+    expect(section).toHaveClass("sm:p-10");
+    expect(section).toHaveClass("lg:p-12");
+  });
+});
+
+describe("ContentCardSection flex min-width prevents overflow", () => {
+  it("time/tags flex row has min-w-0 to allow wrapping", () => {
+    const { container } = render(
+      <ContentCardSection
+        heading="Projects"
+        headingId="projects-heading"
+        items={mockItems}
+        hrefPrefix="/projects"
+      />,
+    );
+    const flexRow = container.querySelector(".flex.min-w-0");
+    expect(flexRow).toBeInTheDocument();
+  });
+});

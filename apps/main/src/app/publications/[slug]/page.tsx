@@ -4,6 +4,7 @@ import {
 } from "@academic-portfolio/publications";
 import { getFullAssetUrl, getFullUrl } from "@academic-portfolio/content";
 import { notFound } from "next/navigation";
+import { Breadcrumb } from "../../ui/Breadcrumb";
 import { ContentDetail } from "../../ui/ContentDetail";
 import { ogImageRef } from "../../lib/og-image";
 
@@ -81,6 +82,12 @@ export default async function PublicationPage({
 
   return (
     <div className="mx-4 flex grow flex-col rounded-2xl dark:bg-sky-50">
+      <Breadcrumb
+        items={[
+          { label: "Publications", href: "/publications/" },
+          { label: publication.title },
+        ]}
+      />
       <ContentDetail content={publication} />
     </div>
   );

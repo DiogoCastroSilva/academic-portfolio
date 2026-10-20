@@ -5,6 +5,7 @@ import {
 import { getFullAssetUrl, getFullUrl } from "@academic-portfolio/content";
 import { notFound } from "next/navigation";
 
+import { Breadcrumb } from "../../ui/Breadcrumb";
 import { ContentDetail } from "../../ui/ContentDetail";
 import { ogImageRef } from "../../lib/og-image";
 
@@ -76,6 +77,9 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
 
   return (
     <div className="flex grow flex-col gap-4">
+      <Breadcrumb
+        items={[{ label: "Blog", href: "/blog/" }, { label: post.title }]}
+      />
       <ContentDetail content={post} />
     </div>
   );
