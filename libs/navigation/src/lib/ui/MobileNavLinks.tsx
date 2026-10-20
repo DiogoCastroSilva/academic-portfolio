@@ -35,7 +35,7 @@ export function MobileNavLinks({
           aria-current={
             isPathActive(currentPath, item.href) ? "page" : undefined
           }
-          className="aria-current/page:border-l-2 aria-current/page:border-sky-600 dark:aria-current/page:border-sky-400 bllck boock border-trans border-l-2 px-3 py-2 text-base font-medium transition-all duration-200 hover:bg-white/5 hover:text-sky-600 focus-visible:bg-white/5 focus-visible:text-sky-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-600 dark:text-white"
+          className="flex min-h-11 items-center aria-current/page:border-l-2 aria-current/page:border-sky-600 dark:aria-current/page:border-sky-400 border-l-2 px-3 py-3 text-base leading-relaxed font-medium transition-colors duration-200 hover:bg-white/5 hover:text-sky-600 focus-visible:bg-white/5 focus-visible:text-sky-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-600 dark:text-white"
           onClick={onNavigate}
         >
           {item.name}
