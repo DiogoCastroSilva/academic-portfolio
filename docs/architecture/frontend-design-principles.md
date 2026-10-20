@@ -92,9 +92,9 @@ The current components still set surfaces directly (for example, `bg-white dark:
 
 - CSS animations only under `@media (prefers-reduced-motion: no-preference)` — global disable in `global.css`.
 - `motion-reduce:animate-none` on individual animated elements.
-- `motion/react` used on the About page (`AboutHero`) and on the homepage sections (`EducationTimeline`, `ResearchInterests`, `SkillsGrid`) where `useReducedMotion()` swaps `motion.div`/`motion.span` for plain `div`/`span`.
-- Card entrance: staggered `fadeInUp` (0.5s) with `animationDelay` per index. Card title: no positional transform on hover (previously had `-translate-y-1`); only underline on hover for affordance. Card image uses a subtle `scale-105` via CSS (`group-hover:scale-105`) which is disabled by the global `prefers-reduced-motion` rule.
-- No animation on hover/focus; no auto-playing carousels.
+- `motion/react` is used on the About page (`AboutHero`, `EducationTimeline`, `ResearchInterests`, `SkillsGrid`) with `useReducedMotion()` to avoid motion when the user requests reduced motion. The homepage's `AboutSection` and `ContentCardSection` use CSS animations instead.
+- Card entrance: staggered `fadeInUp` with `animationDelay` per index. Card titles underline on hover without a positional transform; card images use a subtle `scale-105` hover effect that is disabled for reduced-motion users. The About-page skill chips also use a small hover animation.
+- Keep motion decorative and restrained, ensure reduced-motion preferences are honored, and do not animate controls merely to signal keyboard focus. There are no auto-playing carousels.
 
 ## 10. Static Delivery / Performance
 
