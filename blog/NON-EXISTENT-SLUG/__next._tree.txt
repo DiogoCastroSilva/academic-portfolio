@@ -1,6 +1,6 @@
-:HL["/academic-portfolio/_next/static/css/02603a15703c83ad.css","style"]
+:HL["/academic-portfolio/_next/static/css/b1dc3371bbca2e1f.css","style"]
 :HL["/images/profile.svg","image",{"type":"image/svg+xml"}]
 3:[["children",{"s":"__PAGE__","h":160}]]
 2:[["children",{"s":{"n":"slug","t":"d","k":"NON-EXISTENT-SLUG","s":["page"]},"h":65632,"c":"$Q3"}]]
 1:[["children",{"s":"blog","h":131168,"c":"$Q2"}]]
-0:{"b":"0xWNVx5_4FP3fGvDak3s2","t":{"t":{"s":"","h":131152,"c":"$Q1"}}}
+0:{"b":"ld3TzHYWxUhp56T2Ef633","t":{"t":{"s":"","h":131152,"c":"$Q1"}}}

@@ -1,6 +1,6 @@
-:HL["/academic-portfolio/_next/static/css/02603a15703c83ad.css","style"]
+:HL["/academic-portfolio/_next/static/css/b1dc3371bbca2e1f.css","style"]
 :HL["/images/profile.svg","image",{"type":"image/svg+xml"}]
 :HL["/academic-portfolio/images/profile.svg","image",{"imageSizes":"(max-width: 640px) 140px, (max-width: 768px) 180px, 200px","fetchPriority":"high"}]
 :HL["/academic-portfolio/projects/first-project/first-project.svg","image",{"imageSizes":"(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw","fetchPriority":"high"}]
 1:[["children",{"s":"__PAGE__","h":160}]]
-0:{"b":"0xWNVx5_4FP3fGvDak3s2","t":{"t":{"s":"","h":80,"c":"$Q1"}}}
+0:{"b":"ld3TzHYWxUhp56T2Ef633","t":{"t":{"s":"","h":80,"c":"$Q1"}}}
