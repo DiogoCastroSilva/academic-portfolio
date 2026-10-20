@@ -23,6 +23,7 @@ const mockProfile: ProfileData = {
   image: "profile.svg",
   imageSrc: "/images/profile.svg",
   biography: "<p>Biography content.</p>",
+  cvUrl: "https://example.com/cv.pdf",
   education: [],
   researchInterests: [],
   skills: [],
@@ -53,6 +54,27 @@ describe("AboutHero accessibility", () => {
 
     const contactLink = screen.getByRole("link", { name: "Get in Touch" });
     expect(contactLink).toHaveAttribute("href", `mailto:${mockProfile.email}`);
+  });
+
+  it("has a CV link with accessible name and new-tab behavior", () => {
+    render(<AboutHero profile={mockProfile} />);
+
+    const cvLink = screen.getByRole("link", { name: "View CV (PDF)" });
+    expect(cvLink).toHaveAttribute("href", "https://example.com/cv.pdf");
+    expect(cvLink).toHaveAttribute("target", "_blank");
+    expect(cvLink).toHaveAttribute("rel", "noopener noreferrer");
+  });
+
+  it("does not render a CV link when cvUrl is undefined", () => {
+    const noCvProfile: ProfileData = {
+      ...mockProfile,
+      cvUrl: undefined,
+    };
+    render(<AboutHero profile={noCvProfile} />);
+
+    expect(
+      screen.queryByRole("link", { name: "View CV (PDF)" }),
+    ).not.toBeInTheDocument();
   });
 
   it("has descriptive alt text for profile image", () => {

@@ -16,6 +16,7 @@ linkedInUrl: "https://www.linkedin.com/in/alex-morgan"
 githubUrl: "https://github.com/alex-morgan"
 location: "Ithaca, NY"
 image: "profile.svg"
+cvUrl: "cv.pdf"
 education:
   - degree: "PhD in Earth & Atmospheric Sciences"
     institution: "Cornell University"

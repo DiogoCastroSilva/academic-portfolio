@@ -28,7 +28,7 @@ apps/main/src/app/
 | Route                   | Type   | Notes                                     |
 | ----------------------- | ------ | ----------------------------------------- |
 | `/`                     | Static | Homepage                                  |
-| `/about/`               | Static | Biography, education, skills              |
+| `/about/`               | Static | Biography, education, skills, CV link     |
 | `/projects/`            | Static | Lists all projects via `getAllProjects()` |
 | `/projects/[slug]/`     | SSG    | One static page per project               |
 | `/publications/`        | Static | Lists all publications (currently empty)  |

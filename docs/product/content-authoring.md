@@ -14,6 +14,7 @@ Every personal or site-level change maps to a specific file or directory. Edit M
 | Change your location (shown in structured data)            | `libs/content/src/md/profile.md`            | `location` (optional)                                                                           |
 | Change your profile photo                                  | `libs/content/src/md/profile.md`            | `image` (optional; default `profile.svg`)                                                       |
 | Add/remove your email, LinkedIn, or GitHub                 | `libs/content/src/md/profile.md`            | `email`, `linkedInUrl`, `githubUrl` (all optional)                                              |
+| Add or change your CV link                                 | `libs/content/src/md/profile.md`            | `cvUrl` (optional; see [CV Link](#cv-link))                                                     |
 | Update your biography text                                 | `libs/content/src/md/profile.md`            | Markdown body after frontmatter                                                                 |
 | Add/edit education entries                                 | `libs/content/src/md/profile.md`            | `education` array (see [Education Entries](#education-entries))                                 |
 | Add/edit research interests                                | `libs/content/src/md/profile.md`            | `researchInterests` array                                                                       |
@@ -83,6 +84,7 @@ The About page (`/about`) and home page are driven by a profile content file con
 | `githubUrl`         | string | no       | Full GitHub profile URL                                                            |
 | `location`          | string | no       | City, Country                                                                      |
 | `image`             | string | no       | Filename of your profile photo (default: `profile.svg`)                            |
+| `cvUrl`             | string | no       | CV link — see [CV Link](#cv-link)                                                  |
 | `education`         | array  | no       | List of education entries (see below)                                              |
 | `researchInterests` | array  | no       | List of research interest entries (see below)                                      |
 | `skills`            | array  | no       | List of skill categories (see below)                                               |
@@ -125,6 +127,63 @@ I'm a PhD researcher passionate about leveraging Earth observation technology...
 ### Profile Photo
 
 Place your profile photo (JPEG or PNG) in the same `src/md/` directory. It will be automatically synced to the public folder and served as a WebP-optimised image during the build.
+
+### CV Link
+
+You can optionally add a "View CV (PDF)" button that appears on the About page next to your contact information. This is controlled by the `cvUrl` field in `profile.md` frontmatter.
+
+Two modes are supported. **You only need to edit `profile.md`** — no TypeScript or build configuration changes required.
+
+#### Mode A — Repository-hosted PDF (recommended)
+
+Host the PDF directly in the repository. It is deployed alongside your site and accessible under your GitHub Pages base path.
+
+1. **Upload your PDF** to `apps/main/public/cv.pdf`. In GitHub:
+   - Go to `apps/main/public/`
+   - Click **Add file → Upload files**
+   - Drag and drop your `cv.pdf`
+   - Commit directly to `main`
+
+2. **Set `cvUrl`** in `profile.md` frontmatter to just the filename:
+
+   ```yaml
+   cvUrl: "cv.pdf"
+   ```
+
+   The GitHub Pages base path (e.g. `/academic-portfolio`) is added automatically. No need to include it.
+
+To replace the PDF later, simply repeat the upload step — the same path (`apps/main/public/cv.pdf`) is overwritten. Then re-deploy the site.
+
+#### Mode B — External PDF URL
+
+Link to a PDF hosted by Google Drive, your university, or another provider.
+
+1. **Set `cvUrl`** in `profile.md` frontmatter to the full HTTPS URL:
+
+   ```yaml
+   cvUrl: "https://your-institution.edu/~username/cv.pdf"
+   ```
+
+   The URL is used exactly as written — no rewriting is applied.
+
+   For Google Drive: open the file, click **Share → Get link**, set permissions to **"Anyone with the link can view"** (not "restricted" or "institutional login required"), copy the link, and use the direct PDF view URL. The file must be accessible to visitors without signing in.
+
+#### Removing the CV link
+
+To hide the CV button, either remove the `cvUrl` line from `profile.md` or set it to an empty string:
+
+```yaml
+cvUrl: ""
+```
+
+#### Validation rules
+
+- `cvUrl` must be a string (or omitted/empty).
+- External URLs must use `https://` (not `http://`, `ftp://`, `file://`, etc.).
+- Protocol-relative URLs (`//example.com/...`) are rejected.
+- Local paths must be relative (e.g. `cv.pdf` or `files/cv.pdf`) — no leading `/`.
+- Local paths must not contain `..` (path traversal protection).
+- Invalid values cause the build to fail with an actionable error message.
 
 ### Getting Started (Templates)
 

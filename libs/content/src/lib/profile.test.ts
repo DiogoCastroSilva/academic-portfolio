@@ -1,4 +1,4 @@
-import { describe, expect, it } from "vitest";
+import { describe, expect, it, vi } from "vitest";
 
 import { parseProfile, validateProfileNestedData } from "./profile.js";
 
@@ -11,6 +11,7 @@ linkedInUrl: "https://linkedin.com/in/jane"
 githubUrl: "https://github.com/jane"
 location: "Ithaca, NY"
 image: "profile.svg"
+cvUrl: "https://example.com/cv.pdf"
 education:
   - degree: "PhD"
     institution: "Cornell"
@@ -348,5 +349,111 @@ Bio`;
     expect(errorMsg).toContain("degree");
     expect(errorMsg).toContain("title");
     expect(errorMsg).toContain("category");
+  });
+
+  // -------------------------------------------------------------------------
+  // cvUrl tests
+  // -------------------------------------------------------------------------
+
+  it("parses external HTTPS cvUrl as-is", () => {
+    const result = parseProfile(VALID_PROFILE);
+    expect(result.cvUrl).toBe("https://example.com/cv.pdf");
+  });
+
+  it("parses local cvUrl with base path prefix", () => {
+    vi.stubEnv("NEXT_PUBLIC_BASE_PATH", "/academic-portfolio");
+    const content = VALID_PROFILE.replace(
+      'cvUrl: "https://example.com/cv.pdf"',
+      'cvUrl: "cv.pdf"',
+    );
+    const result = parseProfile(content);
+    expect(result.cvUrl).toBe("/academic-portfolio/cv.pdf");
+    vi.unstubAllEnvs();
+  });
+
+  it("parses local cvUrl with subdirectory path", () => {
+    vi.stubEnv("NEXT_PUBLIC_BASE_PATH", "/repo");
+    const content = VALID_PROFILE.replace(
+      'cvUrl: "https://example.com/cv.pdf"',
+      'cvUrl: "files/cv.pdf"',
+    );
+    const result = parseProfile(content);
+    expect(result.cvUrl).toBe("/repo/files/cv.pdf");
+    vi.unstubAllEnvs();
+  });
+
+  it("cvUrl is undefined when not provided", () => {
+    const content = VALID_PROFILE.replace(/cvUrl:.*\n/, "");
+    const result = parseProfile(content);
+    expect(result.cvUrl).toBeUndefined();
+  });
+
+  it("cvUrl is undefined when empty string", () => {
+    const content = VALID_PROFILE.replace(
+      'cvUrl: "https://example.com/cv.pdf"',
+      'cvUrl: ""',
+    );
+    const result = parseProfile(content);
+    expect(result.cvUrl).toBeUndefined();
+  });
+
+  it("throws when cvUrl is not a string", () => {
+    const content = VALID_PROFILE.replace(
+      'cvUrl: "https://example.com/cv.pdf"',
+      "cvUrl: 123",
+    );
+    expect(() => parseProfile(content)).toThrow(
+      /`'cvUrl' must be a string.*got `number'`/,
+    );
+  });
+
+  it("throws when cvUrl uses http:// scheme", () => {
+    const content = VALID_PROFILE.replace(
+      'cvUrl: "https://example.com/cv.pdf"',
+      'cvUrl: "http://example.com/cv.pdf"',
+    );
+    expect(() => parseProfile(content)).toThrow(
+      /`'cvUrl' external URLs must use HTTPS/,
+    );
+  });
+
+  it("throws when cvUrl uses ftp:// scheme", () => {
+    const content = VALID_PROFILE.replace(
+      'cvUrl: "https://example.com/cv.pdf"',
+      'cvUrl: "ftp://example.com/cv.pdf"',
+    );
+    expect(() => parseProfile(content)).toThrow(
+      /`'cvUrl' external URLs must use HTTPS/,
+    );
+  });
+
+  it("throws when cvUrl is a protocol-relative URL", () => {
+    const content = VALID_PROFILE.replace(
+      'cvUrl: "https://example.com/cv.pdf"',
+      'cvUrl: "//example.com/cv.pdf"',
+    );
+    expect(() => parseProfile(content)).toThrow(
+      /`'cvUrl' must not use protocol-relative URLs/,
+    );
+  });
+
+  it("throws when cvUrl is an absolute local path", () => {
+    const content = VALID_PROFILE.replace(
+      'cvUrl: "https://example.com/cv.pdf"',
+      'cvUrl: "/cv.pdf"',
+    );
+    expect(() => parseProfile(content)).toThrow(
+      /`'cvUrl' local paths must be relative/,
+    );
+  });
+
+  it("throws when cvUrl local path contains .. (path traversal)", () => {
+    const content = VALID_PROFILE.replace(
+      'cvUrl: "https://example.com/cv.pdf"',
+      'cvUrl: "../cv.pdf"',
+    );
+    expect(() => parseProfile(content)).toThrow(
+      /`'cvUrl' local paths must not contain '\.\.'/,
+    );
   });
 });

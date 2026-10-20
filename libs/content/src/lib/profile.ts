@@ -47,6 +47,17 @@ export interface ProfileMeta {
   githubUrl?: string;
   /** Geographic location, e.g. "Ithaca, NY". */
   location?: string;
+  /**
+   * URL for the visitor's CV/resume PDF.
+   *
+   * Two modes are supported:
+   * - **External** — a full `https://` URL to a publicly accessible PDF.
+   * - **Local** — a relative path (e.g. `cv.pdf`) resolved under the
+   *   configured GitHub Pages base path via `withPublicBasePath`.
+   *
+   * When omitted (or empty), no CV link is rendered.
+   */
+  cvUrl?: string;
   /** Filename of the profile image in the content `md` folder. */
   image: string;
   /** Resolved URL (with base path) for the profile image. */
@@ -126,10 +137,82 @@ function validateProfileFrontmatter(data: Record<string, unknown>): void {
     }
   }
 
+  // Validate optional cvUrl field (HTTPS URL or relative local path)
+  validateCvUrl(data.cvUrl, errors);
+
   if (errors.length > 0) {
     throw new Error(
       `Invalid profile.md frontmatter:\n  ${errors.join("\n  ")}`,
     );
+  }
+}
+
+/**
+ * Validate the optional `cvUrl` frontmatter field.
+ *
+ * Accepts either:
+ * - A full `https://` URL to a publicly accessible PDF (Mode B — external).
+ * - A relative local path (e.g. `cv.pdf` or `files/cv.pdf`) that will be
+ *   resolved under the GitHub Pages base path at runtime (Mode A — local).
+ *
+ * Rejects:
+ * - Non-string values
+ * - `http://`, `ftp://`, `file://`, or any non-HTTPS scheme
+ * - Protocol-relative URLs (`//example.com/...`)
+ * - Absolute local paths (leading `/`)
+ * - Paths containing `..` (path traversal)
+ *
+ * An empty string is treated as "not configured" and is accepted silently.
+ */
+function validateCvUrl(value: unknown, errors: string[]): void {
+  if (value === undefined) return;
+  if (typeof value !== "string") {
+    errors.push(
+      `\`'cvUrl' must be a string (HTTPS URL or relative path) or undefined, got \`${typeof value}'\``,
+    );
+    return;
+  }
+
+  const trimmed = value.trim();
+  if (trimmed === "") return; // empty = not configured
+
+  // External URL: must use https:// scheme
+  const schemeMatch = trimmed.match(/^([a-zA-Z][a-zA-Z0-9+.-]*):/);
+  if (schemeMatch) {
+    if (schemeMatch[1] === "https") {
+      // Valid external HTTPS URL — accept as-is
+      return;
+    }
+    errors.push(
+      `\`'cvUrl' external URLs must use HTTPS, got \`${trimmed}'\`.` +
+        " Use an https:// URL to a publicly accessible PDF.",
+    );
+    return;
+  }
+
+  // Protocol-relative URL (e.g. //example.com/cv.pdf)
+  if (trimmed.startsWith("//")) {
+    errors.push(
+      `\`'cvUrl' must not use protocol-relative URLs, got \`${trimmed}'\`.` +
+        " Use a full https:// URL or a relative path.",
+    );
+    return;
+  }
+
+  // Local path: must be relative (no leading /), no parent traversal
+  if (trimmed.startsWith("/")) {
+    errors.push(
+      `\`'cvUrl' local paths must be relative (no leading slash), got \`${trimmed}'\`.` +
+        " Use a path like 'cv.pdf' — the base path is added automatically.",
+    );
+    return;
+  }
+
+  if (trimmed.includes("..")) {
+    errors.push(
+      `\`'cvUrl' local paths must not contain '..' (path traversal), got \`${trimmed}'\``,
+    );
+    return;
   }
 }
 
@@ -276,6 +359,26 @@ export function validateProfileNestedData(data: Record<string, unknown>): void {
 }
 
 /**
+ * Parse the optional `cvUrl` frontmatter field into a resolved URL.
+ *
+ * - HTTPS URLs are returned as-is (external PDF hosting).
+ * - Relative paths (e.g. `cv.pdf`) are prefixed with `/` and resolved under
+ *   the configured GitHub Pages base path via `withPublicBasePath`.
+ * - Empty or undefined → `undefined` (no CV link rendered).
+ */
+function parseCvUrl(raw: unknown): string | undefined {
+  if (typeof raw !== "string") return undefined;
+  const trimmed = raw.trim();
+  if (trimmed === "") return undefined;
+
+  // External HTTPS URL — use as-is, no rewriting
+  if (/^https:\/\//i.test(trimmed)) return trimmed;
+
+  // Local path — prefix with / so withPublicBasePath adds the base path
+  return withPublicBasePath(`/${trimmed}`);
+}
+
+/**
  * Parse a raw profile.md string into structured profile data.
  *
  * This is a pure function: it takes the file content (frontmatter + body)
@@ -315,6 +418,7 @@ export function parseProfile(content: string): ProfileData {
         ? data.githubUrl.trim()
         : undefined,
     location: typeof data.location === "string" ? data.location : undefined,
+    cvUrl: parseCvUrl(data.cvUrl),
     image,
     imageSrc,
     education: parseEducation(data.education),

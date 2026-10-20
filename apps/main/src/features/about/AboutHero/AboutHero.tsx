@@ -69,6 +69,17 @@ export const AboutHero = ({ profile }: AboutHeroProps) => {
                     Get in Touch
                   </a>
                 ) : null}
+                {profile.cvUrl ? (
+                  <a
+                    href={profile.cvUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label="View CV (PDF)"
+                    className="rounded-full border-2 border-sky-600 px-6 py-2 font-medium text-sky-600 transition-all hover:bg-sky-600 hover:text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-600 dark:text-sky-600"
+                  >
+                    View CV (PDF)
+                  </a>
+                ) : null}
               </div>
             </MotionDiv>
           </div>

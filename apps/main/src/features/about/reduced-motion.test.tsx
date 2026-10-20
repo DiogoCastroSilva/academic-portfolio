@@ -42,6 +42,7 @@ const mockProfile: ProfileData = {
   image: "profile.svg",
   imageSrc: "/images/profile.svg",
   biography: "<p>Bio content.</p>",
+  cvUrl: "https://example.com/cv.pdf",
   education: [],
   researchInterests: [],
   skills: [],
