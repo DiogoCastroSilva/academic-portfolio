@@ -159,6 +159,7 @@ This roadmap is ordered by user impact and correctness, not by adding more featu
 - ✅ Supply clearly labelled, realistic-but-generic sample entries and copyable templates. Mark unfinished examples as drafts where appropriate; do not publish invented credentials, publications, or personal claims as if they were real.
   - `profile.md` has "TEMPLATE PLACEHOLDER" comment block, `example.com` email domain, optional fields documented
   - `second-project/README.md` is `draft: true` with TODO comments; `publication-placeholder.svg` is a placeholder asset
+- **Re-audit required:** inspect `libs/projects/src/md/first-project/README.md` and every published example for invented affiliations, scientific/research claims, organization references, and external citations. Either replace with obviously illustrative sample content or mark the entry as a draft; never let plausible fictional academic work appear to be the fork owner's real work.
 - ✅ Explain how to add, edit, reorder (where supported), and remove entries and assets.
 - ✅ Make empty states useful and intentional when the owner deletes all examples.
 - ✅ Keep Decap CMS documented as a future option only; no CMS or login implementation in this phase.
@@ -239,23 +240,28 @@ The shared `ContentCardSection` defaults to showing six items on the homepage vi
 - ✅ Ensure draft entries never appear in generated SEO output
   - Verified at build time and in sitemap.xml via exclusion logic in `tools/generate-sitemap.mjs`
 - ✅ Ignore and remove generated TypeScript build-info/cache artifacts from version control
-- ✅ Refresh dependency/security documentation using a new audit; clearly separate current findings from old audit counts
+- Re-run the dependency/security audit before release and date-stamp the result. The current documented count (36 vulnerabilities: 0 critical, 16 high, 20 moderate) is a snapshot, not a timeless status; distinguish unresolved advisories from stale historical counts.
+- Make generated Open Graph imagery reusable across disciplines: remove or configure hardcoded domain-specific subtitle/copy (currently references science/nature-based solutions) and collection labels such as “Field notes”; verify the generated result for a generic academic profile.
+- Resolve the known deployment documentation mismatch: the workflow currently publishes with `peaceiris/actions-gh-pages@v3` to the `gh-pages` branch, while `docs/operations/deployment.md` describes GitHub Pages “Deploy from a workflow.” Either update the documentation to match the existing branch-publishing workflow or deliberately migrate the workflow and docs together to artifact deployment; do not leave the two models mixed.
+- Reconcile `TEMPLATE_USAGE.md` with the actual profile source of truth (`profile.md`); remove stale instructions to edit `apps/main/src/configs/site-config.ts` for normal personalization.
+- Decide whether to add an optional `googleSiteVerification` field to the owner-editable profile/site configuration. If included, emit the verification metadata only when non-empty and document setup as an optional post-fork Search Console step; do not hardcode a token or make it a template-readiness dependency.
 - ✅ ~~Resolve the repository-code license versus portfolio-content license/template-reuse documentation mismatch. State separately what license applies to code, sample content, and owner-supplied content.~~ — ADR-0007 created — MIT for code, CC BY-NC-ND 4.0 for sample content, no license imposed on owner-supplied content
 - ✅ Remove stale roadmap items and update status tables (ADRs, README, goals updated)
 
-**Exit criteria:** Metadata and generated assets are correct for representative routes and deployment modes; documentation reflects the current code and licensing intent.
+**Exit criteria:** Metadata and generated assets are correct for representative routes and deployment modes; OG assets are discipline-neutral/configurable; deployment and personalization documentation match the actual workflow/source of truth; dependency findings are freshly audited and dated; optional verification metadata never leaks a placeholder token.
 
 ### Phase 6 — Documentation and clean-fork acceptance test
 
 **Priority: P1 — release gate**
 
-- Align the root README, `TEMPLATE_USAGE.md`, content-authoring guide, deployment guide, and product requirements around the actual intended workflow: fork this repository and personalize it.
+- Align the root README, `TEMPLATE_USAGE.md`, content-authoring guide, deployment guide, product requirements, architecture overview, and new frontend design-principles document around the actual intended workflow: fork this repository and personalize it. Remove conflicting/stale paths and claims.
 - Document prerequisites, fork/setup steps, repository variables/settings, GitHub Pages setup, first edit, local validation, deployment verification, and troubleshooting.
 - Keep the quick-start concise; put architecture rationale in separate docs/ADRs.
 - Run the guide from a clean clone or test fork, not only from the existing developer workspace.
 - Use a checklist to test changing profile data, adding a published project, adding a draft, adding/removing an image, adding a publication, deleting all sample entries from a collection, and verifying the deployed output.
 - Confirm the fork never needs to edit application components for normal personalization.
-- Confirm GitHub Actions builds and deploys with the documented steps and no paid services.
+- Confirm GitHub Actions builds and deploys with the documented steps and no paid services. Verify the workflow's actual publishing mode, the GitHub Pages repository setting, the deployed base path, and the deployment URL against the documentation.
+- Inspect the Lighthouse/performance workflow: confirm its audited routes exist in the built artifact, reports are retained/readable, and determine whether budgets are intentionally report-only or release-blocking. Document that choice and do not claim a Lighthouse run passed unless its artifact/result was inspected.
 
 **Exit criteria:** A scientist comfortable with GitHub and Markdown, but not frontend engineering, can follow the guide without guessing, editing application code, or requiring help for routine content changes.
 
