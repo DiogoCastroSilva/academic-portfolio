@@ -150,7 +150,7 @@ Each page sets `<title>` and `<meta name="description">`:
 
 - No server-side rendering at request time.
 - `output: "export"` — all pages prerendered at build time.
-- `next/image` uses `unoptimized: true`.
+- `images.unoptimized: true` is configured in `next.config.mjs` for static-export compatibility, but the current `ContentImage` component renders native `<img>`/`<picture>` elements rather than `next/image`. Revisit the unused image configuration during dependency/configuration cleanup.
 - `trailingSlash: true` — all routes end with `/`.
 - `distDir: "../../public"` — build output at workspace root `public/`.
 
