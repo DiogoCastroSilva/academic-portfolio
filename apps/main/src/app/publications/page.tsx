@@ -3,8 +3,8 @@ import { getAllPublications } from "@academic-portfolio/publications";
 import { siteConfig } from "../../configs/site-config";
 import { paginate, PAGE_SIZE } from "../lib/pagination";
 import { ogImageRef } from "../lib/og-image";
-import { ContentCardSection } from "../ui/ContentCardSection";
-import { Pagination } from "../ui/Pagination";
+import { ContentCardSection } from "../../features/content/ContentCardSection";
+import { Pagination } from "@academic-portfolio/design-system";
 
 export const metadata = {
   title: "Publications",

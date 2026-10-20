@@ -4,8 +4,8 @@ import { getAllPublications } from "@academic-portfolio/publications";
 import { withPublicBasePath } from "@academic-portfolio/content";
 
 import { paginate, parsePageParam, PAGE_SIZE } from "../../../lib/pagination";
-import { ContentCardSection } from "../../../ui/ContentCardSection";
-import { Pagination } from "../../../ui/Pagination";
+import { ContentCardSection } from "../../../../features/content/ContentCardSection";
+import { Pagination } from "@academic-portfolio/design-system";
 
 /**
  * Only pre-render routes that `generateStaticParams` returns.

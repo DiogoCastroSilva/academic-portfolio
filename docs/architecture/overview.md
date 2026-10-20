@@ -39,34 +39,33 @@ apps/main/src/app/
 
 ## Content Directories and Package Boundaries
 
-The workspace is an Nx monorepo with one application and **six** libraries:
+The workspace is an Nx monorepo with one application and **seven** libraries:
 
-```
+```text
 apps/main/
-  src/               Next.js application code
+  src/               Next.js application code (App Router routes, features/, components/, lib/, configs/)
   public/            Static assets (favicon, etc.)
   eslint.config.mjs  App-level ESLint overrides (extends root)
   next.config.mjs    Next.js configuration
 
 libs/
+  design-system/     Semantic CSS tokens, typography, and generic UI primitives (ADR-0008)
   content/           Markdown loading, frontmatter parsing, image resolution
   navigation/        NavBar component and route configuration
   projects/          Project content (markdown files) + library accessor
-    src/md/            .md files + co-located cover images
   publications/      Publication content (markdown files) + library accessor
-    src/md/            .md files + co-located cover images
   blog/              Optional blog content (markdown files) + library accessor
-    src/md/            .md files + co-located cover images
-  utils/             Shared utilities (date formatting)
+  utils/             Shared utilities (date formatting, test helpers)
 ```
 
 **Module boundary rules:** `@nx/enforce-module-boundaries` is configured in the root `eslint.config.mjs` with `depConstraints` based on project tags defined in each library's `package.json`:
 
-- `app` (apps/main) → can depend on `content-layer` and `foundation`
-- `content-layer` (projects, publications, blog) → can depend on `foundation`
+- `app` (apps/main) → can depend on `design-system`, `content-layer`, and `foundation`
+- `content-layer` (projects, publications, blog) → can depend on `design-system` and `foundation`
+- `design-system` → can depend on `foundation` only
 - `foundation` (content, navigation, utils) → cannot depend on any internal library
 
-This enforces the dependency layers: app → content-layer → foundation → external.
+This enforces the dependency layers: app → content-layer/design-system → foundation → external.
 
 ## Markdown Parsing, Validation, and Rendering Flow
 

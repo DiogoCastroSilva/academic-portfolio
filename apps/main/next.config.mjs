@@ -24,6 +24,7 @@ const createNextConfig = (phase) => ({
     "@academic-portfolio/publications",
     "@academic-portfolio/blog",
     "@academic-portfolio/navigation",
+    "@academic-portfolio/design-system",
   ],
   pageExtensions: ["ts", "tsx", "md"],
   images: {

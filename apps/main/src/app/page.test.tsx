@@ -110,7 +110,7 @@ vi.mock("../configs/site-config", () => ({
   },
 }));
 
-vi.mock("./ui/ContentCardSection", () => ({
+vi.mock("../features/content/ContentCardSection", () => ({
   ContentCardSection: ({
     heading,
     items,
@@ -142,11 +142,11 @@ vi.mock("./ui/ContentCardSection", () => ({
   ),
 }));
 
-vi.mock("./ui/AboutSection", () => ({
+vi.mock("../features/content/AboutSection", () => ({
   AboutSection: () => <div data-testid="about-section">About</div>,
 }));
 
-vi.mock("./ui/JsonLd", () => ({
+vi.mock("../lib/JsonLd", () => ({
   JsonLd: () => null,
 }));
 

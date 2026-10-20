@@ -1,11 +1,7 @@
 import { describe, expect, it } from "vitest";
 
-import {
-  generatePageNumbers,
-  parsePageParam,
-  paginate,
-  PAGE_SIZE,
-} from "./pagination.js";
+import { generatePageNumbers } from "@academic-portfolio/design-system";
+import { parsePageParam, paginate, PAGE_SIZE } from "./pagination.js";
 
 // ---------------------------------------------------------------------------
 // paginate()

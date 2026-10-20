@@ -24,6 +24,9 @@
       "@academic-portfolio/blog": ["./libs/blog/src/index.ts"],
       "@academic-portfolio/navigation": ["./libs/navigation/src/index.ts"],
       "@academic-portfolio/utils": ["./libs/utils/src/index.ts"],
+      "@academic-portfolio/design-system": [
+        "./libs/design-system/src/index.ts"
+      ],
       "@academic-portfolio/utils/test-helpers/a11y": [
         "./libs/utils/src/test-helpers/a11y/index.ts"
       ]

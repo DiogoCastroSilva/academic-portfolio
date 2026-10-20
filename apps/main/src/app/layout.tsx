@@ -1,8 +1,8 @@
 import { getAllBlogPosts } from "@academic-portfolio/blog";
 import { getNavigation, NavBar } from "@academic-portfolio/navigation";
 import "./global.css";
-import { CloudflareAnalytics } from "./ui/CloudflareAnalytics";
-import { Footer } from "./ui/Footer";
+import { CloudflareAnalytics } from "../components/CloudflareAnalytics";
+import { Footer } from "../components/Footer";
 
 import { siteConfig } from "../configs/site-config";
 import { ogImageRef } from "./lib/og-image";

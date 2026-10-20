@@ -5,7 +5,7 @@
 This is an Nx workspace containing a Next.js 16 static-export portfolio site.
 
 - **App:** `apps/main/` — Next.js App Router, static export to GitHub Pages
-- **Libraries:** `libs/content/`, `libs/navigation/`, `libs/projects/`, `libs/publications/`, `libs/blog/`, `libs/utils/`
+- **Libraries:** `libs/content/`, `libs/navigation/`, `libs/projects/`, `libs/publications/`, `libs/blog/`, `libs/utils/`, `libs/design-system/`
 - **Tests:** Vitest, run via `npx nx run-many --target=test --all`
 - **Lint:** ESLint 9 with shared `@diogozx-org/eslint-config` + Nx module boundaries
 - **Formatting:** Prettier 3 with shared `@diogozx-org/prettier-config`
@@ -71,13 +71,16 @@ See [docs/architecture/decisions/](docs/architecture/decisions/) for ADRs on:
 - Testing strategy (ADR-0005)
 - Shared frontend tooling (ADR-0006)
 - Licensing policy (ADR-0007)
+- Design-system library (ADR-0008) — semantic tokens, typography, and generic UI primitives
 
 ## Key implementation details
 
 - **next.config.mjs** — static export, base path, transpile packages. Converted from CommonJS to ESM.
 - **eslint.config.mjs** — composes `@diogozx-org/eslint-config/next` with `@nx/enforce-module-boundaries`
 - **prettier.config.mjs** — extends `@diogozx-org/prettier-config`, adds Tailwind CSS plugin
-- **global.css** — partial semantic CSS tokens (`:root`), dark-mode overrides, `prefers-reduced-motion` global reset; see the design-principles doc for the intended contract and current gaps
+- **global.css** — imports design-system CSS (tokens), dark-mode overrides, `prefers-reduced-motion` global reset; see the design-principles doc for the intended contract and current gaps
+- **design-system** (`libs/design-system/`) — owns semantic CSS tokens, typography foundation, and generic UI primitives (`ContentImage`, `Pagination`, `Breadcrumb`, `ChevronIcon`)
+- **features/** (`apps/main/src/features/`) — about-specific and content-presentation components, distinct from shared primitives
 - **ContentDetail** — server component (no `'use client'`), uses `dangerouslySetInnerHTML`
 - **ContentCardSection** — server component with CSS entrance animation and a reduced-motion fallback; `motion/react` is used by About-page components
 - **.swcrc removed** — no decorators used, SWC CLI removed; Next.js uses its own SWC config

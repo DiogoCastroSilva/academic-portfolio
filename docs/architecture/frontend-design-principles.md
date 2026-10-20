@@ -105,7 +105,8 @@ The current components still set surfaces directly (for example, `bg-white dark:
 
 ## 11. Constraints Against Unnecessary Abstraction
 
-- No separate design-system package — shared UI lives in `apps/main/src/app/ui/`.
+> **Updated per [ADR-0008](./decisions/0008-design-system.md):** A single `libs/design-system/` library now exists as the owner of semantic tokens, typography foundation, and genuinely feature-agnostic UI primitives (initially `ContentImage`, `Pagination`, `Breadcrumb`, `ChevronIcon`). The constraint against unnecessary abstraction remains: do **not** create speculative Button/Badge/Card/Heading/Text/Prose components unless evidence of duplication justifies them. Feature-specific presentation (AboutHero, ContentCardSection, ContentDetail) lives in `apps/main/src/features/`. Only components used across multiple feature routes and free of domain-specific types belong in the design system.
+
 - No Redux — Zustand only for truly local UI state (none currently used).
 - No GraphQL — REST + static export.
 - Components are function components with destructured props — no class components, no inheritance.

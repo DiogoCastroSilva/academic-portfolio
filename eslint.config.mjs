@@ -19,11 +19,11 @@ export default [
     ],
   },
   // Nx module-boundary rules with meaningful layer enforcement:
-  //   app (apps/main)           -> depends on content-layer + foundation
-  //   content-layer (projects,  -> depends on foundation
-  //     publications)
-  //   foundation (content,     -> no internal library dependencies
-  //     navigation, utils)
+  //   app (apps/main) -> depends on design-system, content-layer, foundation
+  //   content-layer -> depends on design-system, foundation
+  //   design-system -> depends on foundation only
+  //   foundation -> no internal library dependencies
+  // The rest of Nx's base configs are intentionally omitted.
   // The rest of Nx's base configs are intentionally omitted to avoid
   // conflicts with the shared config's TypeScript rules.
   {
@@ -43,10 +43,18 @@ export default [
           depConstraints: [
             {
               sourceTag: "app",
-              onlyDependOnLibsWithTags: ["content-layer", "foundation"],
+              onlyDependOnLibsWithTags: [
+                "design-system",
+                "content-layer",
+                "foundation",
+              ],
             },
             {
               sourceTag: "content-layer",
+              onlyDependOnLibsWithTags: ["design-system", "foundation"],
+            },
+            {
+              sourceTag: "design-system",
               onlyDependOnLibsWithTags: ["foundation"],
             },
             {

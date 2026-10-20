@@ -30,6 +30,9 @@
       "@academic-portfolio/blog/*": ["../../libs/blog/src/*"],
       "@academic-portfolio/navigation": ["../../libs/navigation/src/index.ts"],
       "@academic-portfolio/utils": ["../../libs/utils/src/index.ts"],
+      "@academic-portfolio/design-system": [
+        "../../libs/design-system/src/index.ts"
+      ],
       "@academic-portfolio/utils/test-helpers/a11y": [
         "../../libs/utils/src/test-helpers/a11y/index.ts"
       ]
@@ -64,7 +67,7 @@
   ],
   "references": [
     {
-      "path": "../../libs/blog"
+      "path": "../../libs/design-system"
     },
     {
       "path": "../../libs/utils"
@@ -80,6 +83,9 @@
     },
     {
       "path": "../../libs/content"
+    },
+    {
+      "path": "../../libs/blog"
     }
   ]
 }

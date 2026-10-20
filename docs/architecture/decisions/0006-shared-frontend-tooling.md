@@ -24,7 +24,9 @@
 
 ### CSS architecture
 
-- **`apps/main/src/app/global.css`** defines a minimal set of semantic CSS custom properties (design tokens) for colours, borders, and text in `:root`, with `@media (prefers-color-scheme: dark)` overrides for dark mode. There is no standalone design-system package — tokens are intentionally lightweight.
+> **Superseded by [ADR-0008](./0008-design-system.md):** The design-system library (`libs/design-system/`) was introduced as a dedicated Nx project owning semantic CSS tokens, typography, and generic UI primitives. The original rationale for keeping tokens lightweight in `global.css` — avoiding premature abstraction — is preserved by ADR-0008's constraint: only promote components that are genuinely feature-agnostic and used across multiple feature routes, and do not create speculative Button/Badge/Card/Heading/Text/Prose components without evidence of duplication. See ADR-0008 for the full dependency direction and CSS integration flow.
+
+- **`libs/design-system/src/styles/global.css`** defines a minimal set of semantic CSS custom properties (design tokens) for colours, borders, and text in `:root`, with `@media (prefers-color-scheme: dark)` overrides for dark mode. The design-system library is the single source of truth for tokens; `apps/main/src/app/global.css` imports the design-system CSS once and retains only truly app-specific overrides.
 - **`@media (prefers-reduced-motion: reduce)`** is honoured in two ways:
   1. _Global CSS_ (`global.css`): a `@media (prefers-reduced-motion: reduce)` rule neutralises all animation and transition durations with `!important`, and `@media (prefers-reduced-motion: no-preference)` guards CSS keyframe animations and gallery transitions so they only run when motion is not restricted.
   2. _Per-component_ (`AboutHero`, `EducationTimeline`, `ResearchInterests`, `SkillsGrid`): these use `useReducedMotion()` from `motion/react` to swap `motion.div`/`motion.span` elements for plain `div`/`span` when the user prefers reduced motion, avoiding any animation entirely.

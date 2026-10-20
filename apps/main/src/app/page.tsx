@@ -3,9 +3,9 @@ import { getAllPublications } from "@academic-portfolio/publications";
 import { getAllBlogPosts } from "@academic-portfolio/blog";
 import { getProfile } from "@academic-portfolio/content";
 
-import { AboutSection } from "./ui/AboutSection";
-import { ContentCardSection } from "./ui/ContentCardSection";
-import { JsonLd } from "./ui/JsonLd";
+import { AboutSection } from "../features/content/AboutSection";
+import { ContentCardSection } from "../features/content/ContentCardSection";
+import { JsonLd } from "../lib/JsonLd";
 import {
   buildWebSiteSchema,
   buildSiteAuthorSchema,

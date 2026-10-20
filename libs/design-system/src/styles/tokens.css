@@ -1,0 +1,87 @@
+/* Semantic CSS custom properties (design tokens).
+ *
+ * These provide a thin layer of semantic naming over raw color values so
+ * that prose and component styles remain consistent and can be theme-adjusted
+ * in a single place. We intentionally keep this minimal — there is no
+ * standalone design-system package — and rely on Tailwind for layout and
+ * spacing primitives.
+ *
+ * See docs/architecture/frontend-design-principles.md for the intended UI
+ * contract and docs/product/goals-and-requirements.md for alignment notes.
+ */
+
+/* ── Surface tokens ────────────────────────── */
+:root {
+  --color-surface-page: #ffffff;
+  --color-surface-card: #ffffff;
+  --color-surface-elevated: #ffffff;
+
+  /* ── Text tokens ──────────────────────────── */
+  --color-text-primary: var(--tw-color-text, #171717);
+  --color-text-muted: var(--tw-color-text-muted, #6b7280);
+
+  /* ── Border token ─────────────────────────── */
+  --color-border: var(--tw-color-border, #e5e7eb);
+
+  /* ── Accent / focus tokens ───────────────── */
+  --color-accent: #0284c7; /* sky-600 */
+  --color-accent-hover: #0369a1; /* sky-700 */
+  --color-focus: #0284c7; /* sky-600 */
+
+  /* ── Code / pre tokens ───────────────────── */
+  --color-code-bg: var(--tw-color-code-bg, #f3f4f6);
+  --color-pre-bg: var(--tw-color-pre-bg, #171717);
+  --color-pre-text: var(--tw-color-pre-text, #f9fafb);
+
+  /* ── Status tokens ───────────────────────── */
+  --color-status-info-bg: #eff6ff;
+  --color-status-info-text: #1e40af;
+
+  /* ── Theme-independent radii ─────────────── */
+  --radius-card: 1rem; /* 2xl */
+  --radius-input: 0.375rem; /* md */
+
+  /* ── Shadows ─────────────────────────────── */
+  --shadow-card: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+
+  /* ── Motion ──────────────────────────────── */
+  --motion-duration-enter: 0.5s;
+  --motion-duration-stagger: 0.1s;
+  --motion-ease-enter: ease-out;
+}
+
+/* Reduced-motion: disable gallery animations and smooth transitions */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/*
+ * The default border color has changed to `currentcolor` in Tailwind CSS v4,
+ * so we've added these compatibility styles to make sure everything still
+ * looks the same as it did with Tailwind CSS v3.
+ *
+ * If we ever want to remove these styles, we need to add an explicit border
+ * color utility to any element that depends on these defaults.
+ */
+@layer base {
+  p {
+    line-height: 1.5;
+  }
+
+  *,
+  ::after,
+  ::before,
+  ::backdrop,
+  ::file-selector-button {
+    box-sizing: border-box;
+    border-width: 0;
+    border-style: solid;
+    border-color: var(--color-gray-200, currentcolor);
+  }
+}

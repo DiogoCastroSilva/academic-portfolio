@@ -1,0 +1,5 @@
+{
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "name": "@academic-portfolio/design-system",
+  "tags": ["design-system"]
+}

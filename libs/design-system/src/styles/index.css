@@ -1,0 +1,9 @@
+/* Design-system CSS entry point.
+ *
+ * This file is imported by apps/main/src/app/global.css.
+ * Import order matters: tokens → themes → typography → animations.
+ */
+@import "./tokens.css";
+@import "./themes.css";
+@import "./typography.css";
+@import "./animations.css";

@@ -1,0 +1,48 @@
+/* Typography foundation: prose styles, heading scales, profile name.
+ *
+ * These styles use semantic CSS custom properties defined in tokens.css.
+ * Content-specific prose extensions (gallery, external-link) remain in
+ * apps/main/src/app/global.css.
+ */
+
+/* Profile name — responsive heading scale for the profile name. */
+.profile-name {
+  max-width: 100%;
+  overflow-wrap: anywhere;
+  text-wrap: balance;
+  font-size: 1.875rem;
+  font-weight: 700;
+  line-height: 1.15;
+  letter-spacing: -0.025em;
+}
+
+@media (min-width: 48rem) {
+  .profile-name {
+    font-size: 2.25rem;
+  }
+}
+
+@media (min-width: 64rem) {
+  .profile-name {
+    font-size: 2.5rem;
+  }
+}
+
+/* Fallback anchor styles for markdown-rendered content (prose) */
+.prose a {
+  text-decoration: none;
+  color: var(--color-accent);
+  /* Prevent long URLs from overflowing prose containers on narrow screens */
+  overflow-wrap: break-word;
+  word-break: break-word;
+}
+.prose a:hover {
+  text-decoration: underline;
+  color: var(--color-accent-hover);
+}
+/* Respect reduced-motion: skip underline-on-hover animation */
+@media (prefers-reduced-motion: reduce) {
+  .prose a:hover {
+    text-decoration: underline;
+  }
+}

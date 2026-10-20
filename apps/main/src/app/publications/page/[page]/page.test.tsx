@@ -58,7 +58,10 @@ vi.mock("../../../configs/site-config", () => ({
   },
 }));
 
-vi.mock("../../../ui/Pagination", () => ({
+vi.mock("@academic-portfolio/design-system", async (importOriginal) => ({
+  ...(await importOriginal<
+    typeof import("@academic-portfolio/design-system")
+  >()),
   Pagination: ({
     currentPage,
     totalPages,

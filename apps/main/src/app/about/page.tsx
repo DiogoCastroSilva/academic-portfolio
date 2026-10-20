@@ -1,11 +1,11 @@
 import { getProfile, getFullUrl } from "@academic-portfolio/content";
 
 import { siteConfig } from "../../configs/site-config";
-import { AboutHero } from "../ui/AboutHero";
-import { EducationTimeline } from "../ui/EducationTimeline";
-import { ResearchInterests } from "../ui/ResearchInterests";
-import { SkillsGrid } from "../ui/SkillsGrid";
-import { JsonLd } from "../ui/JsonLd";
+import { AboutHero } from "../../features/about/AboutHero";
+import { EducationTimeline } from "../../features/about/EducationTimeline";
+import { ResearchInterests } from "../../features/about/ResearchInterests";
+import { SkillsGrid } from "../../features/about/SkillsGrid";
+import { JsonLd } from "../../lib/JsonLd";
 import { buildPersonSchema } from "../lib/structured-data";
 import { ogImageRef } from "../lib/og-image";
 
