@@ -35,7 +35,7 @@ Every collection follows the same pattern:
 - **Card layout:** 16/9 image, metadata row (date + tags), title (line-clamp-2), excerpt (line-clamp-3).
 - **Tag limit:** At most 2 tags on collection cards. When more exist, show an accessible `+N more` indicator with `aria-label`. Full tag list is always visible on the detail page.
 - **Card links:** The entire card is one `next/link` with `aria-label="Read more: {title}"`. No interactive controls (buttons, popovers) inside the clickable card.
-- **Card images:** All cards share `aspect-[16/9]` ratio via `ContentImage` with WebP `<source>` + JPEG/PNG fallback.
+- **Card images:** All cards share an `aspect-[16/9]` ratio via `ContentImage`. JPEG/PNG assets use a WebP `<source>` when a generated variant exists, with the original raster asset as fallback; SVG and other formats render as a plain `<img>`.
 
 ## 5. Responsive Behavior
 
@@ -48,7 +48,7 @@ Every collection follows the same pattern:
 
 ### Semantic Token Layer
 
-A lightweight set of CSS custom properties in `apps/main/src/app/global.css` provides a single source of truth for semantic colors. These are defined under `:root` and overridden in `@media (prefers-color-scheme: dark)`. Tailwind's spacing scale is used for layout primitives — no competing scale is introduced.
+The intended contract is a small set of semantic colors in `apps/main/src/app/global.css`, with values overridden in `@media (prefers-color-scheme: dark)`. **This is not yet a single source of truth in the implementation:** several tokens are unused and components still set many colors directly with Tailwind palette utilities. The roadmap tracks completing this alignment. Keep Tailwind's built-in spacing/type scales; do not create competing scales.
 
 | Token                  | Light     | Dark      | Purpose                         |
 | ---------------------- | --------- | --------- | ------------------------------- |
@@ -64,7 +64,7 @@ A lightweight set of CSS custom properties in `apps/main/src/app/global.css` pro
 | `--color-pre-bg`       | `#171717` | `#0f172a` | Preformatted block background   |
 | `--color-pre-text`     | `#f9fafb` | `#f1f5f9` | Preformatted block text         |
 
-Components set their own surface classes directly (e.g. `bg-white dark:bg-sky-50`) because those values are stable and intentional; the token layer is consumed primarily by prose/markdown rendered content via `global.css` rules (`.prose a { color: var(--color-accent); }`).
+The current components still set surfaces directly (for example, `bg-white dark:bg-sky-50`); prose links consume the accent variables through `global.css`. During the token cleanup, move only stable semantic roles to the contract and remove tokens that remain unused rather than keeping two competing sources of truth.
 
 ### Applied Theme Rules
 
@@ -72,7 +72,7 @@ Components set their own surface classes directly (e.g. `bg-white dark:bg-sky-50
 - **Dark mode:** light-blue surfaces (`dark:bg-sky-50`), `text-slate-900` headings (high contrast on light-blue), `text-zinc-500` metadata.
 - **Accent color:** `sky-600` (`--color-accent`) for links and focus rings; `sky-400` in dark mode via token overrides.
 - Prose link colors are controlled by the global CSS token, not by per-component Tailwind `prose-a:text-*` utilities — this avoids drift.
-- All colors are chosen for WCAG 2.2 AA contrast on the appropriate surface.
+- **Accessibility target:** verify every foreground/background pair used by the UI against WCAG 2.2 AA before claiming full contrast compliance. The token table is a target contract, not proof that every current component combination has been measured.
 
 ## 7. Navigation and Breadcrumbs
 
@@ -100,7 +100,7 @@ Components set their own surface classes directly (e.g. `bg-white dark:bg-sky-50
 
 - `output: "export"` — all pages prerendered. No client JS for navigation beyond `next/link` prefetch.
 - Server components everywhere except where `motion/react` or user interaction genuinely requires `"use client"` (AboutHero, EducationTimeline, ResearchInterests, SkillsGrid, NavBar/MobileNavLinks).
-- Images use `next/image` with `unoptimized: true` (static export constraint) via `ContentImage` component.
+- `ContentImage` currently uses native `<img>` and `<picture>` markup; it serves generated WebP sources for JPEG/PNG where available and keeps the original as a fallback. SVGs use a plain `<img>`. Although `next.config.mjs` sets `images.unoptimized: true`, the component does not currently use `next/image`.
 - Client bundle is minimal: only the NavBar's mobile menu toggle and motion components.
 
 ## 11. Constraints Against Unnecessary Abstraction
