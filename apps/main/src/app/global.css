@@ -108,6 +108,14 @@
   }
 }
 
+.profile-name {
+  max-width: 100%;
+  overflow-wrap: anywhere;
+  text-wrap: balance;
+  line-height: 1.15;
+  letter-spacing: -0.025em;
+}
+
 /* Fallback anchor styles for markdown-rendered content (prose) */
 .prose a {
   text-decoration: none;
