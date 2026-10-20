@@ -30,7 +30,7 @@ The workflow is in `.github/workflows/ci.yml`:
    - `npm ci`
    - `npx nx build main` (builds the static site into `public/` and syncs content assets)
    - `npx nx run main:generate-sitemap` (writes `sitemap.xml` and `robots.txt` after the build)
-   - Deploys `public/` to GitHub Pages via `peaceiris/actions-gh-pages`
+   - Deploys `public/` to GitHub Pages via `peaceiris/actions-gh-pages@v4` (OIDC-supported, compatible with branch protection rules)
 
 ## GitHub Pages Setup
 

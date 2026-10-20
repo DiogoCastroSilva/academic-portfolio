@@ -20,10 +20,11 @@ A reusable template for an academic portfolio website. It presents research proj
 
 ## Why this architecture
 
-This is a single Next.js site with six internal libraries organized into dependency layers enforced by Nx module boundaries:
+This is a single Next.js site with seven internal libraries organized into dependency layers enforced by Nx module boundaries:
 
-- **app** (`apps/main`) → can depend on `content-layer` and `foundation`
-- **content-layer** (`projects`, `publications`, `blog`) → can depend on `foundation`
+- **app** (`apps/main`) → can depend on `design-system`, `content-layer`, and `foundation`
+- **content-layer** (`projects`, `publications`, `blog`) → can depend on `design-system` and `foundation`
+- **design-system** (`libs/design-system`) → can depend on `foundation` only
 - **foundation** (`content`, `navigation`, `utils`) → cannot depend on any internal library
 
 Nx is retained for concrete benefits: (1) `@nx/enforce-module-boundaries` prevents foundation libraries from importing content-layer libraries, catching architectural regressions at lint time; (2) `^typecheck` dependency chains ensure all libraries are type-checked before the app builds; (3) project-aware test/lint targets with automatic parallel execution. See [ADR-0002](docs/architecture/decisions/0002-workspace-tooling.md) for details.
@@ -59,6 +60,7 @@ npx nx run main:dev  # http://localhost:3000
 apps/main/                  Next.js application and page UI
 libs/blog/                  Blog content (Markdown files in src/md/)
 libs/content/               Markdown loading, frontmatter parsing, URL helpers
+libs/design-system/         Semantic CSS tokens, typography, and generic UI primitives
 libs/navigation/            NavBar component and route configuration
 libs/projects/              Project content (Markdown files in src/md/)
 libs/publications/          Publication content (Markdown files in src/md/)
