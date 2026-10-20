@@ -73,6 +73,9 @@
 .prose a {
   text-decoration: none;
   color: var(--color-link);
+  /* Prevent long URLs from overflowing prose containers on narrow screens */
+  overflow-wrap: break-word;
+  word-break: break-word;
 }
 .prose a:hover {
   text-decoration: underline;
@@ -125,6 +128,11 @@
   display: inline-flex;
   align-items: center;
   gap: 0.25rem;
+  /* Allow long URLs to wrap instead of overflowing the prose container.
+     inline-flex has min-width: min-content by default, which prevents
+     wrapping — overflow-wrap break-word forces the text to wrap. */
+  overflow-wrap: break-word;
+  word-break: break-word;
 }
 .prose a.external-link::after {
   content: "↗";

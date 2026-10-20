@@ -71,6 +71,22 @@ describe("ContentDetail accessibility", () => {
     await expectNoA11yViolations(container);
   });
 
+  it("long external URLs in body content do not overflow the prose container", () => {
+    const longUrl = "https://ntrs.nasa.gov/citations/20250011141";
+    const content: ContentItemMeta = {
+      ...mockContent,
+      body: `<p><a class="external-link" href="${longUrl}" target="_blank" rel="noopener noreferrer">https://ntrs.nasa.gov/citations/20250011141↗</a></p>`,
+    };
+    const { container } = render(<ContentDetail content={content} />);
+    const proseDiv = Array.from(container.querySelectorAll("div")).find((d) =>
+      d.className.includes("prose"),
+    );
+    expect(proseDiv).toBeDefined();
+    const className = proseDiv?.className || "";
+    // prose-a:break-words adds overflow-wrap to all <a> in prose
+    expect(className).toMatch(/prose-a:break-words/);
+  });
+
   it("uses h1 for the content title", () => {
     render(<ContentDetail content={mockContent} />);
     const heading = screen.getByRole("heading", { level: 1 });
