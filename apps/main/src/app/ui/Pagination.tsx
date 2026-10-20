@@ -38,7 +38,7 @@ function buildPageUrl(baseUrl: string, page: number): string {
 }
 
 const btnBase =
-  "flex h-9 w-9 items-center justify-center rounded-lg border border-zinc-200 bg-white text-slate-700 hover:bg-zinc-100 hover:text-slate-900 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-600 dark:border-zinc-700 dark:bg-slate-800 dark:text-gray-300 dark:hover:bg-slate-700 dark:hover:text-gray-100";
+  "flex h-11 w-11 items-center justify-center rounded-lg border border-zinc-200 bg-white text-slate-700 hover:bg-zinc-100 hover:text-slate-900 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-600 dark:border-zinc-700 dark:bg-slate-800 dark:text-gray-300 dark:hover:bg-slate-700 dark:hover:text-gray-100";
 
 export function Pagination({
   currentPage,
@@ -82,7 +82,7 @@ export function Pagination({
               <span
                 aria-current="page"
                 aria-label={`Page ${page} of ${totalPages}`}
-                className="flex h-9 w-9 items-center justify-center rounded-lg bg-sky-600 text-white"
+                className="flex h-11 w-11 items-center justify-center rounded-lg bg-sky-600 text-white"
               >
                 {page}
               </span>
