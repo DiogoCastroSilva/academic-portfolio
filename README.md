@@ -1,6 +1,6 @@
 # Academic Portfolio
 
-A reusable, production-ready template for an academic portfolio website. It presents research projects, publications, and professional background with content kept in Markdown so owners can update without editing application code.
+A reusable template for an academic portfolio website. It presents research projects, publications, and professional background with content kept in Markdown so owners can update without editing application code.
 
 **Live site:** https://diogocastrosilva.github.io/academic-portfolio/
 
