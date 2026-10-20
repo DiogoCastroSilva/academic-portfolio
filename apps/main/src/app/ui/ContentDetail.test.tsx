@@ -233,4 +233,18 @@ describe("ContentDetail theme contrast (dark mode on light-blue surfaces)", () =
     const className = timeEl?.className || "";
     expect(className).toMatch(/dark:text-gray-600/);
   });
+
+  it("article has light-blue surface background in dark mode (consistent with sections)", () => {
+    const { container } = render(<ContentDetail content={mockContent} />);
+    const article = container.querySelector("article");
+    expect(article).toHaveClass("dark:bg-sky-50");
+    expect(article).toHaveClass("bg-white");
+  });
+
+  it("image container uses lighter dark-mode background matching the article surface", () => {
+    const { container } = render(<ContentDetail content={mockContent} />);
+    const imgContainer = container.querySelector(".aspect-\\[16\\/9\\]");
+    expect(imgContainer).toHaveClass("dark:bg-stone-300");
+    expect(imgContainer).not.toHaveClass("dark:bg-stone-700");
+  });
 });
