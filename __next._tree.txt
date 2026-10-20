@@ -1,4 +1,4 @@
-:HL["/academic-portfolio/_next/static/css/c893c6b68d5c6f80.css","style"]
+:HL["/academic-portfolio/_next/static/css/bc1d7858520749a2.css","style"]
 :HL["/images/profile.webp","image",{"type":"image/webp"}]
 1:[["children",{"s":"__PAGE__","h":160}]]
-0:{"b":"-WgFoGzHBroKDjLLlqwPr","t":{"t":{"s":"","h":80,"c":"$Q1"}}}
+0:{"b":"msixYyZtp2e8Ti-Kk1Xxa","t":{"t":{"s":"","h":80,"c":"$Q1"}}}
