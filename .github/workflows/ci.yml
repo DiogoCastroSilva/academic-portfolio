@@ -58,7 +58,7 @@ jobs:
       contents: read
     uses: DiogoCastroSilva/frontend-tooling/.github/workflows/performance-audit.yml@3e7274a576a7bd2b06c1d61950dc518d7301a8fc
     with:
-      urls: "/, /about/, /projects/first-project/"
+      urls: "/, /about/, /projects/"
       artifact-name: static-site-output
       output-dir: public
 
