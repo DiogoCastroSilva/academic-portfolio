@@ -49,8 +49,7 @@ threshold. In the current CI workflow (`ci.yml`), the Lighthouse job is a
 **report-only** step — it runs after `ci` but does **not** block the `deploy`
 job (deploy depends only on `ci`). This means the budgets are enforced as
 advisory checks that produce visible failures in GitHub Actions, but do not
-gate releases. Audited routes (`/, /about/, /projects/first-project/`) are
-prerendered as static pages and exist in the `public/` build artifact.
+gate releases. Audited routes (`/, /about/, /projects/`) are intended to be prerendered as static pages and exist in the `public/` build artifact. Audit only published routes: draft content is intentionally excluded from static output, so a draft detail route such as `/projects/first-project/` returns 404 and causes Lighthouse collection to fail before budget assertions run.
 
 ## Key optimizations
 
