@@ -92,8 +92,8 @@ export default function RootLayout({
         <link
           rel="preload"
           as="image"
-          href="/images/profile.webp"
-          type="image/webp"
+          href="/images/profile.svg"
+          type="image/svg+xml"
         />
       </body>
     </html>

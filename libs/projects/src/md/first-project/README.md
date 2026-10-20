@@ -3,7 +3,7 @@ title: "Synthetic Spectral Signature Visualization"
 date: "2025-11-01"
 tags: ["intro", "welcome", "illustration"]
 excerpt: "Template example: synthetic data visualization techniques for spectral analysis workflows."
-draft: true
+draft: false
 image: first-project.svg
 ---
 

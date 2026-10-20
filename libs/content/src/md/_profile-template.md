@@ -9,7 +9,7 @@ email: "you@example.com"
 linkedInUrl: "https://www.linkedin.com/in/your-profile/"
 githubUrl: "https://github.com/your-username"
 location: "City, Country"
-image: "profile.jpeg" # filename in libs/content/src/md/
+image: "profile.svg" # filename in libs/content/src/md/
 education:
   - degree: "Degree Title"
     institution: "Institution Name"
@@ -41,7 +41,7 @@ Write your biography here in Markdown. This text appears on the About page.
 
 You can use standard Markdown: **bold**, _italic_, links, lists, images.
 
-![Portrait photo](profile.jpeg)
+![Portrait photo](profile.svg)
 
 ## External Links
 

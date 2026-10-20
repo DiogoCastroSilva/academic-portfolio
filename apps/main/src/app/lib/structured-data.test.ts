@@ -23,8 +23,8 @@ vi.mock("@academic-portfolio/content", async (importOriginal) => {
       linkedInUrl: "https://linkedin.com/in/jane",
       githubUrl: "https://github.com/jane",
       location: "Ithaca, NY",
-      image: "profile.jpeg",
-      imageSrc: "/images/profile.jpeg",
+      image: "profile.svg",
+      imageSrc: "/images/profile.svg",
       biography: "<p>Bio</p>",
       education: [],
       researchInterests: [],
@@ -46,8 +46,8 @@ const mockProfile: ProfileData = {
   linkedInUrl: "https://linkedin.com/in/jane",
   githubUrl: "https://github.com/jane",
   location: "Ithaca, NY",
-  image: "profile.jpeg",
-  imageSrc: "/images/profile.jpeg",
+  image: "profile.svg",
+  imageSrc: "/images/profile.svg",
   biography: "<p>Bio</p>",
   education: [],
   researchInterests: [],
@@ -70,7 +70,7 @@ describe("buildPersonSchema", () => {
     const schema = buildPersonSchema(mockProfile);
 
     expect(schema.image).toBe(
-      "https://example.com/portfolio/images/profile.jpeg",
+      "https://example.com/portfolio/images/profile.svg",
     );
     expect(schema.location).toBe("Ithaca, NY");
   });
@@ -242,16 +242,13 @@ describe("buildWebSiteSchema", () => {
 
 describe("buildSiteAuthorSchema", () => {
   it("generates a Person schema with name and image", () => {
-    const schema = buildSiteAuthorSchema(
-      "Dr. Jane Doe",
-      "/images/profile.jpeg",
-    );
+    const schema = buildSiteAuthorSchema("Dr. Jane Doe", "/images/profile.svg");
 
     expect(schema["@context"]).toBe("https://schema.org");
     expect(schema["@type"]).toBe("Person");
     expect(schema.name).toBe("Dr. Jane Doe");
     expect(schema.image).toBe(
-      "https://example.com/portfolio/images/profile.jpeg",
+      "https://example.com/portfolio/images/profile.svg",
     );
     expect(schema.url).toBe("https://example.com/portfolio/about/");
   });

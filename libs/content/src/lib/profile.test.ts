@@ -10,7 +10,7 @@ email: "jane@example.com"
 linkedInUrl: "https://linkedin.com/in/jane"
 githubUrl: "https://github.com/jane"
 location: "Ithaca, NY"
-image: "profile.jpeg"
+image: "profile.svg"
 education:
   - degree: "PhD"
     institution: "Cornell"
@@ -45,8 +45,8 @@ describe("parseProfile", () => {
   it("parses optional fields", () => {
     const result = parseProfile(VALID_PROFILE);
     expect(result.location).toBe("Ithaca, NY");
-    expect(result.image).toBe("profile.jpeg");
-    expect(result.imageSrc).toBe("/images/profile.jpeg");
+    expect(result.image).toBe("profile.svg");
+    expect(result.imageSrc).toBe("/images/profile.svg");
   });
 
   it("parses description when provided", () => {
@@ -74,20 +74,20 @@ describe("parseProfile", () => {
     expect(result.role).toBe("PhD Researcher");
   });
 
-  it("defaults image to profile.jpeg when not provided", () => {
-    const content = VALID_PROFILE.replace(/image: "profile\.jpeg"/, "");
+  it("defaults image to profile.svg when not provided", () => {
+    const content = VALID_PROFILE.replace(/image: "profile.svg"/, "");
     const result = parseProfile(content);
-    expect(result.image).toBe("profile.jpeg");
-    expect(result.imageSrc).toBe("/images/profile.jpeg");
+    expect(result.image).toBe("profile.svg");
+    expect(result.imageSrc).toBe("/images/profile.svg");
   });
 
   it("uses basename of image path for imageSrc", () => {
     const content = VALID_PROFILE.replace(
-      'image: "profile.jpeg"',
-      'image: "some/nested/profile.jpeg"',
+      'image: "profile.svg"',
+      'image: "some/nested/profile.svg"',
     );
     const result = parseProfile(content);
-    expect(result.imageSrc).toBe("/images/profile.jpeg");
+    expect(result.imageSrc).toBe("/images/profile.svg");
   });
 
   it("renders biography as HTML", () => {

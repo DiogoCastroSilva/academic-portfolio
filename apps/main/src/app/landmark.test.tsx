@@ -19,8 +19,8 @@ const mockProfile: ProfileData = {
   linkedInUrl: "https://linkedin.com/in/test",
   githubUrl: "https://github.com/test",
   location: "Ithaca, NY",
-  image: "profile.jpeg",
-  imageSrc: "/images/profile.jpeg",
+  image: "profile.svg",
+  imageSrc: "/images/profile.svg",
   biography: "<p>Brief bio.</p>",
   researchInterests: [
     {

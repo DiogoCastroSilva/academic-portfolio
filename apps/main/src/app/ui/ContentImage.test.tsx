@@ -84,7 +84,7 @@ describe("ContentImage", () => {
   describe("StaticImageData (webpack imported)", () => {
     it("renders plain <img> without <picture> for StaticImageData", () => {
       const staticImage: StaticImageData = {
-        src: "/images/profile.jpeg",
+        src: "/images/profile.svg",
         height: 200,
         width: 200,
         blurDataURL: "",
@@ -95,13 +95,13 @@ describe("ContentImage", () => {
       render(<ContentImage src={staticImage} alt="Profile" />);
 
       const img = screen.getByRole("img");
-      expect(img).toHaveAttribute("src", "/images/profile.jpeg");
+      expect(img).toHaveAttribute("src", "/images/profile.svg");
       expect(img.closest("picture")).toBeNull();
     });
 
     it("applies className and loading to StaticImageData", () => {
       const staticImage: StaticImageData = {
-        src: "/images/profile.jpeg",
+        src: "/images/profile.svg",
         height: 200,
         width: 200,
         blurDataURL: "",
@@ -148,7 +148,7 @@ describe("ContentImage", () => {
 
     it("has no violations with StaticImageData", async () => {
       const staticImage: StaticImageData = {
-        src: "/images/profile.jpeg",
+        src: "/images/profile.svg",
         height: 200,
         width: 200,
         blurDataURL: "",

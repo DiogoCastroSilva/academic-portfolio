@@ -290,7 +290,7 @@ export function parseProfile(content: string): ProfileData {
   const image =
     typeof data.image === "string" && data.image.trim() !== ""
       ? data.image
-      : "profile.jpeg";
+      : "profile.svg";
 
   const imageFilename = path.basename(image);
   const imageSrc = withPublicBasePath(`/images/${imageFilename}`);

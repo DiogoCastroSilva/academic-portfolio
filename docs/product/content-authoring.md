@@ -12,7 +12,7 @@ Every personal or site-level change maps to a specific file or directory. Edit M
 | Change your professional title / role                      | `libs/content/src/md/profile.md`            | `role` (required)                                                                               |
 | Change the SEO description (search/social previews)        | `libs/content/src/md/profile.md`            | `description` (optional)                                                                        |
 | Change your location (shown in structured data)            | `libs/content/src/md/profile.md`            | `location` (optional)                                                                           |
-| Change your profile photo                                  | `libs/content/src/md/profile.md`            | `image` (optional; default `profile.jpeg`)                                                      |
+| Change your profile photo                                  | `libs/content/src/md/profile.md`            | `image` (optional; default `profile.svg`)                                                       |
 | Add/remove your email, LinkedIn, or GitHub                 | `libs/content/src/md/profile.md`            | `email`, `linkedInUrl`, `githubUrl` (all optional)                                              |
 | Update your biography text                                 | `libs/content/src/md/profile.md`            | Markdown body after frontmatter                                                                 |
 | Add/edit education entries                                 | `libs/content/src/md/profile.md`            | `education` array (see [Education Entries](#education-entries))                                 |
@@ -80,7 +80,7 @@ The About page (`/about`) and home page are driven by a profile content file con
 | `linkedInUrl`       | string | no       | Full LinkedIn profile URL                                                          |
 | `githubUrl`         | string | no       | Full GitHub profile URL                                                            |
 | `location`          | string | no       | City, Country                                                                      |
-| `image`             | string | no       | Filename of your profile photo (default: `profile.jpeg`)                           |
+| `image`             | string | no       | Filename of your profile photo (default: `profile.svg`)                            |
 | `education`         | array  | no       | List of education entries (see below)                                              |
 | `researchInterests` | array  | no       | List of research interest entries (see below)                                      |
 | `skills`            | array  | no       | List of skill categories (see below)                                               |

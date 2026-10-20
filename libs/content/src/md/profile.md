@@ -15,7 +15,7 @@ email: "alex.morgan@example.com"
 linkedInUrl: "https://www.linkedin.com/in/alex-morgan"
 githubUrl: "https://github.com/alex-morgan"
 location: "Ithaca, NY"
-image: "profile.jpeg"
+image: "profile.svg"
 education:
   - degree: "PhD in Earth & Atmospheric Sciences"
     institution: "Cornell University"
