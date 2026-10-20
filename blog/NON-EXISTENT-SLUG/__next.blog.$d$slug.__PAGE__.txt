@@ -8,51 +8,36 @@
 8:I[1380,[],""]
 9:"static/chunks/app/not-found-6aaae78a0e586f18.js"
 a:I[5587,["825","$2","345","$9"],""]
-14:I[887,[],"OutletBoundary"]
-15:"$Sreact.suspense"
-18:"ViewportBoundary"
-19:I[887,[],"$18"]
-1a:"MetadataBoundary"
-1b:I[887,[],"$1a"]
-:HL["/academic-portfolio/_next/static/css/72c5386ea13cb57a.css","style"]
+:HL["/academic-portfolio/_next/static/css/8acc6a76f7c8630b.css","style"]
+e:X
+12:X
+12:C
+16:[["children",{"s":"__PAGE__","h":160,"d":{"r":"$L17","p":"$@18","v":null,"s":"$e"}}]]
+13:[["children",{"s":{"n":"slug","t":"d","k":"NON-EXISTENT-SLUG","s":["page"]},"h":65632,"d":{"r":"$L14","p":"$@15","v":"$12","s":"$e"},"c":"$Q16"}]]
+f:[["children",{"s":"blog","h":131168,"d":{"r":"$L10","p":"$@11","v":"$12","s":"$e"},"c":"$Q13"}]]
+0:{"t":{"t":{"s":"","h":131152,"d":{"r":["$","$1","c",{"children":[[["$","link","0",{"rel":"stylesheet","href":"/academic-portfolio/_next/static/css/8acc6a76f7c8630b.css","precedence":"next"}]],["$","html",null,{"lang":"en","suppressHydrationWarning":true,"children":["$","body",null,{"suppressHydrationWarning":true,"className":"min-h-full bg-stone-100 dark:bg-slate-800","children":[["$","div",null,{"className":"flex min-h-full flex-col","children":[["$","$L4",null,{"name":"Dr. Alex Morgan","items":[{"name":"Projects","href":"/projects"},{"name":"Publications","href":"/publications"},{"name":"About","href":"/about"}]}],["$","main",null,{"className":"flex-1","children":["$","$L5",null,{"parallelRouterKey":"children","error":"$7","errorStyles":[],"errorScripts":null,"template":["$","$L8",null,{}],"notFound":[["$","main",null,{"className":"mx-auto flex min-h-[calc(100vh-6rem)] flex-col items-center justify-center px-4 py-16 text-center","children":["$","div",null,{"className":"rounded-3xl bg-white p-10 shadow-sm ring-1 ring-slate-200 dark:bg-slate-900 dark:ring-slate-700","children":[["$","p",null,{"className":"text-sm font-semibold tracking-[0.3em] text-sky-600 uppercase","children":"404"}],["$","h1",null,{"className":"mt-4 text-4xl font-bold tracking-tight text-slate-900 dark:text-white","children":"Page not found"}],["$","p",null,{"className":"mt-4 max-w-xl text-base leading-7 text-slate-600 dark:text-slate-300","children":"The page you are looking for does not exist or has been moved. Please check the URL or return to the homepage."}],["$","$La",null,{"href":"/","className":"mt-8 inline-flex rounded-full bg-slate-900 px-6 py-3 text-sm font-semibold text-white transition hover:bg-slate-700 dark:bg-slate-100 dark:text-slate-900 dark:hover:bg-slate-200","children":"Return home"}]]}]}],[]]}]}],["$","footer",null,{"className":"py-4","children":["$","div",null,{"className":"mx-auto flex w-full max-w-6xl flex-col gap-4 px-4 sm:px-6 dark:text-white","children":["$","div",null,{"className":"flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between","children":[["$","p",null,{"className":"text-sm leading-6","children":["© ",2026," ","Dr. Alex Morgan",". Licensed under"," ",["$","a",null,{"href":"https://creativecommons.org/licenses/by-nc-nd/4.0/","target":"_blank","rel":"noopener noreferrer","className":"underline transition-colors duration-200 hover:text-slate-900 focus-visible:rounded-sm focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-600 dark:hover:text-slate-100","children":"CC BY-NC-ND 4.0"}],". Code licensed under"," ",["$","a",null,{"href":"https://opensource.org/licenses/MIT","target":"_blank","rel":"noopener noreferrer","className":"underline transition-colors duration-200 hover:text-slate-900 focus-visible:rounded-sm focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-600 dark:hover:text-slate-100","children":"MIT"}],"."]}],["$","div",null,{"className":"flex flex-wrap gap-4 text-sm","children":[["$","a",null,{"href":"https://www.linkedin.com/in/alex-morgan","target":"_blank","rel":"noopener noreferrer","className":"underline transition-colors duration-200 hover:text-slate-900 focus-visible:rounded-sm focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-600 dark:hover:text-slate-100","children":"LinkedIn"}],["$","a",null,{"href":"https://github.com/alex-morgan","target":"_blank","rel":"noopener noreferrer","className":"underline transition-colors duration-200 hover:text-slate-900 focus-visible:rounded-sm focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-600 dark:hover:text-slate-100","children":"GitHub"}],["$","a",null,{"href":"mailto:alex.morgan@example.com","className":"underline transition-colors duration-200 hover:text-slate-900 focus-visible:rounded-sm focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-600 dark:hover:text-slate-100","children":"Email"}]]}]]}]}]}]]}],"$Lb","$Lc"]}]}]]}],"p":"$@d","v":null,"s":"$e"},"c":"$Qf"},"h":{"r":"$L19","p":"$@1a","v":null,"s":"$e"}},"a":"$@1b","u":"$@1c","b":"L5Zxh-XYvmVupX-R9P68l"}
+1e:I[887,[],"OutletBoundary"]
+1f:"$Sreact.suspense"
+21:"ViewportBoundary"
+22:I[887,[],"$21"]
+23:"MetadataBoundary"
+24:I[887,[],"$23"]
+25:I[214,[],"IconMark"]
 :HL["/images/profile.webp","image",{"type":"image/webp"}]
-c:X
-f:X
-f:C
-12:[["children",{"s":"__PAGE__","h":160,"d":{"r":["$","$1","c",{"children":["$L13",null,["$","$L14",null,{"children":["$","$15",null,{"name":"Next.MetadataOutlet","children":"$@16"}]}]]}],"p":"$@17","v":null,"s":"$c"}}]]
-10:[["children",{"s":{"n":"slug","t":"d","k":"NON-EXISTENT-SLUG","s":["page"]},"h":65632,"d":{"r":["$","$1","c",{"children":[null,["$","$L5",null,{"parallelRouterKey":"children","template":["$","$L8",null,{}]}]]}],"p":"$@11","v":"$f","s":"$c"},"c":"$Q12"}]]
-d:[["children",{"s":"blog","h":131168,"d":{"r":["$","$1","c",{"children":[null,["$","$L5",null,{"parallelRouterKey":"children","template":["$","$L8",null,{}]}]]}],"p":"$@e","v":"$f","s":"$c"},"c":"$Q10"}]]
-0:{"t":{"t":{"s":"","h":131152,"d":{"r":["$","$1","c",{"children":[[["$","link","0",{"rel":"stylesheet","href":"/academic-portfolio/_next/static/css/72c5386ea13cb57a.css","precedence":"next"}]],["$","html",null,{"lang":"en","suppressHydrationWarning":true,"children":["$","body",null,{"suppressHydrationWarning":true,"className":"min-h-full bg-stone-100 dark:bg-slate-800","children":[["$","div",null,{"className":"flex min-h-full flex-col","children":[["$","$L4",null,{"name":"Dr. Alex Morgan","items":[{"name":"Projects","href":"/projects"},{"name":"Publications","href":"/publications"},{"name":"About","href":"/about"}]}],["$","main",null,{"className":"flex-1","children":["$","$L5",null,{"parallelRouterKey":"children","error":"$7","errorStyles":[],"errorScripts":null,"template":["$","$L8",null,{}],"notFound":[["$","main",null,{"className":"mx-auto flex min-h-[calc(100vh-6rem)] flex-col items-center justify-center px-4 py-16 text-center","children":["$","div",null,{"className":"rounded-3xl bg-white p-10 shadow-sm ring-1 ring-slate-200 dark:bg-slate-900 dark:ring-slate-700","children":[["$","p",null,{"className":"text-sm font-semibold tracking-[0.3em] text-sky-600 uppercase","children":"404"}],["$","h1",null,{"className":"mt-4 text-4xl font-bold tracking-tight text-slate-900 dark:text-white","children":"Page not found"}],["$","p",null,{"className":"mt-4 max-w-xl text-base leading-7 text-slate-600 dark:text-slate-300","children":"The page you are looking for does not exist or has been moved. Please check the URL or return to the homepage."}],["$","$La",null,{"href":"/","className":"mt-8 inline-flex rounded-full bg-slate-900 px-6 py-3 text-sm font-semibold text-white transition hover:bg-slate-700 dark:bg-slate-100 dark:text-slate-900 dark:hover:bg-slate-200","children":"Return home"}]]}]}],[]]}]}],["$","footer",null,{"className":"py-4","children":["$","div",null,{"className":"mx-auto flex w-full max-w-6xl flex-col gap-4 px-4 sm:px-6 dark:text-white","children":["$","div",null,{"className":"flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between","children":[["$","p",null,{"className":"text-sm leading-6","children":["© ",2026," ","Dr. Alex Morgan",". Licensed under"," ",["$","a",null,{"href":"https://creativecommons.org/licenses/by-nc-nd/4.0/","target":"_blank","rel":"noopener noreferrer","className":"underline transition-colors duration-200 hover:text-slate-900 dark:hover:text-slate-100","children":"CC BY-NC-ND 4.0"}],". Code licensed under"," ",["$","a",null,{"href":"https://opensource.org/licenses/MIT","target":"_blank","rel":"noopener noreferrer","className":"underline transition-colors duration-200 hover:text-slate-900 dark:hover:text-slate-100","children":"MIT"}],"."]}],["$","div",null,{"className":"flex flex-wrap gap-4 text-sm","children":[["$","a",null,{"href":"https://www.linkedin.com/in/alex-morgan","target":"_blank","rel":"noopener noreferrer","className":"underline transition-colors duration-200 hover:text-slate-900 dark:hover:text-slate-100","children":"LinkedIn"}],["$","a",null,{"href":"https://github.com/alex-morgan","target":"_blank","rel":"noopener noreferrer","className":"underline transition-colors duration-200 hover:text-slate-900 dark:hover:text-slate-100","children":"GitHub"}],["$","a",null,{"href":"mailto:alex.morgan@example.com","className":"underline transition-colors duration-200 hover:text-slate-900 dark:hover:text-slate-100","children":"Email"}]]}]]}]}]}]]}],null,["$","link",null,{"rel":"preload","as":"image","href":"/images/profile.webp","type":"image/webp"}]]}]}]]}],"p":"$@b","v":null,"s":"$c"},"c":"$Qd"},"h":{"r":["$","$1","h",{"children":[null,["$","$L19",null,{"children":[["$","meta","0",{"charSet":"utf-8"}],["$","meta","1",{"name":"viewport","content":"width=device-width, initial-scale=1"}]]}],["$","$L1b",null,{"children":[["$","div",null,{"hidden":true,"children":["$","$15",null,{"name":"Next.Metadata","children":[["$","title","0",{"children":"Post Not Found | Dr. Alex Morgan"}],["$","meta","1",{"name":"description","content":"The requested blog post does not exist."}],["$","link","2",{"rel":"manifest","href":"/manifest.json"}],["$","meta","3",{"name":"robots","content":"index, follow"}],["$","meta","4",{"name":"googlebot","content":"index, follow"}],["$","link","5",{"rel":"canonical","href":"https://diogocastrosilva.github.io/academic-portfolio/"}],"$L1c","$L1d","$L1e","$L1f","$L20","$L21","$L22","$L23","$L24","$L25","$L26","$L27","$L28","$L29","$L2a","$L2b","$L2c","$L2d","$L2e","$L2f","$L30"]}]}],null]}],null]}],"p":"$@31","v":null,"s":"$c"}},"a":"$@32","u":"$@33","b":"KoKBfqDT-Zwd8W1-9lQmn"}
-13:E{"digest":"NEXT_HTTP_ERROR_FALLBACK;404"}
-34:I[214,[],"IconMark"]
-16:null
-1c:["$","meta","6",{"property":"og:title","content":"Dr. Alex Morgan"}]
-1d:["$","meta","7",{"property":"og:description","content":"Earth observation researcher developing machine learning and remote sensing methods for climate change mitigation and agricultural monitoring."}]
-1e:["$","meta","8",{"property":"og:url","content":"https://diogocastrosilva.github.io/academic-portfolio/"}]
-1f:["$","meta","9",{"property":"og:site_name","content":"Dr. Alex Morgan"}]
-20:["$","meta","10",{"property":"og:locale","content":"en_US"}]
-21:["$","meta","11",{"property":"og:image","content":"https://diogocastrosilva.github.io/academic-portfolio/academic-portfolio/og/home.svg"}]
-22:["$","meta","12",{"property":"og:image:width","content":"1200"}]
-23:["$","meta","13",{"property":"og:image:height","content":"630"}]
-24:["$","meta","14",{"property":"og:image:alt","content":"Dr. Alex Morgan — Portfolio"}]
-25:["$","meta","15",{"property":"og:type","content":"website"}]
-26:["$","meta","16",{"name":"twitter:card","content":"summary_large_image"}]
-27:["$","meta","17",{"name":"twitter:title","content":"Dr. Alex Morgan"}]
-28:["$","meta","18",{"name":"twitter:description","content":"Earth observation researcher developing machine learning and remote sensing methods for climate change mitigation and agricultural monitoring."}]
-29:["$","meta","19",{"name":"twitter:image","content":"https://diogocastrosilva.github.io/academic-portfolio/academic-portfolio/og/home.svg"}]
-2a:["$","meta","20",{"name":"twitter:image:alt","content":"Dr. Alex Morgan — Portfolio"}]
-2b:["$","meta","21",{"name":"twitter:image:width","content":"1200"}]
-2c:["$","meta","22",{"name":"twitter:image:height","content":"630"}]
-2d:["$","link","23",{"rel":"icon","href":"/favicon.ico"}]
-2e:["$","link","24",{"rel":"icon","href":"/favicon.svg","type":"image/svg+xml"}]
-2f:["$","link","25",{"rel":"apple-touch-icon","href":"/favicon.svg","type":"image/svg+xml"}]
-30:["$","$L34","26",{}]
-c:300
-33:true
-c:C
-32:0
+b:null
+c:["$","link",null,{"rel":"preload","as":"image","href":"/images/profile.webp","type":"image/webp"}]
+10:["$","$1","c",{"children":[null,["$","$L5",null,{"parallelRouterKey":"children","template":["$","$L8",null,{}]}]]}]
+14:["$","$1","c",{"children":[null,["$","$L5",null,{"parallelRouterKey":"children","template":["$","$L8",null,{}]}]]}]
+17:["$","$1","c",{"children":["$L1d",null,["$","$L1e",null,{"children":["$","$1f",null,{"name":"Next.MetadataOutlet","children":"$@20"}]}]]}]
+19:["$","$1","h",{"children":[null,["$","$L22",null,{"children":[["$","meta","0",{"charSet":"utf-8"}],["$","meta","1",{"name":"viewport","content":"width=device-width, initial-scale=1"}]]}],["$","$L24",null,{"children":[["$","div",null,{"hidden":true,"children":["$","$1f",null,{"name":"Next.Metadata","children":[["$","title","0",{"children":"Post Not Found | Dr. Alex Morgan"}],["$","meta","1",{"name":"description","content":"The requested blog post does not exist."}],["$","link","2",{"rel":"manifest","href":"/manifest.json"}],["$","meta","3",{"name":"robots","content":"index, follow"}],["$","meta","4",{"name":"googlebot","content":"index, follow"}],["$","link","5",{"rel":"canonical","href":"https://diogocastrosilva.github.io/academic-portfolio/"}],["$","meta","6",{"property":"og:title","content":"Dr. Alex Morgan"}],["$","meta","7",{"property":"og:description","content":"Earth observation researcher developing machine learning and remote sensing methods for climate change mitigation and agricultural monitoring."}],["$","meta","8",{"property":"og:url","content":"https://diogocastrosilva.github.io/academic-portfolio/"}],["$","meta","9",{"property":"og:site_name","content":"Dr. Alex Morgan"}],["$","meta","10",{"property":"og:locale","content":"en_US"}],["$","meta","11",{"property":"og:image","content":"https://diogocastrosilva.github.io/academic-portfolio/academic-portfolio/og/home.svg"}],["$","meta","12",{"property":"og:image:width","content":"1200"}],["$","meta","13",{"property":"og:image:height","content":"630"}],["$","meta","14",{"property":"og:image:alt","content":"Dr. Alex Morgan — Portfolio"}],["$","meta","15",{"property":"og:type","content":"website"}],["$","meta","16",{"name":"twitter:card","content":"summary_large_image"}],["$","meta","17",{"name":"twitter:title","content":"Dr. Alex Morgan"}],["$","meta","18",{"name":"twitter:description","content":"Earth observation researcher developing machine learning and remote sensing methods for climate change mitigation and agricultural monitoring."}],["$","meta","19",{"name":"twitter:image","content":"https://diogocastrosilva.github.io/academic-portfolio/academic-portfolio/og/home.svg"}],["$","meta","20",{"name":"twitter:image:alt","content":"Dr. Alex Morgan — Portfolio"}],["$","meta","21",{"name":"twitter:image:width","content":"1200"}],["$","meta","22",{"name":"twitter:image:height","content":"630"}],["$","link","23",{"rel":"icon","href":"/favicon.ico"}],["$","link","24",{"rel":"icon","href":"/favicon.svg","type":"image/svg+xml"}],["$","link","25",{"rel":"apple-touch-icon","href":"/favicon.svg","type":"image/svg+xml"}],["$","$L25","26",{}]]}]}],null]}],null]}]
+1d:E{"digest":"NEXT_HTTP_ERROR_FALLBACK;404"}
+20:null
+1c:true
+e:300
+e:C
+1b:0
+15:"$undefined"
 11:"$undefined"
-e:"$undefined"
-b:"$undefined"
-31:"$undefined"
-17:"$undefined"
+1a:"$undefined"
+18:"$undefined"
+d:"$undefined"
