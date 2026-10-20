@@ -222,7 +222,25 @@ body images referenced in Markdown) are automatically synced to the public direc
 
 - Recommended size: 1200x630px (16:9 aspect ratio)
 - Supported formats: PNG, JPG, JPEG, WebP, GIF, SVG
+- SVG images are copied as-is (no WebP conversion or resizing); raster formats are resized to 1200px width and converted to WebP during sync
 - If the image is missing or the filename is wrong, a placeholder is used automatically
+
+#### Image Sourcing and Licensing
+
+- **Use your own images** or images you have permission to use. The template does
+  not include any third-party image stock libraries.
+- **Sample content images** (`libs/projects/src/md/first-project/`,
+  `libs/publications/src/md/`, `libs/blog/src/md/`) are provided under
+  CC BY-NC-ND 4.0 and are synthetic/purpose-made illustrations — they do **not**
+  contain real satellite imagery, photographs of real field sites, or
+  institutional logos. See [ADR-0007](architecture/decisions/0007-licensing-policy.md)
+  for the full licensing policy.
+- **SVG illustrations** are preferred for diagrams, charts, and abstract
+  visualizations — they scale cleanly, load instantly, and have tiny file
+  sizes with no WebP conversion needed. The sample project uses SVG
+  illustrations exclusively for this reason.
+- **Alt text** is required for all images (see [Image Referencing](#image-referencing-in-content-body)).
+  Describe what the image actually depicts — not just "figure 1" or "plot".
 
 ---
 

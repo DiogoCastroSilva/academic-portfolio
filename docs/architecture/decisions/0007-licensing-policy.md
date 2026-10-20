@@ -53,3 +53,7 @@
   - `apps/main/src/configs/site-config.ts` exports `repoLicenseName` ("MIT")
     and `contentLicenseName` ("CC BY-NC-ND 4.0").
   - `LICENSE` file at repository root is the MIT license.
+  - Sample images in `libs/projects/src/md/first-project/` are CC BY-NC-ND 4.0
+    licensed, purpose-made SVG illustrations with no third-party copyright claims
+    or real-field imagery. See the "Image Sourcing and Licensing" section in
+    `docs/product/content-authoring.md`.

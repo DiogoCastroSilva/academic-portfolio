@@ -1,33 +1,79 @@
 ---
-title: "Grapevine virus detection in Lodi, California"
+title: "Synthetic Spectral Signature Visualization"
 date: "2025-11-01"
-tags: ["intro", "welcome"]
-excerpt: "Field notes from grapevine virus screening in Lodi, California."
+tags: ["intro", "welcome", "illustration"]
+excerpt: "Template example: synthetic data visualization techniques for spectral analysis workflows."
 draft: true
-image: first-project.jpeg
+image: first-project.svg
 ---
 
-<!-- TODO(owner): This is a sample/template project. Replace this content
-     with your real project description, add your own images, and remove
-     the `draft: true` line after filling in the details. This sample
-     references a real NASA DEVELOP project for illustration only;
-     do not present it as your own work without replacing it. -->
+<!-- TODO(owner): This is sample/illustrative content demonstrating the
+     portfolio template. Replace with your own project description, title,
+     images, tags, and links. The title, excerpt, and all image alt text
+     clearly indicate this is a synthetic demonstration. Remove
+     `draft: true` after filling in your real details. -->
 
 ## Summary
 
-This project from the Fall 2025 NASA DEVELOP term was conducted in partnership with the Lodi Winegrape Commission, NASA Acres, and the Gold Lab at Cornell University to develop and test a scalable grapevine virus (GLRaV-3) detection model using Earth observations. The team developed a random forest classification model using hyperspectral imagery from EMIT and multispectral imagery from Sentinel-2 MSI to classify vineyard areas based on the presence of virus symptoms. The EMIT-based model showed greater sensitivity to areas with higher densities of symptomatic vines than the Sentinel-2 model, suggesting that hyperspectral data may be more suitable for detecting virus symptoms. These findings indicate that spectral resolution may be more critical than spatial resolution for this application.
+This is a **template example** showing how to structure a project entry in the
+portfolio. It demonstrates the content format — title, date, tags, excerpt,
+cover image, body images with alt text, and optional links — using entirely
+synthetic visualization concepts.
 
-![EMIT spectral signatures showing high- and low-infection areas](test-emit.jpeg "Figure 1. EMIT spectral signatures showing clear differences between high- and low-infection vineyard areas.")
-![Sentinel-2 false-color composite showing subtle infection differences](sentinel.jpeg "Figure 2. Sentinel-2 composite showing only subtle, overlapping differences between infection levels.")
+The fictional project below illustrates a hypothetical spectral signature
+analysis workflow. The SVG illustrations are purpose-made and clearly synthetic:
+they use abstract geometric shapes, placeholder data, and deliberately
+non-realistic color schemes. They are **not** real satellite imagery, **not**
+from any actual field site, and **not** associated with any real research
+program, institution, or individual.
 
-The team assessed how and where the spectral signatures might differ between areas with high and low infection. EMIT shows a clear difference between high- and low-infection areas, while Sentinel-2 shows only subtle, overlapping differences, limiting its ability to reliably distinguish between infection levels.
+The cover image shows a synthetic visualization dashboard with abstract
+bar-chart elements, colored polygonal annotations, and a circular legend —
+all rendered in a consistent sky-blue palette to match the site's design
+system. The body images show placeholder spectral plots, false-color composites,
+and model prediction maps.
 
-![EMIT random forest model predictions for GLRaV-3 symptomatic classes](emit.jpeg "Figure 3. Model predictions for GLRaV-3 symptomatic classes, applied to PCA-transformed EMIT imagery of Lodi vineyards, August–September 2022–2024.")
+## Spectral Analysis Concepts
 
-EMIT random forest model predictions for GLRaV-3 symptomatic classes. Model predictions were made by applying the best performing random forest model to PCA-transformed EMIT imagery of Lodi vineyards from August and September, 2022–2024.
+This fictional project concept explores how different data sources represent
+landscape features. Hyperspectral imaging captures hundreds of narrow spectral
+bands, allowing detailed material identification, while multispectral imaging
+captures fewer broader bands at higher spatial resolution.
 
-**Team:** Audrey Chin, Noah Larkin, Derek Gonzalez, Monica Napoles Serrano, Dr. Alex Morgan (Lead)
+The synthetic visualizations below illustrate abstract concepts:
 
-**Paper:** [https://ntrs.nasa.gov/citations/20250011141](https://ntrs.nasa.gov/citations/20250011141)
+![Synthetic spectral signature plot showing abstract reflectance curves across wavelength bands — illustrative diagram](spectral-comparison.svg "Figure 1. Synthetic spectral signature plot with abstract reflectance curves across hypothetical wavelength bands.")
 
-**Presentation:** [https://ntrs.nasa.gov/citations/20250010829](https://ntrs.nasa.gov/citations/20250010829)
+The first illustration shows spectral signatures represented as abstract curved
+polylines across a simplified wavelength axis. The second illustration presents
+a false-color composite using gradient-filled rectangles to represent how
+different feature classes might appear under different spectral band combinations.
+
+![Synthetic false-color composite diagram using abstract gradient-filled rectangles to represent land cover classes — illustrative diagram](sentinel-composite.svg "Figure 2. Synthetic false-color composite illustration with gradient-filled regions representing hypothetical land cover categories.")
+
+The composite visualization demonstrates how color mappings can highlight or
+obscure subtle spectral differences. In this synthetic example, distinct color
+palettes illustrate the concept of band combination selection.
+
+![Synthetic model prediction map with grid-pattern background and color-coded classification zones — illustrative diagram](model-predictions.svg "Figure 3. Synthetic classification map with grid background and color-coded risk zones.")
+
+The prediction map illustrates how a hypothetical classification model might
+partition a landscape into discrete categories. The grid-pattern background
+and uniform color blocks are clearly synthetic and do not represent any real
+geographic area.
+
+## Template Usage
+
+To create your own project:
+
+1. Delete this directory or replace its contents.
+2. Edit the frontmatter `title`, `date`, `tags`, `excerpt`, and `image` to
+   match your project.
+3. Remove the `draft: true` line to publish.
+4. Replace the body text and images with your own content.
+5. Update or remove the `links` array below.
+
+**Links:**
+
+- [Template documentation](/docs/content-authoring)
+- [License information](/docs/architecture/decisions/0007-licensing-policy)
