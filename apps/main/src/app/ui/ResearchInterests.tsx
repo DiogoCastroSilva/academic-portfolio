@@ -40,7 +40,7 @@ export const ResearchInterests = ({ items }: ResearchInterestsProps) => {
           {items.map((area, index) => (
             <MotionDiv
               key={area.title}
-              className="flex flex-col gap-3 rounded-xl border border-zinc-200 bg-white p-6 dark:bg-white"
+              className="flex flex-col gap-3 rounded-xl border border-zinc-200 bg-white p-6 dark:border-zinc-300 dark:bg-sky-50"
               {...(shouldReduceMotion
                 ? {}
                 : {

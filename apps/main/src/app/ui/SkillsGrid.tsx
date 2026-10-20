@@ -56,7 +56,7 @@ export const SkillsGrid = ({ categories }: SkillsGridProps) => {
                 {category.items.map((skill, skillIndex) => (
                   <MotionSpan
                     key={skill}
-                    className="rounded-full border border-zinc-300 bg-white px-4 py-2 text-sm font-medium text-slate-700 dark:border-zinc-400 dark:bg-white dark:text-slate-700"
+                    className="rounded-full border border-zinc-300 bg-white px-4 py-2 text-sm font-medium text-slate-700 dark:border-zinc-400 dark:bg-sky-50 dark:text-slate-700"
                     {...(shouldReduceMotion
                       ? {}
                       : {

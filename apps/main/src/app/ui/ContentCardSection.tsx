@@ -92,7 +92,7 @@ export function ContentCardSection({
               {visibleItems.map((item, index) => (
                 <article
                   key={item.slug}
-                  className="animate-fadeInUp rounded-2xl border border-zinc-200 bg-white motion-reduce:animate-none"
+                  className="animate-fadeInUp rounded-2xl border border-zinc-200 bg-white motion-reduce:animate-none dark:border-zinc-300 dark:bg-sky-50"
                   style={{
                     animationDelay: `${index * 100}ms`,
                   }}
@@ -102,7 +102,7 @@ export function ContentCardSection({
                     className="group block rounded-lg focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-600"
                     aria-label={`Read more: ${item.title}`}
                   >
-                    <div className="relative aspect-[16/9] w-full overflow-hidden bg-stone-200 dark:bg-stone-700">
+                    <div className="relative aspect-[16/9] w-full overflow-hidden bg-stone-200 dark:bg-stone-300">
                       <ContentImage
                         src={item.imageSrc}
                         alt={item.title}

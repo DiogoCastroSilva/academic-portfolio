@@ -61,4 +61,23 @@ describe("AboutHero accessibility", () => {
     const img = screen.getByAltText(`Profile picture of ${mockProfile.name}`);
     expect(img).toBeInTheDocument();
   });
+
+  // ---------------------------------------------------------------------------
+  // Phase 3: Surface consistency
+  // ---------------------------------------------------------------------------
+
+  it("section has explicit bg-white in light mode for consistent surfaces", () => {
+    const { container } = render(<AboutHero profile={mockProfile} />);
+    const section = container.querySelector("section");
+    expect(section).toHaveClass("bg-white");
+    expect(section).toHaveClass("dark:bg-sky-50");
+  });
+
+  it("role text uses a color that is readable on light-blue surfaces in dark mode", () => {
+    const { container } = render(<AboutHero profile={mockProfile} />);
+    const roleEl = container.querySelector("p.mt-2");
+    expect(roleEl).toHaveClass("text-gray-600");
+    // On the light-blue surface (dark:bg-sky-50), gray-600 provides adequate contrast
+    expect(roleEl).not.toHaveClass("dark:text-gray-300");
+  });
 });

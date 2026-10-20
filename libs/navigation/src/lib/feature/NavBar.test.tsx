@@ -111,4 +111,28 @@ describe("NavBar accessibility", () => {
       expect(link).not.toHaveAttribute("aria-current");
     });
   });
+
+  // ---------------------------------------------------------------------------
+  // Phase 3: Dark-mode active indicator visibility
+  // ---------------------------------------------------------------------------
+
+  it("active indicator uses visible border color (not white) for light mode", () => {
+    render(<NavBar currentPath="/projects" />);
+    const projectsLinks = screen.getAllByText("Projects");
+    projectsLinks.forEach((link) => {
+      expect(link).toHaveAttribute("aria-current", "page");
+      const className = link.getAttribute("class") || "";
+      // Must use a visible accent color, not border-white which is invisible
+      expect(className).toMatch(/aria-current\/page:border-cyan-500/);
+      expect(className).not.toMatch(/aria-current\/page:border-white/);
+    });
+  });
+
+  it("brand link active indicator uses visible border color", () => {
+    render(<NavBar currentPath="/" name="Test Portfolio" />);
+    const homeLink = screen.getByText("Test Portfolio");
+    expect(homeLink).toHaveAttribute("aria-current", "page");
+    const className = homeLink.getAttribute("class") || "";
+    expect(className).toMatch(/aria-current\/page:border-cyan-500/);
+  });
 });

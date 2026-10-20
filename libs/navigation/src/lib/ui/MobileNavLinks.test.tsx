@@ -158,4 +158,19 @@ describe("MobileNavLinks accessibility", () => {
     const projectsLink = screen.getByText("Projects");
     expect(projectsLink).not.toHaveAttribute("aria-current");
   });
+
+  // ---------------------------------------------------------------------------
+  // Phase 3: Active indicator visibility
+  // ---------------------------------------------------------------------------
+
+  it("active indicator uses visible border color (not border-white)", () => {
+    render(<MobileNavLinks isMenuOpen={true} currentPath="/projects" />);
+
+    const projectsLink = screen.getByText("Projects");
+    expect(projectsLink).toHaveAttribute("aria-current", "page");
+    const className = projectsLink.getAttribute("class") || "";
+    // White border is invisible on light backgrounds in light mode
+    expect(className).toMatch(/aria-current\/page:border-cyan-500/);
+    expect(className).not.toMatch(/aria-current\/page:border-white/);
+  });
 });

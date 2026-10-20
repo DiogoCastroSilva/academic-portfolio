@@ -325,3 +325,46 @@ describe("ContentCardSection empty state", () => {
     expect(emptyDiv).toHaveClass("text-center");
   });
 });
+
+describe("ContentCardSection dark-mode surface consistency", () => {
+  it("card surfaces use dark:bg-sky-50 (light surface) matching the section in dark mode", () => {
+    const { container } = render(
+      <ContentCardSection
+        heading="Projects"
+        headingId="projects-heading"
+        items={mockItems}
+        hrefPrefix="/projects"
+      />,
+    );
+    const article = container.querySelector("article");
+    expect(article).toHaveClass("dark:bg-sky-50");
+    // Must NOT use a dark card background that would clash with light section
+    expect(article).not.toHaveClass("dark:bg-stone-700");
+  });
+
+  it("card borders are visible in dark mode", () => {
+    const { container } = render(
+      <ContentCardSection
+        heading="Projects"
+        headingId="projects-heading"
+        items={mockItems}
+        hrefPrefix="/projects"
+      />,
+    );
+    const article = container.querySelector("article");
+    expect(article).toHaveClass("dark:border-zinc-300");
+  });
+
+  it("section has explicit bg-white in light mode for consistent surfaces", () => {
+    const { container } = render(
+      <ContentCardSection
+        heading="Projects"
+        headingId="projects-heading"
+        items={mockItems}
+        hrefPrefix="/projects"
+      />,
+    );
+    const section = container.querySelector("section");
+    expect(section).toHaveClass("bg-white");
+  });
+});

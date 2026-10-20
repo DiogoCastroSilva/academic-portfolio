@@ -13,7 +13,7 @@ export const AboutHero = ({ profile }: AboutHeroProps) => {
   const MotionDiv = shouldReduceMotion ? "div" : motion.div;
 
   return (
-    <section className="mx-4 rounded-2xl p-6 sm:p-12 dark:bg-sky-50">
+    <section className="mx-4 rounded-2xl bg-white p-6 sm:p-12 dark:bg-sky-50">
       <MotionDiv
         className="flex flex-col gap-8 md:gap-12"
         {...(shouldReduceMotion
