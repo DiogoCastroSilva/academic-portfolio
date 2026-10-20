@@ -70,6 +70,7 @@ See [docs/architecture/decisions/](docs/architecture/decisions/) for ADRs on:
 - Content validation and rendering security (ADR-0004)
 - Testing strategy (ADR-0005)
 - Shared frontend tooling (ADR-0006)
+- Licensing policy (ADR-0007)
 
 ## Key implementation details
 

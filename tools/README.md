@@ -9,10 +9,12 @@ These Node.js scripts support the static build and deployment. They are invoked 
 Copies images from `libs/*/src/md/` into `apps/main/public/` while preserving entry-relative paths. It also resizes raster images to a maximum width of 1200px and generates WebP variants for JPEG/PNG where conversion is available. SVG files are copied as-is.
 
 Nx targets:
+
 - `npx nx run main:sync-content-assets` — normal asset sync for build/test.
 - `npx nx run main:sync-content-assets-dev` — skips resize and WebP generation for faster local development.
 
 Environment variables:
+
 - `SKIP_WEBP_CONVERSION=true` — skip WebP generation.
 - `SKIP_IMAGE_RESIZE=true` — skip raster resizing.
 

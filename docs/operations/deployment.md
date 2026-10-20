@@ -154,8 +154,8 @@ npm ci
 NEXT_PUBLIC_BASE_PATH="/academic-portfolio" \
 NEXT_PUBLIC_DEPLOYMENT_URL="https://diogocastrosilva.github.io/academic-portfolio" \
 npx nx build main
-npx nx run main:sync-content-assets  # ensure images are copied
-# Then push the public/ directory to the gh-pages branch
+npx nx run main:generate-sitemap
+# The build already syncs content assets; push public/ to the gh-pages branch
 ```
 
 ## Environment Variables in CI

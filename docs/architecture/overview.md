@@ -108,7 +108,7 @@ Rendered by ContentDetail (server component) via dangerouslySetInnerHTML
 
 ## Static Generation and Asset Handling
 
-Cover images are stored alongside each entry's `README.md` in `libs/{projects|publications|blog}/src/md/{slug}/`. A Node.js script (`tools/sync-content-assets.mjs`) copies them to `apps/main/public/{projects,publications}/` before build or dev:
+Cover images are stored alongside each entry's `README.md` in `libs/{projects|publications|blog}/src/md/{slug}/`. A Node.js script (`tools/sync-content-assets.mjs`) copies them to `apps/main/public/{projects,publications,blog}/` before build or dev:
 
 ```
 npx nx run main:sync-content-assets
