@@ -154,7 +154,7 @@ async function main() {
 
   writeOgImage("home.svg", {
     title: siteName,
-    subtitle: "Science, nature-based solutions, projects, and publications",
+    subtitle: siteRole,
   });
 
   writeOgImage("about.svg", {
