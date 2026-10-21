@@ -17,5 +17,5 @@
   <path d="M380 500 Q400 520 420 500" stroke="#0284c7" stroke-width="3" stroke-linecap="round" fill="none"/>
   <rect x="80" y="640" width="640" height="100" rx="50" fill="#ffffff" opacity="0.9" transform="rotate(-5 400 690)"/>
   <rect x="160" y="630" width="480" height="80" rx="40" fill="#ffffff" opacity="0.1" transform="rotate(-3 400 670)"/>
-  <text x="400" y="710" font-family="Inter, system-ui, sans-serif" font-size="32" font-weight="600" fill="#0284c7" text-anchor="middle">Dr. Alex</text>
+  <text x="400" y="710" font-family="Inter, system-ui, sans-serif" font-size="32" font-weight="600" fill="#0284c7" text-anchor="middle">Portfolio</text>
 </svg>

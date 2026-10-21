@@ -2,18 +2,18 @@
   "name": "Academic Portfolio",
   "short_name": "Portfolio",
   "description": "Academic portfolio.",
-  "start_url": "/",
+  "start_url": "/academic-portfolio/",
   "display": "standalone",
   "background_color": "#1e293b",
   "theme_color": "#028468",
   "icons": [
     {
-      "src": "/favicon.ico",
+      "src": "/academic-portfolio/favicon.ico",
       "sizes": "32x32",
       "type": "image/x-icon"
     },
     {
-      "src": "/favicon.svg",
+      "src": "/academic-portfolio/favicon.svg",
       "sizes": "100x100",
       "type": "image/svg+xml",
       "purpose": "maskable"
