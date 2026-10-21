@@ -280,15 +280,15 @@ function generateManifest() {
     theme_color: "#028468",
     icons: [
       {
-        src: `${basePath}/favicon.ico`,
-        sizes: "32x32",
-        type: "image/x-icon",
-      },
-      {
         src: `${basePath}/favicon.svg`,
         sizes: "100x100",
         type: "image/svg+xml",
         purpose: "maskable",
+      },
+      {
+        src: `${basePath}/favicon.ico`,
+        sizes: "32x32",
+        type: "image/x-icon",
       },
     ],
   };

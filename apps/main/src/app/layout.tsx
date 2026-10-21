@@ -21,8 +21,8 @@ export const metadata = {
     : undefined,
   icons: {
     icon: [
-      { url: withPublicBasePath("/favicon.ico") },
       { url: withPublicBasePath("/favicon.svg"), type: "image/svg+xml" },
+      { url: withPublicBasePath("/favicon.ico") },
     ],
     apple: {
       url: withPublicBasePath("/favicon.svg"),
