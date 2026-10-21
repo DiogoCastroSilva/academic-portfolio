@@ -8,15 +8,15 @@
   "theme_color": "#028468",
   "icons": [
     {
-      "src": "/academic-portfolio/favicon.ico",
-      "sizes": "32x32",
-      "type": "image/x-icon"
-    },
-    {
       "src": "/academic-portfolio/favicon.svg",
       "sizes": "100x100",
       "type": "image/svg+xml",
       "purpose": "maskable"
+    },
+    {
+      "src": "/academic-portfolio/favicon.ico",
+      "sizes": "32x32",
+      "type": "image/x-icon"
     }
   ]
 }
