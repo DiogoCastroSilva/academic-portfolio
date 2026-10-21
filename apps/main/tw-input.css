@@ -9,3 +9,4 @@
 @source "../../libs/design-system/src/**/*.{js,ts,jsx,tsx,html}";
 @source "../../libs/projects/src/**/*.md";
 @source "../../libs/publications/src/**/*.md";
+@source "../../libs/blog/src/**/*.md";

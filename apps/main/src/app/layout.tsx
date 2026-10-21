@@ -4,6 +4,8 @@ import "./global.css";
 import { CloudflareAnalytics } from "../components/CloudflareAnalytics";
 import { Footer } from "../components/Footer";
 
+import { withPublicBasePath } from "@academic-portfolio/content";
+
 import { siteConfig } from "../configs/site-config";
 import { ogImageRef } from "./lib/og-image";
 
@@ -19,15 +21,15 @@ export const metadata = {
     : undefined,
   icons: {
     icon: [
-      { url: "/favicon.ico" },
-      { url: "/favicon.svg", type: "image/svg+xml" },
+      { url: withPublicBasePath("/favicon.ico") },
+      { url: withPublicBasePath("/favicon.svg"), type: "image/svg+xml" },
     ],
     apple: {
-      url: "/favicon.svg",
+      url: withPublicBasePath("/favicon.svg"),
       type: "image/svg+xml",
     },
   },
-  manifest: "/manifest.json",
+  manifest: withPublicBasePath("/manifest.json"),
   openGraph: {
     type: "website",
     locale: "en_US",
@@ -100,7 +102,7 @@ export default function RootLayout({
         <link
           rel="preload"
           as="image"
-          href="/images/profile.svg"
+          href={withPublicBasePath("/images/profile.svg")}
           type="image/svg+xml"
         />
       </body>

@@ -113,6 +113,8 @@ jobs:
 
             # ✅ Build and export Next.js app the Nx way
       - name: Build Next.js app
+        env:
+          NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION: ${{ vars.GOOGLE_SITE_VERIFICATION }}
         run: npx nx build main
 
       - name: Generate sitemap and robots.txt

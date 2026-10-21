@@ -47,16 +47,23 @@ Check for security vulnerabilities:
 npm audit
 ```
 
-Current status after modernization (36 vulnerabilities, reduced from 99):
+Current status (audited 2026-10-20, 36 vulnerabilities, reduced from 99):
 
 - **0 critical, 0 low, 20 moderate, 16 high** (down from 4 critical, 70 total).
 - All 4 critical vulnerabilities (happy-dom, proxy-addr, shell-quote, websocket-driver) eliminated.
   These were in dev-only dependencies (test environment and build tooling), not in production
   dependencies — confirmed via `npm ls --omit=dev`.
+- **Production-only audit** (`npm audit --omit=dev`): 4 moderate — all in the
+  `gray-matter` → `js-yaml` → `argparse` → `sprintf-js` transitive chain
+  (DoS via unbounded precision specifiers). A fix requires `gray-matter` 2.x
+  (a breaking major upgrade). No fix without breaking change.
 - The remaining 16 high and 20 moderate vulnerabilities are in transitive dependencies of:
   - Nx and Vite/Vitest (build/test tooling)
   - Next.js and webpack-dev-server (dev server)
   - Module Federation (build-time DTS plugin)
+- `autoprefixer` was removed from dependencies in 2026-10-20 — it was not referenced
+  by `postcss.config.js` (which uses `@tailwindcss/postcss`); Tailwind CSS v4 handles
+  vendor prefixing natively via the PostCSS plugin.
 - No direct production dependencies have known critical or high vulnerabilities.
 - happy-dom upgraded from 15.x to ^20.14.6 to resolve the critical RCE advisory
   (GHSA-37j7-fg3j-429f). Test setup updated to suppress a known harmless

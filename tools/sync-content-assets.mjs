@@ -254,6 +254,48 @@ async function main() {
     const names = [...copied].sort().join(", ") || "(none)";
     console.log(`Synced ${path.relative(root, destDir)}: ${names}`);
   }
+
+  generateManifest();
+}
+
+/**
+ * Generate manifest.json with base-path-aware URLs.
+ *
+ * Next.js does not prepend `basePath` to manifest.json file contents or
+ * to `metadata.icons`/`metadata.manifest` URLs. The static file in
+ * `public/manifest.json` serves as a root-site template; this function
+ * overwrites it at build time with the correct base path so that
+ * repository-site deployments (`/<repo>/`) get correct asset URLs.
+ */
+function generateManifest() {
+  const basePath = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
+
+  const manifest = {
+    name: "Academic Portfolio",
+    short_name: "Portfolio",
+    description: "Academic portfolio.",
+    start_url: `${basePath}/`,
+    display: "standalone",
+    background_color: "#1e293b",
+    theme_color: "#028468",
+    icons: [
+      {
+        src: `${basePath}/favicon.ico`,
+        sizes: "32x32",
+        type: "image/x-icon",
+      },
+      {
+        src: `${basePath}/favicon.svg`,
+        sizes: "100x100",
+        type: "image/svg+xml",
+        purpose: "maskable",
+      },
+    ],
+  };
+
+  const manifestPath = path.join(root, "apps/main/public/manifest.json");
+  fs.writeFileSync(manifestPath, JSON.stringify(manifest, null, 2) + "\n");
+  console.log(`Generated manifest.json (basePath: "${basePath || "(root)"}")`);
 }
 
 main();

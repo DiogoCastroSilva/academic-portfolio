@@ -19,13 +19,13 @@ image: "profile.svg"
 cvUrl: "cv.pdf"
 education:
   - degree: "PhD in Earth & Atmospheric Sciences"
-    institution: "Cornell University"
+    institution: "Green Mountain University"
     period: "2024 – Present"
     focus: "Remote sensing and environmental analysis"
     details:
       - "Focus on Earth observation applications for agricultural monitoring and climate solutions"
       - "Working with hyperspectral and multispectral satellite imagery"
-      - "Collaboration with NASA DEVELOP program"
+      - "Collaboration with satellite remote sensing research group"
   - degree: "BSc in Science"
     # TODO(owner): Replace with real undergraduate details
     institution: "University"

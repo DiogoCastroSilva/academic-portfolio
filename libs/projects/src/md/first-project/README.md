@@ -10,8 +10,8 @@ image: first-project.svg
 <!-- TODO(owner): This is sample/illustrative content demonstrating the
      portfolio template. Replace with your own project description, title,
      images, tags, and links. The title, excerpt, and all image alt text
-     clearly indicate this is a synthetic demonstration. Remove
-     `draft: true` after filling in your real details. -->
+     clearly indicate this is a synthetic demonstration. Set
+     `draft: true` to hide, or leave `draft: false` to display. -->
 
 ## Summary
 
@@ -69,7 +69,8 @@ To create your own project:
 1. Delete this directory or replace its contents.
 2. Edit the frontmatter `title`, `date`, `tags`, `excerpt`, and `image` to
    match your project.
-3. Remove the `draft: true` line to publish.
+3. Set `draft: true` to hide this example from your published site, or leave
+   `draft: false` to keep it visible.
 4. Replace the body text and images with your own content.
 5. Update or remove the `links` array below.
 

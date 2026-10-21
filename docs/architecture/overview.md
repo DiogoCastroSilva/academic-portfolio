@@ -20,7 +20,6 @@ apps/main/src/app/
 ├── error.tsx           Error boundary with dev-mode stack trace
 ├── layout.tsx          Root layout with NavBar, Footer, analytics
 ├── page.tsx            Homepage
-└── ui/                 Reusable UI components
 ```
 
 ### Routes at build time

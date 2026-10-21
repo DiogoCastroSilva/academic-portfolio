@@ -126,7 +126,16 @@ I'm a PhD researcher passionate about leveraging Earth observation technology...
 
 ### Profile Photo
 
-Place your profile photo (JPEG or PNG) in the same `src/md/` directory. It will be automatically synced to the public folder and served as a WebP-optimised image during the build.
+Place your profile photo (JPEG or PNG) in the same `src/md/` directory as
+`profile.svg`. It will be automatically synced to the public folder and served
+as a WebP-optimised image during the build.
+
+The default `profile.svg` is **identity-neutral** — it displays the initial "A"
+inside a circle with the label "Portfolio" below. This is safe to ship as a
+starter template. If you prefer initials matching your name, edit both:
+
+- `libs/content/src/md/profile.svg` (used for OG images)
+- `apps/main/public/images/profile.svg` (used for the rendered About page)
 
 ### CV Link
 
@@ -201,7 +210,7 @@ Write your biography here. Use standard Markdown for paragraphs, lists, and link
 
 ### Education
 
-- **PhD in Earth & Atmospheric Sciences**, Cornell University (2024 – Present)
+- **PhD in Earth & Atmospheric Sciences**, Green Mountain University (2024 – Present)
 - **BSc in Environmental Science**, University Name (2020 – 2024)
 
 ### Research Interests
@@ -252,7 +261,7 @@ Create `libs/projects/src/md/{slug}/README.md` with this template:
 ---
 title: "My Project Title"
 date: "2026-02-12"
-tags: ["React", "TypeScript", "NASA"]
+tags: ["React", "TypeScript", "Remote Sensing"]
 excerpt: "A brief summary for the project card."
 image: project-cover.jpg
 links:

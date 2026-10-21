@@ -68,6 +68,23 @@ else
 fi
 ```
 
+### Favicon and Manifest
+
+The site's favicon and Web App Manifest are base-path-aware. Next.js does not
+automatically prepend `basePath` to `metadata.icons`, `metadata.manifest`, or the
+contents of the static `manifest.json` file. To ensure correct resolution on
+both deployment types:
+
+- **Metadata icons and manifest link** (`<link rel="icon">`, `<link rel="manifest">`):
+  Paths are generated via `withPublicBasePath()` — the same utility used for OG
+  images — so they resolve to `/<repo>/favicon.ico` (project site) or
+  `/favicon.ico` (user site).
+- **`manifest.json` file contents**: The `tools/sync-content-assets.mjs` script
+  (which runs before `next build` as part of the build target's `dependsOn`)
+  generates `manifest.json` with base-path-aware `start_url` and icon `src`
+  values. The static `manifest.json` in `apps/main/public/` serves as the
+  root-site template (basePath = `""`).
+
 ## Analytics
 
 Cloudflare Web Analytics is configured in `apps/main/src/configs/site-config.ts`:
@@ -114,16 +131,17 @@ application code.
 
 ### Personalization checklist
 
-| #   | Action                                                                       | Expected result                                         |
-| --- | ---------------------------------------------------------------------------- | ------------------------------------------------------- |
-| 1   | Edit `libs/content/src/md/profile.md` (name, bio, photo)                     | Site reflects new profile on `/about/`                  |
-| 2   | Add a new project under `libs/projects/src/md/new-project/` with `README.md` | Appears in `/projects/` list and its own detail page    |
-| 3   | Add a project with `draft: true`                                             | Does NOT appear in `/projects/` list or sitemap         |
-| 4   | Delete `draft: true` from a project                                          | Now appears in `/projects/` list and sitemap            |
-| 5   | Replace `cover.jpg` in a project folder                                      | New image appears in OG image and detail page           |
-| 6   | Add a publication under `libs/publications/src/md/`                          | Appears in `/publications/` with authors/venue metadata |
-| 7   | Delete all sample entries from a collection                                  | Collection page renders intentional empty state         |
-| 8   | Edit `libs/content/src/md/profile.md` (`name`, `description`, contact links) | Metadata (title, description, OG) reflects changes      |
+| #   | Action                                                                                                | Expected result                                                                 |
+| --- | ----------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------- |
+| 1   | Edit `libs/content/src/md/profile.md` (name, bio, photo)                                              | Site reflects new profile on `/about/`                                          |
+| 2   | Add a new project under `libs/projects/src/md/new-project/` with `README.md`                          | Appears in `/projects/` list and its own detail page                            |
+| 3   | Add a project with `draft: true`                                                                      | Does NOT appear in `/projects/` list or sitemap                                 |
+| 4   | Delete `draft: true` from a project                                                                   | Now appears in `/projects/` list and sitemap                                    |
+| 5   | Replace `cover.jpg` in a project folder                                                               | New image appears in OG image and detail page                                   |
+| 6   | Add a publication under `libs/publications/src/md/`                                                   | Appears in `/publications/` with authors/venue metadata                         |
+| 7   | Delete all sample entries from a collection                                                           | Collection page renders intentional empty state                                 |
+| 8   | Edit `libs/content/src/md/profile.md` (`name`, `description`, contact links)                          | Metadata (title, description, OG) reflects changes                              |
+| 9   | Replace avatar `libs/content/src/md/profile.svg` and `apps/main/public/images/profile.svg` (optional) | Initials in avatar match your name; otherwise identity-neutral default is shown |
 
 ### No-code confirmation
 
@@ -164,5 +182,34 @@ The CI workflow sets these variables automatically:
 
 - `NEXT_PUBLIC_BASE_PATH` — derived from repository name
 - `NEXT_PUBLIC_DEPLOYMENT_URL` — derived from repository name
+- `NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION` — optional, set via GitHub **repository variable** named `GOOGLE_SITE_VERIFICATION` (not a secret). When unset, no Search Console verification meta tag is emitted.
 
-No GitHub secrets are required for deployment. The `GITHUB_TOKEN` (automatically provided by GitHub Actions) is used for authentication.
+No GitHub secrets are required for basic deployment. The `GITHUB_TOKEN` (automatically provided by GitHub Actions) is used for authentication.
+
+## Google Search Console Verification
+
+To verify your site ownership in Google Search Console:
+
+1. Add a **property** in Google Search Console using your GitHub Pages URL
+   (e.g., `https://{username}.github.io/{repo}/`).
+2. Choose the **HTML tag** verification method.
+3. Copy the verification code (e.g., `abc123...`).
+4. In your GitHub repository, go to **Settings → Variables → Actions**.
+5. Click **New repository variable**.
+   - **Name:** `GOOGLE_SITE_VERIFICATION`
+   - **Value:** Paste the verification code from Google Search Console.
+6. Push to `main` (or trigger the workflow manually). The CI workflow passes this
+   value to the build via `NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION`, which is
+   emitted as a `<meta name="google-site-verification" content="...">` tag on
+   every page.
+7. Click **Verify** in Search Console. The tag is present on all pages
+   (including the 404 page), so verification should succeed immediately.
+
+> **Note:** If you already verified via DNS or another method, skip this.
+> The meta tag is optional — the site builds and deploys correctly without it.
+
+> **Warning (expected):** When `GOOGLE_SITE_VERIFICATION` is not yet defined as a
+> repository variable, GitHub Actions may emit a warning: _"Context access might
+> be invalid: GOOGLE_SITE_VERIFICATION."_ This is a linting warning, not a build
+> error — the expression evaluates to an empty string and the workflow proceeds
+> normally. Define the variable to resolve the warning.
