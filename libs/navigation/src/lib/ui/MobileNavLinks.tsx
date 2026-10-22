@@ -6,6 +6,7 @@ import {
   isPathActive,
   type NavigationItem,
 } from "../feature/config.js";
+import { ThemeToggle } from "./ThemeToggle.js";
 
 type MobileNavLinksProps = {
   currentPath?: string;
@@ -41,6 +42,12 @@ export function MobileNavLinks({
           {item.name}
         </Link>
       ))}
+      {/* Theme toggle in mobile menu — only visible on small screens
+          (the `md:hidden` class on the parent container ensures the
+          desktop-only toggle in NavBar doesn't duplicate at ≥md). */}
+      <div className="flex items-center justify-start border-l-2 border-transparent px-3 py-3">
+        <ThemeToggle />
+      </div>
     </div>
   );
 }

@@ -173,4 +173,32 @@ describe("MobileNavLinks accessibility", () => {
     expect(className).toMatch(/aria-current\/page:border-sky-600/);
     expect(className).not.toMatch(/aria-current\/page:border-white/);
   });
+
+  // ---------------------------------------------------------------------------
+  // ThemeToggle integration
+  // ---------------------------------------------------------------------------
+
+  it("renders ThemeToggle button inside mobile menu when open", () => {
+    render(<MobileNavLinks isMenuOpen={true} currentPath="/" />);
+    const themeButton = screen.getByRole("button", { name: /Theme:/i });
+    expect(themeButton).toBeInTheDocument();
+  });
+
+  it("ThemeToggle is in the DOM (hidden) when mobile menu is closed", () => {
+    const { container } = render(
+      <MobileNavLinks isMenuOpen={false} currentPath="/" />,
+    );
+    const mobileNav = document.getElementById("mobile-navigation");
+    expect(mobileNav).toHaveAttribute("hidden");
+    // The ThemeToggle button should still be in the DOM, just hidden
+    const themeButton = container.querySelector('button[aria-label*="Theme"]');
+    expect(themeButton).not.toBeNull();
+  });
+
+  it("does not duplicate ThemeToggle (one copy in mobile menu)", () => {
+    render(<MobileNavLinks isMenuOpen={true} currentPath="/" />);
+    const themeButtons = screen.getAllByRole("button", { name: /Theme:/i });
+    // Only the mobile copy should be found (desktop copy lives in NavBar, not here)
+    expect(themeButtons).toHaveLength(1);
+  });
 });

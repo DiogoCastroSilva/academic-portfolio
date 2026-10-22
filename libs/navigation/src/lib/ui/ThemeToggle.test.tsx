@@ -38,22 +38,48 @@ describe("ThemeToggle", () => {
     await expectNoA11yViolations(container);
   });
 
-  it("shows sun icon when resolved theme is light", () => {
+  it("shows sun icon (opacity-100) and hides moon icon (opacity-0) when resolved theme is light", () => {
     window.localStorage.setItem(THEME_STORAGE_KEY, "light");
     const { container } = render(<ThemeToggle />);
-    const svg = container.querySelector("svg");
-    expect(svg).toBeInTheDocument();
-    // Sun path should be visible (opacity-100)
-    const sunIcon = container.querySelector("svg");
-    expect(sunIcon).not.toBeNull();
+    const svgs = container.querySelectorAll("svg");
+    expect(svgs).toHaveLength(2);
+
+    // Sun icon has a <circle> element, moon icon has only <path>s
+    const sunIcon = Array.from(svgs).find(
+      (svg) => svg.querySelector("circle") !== null,
+    );
+    const moonIcon = Array.from(svgs).find(
+      (svg) => svg.querySelector("circle") === null,
+    );
+
+    expect(sunIcon).toBeDefined();
+    expect(sunIcon!.className).toMatch(/opacity-100/);
+
+    expect(moonIcon).toBeDefined();
+    expect(moonIcon!.className).toMatch(/opacity-0/);
   });
 
-  it("shows moon icon when resolved theme is dark", () => {
+  it("shows moon icon (opacity-100) and hides sun icon (opacity-0) when resolved theme is dark", () => {
     window.localStorage.setItem(THEME_STORAGE_KEY, "dark");
     const { container } = render(<ThemeToggle />);
     // The moon icon SVG should be rendered (present in the DOM)
-    const svg = container.querySelector("svg");
-    expect(svg).not.toBeNull();
+    const svgs = container.querySelectorAll("svg");
+    expect(svgs).toHaveLength(2);
+
+    // Sun icon has a <circle> element, moon icon has only <path>s
+    const sunIcon = Array.from(svgs).find(
+      (svg) => svg.querySelector("circle") !== null,
+    );
+    const moonIcon = Array.from(svgs).find(
+      (svg) => svg.querySelector("circle") === null,
+    );
+
+    expect(sunIcon).toBeDefined();
+    expect(sunIcon!.className).toMatch(/opacity-0/);
+
+    expect(moonIcon).toBeDefined();
+    expect(moonIcon!.className).toMatch(/opacity-100/);
+
     // data-theme attribute is set by the inline theme-init script, not by
     // the hook itself — verify it here for end-to-end confidence
     expect(document.documentElement.getAttribute("data-theme")).toBe("dark");
