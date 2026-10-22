@@ -1,6 +1,6 @@
 ---
 # This is a TEMPLATE for the profile/biography content.
-# The actual data lives in libs/content/src/md/profile.md.
+# The actual data lives in libs/content/src/md/README.md.
 # Copy the structure below and replace the values.
 title: "Profile"
 name: "Your Name"

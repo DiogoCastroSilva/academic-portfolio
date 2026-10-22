@@ -19,7 +19,7 @@ link that works for both repository-hosted PDFs and externally hosted PDFs.
 
 ## Desired outcome
 
-- A single `cvUrl` field in `profile.md` frontmatter supports both hosting modes.
+- A single `cvUrl` field in `README.md` frontmatter supports both hosting modes.
 - A "View CV (PDF)" link appears on the About page near the contact information.
 - No CV link is rendered when `cvUrl` is omitted or empty.
 - Local paths resolve correctly under the GitHub Pages base path (`/academic-portfolio`).
@@ -55,7 +55,7 @@ link that works for both repository-hosted PDFs and externally hosted PDFs.
 | `libs/content/src/lib/profile.ts`                           | Add `cvUrl` to `ProfileMeta`, `validateCvUrl`, `parseCvUrl`                         |
 | `libs/content/src/lib/profile.test.ts`                      | Add 12 tests for cvUrl parsing and validation                                       |
 | `libs/content/src/md/_profile-template.md`                  | Document `cvUrl` with Mode A/B examples; remove misleading `DEPLOYMENT_URL` CV link |
-| `libs/content/src/md/profile.md`                            | Add `cvUrl: "cv.pdf"` example                                                       |
+| `libs/content/src/md/README.md`                             | Add `cvUrl: "cv.pdf"` example                                                       |
 | `apps/main/public/cv.pdf`                                   | New placeholder PDF                                                                 |
 | `apps/main/src/features/about/AboutHero/AboutHero.tsx`      | Add conditional CV link button                                                      |
 | `apps/main/src/features/about/AboutHero/AboutHero.test.tsx` | Add CV link rendering tests                                                         |

@@ -127,7 +127,7 @@ Both are set by the CI workflow from the repository name.
 
 Each page sets `<title>` and `<meta name="description">`:
 
-- Homepage: Title from `siteConfig.name`; description from `profile.md` (`description` field) with a generic `Portfolio of {name}` fallback
+- Homepage: Title from `siteConfig.name`; description from `README.md` (`description` field) with a generic `Portfolio of {name}` fallback
 - Project/detail pages: Dynamic title and description
 
 ## Testing and CI

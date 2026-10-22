@@ -67,7 +67,11 @@ describe("NavBar accessibility", () => {
 
   it("has no violations when mobile menu is open", async () => {
     const { container } = render(<NavBar currentPath="/" />);
-    const menuButton = screen.getByRole("button");
+    // NavBar now has both a mobile menu button and a theme toggle button.
+    // Find the menu button by its aria-controls attribute.
+    const menuButton = container.querySelector(
+      'button[aria-controls="mobile-navigation"]',
+    ) as HTMLButtonElement;
     fireEvent.click(menuButton);
 
     await expectNoA11yViolations(container);

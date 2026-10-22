@@ -22,4 +22,10 @@ describe("tw-input.css content scanning", () => {
     expect(content).toContain('@source "../../libs/projects/src/**/*.md";');
     expect(content).toContain('@source "../../libs/publications/src/**/*.md";');
   });
+
+  it("configures dark variant via [data-theme] selector for theme toggle", () => {
+    expect(content).toMatch(
+      /@custom-variant\s+dark\s*\(&:where\(\[data-theme=dark\]/,
+    );
+  });
 });

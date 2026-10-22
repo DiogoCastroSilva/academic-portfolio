@@ -8,6 +8,7 @@
     "jsx": "react-jsx",
     "forceConsistentCasingInFileNames": true,
     "types": ["node", "next"],
+    "lib": ["dom", "es2022"],
     "paths": {}
   },
   "include": ["src/**/*.ts", "src/**/*.tsx"],

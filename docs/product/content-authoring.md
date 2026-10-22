@@ -8,17 +8,17 @@ Every personal or site-level change maps to a specific file or directory. Edit M
 
 | Want to…                                                   | Edit                                        | Field(s) / detail                                                                               |
 | ---------------------------------------------------------- | ------------------------------------------- | ----------------------------------------------------------------------------------------------- |
-| Change your name (shown in titles and NavBar)              | `libs/content/src/md/profile.md`            | `name` (required)                                                                               |
-| Change your professional title / role                      | `libs/content/src/md/profile.md`            | `role` (required)                                                                               |
-| Change the SEO description (search/social previews)        | `libs/content/src/md/profile.md`            | `description` (optional)                                                                        |
-| Change your location (shown in structured data)            | `libs/content/src/md/profile.md`            | `location` (optional)                                                                           |
-| Change your profile photo                                  | `libs/content/src/md/profile.md`            | `image` (optional; default `profile.svg`)                                                       |
-| Add/remove your email, LinkedIn, or GitHub                 | `libs/content/src/md/profile.md`            | `email`, `linkedInUrl`, `githubUrl` (all optional)                                              |
-| Add or change your CV link                                 | `libs/content/src/md/profile.md`            | `cvUrl` (optional; see [CV Link](#cv-link))                                                     |
-| Update your biography text                                 | `libs/content/src/md/profile.md`            | Markdown body after frontmatter                                                                 |
-| Add/edit education entries                                 | `libs/content/src/md/profile.md`            | `education` array (see [Education Entries](#education-entries))                                 |
-| Add/edit research interests                                | `libs/content/src/md/profile.md`            | `researchInterests` array                                                                       |
-| Add/edit skills                                            | `libs/content/src/md/profile.md`            | `skills` array (see [Skill Category Entries](#skill-category-entries))                          |
+| Change your name (shown in titles and NavBar)              | `libs/content/src/md/README.md`             | `name` (required)                                                                               |
+| Change your professional title / role                      | `libs/content/src/md/README.md`             | `role` (required)                                                                               |
+| Change the SEO description (search/social previews)        | `libs/content/src/md/README.md`             | `description` (optional)                                                                        |
+| Change your location (shown in structured data)            | `libs/content/src/md/README.md`             | `location` (optional)                                                                           |
+| Change your profile photo                                  | `libs/content/src/md/README.md`             | `image` (optional; default `profile.svg`)                                                       |
+| Add/remove your email, LinkedIn, or GitHub                 | `libs/content/src/md/README.md`             | `email`, `linkedInUrl`, `githubUrl` (all optional)                                              |
+| Add or change your CV link                                 | `libs/content/src/md/README.md`             | `cvUrl` (optional; see [CV Link](#cv-link))                                                     |
+| Update your biography text                                 | `libs/content/src/md/README.md`             | Markdown body after frontmatter                                                                 |
+| Add/edit education entries                                 | `libs/content/src/md/README.md`             | `education` array (see [Education Entries](#education-entries))                                 |
+| Add/edit research interests                                | `libs/content/src/md/README.md`             | `researchInterests` array                                                                       |
+| Add/edit skills                                            | `libs/content/src/md/README.md`             | `skills` array (see [Skill Category Entries](#skill-category-entries))                          |
 | Add a project                                              | `libs/projects/src/md/{slug}/README.md`     | See [Project Content](#project-content)                                                         |
 | Add a publication                                          | `libs/publications/src/md/{slug}/README.md` | See [Publication Content](#publication-content)                                                 |
 | Add a blog post                                            | `libs/blog/src/md/{slug}/README.md`         | Same frontmatter rules as projects                                                              |
@@ -27,28 +27,28 @@ Every personal or site-level change maps to a specific file or directory. Edit M
 | Enable/disable Cloudflare Analytics                        | `apps/main/src/configs/site-config.ts`      | `NEXT_PUBLIC_CLOUDFLARE_ANALYTICS_TOKEN` / `NEXT_PUBLIC_CLOUDFLARE_ANALYTICS_DISABLED` env vars |
 | Change the deployment URL / base path (GitHub Pages)       | **No edit needed**                          | Derived automatically from repository name in CI                                                |
 
-> **Note on profile vs. collection content:** Projects, publications, and blog entries use a `{slug}/README.md` directory pattern because they form **collections** — each entry is a directory with a slug, and entries are added or removed independently. The profile is a **singleton**: there is exactly one profile per site, so it lives as a single file at `libs/content/src/md/profile.md` rather than a `profile/README.md` directory. This avoids creating a one-element directory and keeps the profile's image (`profile.svg`) and template in the same `md/` folder alongside it. The content sync tool (`tools/sync-content-assets.mjs`) treats `libs/content/src/md/` as a flat image source, separate from the collection directories that mirror to `public/{collection}/{slug}/`. |
+> **Note on profile vs. collection content:** Projects, publications, and blog entries use a `{slug}/README.md` directory pattern because they form **collections** — each entry is a directory with a slug, and entries are added or removed independently. The profile is a **singleton**: there is exactly one profile per site, so it lives as a single file at `libs/content/src/md/README.md` rather than a `profile/README.md` directory. This avoids creating a one-element directory and keeps the profile's image (`profile.svg`) and template in the same `md/` folder alongside it. The content sync tool (`tools/sync-content-assets.mjs`) treats `libs/content/src/md/` as a flat image source, separate from the collection directories that mirror to `public/{collection}/{slug}/`. |
 
 ## Site Configuration
 
-Site configuration lives in `apps/main/src/configs/site-config.ts`. Most fields are read from `profile.md` at build time so you do not need to edit this file for routine changes. The file also exposes:
+Site configuration lives in `apps/main/src/configs/site-config.ts`. Most fields are read from `README.md` at build time so you do not need to edit this file for routine changes. The file also exposes:
 
 | Setting                             | Source                                        | Description                                                                                  |
 | ----------------------------------- | --------------------------------------------- | -------------------------------------------------------------------------------------------- |
-| `name`, `role`, `description`       | `profile.md` frontmatter                      | Displayed in titles, OG metadata, and JSON-LD                                                |
-| `email`, `linkedInUrl`, `githubUrl` | `profile.md` frontmatter                      | Rendered in footer and Person schema (omitted when absent)                                   |
+| `name`, `role`, `description`       | `README.md` frontmatter                       | Displayed in titles, OG metadata, and JSON-LD                                                |
+| `email`, `linkedInUrl`, `githubUrl` | `README.md` frontmatter                       | Rendered in footer and Person schema (omitted when absent)                                   |
 | `contentLicense`                    | Hardcoded (CC BY-NC-ND 4.0)                   | License for sample content (see [ADR-0007](architecture/decisions/0007-licensing-policy.md)) |
 | `deploymentUrl`                     | `NEXT_PUBLIC_DEPLOYMENT_URL`                  | Set by CI from the repository name; can be set for local builds                              |
 | `analytics`                         | `NEXT_PUBLIC_CLOUDFLARE_ANALYTICS_*` env vars | Disabled by default; set a token to enable                                                   |
 
 ## Content Locations
 
-| Content type | Directory                        |
-| ------------ | -------------------------------- |
-| Profile      | `libs/content/src/md/profile.md` |
-| Projects     | `libs/projects/src/md/`          |
-| Publications | `libs/publications/src/md/`      |
-| Blog         | `libs/blog/src/md/` (optional)   |
+| Content type | Directory                       |
+| ------------ | ------------------------------- |
+| Profile      | `libs/content/src/md/README.md` |
+| Projects     | `libs/projects/src/md/`         |
+| Publications | `libs/publications/src/md/`     |
+| Blog         | `libs/blog/src/md/` (optional)  |
 
 Each item lives in its own directory named `{slug}` containing a `README.md` file with YAML frontmatter at the top. The directory name is the authoritative slug (URL path). Frontmatter `slug` is accepted but ignored for routing.
 
@@ -69,7 +69,7 @@ To add a new entry:
 
 ## Profile Content
 
-The About page (`/about`) and home page are driven by a profile content file containing your biography, education, research interests, skills, and contact links. All personal data lives in `libs/content/src/md/profile.md` — editing this file updates the site everywhere your name, photo, and bio appear.
+The About page (`/about`) and home page are driven by a profile content file containing your biography, education, research interests, skills, and contact links. All personal data lives in `libs/content/src/md/README.md` — editing this file updates the site everywhere your name, photo, and bio appear.
 
 ### Profile Frontmatter
 
@@ -139,9 +139,9 @@ starter template. If you prefer initials matching your name, edit both:
 
 ### CV Link
 
-You can optionally add a "View CV (PDF)" button that appears on the About page next to your contact information. This is controlled by the `cvUrl` field in `profile.md` frontmatter.
+You can optionally add a "View CV (PDF)" button that appears on the About page next to your contact information. This is controlled by the `cvUrl` field in `README.md` frontmatter.
 
-Two modes are supported. **You only need to edit `profile.md`** — no TypeScript or build configuration changes required.
+Two modes are supported. **You only need to edit `README.md`** — no TypeScript or build configuration changes required.
 
 #### Mode A — Repository-hosted PDF (recommended)
 
@@ -153,7 +153,7 @@ Host the PDF directly in the repository. It is deployed alongside your site and 
    - Drag and drop your `cv.pdf`
    - Commit directly to `main`
 
-2. **Set `cvUrl`** in `profile.md` frontmatter to just the filename:
+2. **Set `cvUrl`** in `README.md` frontmatter to just the filename:
 
    ```yaml
    cvUrl: "cv.pdf"
@@ -167,7 +167,7 @@ To replace the PDF later, simply repeat the upload step — the same path (`apps
 
 Link to a PDF hosted by Google Drive, your university, or another provider.
 
-1. **Set `cvUrl`** in `profile.md` frontmatter to the full HTTPS URL:
+1. **Set `cvUrl`** in `README.md` frontmatter to the full HTTPS URL:
 
    ```yaml
    cvUrl: "https://your-institution.edu/~username/cv.pdf"
@@ -179,7 +179,7 @@ Link to a PDF hosted by Google Drive, your university, or another provider.
 
 #### Removing the CV link
 
-To hide the CV button, either remove the `cvUrl` line from `profile.md` or set it to an empty string:
+To hide the CV button, either remove the `cvUrl` line from `README.md` or set it to an empty string:
 
 ```yaml
 cvUrl: ""
@@ -228,7 +228,7 @@ Write your biography here. Use standard Markdown for paragraphs, lists, and link
 
 ````
 
-> **Tip:** Edit `libs/content/src/md/profile.md` to update your biography, education, research interests, and skills site-wide. Changes are reflected on both the About page and home page.
+> **Tip:** Edit `libs/content/src/md/README.md` to update your biography, education, research interests, and skills site-wide. Changes are reflected on both the About page and home page.
 
 ## Project Content
 

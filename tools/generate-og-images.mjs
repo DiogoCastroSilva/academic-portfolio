@@ -146,7 +146,7 @@ function readContentEntries(mdDir) {
 async function main() {
   fs.mkdirSync(ogDir, { recursive: true });
 
-  const profilePath = path.join(root, "libs/content/src/md/profile.md");
+  const profilePath = path.join(root, "libs/content/src/md/README.md");
   const profileContent = fs.readFileSync(profilePath, "utf-8");
   const { data: profileData } = matter(profileContent);
   const siteName = profileData.name || "Portfolio";

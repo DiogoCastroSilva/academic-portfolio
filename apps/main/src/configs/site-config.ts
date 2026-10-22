@@ -1,6 +1,6 @@
 import { getProfile, type ProfileData } from "@academic-portfolio/content";
 
-// Load personal data from profile.md at module load time.
+// Load personal data from README.md at module load time.
 // If the profile is missing or invalid, fail the build with a clear error
 // rather than silently falling back to hardcoded personal information.
 const profile: ProfileData = getProfile();

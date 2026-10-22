@@ -1,4 +1,15 @@
 @import "tailwindcss";
+
+/*
+  Override the default `dark` variant (which uses `prefers-color-scheme`
+  media query) to respond to the `[data-theme]` attribute on `<html>`
+  instead. This allows the theme toggle to drive dark mode explicitly,
+  with the inline theme-init script setting `[data-theme="dark"]` or
+  `[data-theme="light"]` in <head> before first paint.
+  See: https://tailwindcss.com/docs/dark-mode#using-a-data-attribute
+*/
+@custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));
+
 @import "../../libs/design-system/src/styles/index.css";
 /*
   This file lives in `apps/main/`. One `..` is `apps/`, two `..` is the repo root,

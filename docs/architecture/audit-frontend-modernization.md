@@ -193,7 +193,7 @@ No `docs/design-system/`, `docs/roadmap/`, or `docs/tickets/` directories exist.
         structured-data.ts     JSON-LD schema builders
         og-image.ts            SVG OG image generation helpers
       configs/
-        site-config.ts         site configuration (loads profile.md)
+        site-config.ts         site configuration (loads README.md)
   tw-input.css                 Tailwind import + @source directives
   test-setup.ts               Vitest setup (mocks next/link, server-only)
   vitest.config.mts

@@ -15,7 +15,7 @@ is creative work that the content author may wish to reserve for their own use.
 ## Forking this template
 
 1. Fork or duplicate this repository.
-2. Replace `libs/content/src/md/profile.md` with your own biography and profile.
+2. Replace `libs/content/src/md/README.md` with your own biography and profile.
    All personal information (name, role, description, contact links, education,
    research interests, skills) lives in this single file — `site-config.ts` loads
    it at build time, so you do not need to edit any application code.

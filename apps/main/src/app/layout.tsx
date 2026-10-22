@@ -1,5 +1,9 @@
 import { getAllBlogPosts } from "@academic-portfolio/blog";
-import { getNavigation, NavBar } from "@academic-portfolio/navigation";
+import {
+  getNavigation,
+  NavBar,
+  themeInitScript,
+} from "@academic-portfolio/navigation";
 import "./global.css";
 import { CloudflareAnalytics } from "../components/CloudflareAnalytics";
 import { Footer } from "../components/Footer";
@@ -81,6 +85,14 @@ export default function RootLayout({
 
   return (
     <html lang="en" suppressHydrationWarning>
+      <head>
+        {/*
+          Inline theme-init script: reads localStorage and sets [data-theme]
+          on <html> synchronously before first paint to prevent FOUC.
+          Not a client component — pure JS string injected via dangerouslySetInnerHTML.
+        */}
+        <script dangerouslySetInnerHTML={{ __html: themeInitScript }} />
+      </head>
       <body
         suppressHydrationWarning
         className="min-h-full bg-stone-100 dark:bg-slate-800"

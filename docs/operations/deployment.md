@@ -133,14 +133,14 @@ application code.
 
 | #   | Action                                                                                                | Expected result                                                                 |
 | --- | ----------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------- |
-| 1   | Edit `libs/content/src/md/profile.md` (name, bio, photo)                                              | Site reflects new profile on `/about/`                                          |
+| 1   | Edit `libs/content/src/md/README.md` (name, bio, photo)                                               | Site reflects new profile on `/about/`                                          |
 | 2   | Add a new project under `libs/projects/src/md/new-project/` with `README.md`                          | Appears in `/projects/` list and its own detail page                            |
 | 3   | Add a project with `draft: true`                                                                      | Does NOT appear in `/projects/` list or sitemap                                 |
 | 4   | Delete `draft: true` from a project                                                                   | Now appears in `/projects/` list and sitemap                                    |
 | 5   | Replace `cover.jpg` in a project folder                                                               | New image appears in OG image and detail page                                   |
 | 6   | Add a publication under `libs/publications/src/md/`                                                   | Appears in `/publications/` with authors/venue metadata                         |
 | 7   | Delete all sample entries from a collection                                                           | Collection page renders intentional empty state                                 |
-| 8   | Edit `libs/content/src/md/profile.md` (`name`, `description`, contact links)                          | Metadata (title, description, OG) reflects changes                              |
+| 8   | Edit `libs/content/src/md/README.md` (`name`, `description`, contact links)                           | Metadata (title, description, OG) reflects changes                              |
 | 9   | Replace avatar `libs/content/src/md/profile.svg` and `apps/main/public/images/profile.svg` (optional) | Initials in avatar match your name; otherwise identity-neutral default is shown |
 
 ### No-code confirmation

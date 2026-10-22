@@ -5,6 +5,7 @@ import { usePathname } from "next/navigation";
 import { useState } from "react";
 import { MobileMenuButton } from "../ui/MobileMenuButton.js";
 import { MobileNavLinks } from "../ui/MobileNavLinks.js";
+import { ThemeToggle } from "../ui/ThemeToggle.js";
 import { getNavigation, isPathActive, type NavigationItem } from "./config.js";
 
 export type { NavigationItem };
@@ -65,6 +66,9 @@ export function NavBar({
                   {item.name}
                 </Link>
               ))}
+            </div>
+            <div className="hidden md:flex md:items-center md:pr-2">
+              <ThemeToggle />
             </div>
             <MobileMenuButton
               isMenuOpen={isMenuOpen}

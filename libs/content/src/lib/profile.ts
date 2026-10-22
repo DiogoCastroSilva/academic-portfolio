@@ -141,9 +141,7 @@ function validateProfileFrontmatter(data: Record<string, unknown>): void {
   validateCvUrl(data.cvUrl, errors);
 
   if (errors.length > 0) {
-    throw new Error(
-      `Invalid profile.md frontmatter:\n  ${errors.join("\n  ")}`,
-    );
+    throw new Error(`Invalid README.md frontmatter:\n  ${errors.join("\n  ")}`);
   }
 }
 
@@ -352,9 +350,7 @@ export function validateProfileNestedData(data: Record<string, unknown>): void {
   }
 
   if (errors.length > 0) {
-    throw new Error(
-      `Invalid profile.md nested data:\n  ${errors.join("\n  ")}`,
-    );
+    throw new Error(`Invalid README.md nested data:\n  ${errors.join("\n  ")}`);
   }
 }
 
@@ -379,7 +375,7 @@ function parseCvUrl(raw: unknown): string | undefined {
 }
 
 /**
- * Parse a raw profile.md string into structured profile data.
+ * Parse a raw README.md string into structured profile data.
  *
  * This is a pure function: it takes the file content (frontmatter + body)
  * and returns a `ProfileData` object. It does not read from disk, making
@@ -451,10 +447,10 @@ function parseBiography(markdownBody: string): string {
 // ---------------------------------------------------------------------------
 
 const moduleDir = path.dirname(fileURLToPath(import.meta.url));
-const PROFILE_PATH = path.join(moduleDir, "..", "md", "profile.md");
+const PROFILE_PATH = path.join(moduleDir, "..", "md", "README.md");
 
 /**
- * Load and parse the profile from `libs/content/src/md/profile.md`.
+ * Load and parse the profile from `libs/content/src/md/README.md`.
  *
  * Must be called in a server-side context (build time for SSG, or server
  * environment). Uses `fs` to read the file from disk.
@@ -462,8 +458,8 @@ const PROFILE_PATH = path.join(moduleDir, "..", "md", "profile.md");
 export function getProfile(): ProfileData {
   if (!fs.existsSync(PROFILE_PATH)) {
     throw new Error(
-      `profile.md not found at ${PROFILE_PATH}. ` +
-        "Create it in libs/content/src/md/profile.md.",
+      `README.md not found at ${PROFILE_PATH}. ` +
+        "Create it in libs/content/src/md/README.md.",
     );
   }
 

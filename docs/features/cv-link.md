@@ -2,7 +2,7 @@
 
 ## Overview
 
-The CV link feature provides a single `cvUrl` setting in `profile.md` frontmatter that renders a "View CV (PDF)" link on the About page. It supports both repository-hosted and externally hosted PDFs through one configuration field and one UI element.
+The CV link feature provides a single `cvUrl` setting in `README.md` frontmatter that renders a "View CV (PDF)" link on the About page. It supports both repository-hosted and externally hosted PDFs through one configuration field and one UI element.
 
 ## Supported Modes
 
@@ -18,7 +18,7 @@ When `cvUrl` is omitted or empty, no CV link is rendered.
 ### Data Flow
 
 ```
-libs/content/src/md/profile.md
+libs/content/src/md/README.md
   → parseProfile (profile.ts)
   → parseCvUrl (profile.ts)
     → if https:// URL → returned as-is
@@ -32,7 +32,7 @@ libs/content/src/md/profile.md
 | File                                                   | Responsibility                                                                                 |
 | ------------------------------------------------------ | ---------------------------------------------------------------------------------------------- |
 | `libs/content/src/lib/profile.ts`                      | `parseCvUrl()` — resolves local paths with base path; `validateCvUrl()` — rejects invalid URLs |
-| `libs/content/src/md/profile.md`                       | Set `cvUrl: "cv.pdf"` or `cvUrl: "https://..."`                                                |
+| `libs/content/src/md/README.md`                        | Set `cvUrl: "cv.pdf"` or `cvUrl: "https://..."`                                                |
 | `libs/content/src/md/_profile-template.md`             | Template with documented `cvUrl` examples                                                      |
 | `apps/main/public/cv.pdf`                              | Placeholder PDF (replace with real CV)                                                         |
 | `apps/main/src/features/about/AboutHero/AboutHero.tsx` | Renders CV link next to contact info                                                           |

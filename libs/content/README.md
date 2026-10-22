@@ -10,7 +10,7 @@ This package owns the common Markdown pipeline so projects, publications, and bl
 - Resolve entry slugs from directory names and cover images from each entry directory.
 - Render Markdown through the shared `marked` extensions, including relative URL and GitHub Pages base-path handling.
 - Exclude drafts from public collection and slug lookups.
-- Parse `src/md/profile.md` into typed profile data used by the site.
+- Parse `src/md/README.md` into typed profile data used by the site.
 
 The content is read from local repository files at build time. This is not a CMS or a browser-side data API.
 
@@ -51,7 +51,7 @@ libs/blog/src/md/my-post/
 
 The directory name is the public slug. Set `draft: true` while content is unfinished; drafts must not appear in published lists, detail routes, sitemap output, or generated metadata. See the [content authoring guide](../../docs/product/content-authoring.md) for frontmatter fields and image rules.
 
-Profile information is maintained in [profile.md](src/md/profile.md). Do not add owner-specific data to application components.
+Profile information is maintained in [README.md](src/md/README.md). Do not add owner-specific data to application components.
 
 ## Trust and security
 

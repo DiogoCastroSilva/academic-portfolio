@@ -9,7 +9,7 @@ import {
   buildSiteAuthorSchema,
 } from "./structured-data";
 
-// Mock getProfile so site-config loads without requiring profile.md on disk
+// Mock getProfile so site-config loads without requiring README.md on disk
 // during unit tests (site-config calls getProfile at module load time).
 vi.mock("@academic-portfolio/content", async (importOriginal) => {
   const actual = (await importOriginal()) as Record<string, unknown>;

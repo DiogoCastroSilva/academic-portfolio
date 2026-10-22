@@ -1,22 +1,26 @@
 /* Dark-mode overrides for design tokens.
  * These override the base :root values defined in tokens.css
- * when prefers-color-scheme: dark is active.
+ * when the `[data-theme="dark"]` attribute is set on <html>.
+ *
+ * The attribute is set by the inline theme-init script in <head>
+ * (see libs/navigation/src/lib/hooks/theme-init.ts), which runs
+ * synchronously before first paint to prevent FOUC. When JavaScript
+ * is disabled, the site falls back to light mode (the :root defaults
+ * in tokens.css).
  */
-@media (prefers-color-scheme: dark) {
-  :root {
-    --color-surface-page: #1e293b; /* slate-800 */
-    --color-surface-card: #f0f9ff; /* sky-50 */
-    --color-surface-elevated: #f0f9ff; /* sky-50 */
-    --color-text-primary: var(--tw-color-text, #f9fafb);
-    --color-text-muted: var(--tw-color-text-muted, #9ca3af);
-    --color-border: var(--tw-color-border, #3f3f46);
-    --color-accent: #60a5fa; /* sky-400 */
-    --color-accent-hover: #93c5fd; /* sky-300 */
-    --color-focus: #60a5fa; /* sky-400 */
-    --color-code-bg: var(--tw-color-code-bg, #1e293b);
-    --color-pre-bg: var(--tw-color-pre-bg, #0f172a);
-    --color-pre-text: var(--tw-color-pre-text, #f1f5f9);
-    --color-status-info-bg: #1e3a8a;
-    --color-status-info-text: #bfdbfe;
-  }
+:root[data-theme="dark"] {
+  --color-surface-page: #1e293b; /* slate-800 */
+  --color-surface-card: #f0f9ff; /* sky-50 */
+  --color-surface-elevated: #f0f9ff; /* sky-50 */
+  --color-text-primary: var(--tw-color-text, #f9fafb);
+  --color-text-muted: var(--tw-color-text-muted, #9ca3af);
+  --color-border: var(--tw-color-border, #3f3f46);
+  --color-accent: #60a5fa; /* sky-400 */
+  --color-accent-hover: #93c5fd; /* sky-300 */
+  --color-focus: #60a5fa; /* sky-400 */
+  --color-code-bg: var(--tw-color-code-bg, #1e293b);
+  --color-pre-bg: var(--tw-color-pre-bg, #0f172a);
+  --color-pre-text: var(--tw-color-pre-text, #f1f5f9);
+  --color-status-info-bg: #1e3a8a;
+  --color-status-info-text: #bfdbfe;
 }

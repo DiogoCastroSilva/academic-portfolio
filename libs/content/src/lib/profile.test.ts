@@ -345,7 +345,7 @@ Bio`;
     } catch (e) {
       errorMsg = (e as Error).message;
     }
-    expect(errorMsg).toMatch(/Invalid profile\.md nested data/);
+    expect(errorMsg).toMatch(/Invalid README.md nested data/);
     expect(errorMsg).toContain("degree");
     expect(errorMsg).toContain("title");
     expect(errorMsg).toContain("category");
