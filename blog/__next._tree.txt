@@ -1,5 +1,5 @@
-:HL["/academic-portfolio/_next/static/css/b1dc3371bbca2e1f.css","style"]
+:HL["/academic-portfolio/_next/static/css/ea8879049270c0d6.css","style"]
 :HL["/academic-portfolio/images/profile.svg","image",{"type":"image/svg+xml"}]
 2:[["children",{"s":"__PAGE__","h":160}]]
 1:[["children",{"s":"blog","h":96,"c":"$Q2"}]]
-0:{"b":"WWMvj2XGsxw6OHE7Yfjm-","t":{"t":{"s":"","h":80,"c":"$Q1"}}}
+0:{"b":"NldW3Qd9UUaM73VYABmTz","t":{"t":{"s":"","h":80,"c":"$Q1"}}}
