@@ -1,11 +1,10 @@
-:HL["/academic-portfolio/_next/static/media/bc18a3f7a418e10e-s.p.ttf","font",{"crossOrigin":"","type":"font/ttf"}]
-:HL["/academic-portfolio/_next/static/media/cc27cf3ff100ea21-s.p.ttf","font",{"crossOrigin":"","type":"font/ttf"}]
-:HL["/academic-portfolio/_next/static/media/dd830f3b569412d7-s.p.ttf","font",{"crossOrigin":"","type":"font/ttf"}]
-:HL["/academic-portfolio/_next/static/media/f7034d8cf95a6a99-s.p.ttf","font",{"crossOrigin":"","type":"font/ttf"}]
-:HL["/academic-portfolio/_next/static/css/840a8357f8e3fd6b.css","style"]
+:HC["/",""]
+:HL["/academic-portfolio/_next/static/css/c07e5c6367f1ffd8.css","style"]
+:HL["/academic-portfolio/fonts/inter/roman.var.woff2","font",{"crossOrigin":"anonymous","type":"font/woff2"}]
+:HL["/academic-portfolio/fonts/dm-serif-display/regular.woff2","font",{"crossOrigin":"anonymous","type":"font/woff2"}]
 :HL["/academic-portfolio/images/profile.svg","image",{"type":"image/svg+xml"}]
 4:[["children",{"s":"__PAGE__","h":160}]]
 3:[["children",{"s":{"n":"page","t":"d","k":"1","s":[]},"h":65632,"c":"$Q4"}]]
 2:[["children",{"s":"page","h":131168,"c":"$Q3"}]]
-1:[["children",{"s":"publications","h":131168,"c":"$Q2"}]]
-0:{"b":"cw3-DClMDhgjEzQFL9agy","t":{"t":{"s":"","h":131152,"c":"$Q1"}}}
+1:[["children",{"s":"publications","h":131136,"c":"$Q2"}]]
+0:{"b":"QxWdHvQ5wl_NE7jGyeUVS","t":{"t":{"s":"","h":131088,"c":"$Q1"}}}

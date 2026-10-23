@@ -1,9 +1,8 @@
-:HL["/academic-portfolio/_next/static/media/bc18a3f7a418e10e-s.p.ttf","font",{"crossOrigin":"","type":"font/ttf"}]
-:HL["/academic-portfolio/_next/static/media/cc27cf3ff100ea21-s.p.ttf","font",{"crossOrigin":"","type":"font/ttf"}]
-:HL["/academic-portfolio/_next/static/media/dd830f3b569412d7-s.p.ttf","font",{"crossOrigin":"","type":"font/ttf"}]
-:HL["/academic-portfolio/_next/static/media/f7034d8cf95a6a99-s.p.ttf","font",{"crossOrigin":"","type":"font/ttf"}]
-:HL["/academic-portfolio/_next/static/css/840a8357f8e3fd6b.css","style"]
+:HC["/",""]
+:HL["/academic-portfolio/_next/static/css/c07e5c6367f1ffd8.css","style"]
+:HL["/academic-portfolio/fonts/inter/roman.var.woff2","font",{"crossOrigin":"anonymous","type":"font/woff2"}]
+:HL["/academic-portfolio/fonts/dm-serif-display/regular.woff2","font",{"crossOrigin":"anonymous","type":"font/woff2"}]
 :HL["/academic-portfolio/images/profile.svg","image",{"type":"image/svg+xml"}]
 :HL["/academic-portfolio/projects/first-project/first-project.svg","image",{"imageSizes":"(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw","fetchPriority":"high"}]
-1:[["children",{"s":"__PAGE__","h":160}]]
-0:{"b":"cw3-DClMDhgjEzQFL9agy","t":{"t":{"s":"","h":80,"c":"$Q1"}}}
+1:[["children",{"s":"__PAGE__","h":128}]]
+0:{"b":"QxWdHvQ5wl_NE7jGyeUVS","t":{"t":{"s":"","h":16,"c":"$Q1"}}}
