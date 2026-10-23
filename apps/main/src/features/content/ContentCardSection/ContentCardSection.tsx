@@ -114,7 +114,7 @@ export function ContentCardSection({
                       <div className="flex min-w-0 flex-wrap items-center gap-2">
                         <time
                           dateTime={item.date}
-                          className="text-sm text-zinc-600 dark:text-zinc-400"
+                          className="text-sm text-gray-600 dark:text-zinc-400"
                         >
                           {dates.formatISODate(item.date)}
                         </time>
@@ -122,7 +122,7 @@ export function ContentCardSection({
                           {item.tags?.slice(0, tagsLimit).map((tag) => (
                             <li
                               key={tag}
-                              className="min-w-0 rounded-full border border-zinc-200 px-2.5 py-1 text-xs font-medium text-zinc-600 dark:border-zinc-400 dark:text-zinc-400"
+                              className="min-w-0 rounded-full border border-zinc-200 px-2.5 py-1 text-xs font-medium text-gray-600 dark:border-zinc-400 dark:text-zinc-400"
                             >
                               {tag}
                             </li>
@@ -130,7 +130,7 @@ export function ContentCardSection({
                           {item.tags && item.tags.length > tagsLimit && (
                             <li
                               aria-label={`${item.tags.length - tagsLimit} more tags`}
-                              className="text-xs font-medium text-zinc-500"
+                              className="text-xs font-medium text-gray-600 dark:text-zinc-400"
                             >
                               +{item.tags.length - tagsLimit} more
                             </li>
@@ -142,7 +142,7 @@ export function ContentCardSection({
                           {item.title}
                         </h3>
                         {item.excerpt ? (
-                          <p className="line-clamp-3 text-sm leading-6 text-zinc-600 dark:text-zinc-400">
+                          <p className="line-clamp-3 text-sm leading-6 text-gray-600 dark:text-zinc-400">
                             {item.excerpt}
                           </p>
                         ) : null}

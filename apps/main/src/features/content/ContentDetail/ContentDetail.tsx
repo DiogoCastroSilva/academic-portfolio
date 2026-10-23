@@ -36,7 +36,7 @@ export function ContentDetail({ content }: ContentDetailProps) {
               {content.tags.map((tag) => (
                 <li
                   key={tag}
-                  className="rounded-full border border-zinc-200 px-3 py-1 text-sm font-medium text-zinc-600 dark:border-zinc-400 dark:text-zinc-400"
+                  className="rounded-full border border-zinc-200 px-3 py-1 text-sm font-medium text-gray-600 dark:border-zinc-400 dark:text-zinc-400"
                 >
                   {tag}
                 </li>
