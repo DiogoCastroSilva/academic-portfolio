@@ -486,13 +486,13 @@ determines how to prepare it and what to expect on the page.
 
 ### Quick Reference — Image Roles
 
-| Image role               | Where to place the file                              | How to declare it                                      | Rendering behavior                                                         |
-| ------------------------ | ---------------------------------------------------- | ------------------------------------------------------ | -------------------------------------------------------------------------- |
-| **Cover image**          | `libs/{projects\|publications\|blog}/src/md/{slug}/` | `image: filename.ext` in frontmatter                   | Cropped to a 16:9 frame with `object-cover`; corners rounded               |
-| **Body / content image** | Same directory as `README.md`                        | `![alt](image.png "Caption")` in Markdown              | Scaled to fit the reading column; corners have 8px radius; never cropped   |
-| **Gallery image**        | Same directory as `README.md`                        | Two or more adjacent image lines in Markdown           | Side-by-side on desktop, stacked on mobile; each 100% width; never cropped |
-| **Profile portrait**     | `libs/content/src/md/`                               | `image: profile.svg` (or `profile.png`) in frontmatter | Circular crop via `rounded-full`; keep faces centered                      |
-| **Placeholder**          | Built-in (`project-placeholder.svg`, etc.)           | Auto-selected when cover image is missing              | Same rendering as cover images                                             |
+| Image role               | Where to place the file                              | How to declare it                                      | Rendering behavior                                                                                                  |
+| ------------------------ | ---------------------------------------------------- | ------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------- |
+| **Cover image**          | `libs/{projects\|publications\|blog}/src/md/{slug}/` | `image: filename.ext` in frontmatter                   | Cropped to 16:9 via `object-cover`; 12px rounded corners on detail page; square corners on cards (known difference) |
+| **Body / content image** | Same directory as `README.md`                        | `![alt](image.png "Caption")` in Markdown              | Scaled to fit the reading column; corners have 8px radius; never cropped                                            |
+| **Gallery image**        | Same directory as `README.md`                        | Two or more adjacent image lines in Markdown           | Side-by-side on desktop, stacked on mobile; each 100% width; never cropped                                          |
+| **Profile portrait**     | `libs/content/src/md/`                               | `image: profile.svg` (or `profile.png`) in frontmatter | Circular crop via `rounded-full`; keep faces centered                                                               |
+| **Placeholder**          | Built-in (`project-placeholder.svg`, etc.)           | Auto-selected when cover image is missing              | Same rendering as cover images                                                                                      |
 
 ### Cover Images
 
