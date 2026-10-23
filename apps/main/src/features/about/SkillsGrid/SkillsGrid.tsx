@@ -12,7 +12,7 @@ export const SkillsGrid = ({ categories }: SkillsGridProps) => {
   const MotionSpan = shouldReduceMotion ? "span" : motion.span;
 
   return (
-    <section className="mx-4 rounded-2xl bg-white p-12 text-slate-900 shadow-sm dark:bg-sky-50">
+    <section className="mx-4 rounded-2xl bg-white p-12 text-slate-900 shadow-sm dark:bg-slate-800 dark:text-slate-200">
       <MotionDiv
         {...(shouldReduceMotion
           ? {}
@@ -49,14 +49,14 @@ export const SkillsGrid = ({ categories }: SkillsGridProps) => {
                     viewport: { once: true },
                   })}
             >
-              <h3 className="text-lg font-semibold text-slate-900">
+              <h3 className="text-lg font-semibold text-slate-900 dark:text-slate-200">
                 {category.category}
               </h3>
               <div className="flex flex-wrap gap-2">
                 {category.items.map((skill, skillIndex) => (
                   <MotionSpan
                     key={skill}
-                    className="rounded-full border border-zinc-300 bg-white px-4 py-2 text-sm font-medium text-slate-700 dark:border-zinc-400 dark:bg-sky-50 dark:text-slate-700"
+                    className="rounded-full border border-zinc-300 bg-white px-4 py-2 text-sm font-medium text-slate-700 dark:border-zinc-400 dark:bg-slate-800 dark:text-zinc-400"
                     {...(shouldReduceMotion
                       ? {}
                       : {
@@ -69,7 +69,7 @@ export const SkillsGrid = ({ categories }: SkillsGridProps) => {
                           viewport: { once: true },
                           whileHover: {
                             scale: 1.05,
-                            backgroundColor: "#e0f2fe",
+                            backgroundColor: "#0ea5e9",
                           },
                         })}
                   >

@@ -11,7 +11,7 @@ export const ResearchInterests = ({ items }: ResearchInterestsProps) => {
   const MotionDiv = shouldReduceMotion ? "div" : motion.div;
 
   return (
-    <section className="mx-4 rounded-2xl bg-white p-12 text-slate-900 shadow-sm dark:bg-sky-50">
+    <section className="mx-4 rounded-2xl bg-white p-12 text-slate-900 shadow-sm dark:bg-slate-800 dark:text-slate-200">
       <MotionDiv
         {...(shouldReduceMotion
           ? {}
@@ -40,7 +40,7 @@ export const ResearchInterests = ({ items }: ResearchInterestsProps) => {
           {items.map((area, index) => (
             <MotionDiv
               key={area.title}
-              className="flex flex-col gap-3 rounded-xl border border-zinc-200 bg-white p-6 dark:border-zinc-300 dark:bg-sky-50"
+              className="flex flex-col gap-3 rounded-xl border border-zinc-200 bg-white p-6 dark:border-zinc-300 dark:bg-slate-800 dark:text-slate-200"
               {...(shouldReduceMotion
                 ? {}
                 : {
@@ -51,10 +51,10 @@ export const ResearchInterests = ({ items }: ResearchInterestsProps) => {
                   })}
             >
               {area.icon && <div className="text-3xl">{area.icon}</div>}
-              <h3 className="text-lg font-semibold text-slate-900">
+              <h3 className="text-lg font-semibold text-slate-900 dark:text-slate-200">
                 {area.title}
               </h3>
-              <p className="text-sm leading-relaxed text-slate-700">
+              <p className="text-sm leading-relaxed text-slate-700 dark:text-slate-300">
                 {area.description}
               </p>
             </MotionDiv>

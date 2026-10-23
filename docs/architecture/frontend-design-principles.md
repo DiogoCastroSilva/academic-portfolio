@@ -50,26 +50,27 @@ Every collection follows the same pattern:
 
 The intended contract is a small set of semantic colors in `apps/main/src/app/global.css`, with values overridden in `@media (prefers-color-scheme: dark)`. **This is not yet a single source of truth in the implementation:** several tokens are unused and components still set many colors directly with Tailwind palette utilities. The roadmap tracks completing this alignment. Keep Tailwind's built-in spacing/type scales; do not create competing scales.
 
-| Token                  | Light     | Dark      | Purpose                         |
-| ---------------------- | --------- | --------- | ------------------------------- |
-| `--color-surface-page` | `#ffffff` | `#1e293b` | Page background                 |
-| `--color-surface-card` | `#ffffff` | `#f0f9ff` | Card/surface background         |
-| `--color-text-primary` | `#171717` | `#f9fafb` | Primary body text               |
-| `--color-text-muted`   | `#6b7280` | `#9ca3af` | Secondary/metadata text         |
-| `--color-border`       | `#e5e7eb` | `#3f3f46` | Default borders                 |
-| `--color-accent`       | `#0284c7` | `#60a5fa` | Links (sky-600 / sky-400)       |
-| `--color-accent-hover` | `#0369a1` | `#93c5fd` | Link hover (sky-700 / sky-300)  |
-| `--color-focus`        | `#0284c7` | `#60a5fa` | Focus rings (sky-600 / sky-400) |
-| `--color-code-bg`      | `#f3f4f6` | `#1e293b` | Inline code background          |
-| `--color-pre-bg`       | `#171717` | `#0f172a` | Preformatted block background   |
-| `--color-pre-text`     | `#f9fafb` | `#f1f5f9` | Preformatted block text         |
+| Token                      | Light     | Dark      | Purpose                             |
+| -------------------------- | --------- | --------- | ----------------------------------- |
+| `--color-surface-page`     | `#ffffff` | `#0f172a` | Page background (slate-900)         |
+| `--color-surface-card`     | `#ffffff` | `#1e293b` | Card/surface background (slate-800) |
+| `--color-surface-elevated` | `#ffffff` | `#334155` | Elevated surfaces (slate-700)       |
+| `--color-text-primary`     | `#171717` | `#e2e8f0` | Primary body text (slate-200)       |
+| `--color-text-muted`       | `#6b7280` | `#94a3b8` | Secondary/metadata text (slate-400) |
+| `--color-border`           | `#e5e7eb` | `#334155` | Default borders (slate-700)         |
+| `--color-accent`           | `#0284c7` | `#38bdf8` | Links (sky-600 / sky-400)           |
+| `--color-accent-hover`     | `#0369a1` | `#7dd3fc` | Link hover (sky-700 / sky-300)      |
+| `--color-focus`            | `#0284c7` | `#38bdf8` | Focus rings (sky-600 / sky-400)     |
+| `--color-code-bg`          | `#f3f4f6` | `#1e293b` | Inline code background              |
+| `--color-pre-bg`           | `#171717` | `#0f172a` | Preformatted block background       |
+| `--color-pre-text`         | `#f9fafb` | `#e2e8f0` | Preformatted block text             |
 
-The current components still set surfaces directly (for example, `bg-white dark:bg-sky-50`); prose links consume the accent variables through `global.css`. During the token cleanup, move only stable semantic roles to the contract and remove tokens that remain unused rather than keeping two competing sources of truth.
+Components use `dark:bg-slate-800` / `dark:bg-slate-900` directly via Tailwind utilities, matching the token values. Prose links consume the accent variables through `global.css`.
 
 ### Applied Theme Rules
 
 - **Light mode:** white surfaces, `text-slate-900` body on cards, `text-gray-800` on prose, `text-zinc-600` metadata.
-- **Dark mode:** light-blue surfaces (`dark:bg-sky-50`), `text-slate-900` headings (high contrast on light-blue), `text-zinc-500` metadata.
+- **Dark mode:** dark surfaces (`slate-900` page, `slate-800` cards), off-white text (`slate-200` primary, `slate-300` prose, `zinc-400` metadata), sky-400 accents.
 - **Accent color:** `sky-600` (`--color-accent`) for links and focus rings; `sky-400` in dark mode via token overrides.
 - Prose link colors are controlled by the global CSS token, not by per-component Tailwind `prose-a:text-*` utilities — this avoids drift.
 - **Accessibility target:** verify every foreground/background pair used by the UI against WCAG 2.2 AA before claiming full contrast compliance. The token table is a target contract, not proof that every current component combination has been measured.

@@ -8,7 +8,7 @@ export type AboutSectionProps = {
 
 export const AboutSection = ({ profile }: AboutSectionProps) => {
   return (
-    <section className="mx-4 rounded-2xl bg-white p-6 sm:p-12 dark:bg-sky-50">
+    <section className="mx-4 rounded-2xl bg-white p-6 sm:p-12 dark:bg-slate-800 dark:text-slate-200">
       <div className="animate-fadeInUp flex flex-col gap-4 motion-reduce:animate-none md:flex-row">
         <div className="flex flex-4 flex-col items-center gap-2 md:flex-6">
           <ContentImage
@@ -20,7 +20,7 @@ export const AboutSection = ({ profile }: AboutSectionProps) => {
           />
           <div className="flex flex-col items-center justify-center text-wrap">
             <h1 className="profile-name">{profile.name}</h1>
-            <p className="text-center text-lg leading-relaxed text-gray-600">
+            <p className="text-center text-lg leading-relaxed text-gray-600 dark:text-slate-300">
               {profile.role}
             </p>
           </div>
@@ -29,7 +29,7 @@ export const AboutSection = ({ profile }: AboutSectionProps) => {
           <h2 className="mb-4 text-2xl font-bold md:text-3xl">About Me</h2>
           <div
             dangerouslySetInnerHTML={{ __html: profile.biography }}
-            className="prose prose-sm prose-p:leading-6 prose-p:my-4 prose-headings:font-bold prose-a:break-words max-w-none text-gray-800"
+            className="prose prose-sm prose-p:leading-6 prose-p:my-4 prose-headings:font-bold prose-a:break-words max-w-none text-gray-800 dark:text-slate-300"
           />
         </div>
       </div>

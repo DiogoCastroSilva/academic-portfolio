@@ -95,7 +95,7 @@ export default function RootLayout({
       </head>
       <body
         suppressHydrationWarning
-        className="min-h-full bg-stone-100 dark:bg-slate-800"
+        className="min-h-full bg-stone-100 text-slate-900 dark:bg-slate-900 dark:text-slate-200"
       >
         <div className="flex min-h-full flex-col">
           <a

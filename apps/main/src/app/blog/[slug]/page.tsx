@@ -76,7 +76,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
   }
 
   return (
-    <div className="mx-4 flex grow flex-col gap-4 rounded-2xl dark:bg-sky-50">
+    <div className="mx-4 flex grow flex-col gap-4 rounded-2xl dark:bg-slate-800">
       <Breadcrumb
         items={[{ label: "Blog", href: "/blog/" }, { label: post.title }]}
       />

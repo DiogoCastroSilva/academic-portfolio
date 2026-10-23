@@ -12,7 +12,7 @@ export default function Error({
   return (
     <main className="mx-auto flex min-h-[calc(100vh-6rem)] flex-col items-center justify-center px-4 py-16 text-center">
       <div className="rounded-3xl bg-white p-10 shadow-sm ring-1 ring-slate-200 dark:bg-slate-900 dark:ring-slate-700">
-        <p className="text-sm font-semibold tracking-[0.3em] text-red-600 uppercase">
+        <p className="text-sm font-semibold tracking-[0.3em] text-red-600 uppercase dark:text-red-400">
           Something went wrong
         </p>
         <h1 className="mt-4 text-4xl font-bold tracking-tight text-slate-900 dark:text-white">
@@ -23,7 +23,7 @@ export default function Error({
           homepage.
         </p>
         {process.env.NODE_ENV === "development" && error instanceof Error && (
-          <pre className="mt-4 max-w-xl text-left text-xs text-red-500">
+          <pre className="mt-4 max-w-xl text-left text-xs text-red-500 dark:text-red-400">
             {error.stack}
           </pre>
         )}

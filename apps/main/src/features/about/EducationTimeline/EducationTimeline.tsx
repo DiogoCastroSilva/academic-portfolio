@@ -11,7 +11,7 @@ export const EducationTimeline = ({ items }: EducationTimelineProps) => {
   const MotionDiv = shouldReduceMotion ? "div" : motion.div;
 
   return (
-    <section className="mx-4 rounded-2xl bg-white p-12 text-slate-900 shadow-sm dark:bg-sky-50">
+    <section className="mx-4 rounded-2xl bg-white p-12 text-slate-900 shadow-sm dark:bg-slate-800 dark:text-slate-200">
       <MotionDiv
         {...(shouldReduceMotion
           ? {}
@@ -61,18 +61,24 @@ export const EducationTimeline = ({ items }: EducationTimelineProps) => {
                   <h3 className="text-lg font-semibold text-slate-900">
                     {edu.degree}
                   </h3>
-                  <p className="text-sm font-medium text-sky-600">
+                  <p className="text-sm font-medium text-sky-600 dark:text-sky-400">
                     {edu.institution}
                   </p>
-                  <p className="text-sm text-slate-600">{edu.period}</p>
-                  <p className="mt-2 text-slate-600">{edu.focus}</p>
+                  <p className="text-sm text-slate-600 dark:text-slate-300">
+                    {edu.period}
+                  </p>
+                  <p className="mt-2 text-slate-600 dark:text-slate-300">
+                    {edu.focus}
+                  </p>
                   <ul className="mt-3 space-y-1">
                     {edu.details.map((detail) => (
                       <li
                         key={detail}
-                        className="flex gap-2 text-sm text-slate-600"
+                        className="flex gap-2 text-sm text-slate-600 dark:text-slate-300"
                       >
-                        <span className="mt-1 text-sky-600">&rarr;</span>
+                        <span className="mt-1 text-sky-600 dark:text-sky-400">
+                          &rarr;
+                        </span>
                         <span>{detail}</span>
                       </li>
                     ))}

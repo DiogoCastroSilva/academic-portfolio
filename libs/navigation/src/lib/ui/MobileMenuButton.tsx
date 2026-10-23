@@ -13,7 +13,7 @@ export function MobileMenuButton({
     <div className="-mr-2 flex md:hidden">
       <button
         type="button"
-        className="relative inline-flex size-11 items-center justify-center rounded-md text-gray-400 hover:bg-white/5 hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-600"
+        className="relative inline-flex size-11 items-center justify-center rounded-md text-gray-400 hover:bg-white/5 hover:text-sky-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-600 dark:hover:text-sky-300 dark:focus-visible:outline-sky-400"
         onClick={onToggleMenu}
         aria-expanded={isMenuOpen}
         aria-controls="mobile-navigation"

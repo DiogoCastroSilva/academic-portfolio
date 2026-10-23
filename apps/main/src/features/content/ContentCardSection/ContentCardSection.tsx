@@ -56,7 +56,7 @@ export function ContentCardSection({
   const HeadingTag: "h1" | "h2" = headingLevel;
   return (
     <section
-      className="mx-4 rounded-2xl bg-white p-6 text-slate-900 shadow-sm sm:p-10 lg:p-12 dark:bg-sky-50"
+      className="mx-4 rounded-2xl bg-white p-6 text-slate-900 shadow-sm sm:p-10 lg:p-12 dark:bg-slate-800 dark:text-slate-200"
       aria-labelledby={headingId ?? heading}
     >
       <HeadingTag
@@ -82,7 +82,7 @@ export function ContentCardSection({
               d="M9 12h6m-6 2h6m2 6a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2zM9 9h.01M9 9a.75.75 0 11-1.5 0V8a.75.75 0 011.5 0v1z"
             />
           </svg>
-          <p className="text-slate-600">{emptyMessage}</p>
+          <p className="text-slate-600 dark:text-slate-300">{emptyMessage}</p>
         </div>
       ) : (
         <>
@@ -91,17 +91,17 @@ export function ContentCardSection({
               {visibleItems.map((item, index) => (
                 <article
                   key={item.slug}
-                  className="animate-fadeInUp rounded-2xl border border-zinc-200 bg-white motion-reduce:animate-none dark:border-zinc-300 dark:bg-sky-50"
+                  className="animate-fadeInUp rounded-2xl border border-zinc-200 bg-white motion-reduce:animate-none dark:border-zinc-400 dark:bg-slate-800"
                   style={{
                     animationDelay: `${index * 100}ms`,
                   }}
                 >
                   <Link
                     href={itemHref(hrefPrefix, item.slug)}
-                    className="group block rounded-lg focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-600"
+                    className="group block rounded-lg focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-600 dark:focus-visible:outline-sky-400"
                     aria-label={`Read more: ${item.title}`}
                   >
-                    <div className="relative aspect-[16/9] w-full overflow-hidden bg-stone-200 dark:bg-stone-300">
+                    <div className="relative aspect-[16/9] w-full overflow-hidden bg-stone-200 dark:bg-slate-700">
                       <ContentImage
                         src={item.imageSrc}
                         alt={item.title}
@@ -114,7 +114,7 @@ export function ContentCardSection({
                       <div className="flex min-w-0 flex-wrap items-center gap-2">
                         <time
                           dateTime={item.date}
-                          className="text-sm text-zinc-600 dark:text-zinc-500"
+                          className="text-sm text-zinc-600 dark:text-zinc-400"
                         >
                           {dates.formatISODate(item.date)}
                         </time>
@@ -122,7 +122,7 @@ export function ContentCardSection({
                           {item.tags?.slice(0, tagsLimit).map((tag) => (
                             <li
                               key={tag}
-                              className="min-w-0 rounded-full border border-zinc-200 px-2.5 py-1 text-xs font-medium text-zinc-600 dark:border-zinc-400 dark:text-zinc-600"
+                              className="min-w-0 rounded-full border border-zinc-200 px-2.5 py-1 text-xs font-medium text-zinc-600 dark:border-zinc-400 dark:text-zinc-400"
                             >
                               {tag}
                             </li>
@@ -142,7 +142,7 @@ export function ContentCardSection({
                           {item.title}
                         </h3>
                         {item.excerpt ? (
-                          <p className="line-clamp-3 text-sm leading-6 text-zinc-600 dark:text-zinc-500">
+                          <p className="line-clamp-3 text-sm leading-6 text-zinc-600 dark:text-zinc-400">
                             {item.excerpt}
                           </p>
                         ) : null}
@@ -157,7 +157,7 @@ export function ContentCardSection({
               <div className="col-span-full mt-2">
                 <Link
                   href={viewAllHref}
-                  className="inline-flex items-center gap-1 text-sm font-medium text-sky-600 hover:text-sky-500 hover:underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-600"
+                  className="inline-flex items-center gap-1 text-sm font-medium text-sky-600 hover:text-sky-500 hover:underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-600 dark:text-sky-400 dark:hover:text-sky-300 dark:focus-visible:outline-sky-400"
                   aria-label={viewAllLabel}
                 >
                   {viewAllLabel}

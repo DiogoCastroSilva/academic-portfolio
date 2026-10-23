@@ -92,14 +92,15 @@ describe("AboutHero accessibility", () => {
     const { container } = render(<AboutHero profile={mockProfile} />);
     const section = container.querySelector("section");
     expect(section).toHaveClass("bg-white");
-    expect(section).toHaveClass("dark:bg-sky-50");
+    expect(section).toHaveClass("dark:bg-slate-800");
   });
 
-  it("role text uses a color that is readable on light-blue surfaces in dark mode", () => {
+  it("role text uses a color that is readable on dark surfaces in dark mode", () => {
     const { container } = render(<AboutHero profile={mockProfile} />);
     const roleEl = container.querySelector("p.mt-2");
     expect(roleEl).toHaveClass("text-gray-600");
-    // On the light-blue surface (dark:bg-sky-50), gray-600 provides adequate contrast
+    // On dark card surfaces (slate-800), slate-300 provides adequate contrast
+    expect(roleEl).toHaveClass("dark:text-slate-300");
     expect(roleEl).not.toHaveClass("dark:text-gray-300");
   });
 });

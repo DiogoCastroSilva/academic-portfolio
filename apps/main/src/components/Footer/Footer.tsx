@@ -13,7 +13,7 @@ export function Footer() {
               href={siteConfig.contentLicenseUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="underline transition-colors duration-200 hover:text-slate-900 focus-visible:rounded-sm focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-600 dark:hover:text-slate-100"
+              className="underline transition-colors duration-200 hover:text-slate-900 focus-visible:rounded-sm focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-600 dark:hover:text-slate-100 dark:focus-visible:outline-sky-400"
             >
               {siteConfig.contentLicenseName}
             </a>
@@ -22,7 +22,7 @@ export function Footer() {
               href={siteConfig.repoLicenseUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="underline transition-colors duration-200 hover:text-slate-900 focus-visible:rounded-sm focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-600 dark:hover:text-slate-100"
+              className="underline transition-colors duration-200 hover:text-slate-900 focus-visible:rounded-sm focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-600 dark:hover:text-slate-100 dark:focus-visible:outline-sky-400"
             >
               {siteConfig.repoLicenseName}
             </a>
@@ -34,7 +34,7 @@ export function Footer() {
                 href={siteConfig.linkedInUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="underline transition-colors duration-200 hover:text-slate-900 focus-visible:rounded-sm focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-600 dark:hover:text-slate-100"
+                className="underline transition-colors duration-200 hover:text-slate-900 focus-visible:rounded-sm focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-600 dark:hover:text-slate-100 dark:focus-visible:outline-sky-400"
               >
                 LinkedIn
               </a>
@@ -44,7 +44,7 @@ export function Footer() {
                 href={siteConfig.githubUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="underline transition-colors duration-200 hover:text-slate-900 focus-visible:rounded-sm focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-600 dark:hover:text-slate-100"
+                className="underline transition-colors duration-200 hover:text-slate-900 focus-visible:rounded-sm focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-600 dark:hover:text-slate-100 dark:focus-visible:outline-sky-400"
               >
                 GitHub
               </a>
@@ -52,7 +52,7 @@ export function Footer() {
             {siteConfig.email ? (
               <a
                 href={`mailto:${siteConfig.email}`}
-                className="underline transition-colors duration-200 hover:text-slate-900 focus-visible:rounded-sm focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-600 dark:hover:text-slate-100"
+                className="underline transition-colors duration-200 hover:text-slate-900 focus-visible:rounded-sm focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-600 dark:hover:text-slate-100 dark:focus-visible:outline-sky-400"
               >
                 Email
               </a>

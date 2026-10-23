@@ -63,8 +63,8 @@ describe("BlogPostPage card surface consistency", () => {
     expect(containerDiv).toContain("flex-col");
     expect(containerDiv).toContain("gap-4");
     expect(containerDiv).toContain("rounded-2xl");
-    // Critical: dark-mode light-blue surface for breadcrumb text contrast
-    expect(containerDiv).toContain("dark:bg-sky-50");
+    // Card container uses dark slate-800 surface in dark mode
+    expect(containerDiv).toContain("dark:bg-slate-800");
   });
 
   it("Breadcrumb and ContentDetail both render inside the card container", async () => {

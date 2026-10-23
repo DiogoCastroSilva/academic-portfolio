@@ -9,18 +9,27 @@
  * in tokens.css).
  */
 :root[data-theme="dark"] {
-  --color-surface-page: #1e293b; /* slate-800 */
-  --color-surface-card: #f0f9ff; /* sky-50 */
-  --color-surface-elevated: #f0f9ff; /* sky-50 */
-  --color-text-primary: var(--tw-color-text, #f9fafb);
-  --color-text-muted: var(--tw-color-text-muted, #9ca3af);
-  --color-border: var(--tw-color-border, #3f3f46);
-  --color-accent: #60a5fa; /* sky-400 */
-  --color-accent-hover: #93c5fd; /* sky-300 */
-  --color-focus: #60a5fa; /* sky-400 */
-  --color-code-bg: var(--tw-color-code-bg, #1e293b);
-  --color-pre-bg: var(--tw-color-pre-bg, #0f172a);
-  --color-pre-text: var(--tw-color-pre-text, #f1f5f9);
+  --color-surface-page: #0f172a; /* slate-900 — deep page background */
+  --color-surface-card: #1e293b; /* slate-800 — dark card/surface background (was sky-50) */
+  --color-surface-elevated: #334155; /* slate-700 — subtle elevation above cards */
+  --color-text-primary: var(
+    --tw-color-text,
+    #e2e8f0
+  ); /* slate-200 — comfortable off-white */
+  --color-text-muted: var(
+    --tw-color-text-muted,
+    #94a3b8
+  ); /* slate-400 — passes 4.5:1 on slate-800/900 */
+  --color-border: var(
+    --tw-color-border,
+    #334155
+  ); /* slate-700 — visible separation */
+  --color-accent: #38bdf8; /* sky-400 — visible on dark backgrounds */
+  --color-accent-hover: #7dd3fc; /* sky-300 — brighter hover */
+  --color-focus: #38bdf8; /* sky-400 — matches accent for coherent focus */
+  --color-code-bg: var(--tw-color-code-bg, #1e293b); /* slate-800 */
+  --color-pre-bg: var(--tw-color-pre-bg, #0f172a); /* slate-900 */
+  --color-pre-text: var(--tw-color-pre-text, #e2e8f0); /* slate-200 */
   --color-status-info-bg: #1e3a8a;
-  --color-status-info-text: #bfdbfe;
+  --color-status-info-text: #bfdbfd;
 }

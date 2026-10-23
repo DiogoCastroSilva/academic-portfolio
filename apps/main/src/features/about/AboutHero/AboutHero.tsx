@@ -13,7 +13,7 @@ export const AboutHero = ({ profile }: AboutHeroProps) => {
   const MotionDiv = shouldReduceMotion ? "div" : motion.div;
 
   return (
-    <section className="mx-4 rounded-2xl bg-white p-6 sm:p-12 dark:bg-sky-50">
+    <section className="mx-4 rounded-2xl bg-white p-6 sm:p-12 dark:bg-slate-800 dark:text-slate-200">
       <MotionDiv
         className="flex flex-col gap-8 md:gap-12"
         {...(shouldReduceMotion
@@ -58,13 +58,15 @@ export const AboutHero = ({ profile }: AboutHeroProps) => {
                 <h1 className="text-3xl font-bold md:text-4xl lg:text-5xl">
                   {profile.name}
                 </h1>
-                <p className="mt-2 text-xl text-gray-600">{profile.role}</p>
+                <p className="mt-2 text-xl text-gray-600 dark:text-slate-300">
+                  {profile.role}
+                </p>
               </div>
               <div className="flex flex-wrap justify-center gap-3 md:justify-start">
                 {profile.email ? (
                   <a
                     href={`mailto:${profile.email}`}
-                    className="rounded-full border-2 border-sky-600 px-6 py-2 font-medium text-sky-600 transition-all hover:bg-sky-600 hover:text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-600 dark:text-sky-600"
+                    className="rounded-full border-2 border-sky-600 px-6 py-2 font-medium text-sky-600 transition-all hover:bg-sky-600 hover:text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-600 dark:border-sky-400 dark:text-sky-400 dark:hover:bg-sky-700 dark:focus-visible:outline-sky-400"
                   >
                     Get in Touch
                   </a>
@@ -75,7 +77,7 @@ export const AboutHero = ({ profile }: AboutHeroProps) => {
                     target="_blank"
                     rel="noopener noreferrer"
                     aria-label="View CV (PDF)"
-                    className="rounded-full border-2 border-sky-600 px-6 py-2 font-medium text-sky-600 transition-all hover:bg-sky-600 hover:text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-600 dark:text-sky-600"
+                    className="rounded-full border-2 border-sky-600 px-6 py-2 font-medium text-sky-600 transition-all hover:bg-sky-600 hover:text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-600 dark:border-sky-400 dark:text-sky-400 dark:hover:bg-sky-700 dark:focus-visible:outline-sky-400"
                   >
                     View CV (PDF)
                   </a>
@@ -99,7 +101,7 @@ export const AboutHero = ({ profile }: AboutHeroProps) => {
           <h2 className="text-2xl font-bold md:text-3xl">About Me</h2>
           <div
             dangerouslySetInnerHTML={{ __html: profile.biography }}
-            className="prose prose-lg prose-p:leading-7 prose-p:my-4 prose-headings:font-bold prose-a:break-words max-w-none text-gray-800"
+            className="prose prose-lg prose-p:leading-7 prose-p:my-4 prose-headings:font-bold prose-a:break-words max-w-none text-gray-800 dark:text-slate-300"
           />
         </MotionDiv>
       </MotionDiv>

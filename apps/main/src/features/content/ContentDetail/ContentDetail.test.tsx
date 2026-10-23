@@ -209,16 +209,16 @@ describe("ContentDetail accessibility — figures and galleries", () => {
   });
 });
 
-describe("ContentDetail theme contrast (dark mode on light-blue surfaces)", () => {
-  it("prose container does not use dark:prose-invert (light text on light blue = poor contrast)", () => {
+describe("ContentDetail theme contrast (dark mode on dark surfaces)", () => {
+  it("prose container does not use dark:prose-invert (light text on dark surface = poor contrast)", () => {
     const { container } = render(<ContentDetail content={mockContent} />);
     const proseDiv = Array.from(container.querySelectorAll("div")).find((d) =>
       d.className.includes("prose"),
     );
     expect(proseDiv).toBeDefined();
     const className = proseDiv?.className || "";
-    // prose-invert makes text light for dark surfaces; our prose sits on
-    // bg-sky-50 (light blue) in dark mode, so light text would have poor contrast.
+    // Our prose sits on dark:bg-slate-800 in dark mode; we use
+    // explicit Tailwind text color classes rather than prose-invert.
     expect(className).not.toMatch(/dark:prose-invert/);
   });
 
@@ -240,33 +240,33 @@ describe("ContentDetail theme contrast (dark mode on light-blue surfaces)", () =
     const tagItems = document.querySelectorAll("li");
     tagItems.forEach((li) => {
       const className = li.className;
-      // zinc-400 is too light on the light-blue surface; use zinc-600
-      expect(className).not.toMatch(/dark:text-zinc-400/);
+      // On dark card surfaces (slate-800), zinc-400 provides adequate contrast
+      expect(className).toMatch(/dark:text-zinc-400/);
     });
   });
 
-  it("time element uses readable text color in dark mode for contrast on light-blue surfaces", () => {
+  it("time element uses readable text color in dark mode for contrast on dark surfaces", () => {
     const { container } = render(<ContentDetail content={mockContent} />);
     const timeEl = container.querySelector("time");
     expect(timeEl).toBeDefined();
     const className = timeEl?.className || "";
-    // Uses zinc-600 (muted) in both light and dark mode for consistent readability
-    expect(className).toMatch(/dark:text-zinc-600/);
+    // On dark card surfaces (slate-800), use zinc-400 (light) for readability
+    expect(className).toMatch(/dark:text-zinc-400/);
     expect(className).not.toMatch(/dark:text-gray-600/);
   });
 
-  it("article has light-blue surface background in dark mode (consistent with sections)", () => {
+  it("article has dark surface background in dark mode (consistent with sections)", () => {
     const { container } = render(<ContentDetail content={mockContent} />);
     const article = container.querySelector("article");
-    expect(article).toHaveClass("dark:bg-sky-50");
+    expect(article).toHaveClass("dark:bg-slate-800");
     expect(article).toHaveClass("bg-white");
   });
 
   it("image container uses lighter dark-mode background matching the article surface", () => {
     const { container } = render(<ContentDetail content={mockContent} />);
     const imgContainer = container.querySelector(".aspect-\\[16\\/9\\]");
-    expect(imgContainer).toHaveClass("dark:bg-stone-300");
-    expect(imgContainer).not.toHaveClass("dark:bg-stone-700");
+    expect(imgContainer).toHaveClass("dark:bg-slate-700");
+    expect(imgContainer).not.toHaveClass("dark:bg-stone-800");
   });
 });
 
