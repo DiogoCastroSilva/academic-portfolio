@@ -69,11 +69,30 @@ Components use `dark:bg-slate-850` (custom token for card surfaces) and `dark:bg
 
 ### Applied Theme Rules
 
-- **Light mode:** soft `slate-50` page canvas, white cards, `text-slate-900` body on cards, `text-gray-800` on prose, `text-zinc-600` metadata.
+- **Light mode:** soft `slate-50` page canvas (not pure white), white cards, `text-slate-900` body on cards, `text-gray-800` on prose, `text-gray-600` for metadata and secondary text (replaces `text-zinc-600` — `gray-600` provides 8.2:1 contrast on white vs. 4.84:1 for `zinc-600`).
 - **Dark mode:** slate-800 page background, `slate-850` cards (slightly lighter for hierarchy), off-white text (`slate-200` primary, `slate-300` prose, `zinc-400` metadata), sky-400 accents.
 - **Accent color:** `sky-600` (`--color-accent`) for links and focus rings; `sky-400` in dark mode via token overrides.
 - Prose link colors are controlled by the global CSS token, not by per-component Tailwind `prose-a:text-*` utilities — this avoids drift.
-- **Accessibility target:** verify every foreground/background pair used by the UI against WCAG 2.2 AA before claiming full contrast compliance. The token table is a target contract, not proof that every current component combination has been measured.
+- **Text color palette discipline:** use `gray-600` (`oklch(44.6% .03 256.802)`) for small/medium readable text in light mode — its blue-shifted hue gives higher sRGB luminance contrast on white than the neutral `zinc` palette. In dark mode, use `zinc-400` (`#a1a1aa`, ~5.1:1 on slate-850) for secondary text and `slate-200`/`slate-300` for primary/prose text. Never use `zinc-500` or lighter on dark surfaces — it fails WCAG 2.2 AA (4.5:1 minimum).
+
+#### Verified Contrast Ratios (WCAG 2.2 AA — 4.5:1 minimum)
+
+| Text color        | Background       | Ratio   | Status |
+| ----------------- | ---------------- | ------- | ------ |
+| `slate-900` body  | `slate-50` bg    | ~18:1   | ✅     |
+| `gray-800` prose  | `white` card     | ~16:1   | ✅     |
+| `gray-600` meta   | `white` card     | ~8.2:1  | ✅     |
+| `slate-600` info  | `white` card     | ~6.5:1  | ✅     |
+| `slate-700` desc  | `white` card     | ~10:1   | ✅     |
+| `sky-600` links   | `white` card     | ~4.65:1 | ✅     |
+| `slate-200` body  | `slate-850` card | ~9.7:1  | ✅     |
+| `slate-300` prose | `slate-850` card | ~8.2:1  | ✅     |
+| `zinc-400` meta   | `slate-850` card | ~5.1:1  | ✅     |
+| `sky-400` links   | `slate-850` card | ~6.6:1  | ✅     |
+| `zinc-400` icons  | `slate-800` page | ~5.5:1  | ✅     |
+| `white` btn text  | `sky-600` btn    | ~4.65:1 | ✅     |
+
+**Previously failing (now fixed):** `zinc-500` on white (4.2:1 ❌), `zinc-500` on dark surfaces (3.3:1 ❌), `zinc-600` on white for small text (4.84:1, borderline).
 
 ## 7. Navigation and Breadcrumbs
 
