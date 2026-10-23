@@ -1,5 +1,9 @@
-:HL["/academic-portfolio/_next/static/css/cba389b589e05cec.css","style"]
+:HL["/academic-portfolio/_next/static/media/bc18a3f7a418e10e-s.p.ttf","font",{"crossOrigin":"","type":"font/ttf"}]
+:HL["/academic-portfolio/_next/static/media/cc27cf3ff100ea21-s.p.ttf","font",{"crossOrigin":"","type":"font/ttf"}]
+:HL["/academic-portfolio/_next/static/media/dd830f3b569412d7-s.p.ttf","font",{"crossOrigin":"","type":"font/ttf"}]
+:HL["/academic-portfolio/_next/static/media/f7034d8cf95a6a99-s.p.ttf","font",{"crossOrigin":"","type":"font/ttf"}]
+:HL["/academic-portfolio/_next/static/css/840a8357f8e3fd6b.css","style"]
 :HL["/academic-portfolio/images/profile.svg","image",{"type":"image/svg+xml"}]
 2:[["children",{"s":"__PAGE__","h":160}]]
 1:[["children",{"s":"blog","h":96,"c":"$Q2"}]]
-0:{"b":"n7rmmXVUAA84YZ3z970n-","t":{"t":{"s":"","h":80,"c":"$Q1"}}}
+0:{"b":"cw3-DClMDhgjEzQFL9agy","t":{"t":{"s":"","h":80,"c":"$Q1"}}}
