@@ -1,9 +1,9 @@
 :HC["/",""]
-:HL["/academic-portfolio/_next/static/css/c07e5c6367f1ffd8.css","style"]
+:HL["/academic-portfolio/_next/static/css/723ccecdcf8be031.css","style"]
 :HL["/academic-portfolio/fonts/inter/roman.var.woff2","font",{"crossOrigin":"anonymous","type":"font/woff2"}]
 :HL["/academic-portfolio/fonts/dm-serif-display/regular.woff2","font",{"crossOrigin":"anonymous","type":"font/woff2"}]
 :HL["/academic-portfolio/images/profile.svg","image",{"type":"image/svg+xml"}]
 3:[["children",{"s":"__PAGE__","h":160}]]
 2:[["children",{"s":{"n":"slug","t":"d","k":"NON-EXISTENT-SLUG","s":["page"]},"h":65632,"c":"$Q3"}]]
 1:[["children",{"s":"blog","h":131136,"c":"$Q2"}]]
-0:{"b":"QxWdHvQ5wl_NE7jGyeUVS","t":{"t":{"s":"","h":131088,"c":"$Q1"}}}
+0:{"b":"lmeZ5sQHo3jYxjZJ-xKLr","t":{"t":{"s":"","h":131088,"c":"$Q1"}}}
