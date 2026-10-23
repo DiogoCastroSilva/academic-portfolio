@@ -28,14 +28,25 @@ const mockProfile: ProfileData = {
 
 const mockProjects: ContentMeta[] = [
   {
-    slug: "test-project",
-    href: "/projects/test-project",
-    title: "Test Project",
+    slug: "regular-project",
+    href: "/projects/regular-project",
+    title: "Regular Project",
     date: "2024-01-15",
     tags: [],
     excerpt: "A test.",
     imageSrc: "/projects/test-project/cover.webp",
     imageType: "cover",
+  },
+  {
+    slug: "selected-project",
+    href: "/projects/selected-project",
+    title: "Selected Project",
+    date: "2023-01-15",
+    tags: [],
+    excerpt: "A featured test.",
+    imageSrc: "/projects/selected-project/cover.webp",
+    imageType: "cover",
+    selected: true,
   },
 ];
 
@@ -76,7 +87,7 @@ vi.mock("@academic-portfolio/content", () => ({
 }));
 
 vi.mock("@academic-portfolio/projects", () => ({
-  getAllProjects: () => mockProjects,
+  getAllProjects: vi.fn(() => mockProjects),
   getProjectContentBySlug: vi.fn(),
 }));
 
@@ -158,6 +169,7 @@ vi.mock("./lib/og-image", () => ({
 import Index from "./page";
 import { getAllBlogPosts } from "@academic-portfolio/blog";
 import { getAllPublications } from "@academic-portfolio/publications";
+import { getAllProjects } from "@academic-portfolio/projects";
 
 describe("Homepage", () => {
   it("hides Blog section when no published blog posts exist", () => {
@@ -241,5 +253,214 @@ describe("Homepage", () => {
     expect(blogSection).toBeDefined();
     const articles = blogSection!.querySelectorAll("article");
     expect(articles).toHaveLength(6);
+  });
+
+  describe("project selection on homepage", () => {
+    it("shows only selected projects when any are selected", () => {
+      vi.mocked(getAllProjects).mockReturnValue([
+        {
+          slug: "old-project",
+          href: "/projects/old-project",
+          title: "Old Project",
+          date: "2020-01-01",
+          tags: [],
+          excerpt: "Old.",
+          imageSrc: "/projects/old.webp",
+          imageType: "cover",
+        },
+        {
+          slug: "featured-project",
+          href: "/projects/featured-project",
+          title: "Featured Project",
+          date: "2024-06-01",
+          tags: [],
+          excerpt: "Featured.",
+          imageSrc: "/projects/featured.webp",
+          imageType: "cover",
+          selected: true,
+        },
+        {
+          slug: "another-unselected",
+          href: "/projects/another-unselected",
+          title: "Another Unselected",
+          date: "2024-12-01",
+          tags: [],
+          excerpt: "Recent but not selected.",
+          imageSrc: "/projects/another.webp",
+          imageType: "cover",
+        },
+      ]);
+      vi.mocked(getAllBlogPosts).mockReturnValue([]);
+
+      render(<Index />);
+
+      const projectsSection = screen
+        .getAllByTestId("card-section")
+        .find((s) => s.getAttribute("data-heading") === "Projects");
+
+      const articleTitles = Array.from(
+        projectsSection!.querySelectorAll("article"),
+      ).map((a) => a.textContent);
+
+      // Only the selected project should appear, not the recent unselected one
+      expect(articleTitles).toEqual(["Featured Project"]);
+    });
+
+    it("shows only selected projects even when fewer than 3 are selected", () => {
+      vi.mocked(getAllProjects).mockReturnValue([
+        {
+          slug: "unselected-1",
+          href: "/projects/unselected-1",
+          title: "Unselected 1",
+          date: "2024-01-01",
+          tags: [],
+          excerpt: "",
+          imageSrc: "/projects/u1.webp",
+          imageType: "cover",
+        },
+        {
+          slug: "selected-1",
+          href: "/projects/selected-1",
+          title: "Selected 1",
+          date: "2024-06-01",
+          tags: [],
+          excerpt: "",
+          imageSrc: "/projects/s1.webp",
+          imageType: "cover",
+          selected: true,
+        },
+        {
+          slug: "unselected-2",
+          href: "/projects/unselected-2",
+          title: "Unselected 2",
+          date: "2024-12-01",
+          tags: [],
+          excerpt: "",
+          imageSrc: "/projects/u2.webp",
+          imageType: "cover",
+        },
+      ]);
+      vi.mocked(getAllBlogPosts).mockReturnValue([]);
+
+      render(<Index />);
+
+      const projectsSection = screen
+        .getAllByTestId("card-section")
+        .find((s) => s.getAttribute("data-heading") === "Projects");
+
+      const articles = projectsSection!.querySelectorAll("article");
+      expect(articles).toHaveLength(1);
+      expect(articles[0]).toHaveTextContent("Selected 1");
+    });
+
+    it("falls back to three most recent projects when none are selected", () => {
+      vi.mocked(getAllProjects).mockReturnValue([
+        {
+          slug: "newest",
+          href: "/projects/newest",
+          title: "Newestest",
+          date: "2025-01-01",
+          tags: [],
+          excerpt: "",
+          imageSrc: "/projects/newest.webp",
+          imageType: "cover",
+        },
+        {
+          slug: "new",
+          href: "/projects/new",
+          title: "Newest",
+          date: "2024-12-01",
+          tags: [],
+          excerpt: "",
+          imageSrc: "/projects/new.webp",
+          imageType: "cover",
+        },
+        {
+          slug: "middle",
+          href: "/projects/middle",
+          title: "Middle",
+          date: "2021-06-01",
+          tags: [],
+          excerpt: "",
+          imageSrc: "/projects/middle.webp",
+          imageType: "cover",
+        },
+        {
+          slug: "old",
+          href: "/projects/old",
+          title: "Oldest",
+          date: "2020-01-01",
+          tags: [],
+          excerpt: "",
+          imageSrc: "/projects/old.webp",
+          imageType: "cover",
+        },
+      ]);
+      vi.mocked(getAllBlogPosts).mockReturnValue([]);
+
+      render(<Index />);
+
+      const projectsSection = screen
+        .getAllByTestId("card-section")
+        .find((s) => s.getAttribute("data-heading") === "Projects");
+
+      const articles = projectsSection!.querySelectorAll("article");
+      // Should show exactly 3 (the three most recent), sorted newest-first
+      expect(articles).toHaveLength(3);
+      expect(articles[0]).toHaveTextContent("Newestest");
+      expect(articles[1]).toHaveTextContent("Newest");
+      expect(articles[2]).toHaveTextContent("Middle");
+    });
+
+    it("shows all projects when fewer than 3 exist and none are selected", () => {
+      vi.mocked(getAllProjects).mockReturnValue([
+        {
+          slug: "only",
+          href: "/projects/only",
+          title: "Only Project",
+          date: "2024-01-01",
+          tags: [],
+          excerpt: "",
+          imageSrc: "/projects/only.webp",
+          imageType: "cover",
+        },
+      ]);
+      vi.mocked(getAllBlogPosts).mockReturnValue([]);
+
+      render(<Index />);
+
+      const projectsSection = screen
+        .getAllByTestId("card-section")
+        .find((s) => s.getAttribute("data-heading") === "Projects");
+
+      const articles = projectsSection!.querySelectorAll("article");
+      expect(articles).toHaveLength(1);
+      expect(articles[0]).toHaveTextContent("Only Project");
+    });
+
+    it("shows 'View all projects' link pointing to /projects", () => {
+      vi.mocked(getAllProjects).mockReturnValue([
+        {
+          slug: "p1",
+          href: "/projects/p1",
+          title: "Project 1",
+          date: "2024-01-01",
+          tags: [],
+          excerpt: "",
+          imageSrc: "/projects/p1.webp",
+          imageType: "cover",
+        },
+      ]);
+      vi.mocked(getAllBlogPosts).mockReturnValue([]);
+
+      render(<Index />);
+
+      const links = screen.getAllByTestId("view-all-link");
+      const projectsLink = links.find(
+        (l) => l.getAttribute("href") === "/projects",
+      );
+      expect(projectsLink).toBeInTheDocument();
+      expect(projectsLink).toHaveTextContent("View all projects");
+    });
   });
 });

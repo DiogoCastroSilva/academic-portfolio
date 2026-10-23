@@ -223,7 +223,10 @@ describe("ContentDetail theme contrast (dark mode on dark surfaces)", () => {
     // (text-text-primary) in dark mode, keeping it light — not the
     // @tailwindcss/typography plugin's hardcoded dark --tw-prose-headings value.
     expect(className).not.toMatch(/dark:prose-invert/);
-    expect(className).toMatch(/dark:prose-headings:text-text-primary/);
+    // We now use prose-headings (no dark: prefix) so headings are colored
+    // consistently in BOTH light and dark modes — not just dark.
+    expect(className).toMatch(/prose-headings:text-text-primary/);
+    expect(className).not.toMatch(/dark:prose-headings/);
   });
 
   it("prose links use semantic accent token instead of hardcoded blue variant", () => {
@@ -280,6 +283,37 @@ describe("ContentDetail responsive link wrapping", () => {
     expect(proseDiv).toBeDefined();
     const className = proseDiv?.className || "";
     expect(className).toMatch(/prose-a:break-words/);
+  });
+
+  it("prose headings have explicit text-text-primary color (not dark-only) for both themes", () => {
+    const { container } = render(<ContentDetail content={mockContent} />);
+    const proseDiv = Array.from(container.querySelectorAll("div")).find((d) =>
+      d.className.includes("prose"),
+    );
+    const className = proseDiv?.className || "";
+    // Must NOT use dark: prefix — headings must be colored in both light and dark modes
+    expect(className).toMatch(/prose-headings:text-text-primary/);
+    expect(className).not.toMatch(/dark:prose-headings/);
+  });
+
+  it("prose links have explicit text-link color for both themes", () => {
+    const { container } = render(<ContentDetail content={mockContent} />);
+    const proseDiv = Array.from(container.querySelectorAll("div")).find((d) =>
+      d.className.includes("prose"),
+    );
+    const className = proseDiv?.className || "";
+    expect(className).toMatch(/prose-a:text-link/);
+  });
+
+  it("prose strong elements have explicit text-text-primary color for both themes", () => {
+    const { container } = render(<ContentDetail content={mockContent} />);
+    const proseDiv = Array.from(container.querySelectorAll("div")).find((d) =>
+      d.className.includes("prose"),
+    );
+    const className = proseDiv?.className || "";
+    // Must NOT use dark: prefix — strong text must be colored in both light and dark modes
+    expect(className).toMatch(/prose-strong:text-text-primary/);
+    expect(className).not.toMatch(/dark:prose-strong/);
   });
 
   it("prose paragraphs have break-words for inline long content", () => {

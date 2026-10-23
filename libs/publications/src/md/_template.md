@@ -6,6 +6,8 @@
 # Remove the `draft: true` line from the README.md frontmatter when
 # ready to publish.
 #
+# Set `selected: true` on publications you want to highlight on the homepage.
+#
 # Directory structure:
 #   libs/publications/src/md/my-paper-slug/
 #     README.md          <- this file (frontmatter + body)
@@ -29,6 +31,7 @@ doi: "10.0000/journal.xxxxx"
 paperUrl: "https://journal.example.com/doi/xxxxx"
 links: []
 image: "cover.jpeg"
+selected: false
 ---
 
 ## Abstract

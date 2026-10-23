@@ -26,6 +26,8 @@ export interface ContentMeta {
   imageType: "cover" | "placeholder";
   /** Internal flag — true if this item is a draft (excluded from `getAll`). */
   draft?: boolean;
+  /** Optional editorial flag — marks this item as "selected" or "featured" for prominent display. */
+  selected?: boolean;
 }
 
 export interface ContentItemMeta extends ContentMeta {

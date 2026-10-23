@@ -27,7 +27,7 @@
   overflow-wrap: anywhere;
   text-wrap: balance;
   font-family: var(--font-display, "DM Serif Display", Georgia, serif);
-  color: var(--color-text-secondary);
+  color: var(--color-text-primary);
   /* Fluid responsive size: ~2.5rem at 320px → ~4rem at 1200px+ */
   font-size: clamp(2.5rem, 5vw + 1rem, 4rem);
   font-weight: 400; /* DM Serif Display only ships weight 400 */

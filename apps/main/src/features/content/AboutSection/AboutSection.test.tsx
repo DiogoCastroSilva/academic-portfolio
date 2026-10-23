@@ -69,11 +69,11 @@ describe("AboutSection", () => {
     expect(bioParagraph).toBeInTheDocument();
   });
 
-  it("renders the 'About Me' section heading as h2", () => {
+  it("does not render an 'About Me' section heading", () => {
     render(<AboutSection profile={mockProfile} />);
 
-    const subheading = screen.getByRole("heading", { level: 2 });
-    expect(subheading).toHaveTextContent("About Me");
+    const h2Headings = screen.queryByRole("heading", { level: 2 });
+    expect(h2Headings).not.toBeInTheDocument();
   });
 
   it("passes accessibility checks with profile image", async () => {
@@ -97,6 +97,90 @@ describe("AboutSection", () => {
 
     const h1Headings = screen.getAllByRole("heading", { level: 1 });
     expect(h1Headings).toHaveLength(1);
+  });
+
+  describe("layout: portrait and text positioning", () => {
+    it("text container uses flex-col so name, role, and bio stack vertically", () => {
+      const { container } = render(<AboutSection profile={mockProfile} />);
+
+      /* The text container is the second <div> inside the outer flex.
+         It must use flex-col so that <h1>, <p> (role), and the bio <div>
+         stack vertically instead of sitting side-by-side in a row. */
+      const outerFlex = container.querySelector(
+        ".animate-fadeInUp",
+      ) as HTMLElement;
+      const children = Array.from(outerFlex.children);
+      const textContainer = children[1] as HTMLElement;
+      expect(textContainer.className).toMatch(/flex-col/);
+    });
+
+    it("portrait container does not use md:order-2 (which would place it on the LEFT in desktop)", () => {
+      const { container } = render(<AboutSection profile={mockProfile} />);
+
+      /* With md:flex-row-reverse, any md:order overrides would swap
+         the portrait to the wrong side. The portrait must rely on
+         natural DOM order so flex-row-reverse places it on the RIGHT. */
+      const portraitContainer = Array.from(
+        container.querySelectorAll("div"),
+      ).find((d) => d.querySelector("img")) as HTMLElement;
+      expect(portraitContainer.className).not.toMatch(/md:order-2/);
+    });
+
+    it("portrait appears first in DOM order (before text) for correct flex-row-reverse visual", () => {
+      const { container } = render(<AboutSection profile={mockProfile} />);
+
+      const outerFlex = container.querySelector(
+        ".animate-fadeInUp",
+      ) as HTMLElement;
+      const children = Array.from(outerFlex.children);
+      const firstChildHasImage = (children[0] as HTMLElement).querySelector(
+        "img",
+      );
+      const secondChildHasName = (children[1] as HTMLElement).querySelector(
+        ".profile-name",
+      );
+      expect(firstChildHasImage).toBeInTheDocument();
+      expect(secondChildHasName).toBeInTheDocument();
+    });
+
+    it("uses md:flex-row-reverse for desktop two-column layout (portrait on right)", () => {
+      const { container } = render(<AboutSection profile={mockProfile} />);
+
+      const outerFlex = container.querySelector(
+        ".animate-fadeInUp",
+      ) as HTMLElement;
+      expect(outerFlex.className).toMatch(/md:flex-row-reverse/);
+    });
+  });
+
+  describe("biography prose color consistency", () => {
+    it("prose headings have explicit text-text-primary color for both themes", () => {
+      const { container } = render(<AboutSection profile={mockProfile} />);
+      const proseDiv = Array.from(container.querySelectorAll("div")).find((d) =>
+        d.className.includes("prose"),
+      );
+      const className = proseDiv?.className || "";
+      expect(className).toMatch(/prose-headings:text-text-primary/);
+    });
+
+    it("prose links have explicit text-link color for both themes", () => {
+      const { container } = render(<AboutSection profile={mockProfile} />);
+      const proseDiv = Array.from(container.querySelectorAll("div")).find((d) =>
+        d.className.includes("prose"),
+      );
+      const className = proseDiv?.className || "";
+      expect(className).toMatch(/prose-a:text-link/);
+    });
+
+    it("prose strong elements have explicit text-text-primary color for both themes", () => {
+      const { container } = render(<AboutSection profile={mockProfile} />);
+      const proseDiv = Array.from(container.querySelectorAll("div")).find((d) =>
+        d.className.includes("prose"),
+      );
+      const className = proseDiv?.className || "";
+      expect(className).toMatch(/prose-strong:text-text-primary/);
+      expect(className).not.toMatch(/dark:prose-strong/);
+    });
   });
 
   describe("biography image overflow protection", () => {

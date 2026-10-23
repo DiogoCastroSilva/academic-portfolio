@@ -472,3 +472,107 @@ describe("ContentCardSection flex min-width prevents overflow", () => {
     expect(flexRow).toBeInTheDocument();
   });
 });
+
+describe("ContentCardSection selected badge", () => {
+  it("renders 'Featured' badge when selected is true", () => {
+    const items: ContentMeta[] = [
+      {
+        slug: "selected-project",
+        title: "Selected Project",
+        date: "2024-01-15",
+        tags: [],
+        excerpt: "A description.",
+        imageSrc: "/projects/selected-project.webp",
+        selected: true,
+      },
+    ];
+
+    render(
+      <ContentCardSection
+        heading="Projects"
+        headingId="projects-heading"
+        items={items}
+        hrefPrefix="/projects"
+      />,
+    );
+
+    const badge = screen.getByText("Featured");
+    expect(badge).toBeInTheDocument();
+  });
+
+  it("does not render 'Featured' badge when selected is not set", () => {
+    const items: ContentMeta[] = [
+      {
+        slug: "regular-project",
+        title: "Regular Project",
+        date: "2024-01-15",
+        tags: [],
+        excerpt: "A description.",
+        imageSrc: "/projects/regular-project.webp",
+      },
+    ];
+
+    render(
+      <ContentCardSection
+        heading="Projects"
+        headingId="projects-heading"
+        items={items}
+        hrefPrefix="/projects"
+      />,
+    );
+
+    expect(screen.queryByText("Featured")).not.toBeInTheDocument();
+  });
+
+  it("badge has accessible aria-label", () => {
+    const items: ContentMeta[] = [
+      {
+        slug: "selected-project",
+        title: "Selected Project",
+        date: "2024-01-15",
+        tags: [],
+        excerpt: "A description.",
+        imageSrc: "/projects/selected-project.webp",
+        selected: true,
+      },
+    ];
+
+    render(
+      <ContentCardSection
+        heading="Projects"
+        headingId="projects-heading"
+        items={items}
+        hrefPrefix="/projects"
+      />,
+    );
+
+    const badge = screen.getByText("Featured");
+    expect(badge).toHaveAttribute("aria-label", "Featured project");
+  });
+});
+
+describe("ContentCardSection title text color", () => {
+  it("renders h3 card title with text-text-primary for correct dark-mode visibility", () => {
+    const items: ContentMeta[] = [
+      {
+        slug: "project-1",
+        title: "Project One",
+        date: "2024-01-15",
+        tags: ["TypeScript"],
+        imageSrc: "/projects/project-1.webp",
+      },
+    ];
+
+    const { container } = render(
+      <ContentCardSection
+        heading="Projects"
+        headingId="projects-heading"
+        items={items}
+        hrefPrefix="/projects"
+      />,
+    );
+
+    const h3 = container.querySelector("h3");
+    expect(h3).toHaveClass("text-text-primary");
+  });
+});

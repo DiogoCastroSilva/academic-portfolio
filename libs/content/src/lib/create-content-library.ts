@@ -232,6 +232,14 @@ function validateFrontmatter(
     errors.push(`\`slug\` must be a string, got ${typeof data.slug}`);
   }
 
+  if (
+    data.selected !== undefined &&
+    data.selected !== true &&
+    data.selected !== false
+  ) {
+    errors.push(`\`selected\` must be a boolean, got ${typeof data.selected}`);
+  }
+
   // image: null/undefined means "no cover image" (use placeholder).
   // Arrays and objects are rejected — `image: []` used to silently pass
   // because `typeof [] === "object"`.
@@ -353,6 +361,7 @@ function toContentMeta(
     ? data.links.filter((l): l is string => typeof l === "string")
     : undefined;
   const draft = data.draft === true;
+  const selected = data.selected === true;
 
   const resolvedImage = resolveImage(
     entryDir,
@@ -390,6 +399,7 @@ function toContentMeta(
     ...(links && links.length > 0 && { links }),
     ...(image && { image }),
     ...(draft && { draft }),
+    ...(selected && { selected }),
     imageSrc: resolvedImage.src,
     imageType: resolvedImage.imageType,
   };

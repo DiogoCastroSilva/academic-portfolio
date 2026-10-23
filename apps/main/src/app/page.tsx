@@ -12,10 +12,18 @@ import {
 } from "./lib/structured-data";
 
 export default function Index() {
-  const projects = getAllProjects();
+  const allProjects = getAllProjects();
   const publications = getAllPublications();
   const blogPosts = getAllBlogPosts();
   const profile = getProfile();
+
+  // Homepage project selection: if any projects are explicitly selected,
+  // show only those. Otherwise, fall back to the three most recent projects.
+  // getAllProjects() returns items sorted newest-first, so the slice gives
+  // the three most recent. If fewer than three exist, slice returns all.
+  const selectedProjects = allProjects.filter((p) => p.selected);
+  const homeProjects =
+    selectedProjects.length > 0 ? selectedProjects : allProjects.slice(0, 3);
 
   return (
     <div className="flex grow flex-col gap-4">
@@ -25,7 +33,7 @@ export default function Index() {
       <ContentCardSection
         heading="Projects"
         headingId="projects-heading"
-        items={projects}
+        items={homeProjects}
         hrefPrefix="/projects"
         limit={6}
         viewAllHref="/projects"

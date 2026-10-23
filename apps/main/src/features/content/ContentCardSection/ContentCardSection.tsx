@@ -109,6 +109,14 @@ export function ContentCardSection({
                         sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
                         priority={index === 0}
                       />
+                      {item.selected && (
+                        <span
+                          aria-label="Featured project"
+                          className="bg-accent/90 text-text-on-accent absolute top-2 right-2 rounded-full px-2.5 py-1 text-xs font-medium backdrop-blur-[1px]"
+                        >
+                          Featured
+                        </span>
+                      )}
                     </div>
                     <div className="p-4">
                       <div className="flex min-w-0 flex-wrap items-center gap-2">
@@ -138,7 +146,7 @@ export function ContentCardSection({
                         </ul>
                       </div>
                       <div className="flex min-w-0 flex-1 flex-col">
-                        <h3 className="mb-2 line-clamp-2 text-xl leading-tight font-semibold tracking-tight group-hover:underline">
+                        <h3 className="text-text-primary mb-2 line-clamp-2 text-xl leading-tight font-semibold tracking-tight group-hover:underline">
                           {item.title}
                         </h3>
                         {item.excerpt ? (

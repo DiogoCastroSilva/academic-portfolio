@@ -8,9 +8,9 @@ export type AboutSectionProps = {
 
 export const AboutSection = ({ profile }: AboutSectionProps) => {
   return (
-    <section className="bg-surface-card text-text-primary mx-4 rounded-2xl p-6 sm:p-12">
-      <div className="animate-fadeInUp flex flex-col gap-4 motion-reduce:animate-none md:flex-row">
-        <div className="flex flex-4 flex-col items-center gap-2 md:flex-6">
+    <section className="bg-surface-card text-text-primary mx-4 rounded-2xl p-8 sm:p-14 lg:p-16">
+      <div className="animate-fadeInUp flex flex-col gap-10 motion-reduce:animate-none md:flex-row-reverse md:items-start">
+        <div className="flex justify-center md:w-64 md:justify-end">
           <ContentImage
             src={profile.imageSrc}
             alt={`Profile picture of ${profile.name}`}
@@ -18,20 +18,15 @@ export const AboutSection = ({ profile }: AboutSectionProps) => {
             sizes="(max-width: 640px) 140px, (max-width: 768px) 180px, 200px"
             priority
           />
-          <div className="flex flex-col items-center justify-center text-wrap">
-            <h1 className="profile-name">{profile.name}</h1>
-            <p className="text-text-secondary text-center text-lg leading-relaxed">
-              {profile.role}
-            </p>
-          </div>
         </div>
-        <div className="flex flex-12 flex-col gap-2 pt-2">
-          <h2 className="font-display text-text-secondary mb-4 text-2xl font-normal md:text-3xl">
-            About Me
-          </h2>
+        <div className="flex flex-1 flex-col md:pr-8 lg:pr-12">
+          <h1 className="profile-name">{profile.name}</h1>
+          <p className="text-text-secondary mt-2 text-xl leading-relaxed">
+            {profile.role}
+          </p>
           <div
             dangerouslySetInnerHTML={{ __html: profile.biography }}
-            className="prose prose-sm prose-headings:font-bold prose-a:break-words prose-img:max-w-full prose-img:rounded-lg prose-img:my-6 text-text-primary max-w-none"
+            className="prose prose-sm prose-headings:text-text-primary prose-headings:font-bold prose-a:text-link prose-a:break-words prose-strong:text-text-primary prose-a:no-underline prose-a:hover:underline prose-code:bg-code-bg prose-code:px-2 prose-code:py-1 prose-code:rounded prose-code:text-sm prose-code:font-mono prose-pre:bg-pre-bg prose-pre:text-pre-text prose-pre:p-4 prose-pre:rounded-lg prose-pre:overflow-x-auto prose-blockquote:border-l-4 prose-blockquote:border-accent prose-blockquote:pl-4 prose-blockquote:italic prose-ul:list-disc prose-ul:pl-6 prose-ul:my-4 prose-ol:list-decimal prose-ol:pl-6 prose-ol:my-4 prose-li:my-2 prose-img:max-w-full prose-img:rounded-lg prose-img:my-6 text-text-primary mt-8 max-w-none"
           />
         </div>
       </div>

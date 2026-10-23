@@ -6,6 +6,10 @@
 # Remove the `draft: true` line from the README.md frontmatter when
 # ready to publish.
 #
+# Set `selected: true` on projects you want to highlight on the homepage
+# (these will appear before non-selected projects and show a "Featured"
+# badge on their card).
+#
 # Directory structure:
 #   libs/projects/src/md/my-project-slug/
 #     README.md          <- this file (frontmatter + body)
@@ -24,6 +28,7 @@ tags: ["example-tag"]
 excerpt: "A one-sentence summary of this project."
 image: "cover.jpeg"
 links: []
+selected: false
 ---
 
 ## Overview

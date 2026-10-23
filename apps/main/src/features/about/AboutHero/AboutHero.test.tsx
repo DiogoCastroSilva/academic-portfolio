@@ -42,6 +42,13 @@ describe("AboutHero accessibility", () => {
     expect(heading).toHaveTextContent(mockProfile.name);
   });
 
+  it("renders the researcher name with profile-name display class", () => {
+    render(<AboutHero profile={mockProfile} />);
+
+    const heading = screen.getByRole("heading", { level: 1 });
+    expect(heading).toHaveClass("profile-name");
+  });
+
   it("has h2 for About Me section", () => {
     render(<AboutHero profile={mockProfile} />);
 
@@ -117,6 +124,36 @@ describe("AboutHero accessibility", () => {
       );
       const className = proseDiv?.className || "";
       expect(className).toMatch(/prose-img:rounded-lg/);
+    });
+  });
+
+  describe("biography prose color consistency", () => {
+    it("prose headings have explicit text-text-primary color for both themes", () => {
+      const { container } = render(<AboutHero profile={mockProfile} />);
+      const proseDiv = Array.from(container.querySelectorAll("div")).find((d) =>
+        d.className.includes("prose"),
+      );
+      const className = proseDiv?.className || "";
+      expect(className).toMatch(/prose-headings:text-text-primary/);
+    });
+
+    it("prose links have explicit text-link color for both themes", () => {
+      const { container } = render(<AboutHero profile={mockProfile} />);
+      const proseDiv = Array.from(container.querySelectorAll("div")).find((d) =>
+        d.className.includes("prose"),
+      );
+      const className = proseDiv?.className || "";
+      expect(className).toMatch(/prose-a:text-link/);
+    });
+
+    it("prose strong elements have explicit text-text-primary color for both themes", () => {
+      const { container } = render(<AboutHero profile={mockProfile} />);
+      const proseDiv = Array.from(container.querySelectorAll("div")).find((d) =>
+        d.className.includes("prose"),
+      );
+      const className = proseDiv?.className || "";
+      expect(className).toMatch(/prose-strong:text-text-primary/);
+      expect(className).not.toMatch(/dark:prose-strong/);
     });
   });
 });

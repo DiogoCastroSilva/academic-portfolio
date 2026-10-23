@@ -252,6 +252,7 @@ Projects are academic or professional work items (research projects, software, e
 | `image`   | string           | Cover image filename (same directory as the `README.md` file)     |
 | `links`   | array of URLs    | External links (GitHub, demo, paper, etc.)                  |
 | `draft`   | boolean          | Set to `true` to exclude from the listing and build         |
+| `selected`| boolean          | Set to `true` to highlight on the homepage; shows a "Featured" badge and sorts first in the card grid |
 
 ### Project Template
 
@@ -327,18 +328,19 @@ Publications are academic papers, preprints, presentations, and similar works. T
 
 ### Optional Fields (Publications)
 
-| Field      | Type             | Description                                           |
-| ---------- | ---------------- | ----------------------------------------------------- |
-| `slug`     | string           | Accepted but ignored; directory name is authoritative |
-| `tags`     | array of strings | Tags shown on cards (e.g., research areas)            |
-| `excerpt`  | string           | Brief abstract for the publication card               |
-| `authors`  | array of strings | List of author names                                  |
-| `venue`    | string           | Journal, conference, or preprint server name          |
-| `doi`      | string           | Digital Object Identifier                             |
-| `paperUrl` | string           | Direct URL to the paper or preprint                   |
-| `image`    | string           | Cover image filename (same directory)                 |
-| `links`    | array of URLs    | Supplementary links (presentation, code, etc.)        |
-| `draft`    | boolean          | Set to `true` to exclude from the listing             |
+| Field      | Type             | Description                                                                                           |
+| ---------- | ---------------- | ----------------------------------------------------------------------------------------------------- |
+| `slug`     | string           | Accepted but ignored; directory name is authoritative                                                 |
+| `tags`     | array of strings | Tags shown on cards (e.g., research areas)                                                            |
+| `excerpt`  | string           | Brief abstract for the publication card                                                               |
+| `authors`  | array of strings | List of author names                                                                                  |
+| `venue`    | string           | Journal, conference, or preprint server name                                                          |
+| `doi`      | string           | Digital Object Identifier                                                                             |
+| `paperUrl` | string           | Direct URL to the paper or preprint                                                                   |
+| `image`    | string           | Cover image filename (same directory)                                                                 |
+| `links`    | array of URLs    | Supplementary links (presentation, code, etc.)                                                        |
+| `draft`    | boolean          | Set to `true` to exclude from the listing                                                             |
+| `selected` | boolean          | Set to `true` to highlight on the homepage; sorts first in the card grid and shows a "Featured" badge |
 
 ### Publication Template
 
