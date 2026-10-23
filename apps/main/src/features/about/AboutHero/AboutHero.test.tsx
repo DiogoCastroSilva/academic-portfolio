@@ -99,4 +99,24 @@ describe("AboutHero accessibility", () => {
     const roleEl = container.querySelector("p.mt-2");
     expect(roleEl).toHaveClass("text-text-secondary");
   });
+
+  describe("biography image overflow protection", () => {
+    it("prose images have max-w-full to prevent overflow on narrow screens", () => {
+      const { container } = render(<AboutHero profile={mockProfile} />);
+      const proseDiv = Array.from(container.querySelectorAll("div")).find((d) =>
+        d.className.includes("prose"),
+      );
+      const className = proseDiv?.className || "";
+      expect(className).toMatch(/prose-img:max-w-full/);
+    });
+
+    it("prose images have rounded-lg corners", () => {
+      const { container } = render(<AboutHero profile={mockProfile} />);
+      const proseDiv = Array.from(container.querySelectorAll("div")).find((d) =>
+        d.className.includes("prose"),
+      );
+      const className = proseDiv?.className || "";
+      expect(className).toMatch(/prose-img:rounded-lg/);
+    });
+  });
 });

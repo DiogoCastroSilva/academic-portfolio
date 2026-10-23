@@ -290,10 +290,10 @@ Place the image file in `libs/projects/src/md/{slug}/` (same directory as the `R
 Reference it by filename in the `image` field. All images within the entry directory (including
 body images referenced in Markdown) are automatically synced to the public directory.
 
-- Recommended size: 1200x630px (16:9 aspect ratio)
+- Recommended size: 1200×675px (true 16:9 aspect ratio)
 - Supported formats: PNG, JPG, JPEG, WebP, GIF, SVG
 - SVG images are copied as-is (no WebP conversion or resizing); raster formats are resized to 1200px width and converted to WebP during sync
-- If the image is missing or the filename is wrong, a placeholder is used automatically
+- If the filename in the `image` field is wrong, the build fails with an error. If the `image` field is omitted or the file doesn't match any naming pattern, a collection placeholder SVG is used automatically
 
 #### Image Sourcing and Licensing
 
@@ -514,23 +514,28 @@ Cover images appear in two contexts:
    - `overflow-hidden` clips the image to the frame
    - On hover, the image scales up 5% (zoom effect)
    - Cards have `rounded-2xl` (1rem / 16px) corners on the outer `article` element.
-     _(Note: the inner image container's `overflow-hidden` does not inherit the parent
-     `article`'s border-radius, so card cover images have square corners rather than
-     rounded corners. This is an intentional minor visual difference.)_
+     _(Note: the inner image container div has `overflow-hidden` but no `border-radius`
+     class of its own, so it does not clip to the parent `article`'s rounded corners.
+     Card cover images therefore render with square corners, unlike detail-page covers
+     which get 12px rounded corners. This is a known visual difference.)_
 
 #### How to prepare a safe cover image
 
 Because the image is cropped to a 16:9 frame, keep all essential content — text,
 logos, faces, diagrams, data labels — well inside the frame.
 
-1. **Match the 16:9 aspect ratio.** Use 1200×630 pixels (16:9) so nothing is cropped
-   except the ~12px corner rounding on detail pages. If your source image is not 16:9,
-   the browser will crop the excess — you cannot control which part is cropped via
-   Markdown.
+1. **Match the 16:9 aspect ratio.** Use 1200×675 pixels (which is a true 16:9 ratio:
+   1200÷675 = 1.778). This minimizes `object-cover` cropping to at most a few
+   pixels. If your source image is not exactly 16:9, `object-cover` will crop
+   the excess — you cannot control which part is cropped via Markdown.
 2. **Leave a safety margin.** Keep essential content at least **10%** of the image
-   width inward from each edge. This accounts for:
-   - `object-cover` cropping when the image's aspect ratio doesn't exactly match 16:9
-   - Corner rounding (12px on detail pages, 0px effective on cards — see note above)
+   width inward from each edge. This is practical guidance, not a guarantee, but
+   it substantially reduces the risk of content being cropped by `object-cover`:
+   - When the image's aspect ratio exactly matches 16:9, `object-cover` does
+     not crop at all (except ~12px corner rounding on detail pages)
+   - When the image's aspect ratio differs from 16:9, `object-cover` center-crops
+     the excess. A 10% margin accommodates common aspect-ratio mismatches.
+   - Corner rounding: 12px on detail pages, 0px effective on listing cards.
 3. **Place the focal point in the center.** Faces, key data, and any text should be
    centered horizontally and vertically within the 16:9 frame.
 4. **Avoid edge-aligned elements.** Do not place text, logos, or fine detail within
@@ -541,10 +546,10 @@ logos, faces, diagrams, data labels — well inside the frame.
 6. **Prefer JPEG or WebP for photographs.** PNG/SVG are fine for diagrams and
    illustrations. SVG is never converted to WebP and loads instantly.
 
-> **Visual guide:** If you imagine a 1200×630 cover image, draw a "safe zone" inset
-> 10% from each edge (120px). Everything inside that inner 960×420 rectangle is
-> guaranteed visible. Anything outside it **may be cropped** and should be decorative
-> only.
+> **Visual guide:** If you imagine a 1200×675 cover image (a true 16:9 ratio),
+> draw a "safe zone" inset 10% from each edge (120px). Everything inside that
+> inner 960×420 rectangle is likely to remain visible. Content outside that zone
+> **may be cropped** and should be treated as decorative.
 
 ```
 ┌────────────────────────────────────────────────────────┐  ← 10% margin (may be cropped)
@@ -574,10 +579,19 @@ exists in the same directory.
 
 #### Placeholder fallback
 
-If no cover image is provided (or the file is missing), the site automatically uses a
-collection-level placeholder SVG (`project-placeholder.svg`, `publication-placeholder.svg`,
-or `blog-placeholder.svg`). To use a placeholder intentionally, simply omit the `image`
-field or set `image:` to an empty string.
+If no cover image is provided, the site automatically falls back through three
+tiers to find a suitable image:
+
+1.  The `image:` field in frontmatter (relative to the entry's `README.md`).
+2.  An auto-discovered file matching the slug (e.g. `first-project.svg`) in the
+    same directory.
+3.  A collection-level placeholder SVG (`project-placeholder.svg`,
+    `publication-placeholder.svg`, or `blog-placeholder.svg`) at the collection
+    root.
+
+To use a placeholder intentionally, omit the `image` field or set `image:` to an
+empty string. **Note:** if `image` is set but the file does not exist, the build
+fails with an error — it does not silently fall back to a placeholder.
 
 ### Content (Body) Images
 
@@ -610,7 +624,7 @@ is always visible.
 5. **Prefer SVG for diagrams and charts.** SVGs scale perfectly to any size, have
    tiny file sizes, and require no WebP conversion.
 6. **Prefer JPEG/WebP for photographs.** The `sync-content-assets` tool automatically
-   generates WebP versions of JPEG and PNG files at build time.
+   generates WebP versions of JPEG and PNG files during `sync-content-assets` (before build).
 7. **Avoid unnecessarily large files.** Aim for under 300KB per image. The build
    pipeline resizes raster images to 1200px width automatically.
 
@@ -644,19 +658,22 @@ It is displayed as a **circle** via CSS `rounded-full`. Use a square image and k
 the face or focal subject centered with at least 20% margin from each edge, since
 the circular crop removes roughly 21% of the image area at each corner.
 
-- Dimensions: 128px (mobile) → 160px (sm) → 192px (md) → 224px (lg) → 256px (xl)
+- Dimensions (homepage `AboutSection`): 128px (mobile) → 160px (sm) → 192px (md)
+  - Dimensions (`AboutHero` full page): 192px (mobile) → 256px (sm) → 224px (md)
+  - Both components use fixed px sizes via Tailwind height classes; no `lg` or
+    `xl` breakpoints are applied.
 - Place the file in `libs/content/src/md/` and reference it by filename:
   `image: profile.jpg` in the profile frontmatter
 - The default `profile.svg` is identity-neutral and safe to ship as-is
-- Raster images (JPEG/PNG) are converted to WebP during build
+- Raster images (JPEG/PNG) are converted to WebP during `npx nx run main:sync-content-assets` (before build)
 
 ### Favicon, OG Images, and Placeholders
 
-| Image type                 | Location                                     | Action needed                       |
-| -------------------------- | -------------------------------------------- | ----------------------------------- |
-| **Placeholder images**     | `libs/{collection}/src/md/*-placeholder.svg` | Auto-selected when cover is missing |
-| **OG (Open Graph) images** | Auto-generated at build time                 | Generated from cover image + title  |
-| **Favicon**                | `apps/main/public/favicon.svg`               | Only edit if you want to replace    |
+| Image type                 | Location                                     | Action needed                                           |
+| -------------------------- | -------------------------------------------- | ------------------------------------------------------- |
+| **Placeholder images**     | `libs/{collection}/src/md/*-placeholder.svg` | Auto-selected when cover is missing                     |
+| **OG (Open Graph) images** | Pre-generated SVGs in `public/og/`           | Uses cover image, or auto-generated SVG with title text |
+| **Favicon**                | `apps/main/public/favicon.svg`               | Only edit if you want to replace                        |
 
 ### Pre-Publication Checklist
 
@@ -664,13 +681,15 @@ Before adding or replacing any image, follow this checklist:
 
 - [ ] I chose the correct image type for its purpose (cover, body content, gallery, profile).
 - [ ] Important text, labels, faces, logos, and diagram details have sufficient space
-      from the edges — at least 10% for cover images, at least 20% for profile portraits.
+      from the edges — at least 10% (practical guidance) for cover images, at least 20%
+      for profile portraits.
 - [ ] I checked how the image looks inside its actual cover, card, or content container
       at the displayed size — not just in the file browser.
 - [ ] The image remains clear and complete at both mobile and desktop sizes.
 - [ ] The image is not unintentionally cropped, clipped, or stretched. (Cover images
       ARE intentionally cropped to 16:9 — this is expected; profile portraits ARE
-      intentionally cropped to a circle — this is expected.)
+      intentionally cropped to a circle — this is expected. Cover images on cards
+      have square corners due to a known rendering difference — see Image Guidelines.)
 - [ ] I added useful alternative text describing the meaningful information in the
       image, and a caption where the image needs explanation or attribution.
 - [ ] The image file is reasonably sized (under 300 KB) and follows the repository's

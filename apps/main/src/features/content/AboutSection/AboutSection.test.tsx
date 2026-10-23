@@ -98,4 +98,24 @@ describe("AboutSection", () => {
     const h1Headings = screen.getAllByRole("heading", { level: 1 });
     expect(h1Headings).toHaveLength(1);
   });
+
+  describe("biography image overflow protection", () => {
+    it("prose images have max-w-full to prevent overflow on narrow screens", () => {
+      const { container } = render(<AboutSection profile={mockProfile} />);
+      const proseDiv = Array.from(container.querySelectorAll("div")).find((d) =>
+        d.className.includes("prose"),
+      );
+      const className = proseDiv?.className || "";
+      expect(className).toMatch(/prose-img:max-w-full/);
+    });
+
+    it("prose images have rounded-lg corners", () => {
+      const { container } = render(<AboutSection profile={mockProfile} />);
+      const proseDiv = Array.from(container.querySelectorAll("div")).find((d) =>
+        d.className.includes("prose"),
+      );
+      const className = proseDiv?.className || "";
+      expect(className).toMatch(/prose-img:rounded-lg/);
+    });
+  });
 });

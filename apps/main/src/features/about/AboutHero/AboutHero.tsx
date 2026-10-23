@@ -101,7 +101,7 @@ export const AboutHero = ({ profile }: AboutHeroProps) => {
           </h2>
           <div
             dangerouslySetInnerHTML={{ __html: profile.biography }}
-            className="prose prose-lg prose-headings:font-bold prose-a:break-words text-text-primary max-w-none"
+            className="prose prose-lg prose-headings:font-bold prose-a:break-words prose-img:max-w-full prose-img:rounded-lg prose-img:my-6 text-text-primary max-w-none"
           />
         </MotionDiv>
       </MotionDiv>
