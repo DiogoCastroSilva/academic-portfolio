@@ -58,7 +58,7 @@ export const EducationTimeline = ({ items }: EducationTimelineProps) => {
               {/* Content */}
               <div className="flex-1 pb-2">
                 <div className="flex flex-col gap-2">
-                  <h3 className="text-lg font-semibold text-slate-900">
+                  <h3 className="text-lg font-semibold text-slate-900 dark:text-slate-200">
                     {edu.degree}
                   </h3>
                   <p className="text-sm font-medium text-sky-600 dark:text-sky-400">
