@@ -1,8 +1,13 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="800" height="450" viewBox="0 0 800 450" role="img" aria-label="Post cover placeholder">
-  <rect width="800" height="450" fill="#e7e5e4"/>
-  <rect x="280" y="115" width="240" height="180" rx="12" fill="#d6d3d1" stroke="#a8a29e" stroke-width="2"/>
-  <circle cx="340" cy="165" r="28" fill="#a8a29e"/>
-  <path d="M300 255l52-48 40 36 28-24 80 72v24H300z" fill="#a8a29e"/>
-  <path d="M360 305h80" stroke="#78716c" stroke-width="3" stroke-linecap="round"/>
-  <path d="M320 335h160" stroke="#a8a29e" stroke-width="3" stroke-linecap="round"/>
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="450" viewBox="0 0 800 450" role="img" aria-label="Cover placeholder">
+  <rect width="800" height="450" fill="#ffffff"/>
+  <!-- Subtle contour lines: glacial elevation curves -->
+  <path d="M100 100 C250 60, 350 140, 500 100 C650 60, 700 140" stroke="#bae6fd" stroke-width="2" fill="none" stroke-linecap="round"/>
+  <path d="M100 130 C250 90, 350 160, 500 130 C650 90, 700 160" stroke="#bae6fd" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+  <!-- River line: flowing water course -->
+  <path d="M0 360 C120 310, 220 380, 320 340 C420 300, 520 370, 640 330 C740 300, 800 340" stroke="#0369a1" stroke-width="12" fill="none" stroke-linecap="round"/>
+  <!-- Floodplain boundary: dashed water-level curve -->
+  <path d="M0 400 C120 350, 220 420, 320 380 C420 340, 520 410, 640 370 C740 340, 800 380" stroke="#7dd3fc" stroke-width="6" fill="none" stroke-linecap="round" stroke-dasharray="6,4"/>
+  <!-- Placeholder label -->
+  <text x="400" y="240" font-family="Inter, system-ui, sans-serif" font-size="20" font-weight="500" fill="#475569" text-anchor="middle">Cover placeholder</text>
+  <text x="400" y="265" font-family="Inter, system-ui, sans-serif" font-size="13" fill="#475569" text-anchor="middle">not a real research figure</text>
 </svg>
