@@ -5,6 +5,15 @@
  * libs/design-system/src/styles/ (see ADR-0008).
  */
 
+/* Display font for major prose headings (h1, h2).
+ * DM Serif Display provides editorial personality for section titles.
+ * Smaller headings (h3–h6) and body text inherit Inter (font-sans)
+ * from the body's font-family declaration. */
+.prose h1,
+.prose h2 {
+  font-family: var(--font-display, "DM Serif Display", Georgia, serif);
+}
+
 /* Semantic figure/figcaption styles for markdown-rendered images */
 .prose figure {
   margin: 1.5rem auto;

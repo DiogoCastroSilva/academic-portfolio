@@ -26,7 +26,9 @@ export const AboutSection = ({ profile }: AboutSectionProps) => {
           </div>
         </div>
         <div className="flex flex-12 flex-col gap-2 pt-2">
-          <h2 className="mb-4 text-2xl font-bold md:text-3xl">About Me</h2>
+          <h2 className="font-display mb-4 text-2xl font-bold md:text-3xl">
+            About Me
+          </h2>
           <div
             dangerouslySetInnerHTML={{ __html: profile.biography }}
             className="prose prose-sm prose-headings:font-bold prose-a:break-words text-text-primary max-w-none"

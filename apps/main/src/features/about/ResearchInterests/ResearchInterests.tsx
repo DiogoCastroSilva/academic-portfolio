@@ -22,7 +22,7 @@ export const ResearchInterests = ({ items }: ResearchInterestsProps) => {
               viewport: { once: true },
             })}
       >
-        <h2 className="mb-8 text-2xl font-bold md:text-3xl">
+        <h2 className="font-display mb-8 text-2xl font-bold md:text-3xl">
           Research Interests &amp; Expertise
         </h2>
 

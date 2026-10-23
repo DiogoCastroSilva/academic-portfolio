@@ -10,6 +10,7 @@
   max-width: 100%;
   overflow-wrap: anywhere;
   text-wrap: balance;
+  font-family: var(--font-display, "DM Serif Display", Georgia, serif);
   font-size: 1.875rem;
   font-weight: 700;
   line-height: 1.15;

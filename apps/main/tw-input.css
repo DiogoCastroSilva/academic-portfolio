@@ -68,6 +68,10 @@
   --color-status-info-text: var(--color-status-info-text, #1e40af);
   --color-status-warning-bg: var(--color-status-warning-bg, #fef3c7);
   --color-status-warning-text: var(--color-status-warning-text, #92400e);
+
+  /* Fonts (set by next/font/local on <html> via layout.tsx className) */
+  --font-sans: var(--font-sans, "Inter", system-ui, sans-serif);
+  --font-display: var(--font-display, "DM Serif Display", Georgia, serif);
 }
 
 @import "../../libs/design-system/src/styles/index.css";

@@ -10,6 +10,7 @@ import { Footer } from "../components/Footer";
 
 import { withPublicBasePath } from "@academic-portfolio/content";
 
+import { inter, dmSerifDisplay } from "../lib/fonts.js";
 import { siteConfig } from "../configs/site-config";
 import { ogImageRef } from "./lib/og-image";
 
@@ -84,7 +85,11 @@ export default function RootLayout({
   const navItems = getNavigation(hasBlogPosts);
 
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html
+      lang="en"
+      suppressHydrationWarning
+      className={`${dmSerifDisplay.variable} ${inter.variable}`}
+    >
       <head>
         {/*
           Inline theme-init script: reads localStorage and sets [data-theme]
@@ -95,7 +100,7 @@ export default function RootLayout({
       </head>
       <body
         suppressHydrationWarning
-        className="bg-surface-page text-text-primary min-h-full"
+        className="bg-surface-page text-text-primary min-h-full font-sans"
       >
         <div className="flex min-h-full flex-col">
           <a

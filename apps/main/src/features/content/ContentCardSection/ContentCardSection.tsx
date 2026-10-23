@@ -61,7 +61,7 @@ export function ContentCardSection({
     >
       <HeadingTag
         id={headingId ?? heading}
-        className="text-text-primary mb-6 text-2xl font-bold md:text-3xl"
+        className="text-text-primary font-display mb-6 text-2xl font-bold md:text-3xl"
       >
         {heading}
       </HeadingTag>

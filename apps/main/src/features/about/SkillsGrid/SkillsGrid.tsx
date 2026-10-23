@@ -23,7 +23,9 @@ export const SkillsGrid = ({ categories }: SkillsGridProps) => {
               viewport: { once: true },
             })}
       >
-        <h2 className="mb-8 text-2xl font-bold md:text-3xl">Skills & Tools</h2>
+        <h2 className="font-display mb-8 text-2xl font-bold md:text-3xl">
+          Skills & Tools
+        </h2>
 
         <MotionDiv
           className="grid grid-cols-1 gap-8 md:grid-cols-2"

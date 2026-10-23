@@ -22,7 +22,9 @@ export const EducationTimeline = ({ items }: EducationTimelineProps) => {
               viewport: { once: true },
             })}
       >
-        <h2 className="mb-8 text-2xl font-bold md:text-3xl">Education</h2>
+        <h2 className="font-display mb-8 text-2xl font-bold md:text-3xl">
+          Education
+        </h2>
 
         <div className="space-y-8">
           {items.map((edu, index) => (
