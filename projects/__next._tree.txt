@@ -6,4 +6,4 @@
 :HL["/academic-portfolio/projects/first-project/first-project.svg","image",{"imageSizes":"(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw","fetchPriority":"high"}]
 2:[["children",{"s":"__PAGE__","h":160}]]
 1:[["children",{"s":"projects","h":64,"c":"$Q2"}]]
-0:{"b":"UqSgBHBpel94FOfw5DVxQ","t":{"t":{"s":"","h":16,"c":"$Q1"}}}
+0:{"b":"cIyk_VnTEhzyQ6Y3vM5B4","t":{"t":{"s":"","h":16,"c":"$Q1"}}}
