@@ -11,7 +11,7 @@ export const EducationTimeline = ({ items }: EducationTimelineProps) => {
   const MotionDiv = shouldReduceMotion ? "div" : motion.div;
 
   return (
-    <section className="mx-4 rounded-2xl bg-white p-12 text-slate-900 shadow-sm dark:bg-slate-800 dark:text-slate-200">
+    <section className="dark:bg-slate-850 mx-4 rounded-2xl bg-white p-12 text-slate-900 shadow-sm dark:text-slate-200">
       <MotionDiv
         {...(shouldReduceMotion
           ? {}

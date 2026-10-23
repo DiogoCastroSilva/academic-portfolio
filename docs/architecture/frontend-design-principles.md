@@ -50,27 +50,27 @@ Every collection follows the same pattern:
 
 The intended contract is a small set of semantic colors in `apps/main/src/app/global.css`, with values overridden in `@media (prefers-color-scheme: dark)`. **This is not yet a single source of truth in the implementation:** several tokens are unused and components still set many colors directly with Tailwind palette utilities. The roadmap tracks completing this alignment. Keep Tailwind's built-in spacing/type scales; do not create competing scales.
 
-| Token                      | Light     | Dark      | Purpose                             |
-| -------------------------- | --------- | --------- | ----------------------------------- |
-| `--color-surface-page`     | `#ffffff` | `#0f172a` | Page background (slate-900)         |
-| `--color-surface-card`     | `#ffffff` | `#1e293b` | Card/surface background (slate-800) |
-| `--color-surface-elevated` | `#ffffff` | `#334155` | Elevated surfaces (slate-700)       |
-| `--color-text-primary`     | `#171717` | `#e2e8f0` | Primary body text (slate-200)       |
-| `--color-text-muted`       | `#6b7280` | `#94a3b8` | Secondary/metadata text (slate-400) |
-| `--color-border`           | `#e5e7eb` | `#334155` | Default borders (slate-700)         |
-| `--color-accent`           | `#0284c7` | `#38bdf8` | Links (sky-600 / sky-400)           |
-| `--color-accent-hover`     | `#0369a1` | `#7dd3fc` | Link hover (sky-700 / sky-300)      |
-| `--color-focus`            | `#0284c7` | `#38bdf8` | Focus rings (sky-600 / sky-400)     |
-| `--color-code-bg`          | `#f3f4f6` | `#1e293b` | Inline code background              |
-| `--color-pre-bg`           | `#171717` | `#0f172a` | Preformatted block background       |
-| `--color-pre-text`         | `#f9fafb` | `#e2e8f0` | Preformatted block text             |
+| Token                      | Light     | Dark      | Purpose                                        |
+| -------------------------- | --------- | --------- | ---------------------------------------------- |
+| `--color-surface-page`     | `#f8fafc` | `#1e293b` | Page background (slate-50 / slate-800)         |
+| `--color-surface-card`     | `#ffffff` | `#273449` | Card/surface background (white / slate-850)    |
+| `--color-surface-elevated` | `#ffffff` | `#334155` | Elevated surfaces (white / slate-700)          |
+| `--color-text-primary`     | `#171717` | `#e2e8f0` | Primary body text (slate-800 / slate-200)      |
+| `--color-text-muted`       | `#6b7280` | `#94a3b8` | Secondary/metadata text (gray-600 / slate-400) |
+| `--color-border`           | `#e5e7eb` | `#334155` | Default borders (gray-200 / slate-700)         |
+| `--color-accent`           | `#0284c7` | `#38bdf8` | Links (sky-600 / sky-400)                      |
+| `--color-accent-hover`     | `#0369a1` | `#7dd3fc` | Link hover (sky-700 / sky-300)                 |
+| `--color-focus`            | `#0284c7` | `#38bdf8` | Focus rings (sky-600 / sky-400)                |
+| `--color-code-bg`          | `#f3f4f6` | `#1e293b` | Inline code background                         |
+| `--color-pre-bg`           | `#171717` | `#0f172a` | Preformatted block background                  |
+| `--color-pre-text`         | `#f9fafb` | `#e2e8f0` | Preformatted block text                        |
 
-Components use `dark:bg-slate-800` / `dark:bg-slate-900` directly via Tailwind utilities, matching the token values. Prose links consume the accent variables through `global.css`.
+Components use `dark:bg-slate-850` (custom token for card surfaces) and `dark:bg-slate-800` (page background) directly via Tailwind utilities. The custom `slate-850` color (`#273449`) is defined via `@theme` in `tw-input.css`. Prose links consume the accent variables through `global.css`.
 
 ### Applied Theme Rules
 
-- **Light mode:** white surfaces, `text-slate-900` body on cards, `text-gray-800` on prose, `text-zinc-600` metadata.
-- **Dark mode:** dark surfaces (`slate-900` page, `slate-800` cards), off-white text (`slate-200` primary, `slate-300` prose, `zinc-400` metadata), sky-400 accents.
+- **Light mode:** soft `slate-50` page canvas, white cards, `text-slate-900` body on cards, `text-gray-800` on prose, `text-zinc-600` metadata.
+- **Dark mode:** slate-800 page background, `slate-850` cards (slightly lighter for hierarchy), off-white text (`slate-200` primary, `slate-300` prose, `zinc-400` metadata), sky-400 accents.
 - **Accent color:** `sky-600` (`--color-accent`) for links and focus rings; `sky-400` in dark mode via token overrides.
 - Prose link colors are controlled by the global CSS token, not by per-component Tailwind `prose-a:text-*` utilities — this avoids drift.
 - **Accessibility target:** verify every foreground/background pair used by the UI against WCAG 2.2 AA before claiming full contrast compliance. The token table is a target contract, not proof that every current component combination has been measured.
@@ -80,7 +80,7 @@ Components use `dark:bg-slate-800` / `dark:bg-slate-900` directly via Tailwind u
 - NavBar uses segment-aware prefix matching (`isPathActive`) — `/projects/example/` matches "Projects" but not unrelated paths.
 - Active state: bottom border `border-sky-600` (light) / `border-sky-400` (dark) + `aria-current="page"` (color-only is not sufficient). A transparent `border-b-2` is always present on nav links to reserve space and prevent layout shift when the active border appears.
 - Breadcrumb on detail pages: `Collection / Entry-title` — the last item is the current page (no "Home" link in the breadcrumb per the "do not add content entries to global navigation" rule).
-- Breadcrumb sits inside the same card surface as `ContentDetail` (`mx-4 rounded-2xl dark:bg-sky-50 gap-4`), with `text-slate-900 dark:text-slate-900` for the current page — preventing dark-text-on-dark-surface contrast failures.
+- Breadcrumb sits inside the same card surface as `ContentDetail` (`mx-4 rounded-2xl dark:bg-slate-850 gap-4`), with `text-slate-900 dark:text-slate-200` for the current page — preventing dark-text-on-dark-surface contrast failures.
 - Focus ring: `focus-visible:outline-2 focus-visible:outline-sky-600` on all interactive elements.
 
 ## 8. Keyboard / Focus Behavior

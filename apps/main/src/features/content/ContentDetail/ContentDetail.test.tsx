@@ -217,7 +217,7 @@ describe("ContentDetail theme contrast (dark mode on dark surfaces)", () => {
     );
     expect(proseDiv).toBeDefined();
     const className = proseDiv?.className || "";
-    // Our prose sits on dark:bg-slate-800 in dark mode; we use
+    // Our prose sits on dark:bg-slate-850 in dark mode; we use
     // explicit Tailwind text color classes rather than prose-invert.
     expect(className).not.toMatch(/dark:prose-invert/);
   });
@@ -240,7 +240,7 @@ describe("ContentDetail theme contrast (dark mode on dark surfaces)", () => {
     const tagItems = document.querySelectorAll("li");
     tagItems.forEach((li) => {
       const className = li.className;
-      // On dark card surfaces (slate-800), zinc-400 provides adequate contrast
+      // On dark card surfaces (slate-850), zinc-400 provides adequate contrast
       expect(className).toMatch(/dark:text-zinc-400/);
     });
   });
@@ -250,7 +250,7 @@ describe("ContentDetail theme contrast (dark mode on dark surfaces)", () => {
     const timeEl = container.querySelector("time");
     expect(timeEl).toBeDefined();
     const className = timeEl?.className || "";
-    // On dark card surfaces (slate-800), use zinc-400 (light) for readability
+    // On dark card surfaces (slate-850), use zinc-400 (light) for readability
     expect(className).toMatch(/dark:text-zinc-400/);
     expect(className).not.toMatch(/dark:text-gray-600/);
   });
@@ -258,7 +258,7 @@ describe("ContentDetail theme contrast (dark mode on dark surfaces)", () => {
   it("article has dark surface background in dark mode (consistent with sections)", () => {
     const { container } = render(<ContentDetail content={mockContent} />);
     const article = container.querySelector("article");
-    expect(article).toHaveClass("dark:bg-slate-800");
+    expect(article).toHaveClass("dark:bg-slate-850");
     expect(article).toHaveClass("bg-white");
   });
 

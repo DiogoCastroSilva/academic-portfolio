@@ -92,7 +92,7 @@ describe("AboutHero accessibility", () => {
     const { container } = render(<AboutHero profile={mockProfile} />);
     const section = container.querySelector("section");
     expect(section).toHaveClass("bg-white");
-    expect(section).toHaveClass("dark:bg-slate-800");
+    expect(section).toHaveClass("dark:bg-slate-850");
   });
 
   it("role text uses a color that is readable on dark surfaces in dark mode", () => {

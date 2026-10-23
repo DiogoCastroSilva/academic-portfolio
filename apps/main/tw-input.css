@@ -10,6 +10,13 @@
 */
 @custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));
 
+@theme {
+  /* Custom slate between slate-800 (#1e293b) and slate-700 (#334155).
+     Used for card surfaces in dark mode to create visual hierarchy
+     above the slate-800 page background. */
+  --color-slate-850: #273449;
+}
+
 @import "../../libs/design-system/src/styles/index.css";
 /*
   This file lives in `apps/main/`. One `..` is `apps/`, two `..` is the repo root,

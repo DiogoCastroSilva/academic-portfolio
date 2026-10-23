@@ -8,11 +8,11 @@ export const metadata = {
 export default function NotFound() {
   return (
     <main className="mx-auto flex h-full flex-col items-center justify-center px-4 py-16 text-center">
-      <div className="rounded-3xl bg-white p-10 shadow-sm ring-1 ring-slate-200 dark:bg-slate-900 dark:ring-slate-700">
+      <div className="rounded-3xl bg-white p-10 shadow-sm ring-1 ring-slate-200 dark:bg-slate-800 dark:ring-slate-700">
         <p className="text-sm font-semibold tracking-[0.3em] text-sky-600 uppercase dark:text-sky-400">
           404
         </p>
-        <h1 className="mt-4 text-4xl font-bold tracking-tight text-slate-900 dark:text-white">
+        <h1 className="mt-4 text-4xl font-bold tracking-tight text-slate-900 dark:text-slate-200">
           Page not found
         </h1>
         <p className="mt-4 max-w-xl text-base leading-7 text-slate-600 dark:text-slate-300">

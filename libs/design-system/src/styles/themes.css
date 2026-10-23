@@ -9,8 +9,8 @@
  * in tokens.css).
  */
 :root[data-theme="dark"] {
-  --color-surface-page: #0f172a; /* slate-900 — deep page background */
-  --color-surface-card: #1e293b; /* slate-800 — dark card/surface background (was sky-50) */
+  --color-surface-page: #1e293b; /* slate-800 — page background (restored from earlier slate-blue theme) */
+  --color-surface-card: #273449; /* slate-850 — slightly lighter than page for card hierarchy */
   --color-surface-elevated: #334155; /* slate-700 — subtle elevation above cards */
   --color-text-primary: var(
     --tw-color-text,

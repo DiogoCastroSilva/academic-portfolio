@@ -12,7 +12,7 @@
 
 /* ── Surface tokens ────────────────────────── */
 :root {
-  --color-surface-page: #ffffff;
+  --color-surface-page: #f8fafc; /* slate-50 — soft off-white instead of pure black */
   --color-surface-card: #ffffff;
   --color-surface-elevated: #ffffff;
 

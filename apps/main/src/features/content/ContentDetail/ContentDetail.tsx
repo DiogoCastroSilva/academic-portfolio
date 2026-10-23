@@ -10,7 +10,7 @@ export interface ContentDetailProps {
 
 export function ContentDetail({ content }: ContentDetailProps) {
   return (
-    <article className="mx-auto flex w-full max-w-3xl grow flex-col gap-8 rounded-2xl bg-white p-8 dark:bg-slate-800 dark:text-slate-200">
+    <article className="dark:bg-slate-850 mx-auto flex w-full max-w-3xl grow flex-col gap-8 rounded-2xl bg-white p-8 dark:text-slate-200">
       <JsonLd data={buildArticleSchema(content)} />
       <div className="aspect-[16/9] w-full overflow-hidden rounded-xl bg-stone-200 dark:bg-slate-700">
         <ContentImage

@@ -12,7 +12,7 @@ export const SkillsGrid = ({ categories }: SkillsGridProps) => {
   const MotionSpan = shouldReduceMotion ? "span" : motion.span;
 
   return (
-    <section className="mx-4 rounded-2xl bg-white p-12 text-slate-900 shadow-sm dark:bg-slate-800 dark:text-slate-200">
+    <section className="dark:bg-slate-850 mx-4 rounded-2xl bg-white p-12 text-slate-900 shadow-sm dark:text-slate-200">
       <MotionDiv
         {...(shouldReduceMotion
           ? {}
@@ -56,7 +56,7 @@ export const SkillsGrid = ({ categories }: SkillsGridProps) => {
                 {category.items.map((skill, skillIndex) => (
                   <MotionSpan
                     key={skill}
-                    className="rounded-full border border-zinc-300 bg-white px-4 py-2 text-sm font-medium text-slate-700 dark:border-zinc-400 dark:bg-slate-800 dark:text-zinc-400"
+                    className="dark:bg-slate-850 rounded-full border border-zinc-300 bg-white px-4 py-2 text-sm font-medium text-slate-700 dark:border-zinc-400 dark:text-zinc-400"
                     {...(shouldReduceMotion
                       ? {}
                       : {

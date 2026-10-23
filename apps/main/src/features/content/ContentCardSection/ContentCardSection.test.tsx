@@ -327,7 +327,7 @@ describe("ContentCardSection empty state", () => {
 });
 
 describe("ContentCardSection dark-mode surface consistency", () => {
-  it("card surfaces use dark:bg-slate-800 (dark surface) matching the section in dark mode", () => {
+  it("card surfaces use dark:bg-slate-850 (dark surface) matching the section in dark mode", () => {
     const { container } = render(
       <ContentCardSection
         heading="Projects"
@@ -337,7 +337,7 @@ describe("ContentCardSection dark-mode surface consistency", () => {
       />,
     );
     const article = container.querySelector("article");
-    expect(article).toHaveClass("dark:bg-slate-800");
+    expect(article).toHaveClass("dark:bg-slate-850");
   });
 
   it("card borders are visible in dark mode", () => {

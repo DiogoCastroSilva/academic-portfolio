@@ -8,7 +8,7 @@ export type AboutSectionProps = {
 
 export const AboutSection = ({ profile }: AboutSectionProps) => {
   return (
-    <section className="mx-4 rounded-2xl bg-white p-6 sm:p-12 dark:bg-slate-800 dark:text-slate-200">
+    <section className="dark:bg-slate-850 mx-4 rounded-2xl bg-white p-6 sm:p-12 dark:text-slate-200">
       <div className="animate-fadeInUp flex flex-col gap-4 motion-reduce:animate-none md:flex-row">
         <div className="flex flex-4 flex-col items-center gap-2 md:flex-6">
           <ContentImage

@@ -77,7 +77,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
   }
 
   return (
-    <div className="mx-4 flex grow flex-col gap-4 rounded-2xl dark:bg-slate-800">
+    <div className="dark:bg-slate-850 mx-4 flex grow flex-col gap-4 rounded-2xl">
       <Breadcrumb
         items={[
           { label: "Projects", href: "/projects/" },

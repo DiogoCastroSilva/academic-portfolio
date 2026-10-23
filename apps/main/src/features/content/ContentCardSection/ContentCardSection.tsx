@@ -56,7 +56,7 @@ export function ContentCardSection({
   const HeadingTag: "h1" | "h2" = headingLevel;
   return (
     <section
-      className="mx-4 rounded-2xl bg-white p-6 text-slate-900 shadow-sm sm:p-10 lg:p-12 dark:bg-slate-800 dark:text-slate-200"
+      className="dark:bg-slate-850 mx-4 rounded-2xl bg-white p-6 text-slate-900 shadow-sm sm:p-10 lg:p-12 dark:text-slate-200"
       aria-labelledby={headingId ?? heading}
     >
       <HeadingTag
@@ -91,7 +91,7 @@ export function ContentCardSection({
               {visibleItems.map((item, index) => (
                 <article
                   key={item.slug}
-                  className="animate-fadeInUp rounded-2xl border border-zinc-200 bg-white motion-reduce:animate-none dark:border-zinc-400 dark:bg-slate-800"
+                  className="animate-fadeInUp dark:bg-slate-850 rounded-2xl border border-zinc-200 bg-white motion-reduce:animate-none dark:border-zinc-400"
                   style={{
                     animationDelay: `${index * 100}ms`,
                   }}

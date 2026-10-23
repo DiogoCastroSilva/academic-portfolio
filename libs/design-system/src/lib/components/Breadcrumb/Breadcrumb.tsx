@@ -25,7 +25,7 @@ export function Breadcrumb({ items }: BreadcrumbProps) {
           <li key={index} className="flex min-w-0 items-center gap-1">
             {index > 0 && (
               <ChevronIcon
-                className="h-4 w-4 text-zinc-400 dark:text-zinc-600"
+                className="h-4 w-4 text-zinc-400 dark:text-zinc-500"
                 aria-hidden={true}
               />
             )}
@@ -40,14 +40,14 @@ export function Breadcrumb({ items }: BreadcrumbProps) {
               <Link
                 href={item.href}
                 aria-current="page"
-                className="block max-w-[100px] truncate font-medium text-slate-900 sm:max-w-[150px] md:max-w-xs dark:text-slate-900"
+                className="block max-w-[100px] truncate font-medium text-slate-900 sm:max-w-[150px] md:max-w-xs dark:text-slate-200"
               >
                 {item.label}
               </Link>
             ) : (
               <span
                 aria-current="page"
-                className="block max-w-[100px] truncate font-medium text-slate-900 sm:max-w-[150px] md:max-w-xs dark:text-slate-900"
+                className="block max-w-[100px] truncate font-medium text-slate-900 sm:max-w-[150px] md:max-w-xs dark:text-slate-200"
               >
                 {item.label}
               </span>

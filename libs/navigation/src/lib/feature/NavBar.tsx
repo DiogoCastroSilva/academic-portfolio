@@ -46,7 +46,7 @@ export function NavBar({
               <Link
                 href="/"
                 aria-current={isHome ? "page" : undefined}
-                className="aria-current/page:border-b-2 aria-current/page:border-sky-600 dark:aria-current/page:border-sky-400 inline-flex min-h-11 items-center border-b-2 border-transparent px-2 transition-colors duration-200 hover:text-sky-600 focus-visible:text-sky-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-600 dark:text-white dark:hover:text-sky-300 dark:focus-visible:text-sky-300 dark:focus-visible:outline-sky-400"
+                className="aria-current/page:border-b-2 aria-current/page:border-sky-600 dark:aria-current/page:border-sky-400 inline-flex min-h-11 items-center border-b-2 border-transparent px-2 transition-colors duration-200 hover:text-sky-600 focus-visible:text-sky-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-600 dark:text-slate-200 dark:hover:text-sky-300 dark:focus-visible:text-sky-300 dark:focus-visible:outline-sky-400"
               >
                 {name}
               </Link>
@@ -61,7 +61,7 @@ export function NavBar({
                   aria-current={
                     isPathActive(activePath, item.href) ? "page" : undefined
                   }
-                  className="aria-current/page:border-b-2 aria-current/page:border-sky-600 dark:aria-current/page:border-sky-400 inline-flex min-h-11 items-center border-b-2 border-transparent px-3 transition-colors duration-200 hover:text-sky-600 focus-visible:text-sky-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-600 dark:text-white dark:hover:text-sky-300 dark:focus-visible:text-sky-300 dark:focus-visible:outline-sky-400"
+                  className="aria-current/page:border-b-2 aria-current/page:border-sky-600 dark:aria-current/page:border-sky-400 inline-flex min-h-11 items-center border-b-2 border-transparent px-3 transition-colors duration-200 hover:text-sky-600 focus-visible:text-sky-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-600 dark:text-slate-200 dark:hover:text-sky-300 dark:focus-visible:text-sky-300 dark:focus-visible:outline-sky-400"
                 >
                   {item.name}
                 </Link>
