@@ -1,8 +1,8 @@
 :HC["/",""]
-:HL["/academic-portfolio/_next/static/css/723ccecdcf8be031.css","style"]
+:HL["/academic-portfolio/_next/static/css/fb43f49b760fe7cf.css","style"]
 :HL["/academic-portfolio/fonts/inter/roman.var.woff2","font",{"crossOrigin":"anonymous","type":"font/woff2"}]
 :HL["/academic-portfolio/fonts/dm-serif-display/regular.woff2","font",{"crossOrigin":"anonymous","type":"font/woff2"}]
 :HL["/academic-portfolio/images/profile.svg","image",{"type":"image/svg+xml"}]
 2:[["children",{"s":"__PAGE__","h":160}]]
 1:[["children",{"s":"publications","h":64,"c":"$Q2"}]]
-0:{"b":"cIyk_VnTEhzyQ6Y3vM5B4","t":{"t":{"s":"","h":16,"c":"$Q1"}}}
+0:{"b":"WjhAp7_i9kypaP3xM5MGe","t":{"t":{"s":"","h":16,"c":"$Q1"}}}
