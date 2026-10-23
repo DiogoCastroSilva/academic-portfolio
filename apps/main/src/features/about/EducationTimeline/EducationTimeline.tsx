@@ -11,7 +11,7 @@ export const EducationTimeline = ({ items }: EducationTimelineProps) => {
   const MotionDiv = shouldReduceMotion ? "div" : motion.div;
 
   return (
-    <section className="dark:bg-slate-850 mx-4 rounded-2xl bg-white p-12 text-slate-900 shadow-sm dark:text-slate-200">
+    <section className="bg-surface-card text-text-primary mx-4 rounded-2xl p-12 shadow-sm">
       <MotionDiv
         {...(shouldReduceMotion
           ? {}
@@ -41,7 +41,7 @@ export const EducationTimeline = ({ items }: EducationTimelineProps) => {
               {/* Timeline dot */}
               <div className="flex flex-col items-center">
                 <MotionDiv
-                  className="h-4 w-4 rounded-full bg-sky-600"
+                  className="bg-accent h-4 w-4 rounded-full"
                   {...(shouldReduceMotion
                     ? {}
                     : {
@@ -51,34 +51,28 @@ export const EducationTimeline = ({ items }: EducationTimelineProps) => {
                       })}
                 />
                 {index < items.length - 1 && (
-                  <div className="mt-2 h-16 w-0.5 bg-zinc-200 dark:bg-zinc-400" />
+                  <div className="bg-border mt-2 h-16 w-0.5" />
                 )}
               </div>
 
               {/* Content */}
               <div className="flex-1 pb-2">
                 <div className="flex flex-col gap-2">
-                  <h3 className="text-lg font-semibold text-slate-900 dark:text-slate-200">
+                  <h3 className="text-text-primary text-lg font-semibold">
                     {edu.degree}
                   </h3>
-                  <p className="text-sm font-medium text-sky-600 dark:text-sky-400">
+                  <p className="text-accent text-sm font-medium">
                     {edu.institution}
                   </p>
-                  <p className="text-sm text-slate-600 dark:text-slate-300">
-                    {edu.period}
-                  </p>
-                  <p className="mt-2 text-slate-600 dark:text-slate-300">
-                    {edu.focus}
-                  </p>
+                  <p className="text-text-secondary text-sm">{edu.period}</p>
+                  <p className="text-text-secondary mt-2">{edu.focus}</p>
                   <ul className="mt-3 space-y-1">
                     {edu.details.map((detail) => (
                       <li
                         key={detail}
-                        className="flex gap-2 text-sm text-slate-600 dark:text-slate-300"
+                        className="text-text-secondary flex gap-2 text-sm"
                       >
-                        <span className="mt-1 text-sky-600 dark:text-sky-400">
-                          &rarr;
-                        </span>
+                        <span className="text-accent mt-1">&rarr;</span>
                         <span>{detail}</span>
                       </li>
                     ))}

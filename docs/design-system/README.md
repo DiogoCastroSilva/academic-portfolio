@@ -12,20 +12,19 @@ The design-system library is the single source of truth for shared visual founda
 
 ### Design tokens
 
-| Token                                                                           | Purpose                          |
-| ------------------------------------------------------------------------------- | -------------------------------- |
-| `--color-surface-page`                                                          | Page background                  |
-| `--color-surface-card`                                                          | Card/elevated surface background |
-| `--color-text-primary`                                                          | Primary text color               |
-| `--color-text-muted`                                                            | Secondary/muted text             |
-| `--color-border`                                                                | Border and separator color       |
-| `--color-accent` / `--color-accent-hover`                                       | Link and interactive color       |
-| `--color-focus`                                                                 | Focus ring color                 |
-| `--color-code-bg` / `--color-pre-bg` / `--color-pre-text`                       | Code block colors                |
-| `--color-status-info-bg` / `--color-status-info-text`                           | Status/info callout colors       |
-| `--radius-card` / `--radius-input`                                              | Border radius values             |
-| `--shadow-card`                                                                 | Card shadow                      |
-| `--motion-duration-enter` / `--motion-duration-stagger` / `--motion-ease-enter` | Animation timing                 |
+| Token                                                                                                                      | Purpose                                                          |
+| -------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------- |
+| `--color-surface-page` / `--color-surface-card` / `--color-surface-elevated` / `--color-surface-tinted`                    | Page, card, elevated, and tinted surface backgrounds             |
+| `--color-text-primary` / `--color-text-secondary` / `--color-text-muted` / `--color-text-on-accent` / `--color-text-error` | Text color hierarchy (primary, secondary, muted, inverse, error) |
+| `--color-border` / `--color-border-strong`                                                                                 | Border and separator colors                                      |
+| `--color-accent` / `--color-accent-hover`                                                                                  | Teal accent for buttons, borders, decorative elements            |
+| `--color-link` / `--color-link-hover`                                                                                      | Text link color and hover state                                  |
+| `--color-focus`                                                                                                            | Focus ring color                                                 |
+| `--color-code-bg` / `--color-pre-bg` / `--color-pre-text`                                                                  | Code block colors                                                |
+| `--color-status-info-bg` / `--color-status-info-text` / `--color-status-warning-bg` / `--color-status-warning-text`        | Status/info/warning callout colors                               |
+| `--radius-card` / `--radius-input`                                                                                         | Border radius values                                             |
+| `--shadow-card`                                                                                                            | Card shadow                                                      |
+| `--motion-duration-enter` / `--motion-duration-stagger` / `--motion-ease-enter`                                            | Animation timing                                                 |
 
 All tokens are defined in `libs/design-system/src/styles/tokens.css` as `:root` CSS custom properties, with dark-mode overrides in `themes.css`.
 

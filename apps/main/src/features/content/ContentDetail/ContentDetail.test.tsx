@@ -217,7 +217,7 @@ describe("ContentDetail theme contrast (dark mode on dark surfaces)", () => {
     );
     expect(proseDiv).toBeDefined();
     const className = proseDiv?.className || "";
-    // Our prose sits on dark:bg-slate-850 in dark mode; we use
+    // Our prose sits on a themed card surface in dark mode; we use
     // explicit Tailwind text color classes rather than prose-invert.
     expect(className).not.toMatch(/dark:prose-invert/);
   });
@@ -235,38 +235,35 @@ describe("ContentDetail theme contrast (dark mode on dark surfaces)", () => {
     expect(className).not.toMatch(/prose-a:text-blue-600/);
   });
 
-  it("tag list items use readable text color in dark mode", () => {
+  it("tag list items use semantic text color token", () => {
     render(<ContentDetail content={mockContent} />);
     const tagItems = document.querySelectorAll("li");
     tagItems.forEach((li) => {
       const className = li.className;
-      // On dark card surfaces (slate-850), zinc-400 provides adequate contrast
-      expect(className).toMatch(/dark:text-zinc-400/);
+      // Semantic text-secondary token provides adequate contrast in both themes
+      expect(className).toMatch(/text-text-secondary/);
     });
   });
 
-  it("time element uses readable text color in dark mode for contrast on dark surfaces", () => {
+  it("time element uses semantic text color token", () => {
     const { container } = render(<ContentDetail content={mockContent} />);
     const timeEl = container.querySelector("time");
     expect(timeEl).toBeDefined();
     const className = timeEl?.className || "";
-    // On dark card surfaces (slate-850), use zinc-400 (light) for readability
-    expect(className).toMatch(/dark:text-zinc-400/);
-    expect(className).not.toMatch(/dark:text-gray-600/);
+    // Semantic text-secondary token provides contrast in both themes
+    expect(className).toMatch(/text-text-secondary/);
   });
 
-  it("article has dark surface background in dark mode (consistent with sections)", () => {
+  it("article uses semantic surface token (consistent with sections)", () => {
     const { container } = render(<ContentDetail content={mockContent} />);
     const article = container.querySelector("article");
-    expect(article).toHaveClass("dark:bg-slate-850");
-    expect(article).toHaveClass("bg-white");
+    expect(article).toHaveClass("bg-surface-card");
   });
 
-  it("image container uses lighter dark-mode background matching the article surface", () => {
+  it("image container uses semantic elevated surface token", () => {
     const { container } = render(<ContentDetail content={mockContent} />);
     const imgContainer = container.querySelector(".aspect-\\[16\\/9\\]");
-    expect(imgContainer).toHaveClass("dark:bg-slate-700");
-    expect(imgContainer).not.toHaveClass("dark:bg-stone-800");
+    expect(imgContainer).toHaveClass("bg-surface-elevated");
   });
 });
 

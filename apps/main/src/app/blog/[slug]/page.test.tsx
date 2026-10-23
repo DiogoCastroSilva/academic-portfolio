@@ -52,7 +52,7 @@ vi.mock("../../ui/NavBar", () => ({
 const { default: BlogPostPage, generateMetadata } = await import("./page.js");
 
 describe("BlogPostPage card surface consistency", () => {
-  it("uses the same card container class as project/publication detail pages (dark:bg-slate-850)", async () => {
+  it("uses the same card container class as project/publication detail pages (bg-surface-card)", async () => {
     const params = Promise.resolve({ slug: "test-post" });
     const result = await BlogPostPage({ params });
     // The card container div is the first child — check its className
@@ -63,8 +63,8 @@ describe("BlogPostPage card surface consistency", () => {
     expect(containerDiv).toContain("flex-col");
     expect(containerDiv).toContain("gap-4");
     expect(containerDiv).toContain("rounded-2xl");
-    // Card container uses dark slate-800 surface in dark mode
-    expect(containerDiv).toContain("dark:bg-slate-850");
+    // Card container uses semantic surface token
+    expect(containerDiv).toContain("bg-surface-card");
   });
 
   it("Breadcrumb and ContentDetail both render inside the card container", async () => {

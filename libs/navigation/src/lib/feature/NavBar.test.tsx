@@ -128,7 +128,7 @@ describe("NavBar accessibility", () => {
       const className = link.getAttribute("class") || "";
       // Must use a visible accent color (sky-600 per design principles),
       // not border-white which is invisible on light backgrounds
-      expect(className).toMatch(/aria-current\/page:border-sky-600/);
+      expect(className).toMatch(/aria-current\/page:border-accent/);
       expect(className).not.toMatch(/aria-current\/page:border-white/);
     });
   });
@@ -150,6 +150,6 @@ describe("NavBar accessibility", () => {
     const homeLink = screen.getByText("Test Portfolio");
     expect(homeLink).toHaveAttribute("aria-current", "page");
     const className = homeLink.getAttribute("class") || "";
-    expect(className).toMatch(/aria-current\/page:border-sky-600/);
+    expect(className).toMatch(/aria-current\/page:border-accent/);
   });
 });

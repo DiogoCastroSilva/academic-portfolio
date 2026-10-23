@@ -56,12 +56,12 @@ export function ContentCardSection({
   const HeadingTag: "h1" | "h2" = headingLevel;
   return (
     <section
-      className="dark:bg-slate-850 mx-4 rounded-2xl bg-white p-6 text-slate-900 shadow-sm sm:p-10 lg:p-12 dark:text-slate-200"
+      className="bg-surface-card text-text-primary mx-4 rounded-2xl p-6 shadow-sm sm:p-10 lg:p-12"
       aria-labelledby={headingId ?? heading}
     >
       <HeadingTag
         id={headingId ?? heading}
-        className="mb-6 text-2xl font-bold text-slate-900 md:text-3xl dark:text-slate-200"
+        className="text-text-primary mb-6 text-2xl font-bold md:text-3xl"
       >
         {heading}
       </HeadingTag>
@@ -69,7 +69,7 @@ export function ContentCardSection({
         <div className="flex flex-col items-center justify-center py-12 text-center">
           <svg
             aria-hidden="true"
-            className="mb-4 h-12 w-12 text-sky-300"
+            className="text-accent mb-4 h-12 w-12"
             fill="none"
             stroke="currentColor"
             viewBox="0 0 24 24"
@@ -82,7 +82,7 @@ export function ContentCardSection({
               d="M9 12h6m-6 2h6m2 6a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2zM9 9h.01M9 9a.75.75 0 11-1.5 0V8a.75.75 0 011.5 0v1z"
             />
           </svg>
-          <p className="text-slate-600 dark:text-slate-300">{emptyMessage}</p>
+          <p className="text-text-secondary">{emptyMessage}</p>
         </div>
       ) : (
         <>
@@ -91,17 +91,17 @@ export function ContentCardSection({
               {visibleItems.map((item, index) => (
                 <article
                   key={item.slug}
-                  className="animate-fadeInUp dark:bg-slate-850 rounded-2xl border border-zinc-200 bg-white motion-reduce:animate-none dark:border-zinc-400"
+                  className="animate-fadeInUp bg-surface-card border-border rounded-2xl border motion-reduce:animate-none"
                   style={{
                     animationDelay: `${index * 100}ms`,
                   }}
                 >
                   <Link
                     href={itemHref(hrefPrefix, item.slug)}
-                    className="group block rounded-lg focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-600 dark:focus-visible:outline-sky-400"
+                    className="group focus-visible:outline-focus block rounded-lg focus-visible:outline-2 focus-visible:outline-offset-2"
                     aria-label={`Read more: ${item.title}`}
                   >
-                    <div className="relative aspect-[16/9] w-full overflow-hidden bg-stone-200 dark:bg-slate-700">
+                    <div className="bg-surface-elevated relative aspect-[16/9] w-full overflow-hidden">
                       <ContentImage
                         src={item.imageSrc}
                         alt={item.title}
@@ -114,7 +114,7 @@ export function ContentCardSection({
                       <div className="flex min-w-0 flex-wrap items-center gap-2">
                         <time
                           dateTime={item.date}
-                          className="text-sm text-gray-600 dark:text-zinc-400"
+                          className="text-text-secondary text-sm"
                         >
                           {dates.formatISODate(item.date)}
                         </time>
@@ -122,7 +122,7 @@ export function ContentCardSection({
                           {item.tags?.slice(0, tagsLimit).map((tag) => (
                             <li
                               key={tag}
-                              className="min-w-0 rounded-full border border-zinc-200 px-2.5 py-1 text-xs font-medium text-gray-600 dark:border-zinc-400 dark:text-zinc-400"
+                              className="border-border text-text-secondary min-w-0 rounded-full border px-2.5 py-1 text-xs font-medium"
                             >
                               {tag}
                             </li>
@@ -130,7 +130,7 @@ export function ContentCardSection({
                           {item.tags && item.tags.length > tagsLimit && (
                             <li
                               aria-label={`${item.tags.length - tagsLimit} more tags`}
-                              className="text-xs font-medium text-gray-600 dark:text-zinc-400"
+                              className="text-text-secondary text-xs font-medium"
                             >
                               +{item.tags.length - tagsLimit} more
                             </li>
@@ -142,7 +142,7 @@ export function ContentCardSection({
                           {item.title}
                         </h3>
                         {item.excerpt ? (
-                          <p className="line-clamp-3 text-sm leading-6 text-gray-600 dark:text-zinc-400">
+                          <p className="text-text-secondary line-clamp-3 text-sm leading-6">
                             {item.excerpt}
                           </p>
                         ) : null}
@@ -157,7 +157,7 @@ export function ContentCardSection({
               <div className="col-span-full mt-2">
                 <Link
                   href={viewAllHref}
-                  className="inline-flex items-center gap-1 text-sm font-medium text-sky-600 hover:text-sky-500 hover:underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-600 dark:text-sky-400 dark:hover:text-sky-300 dark:focus-visible:outline-sky-400"
+                  className="text-link hover:text-link-hover focus-visible:outline-focus inline-flex items-center gap-1 text-sm font-medium hover:underline focus-visible:outline-2 focus-visible:outline-offset-2"
                   aria-label={viewAllLabel}
                 >
                   {viewAllLabel}

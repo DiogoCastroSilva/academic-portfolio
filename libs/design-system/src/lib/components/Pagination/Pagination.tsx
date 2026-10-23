@@ -38,7 +38,7 @@ function buildPageUrl(baseUrl: string, page: number): string {
 }
 
 const btnBase =
-  "flex h-11 w-11 items-center justify-center rounded-lg border border-zinc-200 bg-white text-slate-700 hover:bg-zinc-100 hover:text-slate-900 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-600 dark:border-zinc-600 dark:bg-slate-850 dark:text-slate-300 dark:hover:bg-slate-700 dark:hover:text-slate-200 dark:focus-visible:outline-sky-400";
+  "flex h-11 w-11 items-center justify-center rounded-lg border border-border bg-surface-card text-text-primary hover:bg-surface-tinted hover:text-link focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus";
 
 export function Pagination({
   currentPage,
@@ -73,16 +73,14 @@ export function Pagination({
         {pages.map((page, index) =>
           page === "..." ? (
             <li key={`ellipsis-${index}`} aria-hidden="true">
-              <span className="px-2 py-1 text-sm text-gray-600 dark:text-zinc-400">
-                …
-              </span>
+              <span className="text-text-secondary px-2 py-1 text-sm">…</span>
             </li>
           ) : page === currentPage ? (
             <li key={page}>
               <span
                 aria-current="page"
                 aria-label={`Page ${page} of ${totalPages}`}
-                className="flex h-11 w-11 items-center justify-center rounded-lg bg-sky-600 text-white"
+                className="bg-accent text-text-on-accent flex h-11 w-11 items-center justify-center rounded-lg"
               >
                 {page}
               </span>

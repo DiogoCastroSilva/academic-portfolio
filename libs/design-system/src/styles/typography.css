@@ -31,14 +31,14 @@
 /* Fallback anchor styles for markdown-rendered content (prose) */
 .prose a {
   text-decoration: none;
-  color: var(--color-accent);
+  color: var(--color-link);
   /* Prevent long URLs from overflowing prose containers on narrow screens */
   overflow-wrap: break-word;
   word-break: break-word;
 }
 .prose a:hover {
   text-decoration: underline;
-  color: var(--color-accent-hover);
+  color: var(--color-link-hover);
 }
 /* Respect reduced-motion: skip underline-on-hover animation */
 @media (prefers-reduced-motion: reduce) {

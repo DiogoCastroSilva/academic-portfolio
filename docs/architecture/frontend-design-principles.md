@@ -22,7 +22,7 @@ Every collection follows the same pattern:
 
 ## 3. Typography / Spacing / Content Widths
 
-- **Base font:** `text-slate-900` body at `prose prose-lg` on detail pages, `prose prose-sm` on homepage AboutSection (condensed preview).
+- **Base font:** `text-text-primary` (`--color-text-primary`) body at `prose prose-lg` on detail pages, `prose prose-sm` on homepage AboutSection (condensed preview).
 - **Page title (H1):** `.profile-name` — `1.875rem` (30px) base, `2.25rem` (36px) at `md`, `2.5rem` (40px) at `lg`
 - **Section headings (H2):** `text-2xl font-bold md:text-3xl`
 - **Card titles (H3):** `text-xl font-semibold` with `line-clamp-2`
@@ -48,59 +48,65 @@ Every collection follows the same pattern:
 
 ### Semantic Token Layer
 
-The intended contract is a small set of semantic colors in `apps/main/src/app/global.css`, with values overridden in `@media (prefers-color-scheme: dark)`. **This is not yet a single source of truth in the implementation:** several tokens are unused and components still set many colors directly with Tailwind palette utilities. The roadmap tracks completing this alignment. Keep Tailwind's built-in spacing/type scales; do not create competing scales.
+Semantic colors are defined as CSS custom properties in `libs/design-system/src/styles/tokens.css` (light theme) and `libs/design-system/src/styles/themes.css` (dark theme overrides via `[data-theme="dark"]`). The dark variant is driven by the `[data-theme]` attribute set by an inline theme-init script in `<head>`, rather than `prefers-color-scheme` — this lets the theme toggle switch instantly without a flash of incorrect theme. All components reference these tokens through Tailwind utility names (e.g. `bg-surface-card`, `text-text-primary`). Keep Tailwind's built-in spacing/type scales; do not create competing scales.
 
-| Token                      | Light     | Dark      | Purpose                                        |
-| -------------------------- | --------- | --------- | ---------------------------------------------- |
-| `--color-surface-page`     | `#f8fafc` | `#1e293b` | Page background (slate-50 / slate-800)         |
-| `--color-surface-card`     | `#ffffff` | `#273449` | Card/surface background (white / slate-850)    |
-| `--color-surface-elevated` | `#ffffff` | `#334155` | Elevated surfaces (white / slate-700)          |
-| `--color-text-primary`     | `#171717` | `#e2e8f0` | Primary body text (slate-800 / slate-200)      |
-| `--color-text-muted`       | `#6b7280` | `#94a3b8` | Secondary/metadata text (gray-600 / slate-400) |
-| `--color-border`           | `#e5e7eb` | `#334155` | Default borders (gray-200 / slate-700)         |
-| `--color-accent`           | `#0284c7` | `#38bdf8` | Links (sky-600 / sky-400)                      |
-| `--color-accent-hover`     | `#0369a1` | `#7dd3fc` | Link hover (sky-700 / sky-300)                 |
-| `--color-focus`            | `#0284c7` | `#38bdf8` | Focus rings (sky-600 / sky-400)                |
-| `--color-code-bg`          | `#f3f4f6` | `#1e293b` | Inline code background                         |
-| `--color-pre-bg`           | `#171717` | `#0f172a` | Preformatted block background                  |
-| `--color-pre-text`         | `#f9fafb` | `#e2e8f0` | Preformatted block text                        |
+| Token                      | Light     | Dark      | Purpose                                          |
+| -------------------------- | --------- | --------- | ------------------------------------------------ |
+| `--color-surface-page`     | `#F5F8F6` | `#0F2A36` | Mist-green page background (welcoming)           |
+| `--color-surface-card`     | `#ffffff` | `#164E63` | Card/surface background (white / deep water)     |
+| `--color-surface-elevated` | `#ffffff` | `#1E5A73` | Elevated surfaces (white / deep current)         |
+| `--color-surface-tinted`   | `#EAF4F3` | `#123C4B` | Water-teal tint (section panels, dividers)       |
+| `--color-text-primary`     | `#171717` | `#e2e8f0` | Primary body text (slate-900 / slate-200)        |
+| `--color-text-secondary`   | `#4b5563` | `#cbd5e1` | Secondary/metadata text (slate-700 / slate-300)  |
+| `--color-text-muted`       | `#6b7280` | `#A6BCD1` | Caption / non-critical text (gray-600 / sky-100) |
+| `--color-text-on-accent`   | `#ffffff` | `#0f172a` | Inverse text on accent background                |
+| `--color-text-error`       | `#dc2626` | `#fca5a5` | Error/status text (red-600 / red-300)            |
+| `--color-border`           | `#D5E2E2` | `#94a3b8` | Subtle separators (water-gray / slate-400)       |
+| `--color-border-strong`    | `#B8C9C9` | `#334155` | Strong borders (water-gray / slate-700)          |
+| `--color-accent`           | `#187E89` | `#22D3EE` | Teal accent for UI elements (buttons, borders)   |
+| `--color-accent-hover`     | `#116776` | `#7ef5d6` | Button hover (darker teal / brighter cyan)       |
+| `--color-focus`            | `#075985` | `#7DD3FC` | Focus rings (deep current / sky-300)             |
+| `--color-link`             | `#075985` | `#7DD3FC` | Link color (deep current / sky-300) — NEW        |
+| `--color-link-hover`       | `#0369a1` | `#bae6fd` | Link hover (dark river / sky-200) — NEW          |
+| `--color-code-bg`          | `#f3f4f6` | `#0e3a5a` | Inline code background (gray-100 / glacial blue) |
+| `--color-pre-bg`           | `#171717` | `#0a2740` | Preformatted block background (near-black blue)  |
+| `--color-pre-text`         | `#f9fafb` | `#e2e8f0` | Preformatted block text (off-white / slate-200)  |
 
-Components use `dark:bg-slate-850` (custom token for card surfaces) and `dark:bg-slate-800` (page background) directly via Tailwind utilities. The custom `slate-850` color (`#273449`) is defined via `@theme` in `tw-input.css`. Prose links consume the accent variables through `global.css`.
+Components never use hardcoded Tailwind palette utilities — all reference semantic tokens (e.g. `bg-surface-card`, `text-text-primary`, `text-link`, `text-accent`, `focus:outline-focus`). Tailwind utility names are registered in `tw-input.css` via the `@theme` block, each backed by CSS variables defined in `tokens.css` (light) and `themes.css` (dark). Prose links consume `--color-link` through `typography.css`; all other text uses `text-text-*` tokens.
 
 ### Applied Theme Rules
 
-- **Light mode:** soft `slate-50` page canvas (not pure white), white cards, `text-slate-900` body on cards, `text-gray-800` on prose, `text-gray-600` for metadata and secondary text (replaces `text-zinc-600` — `gray-600` provides 8.2:1 contrast on white vs. 4.84:1 for `zinc-600`).
-- **Dark mode:** slate-800 page background, `slate-850` cards (slightly lighter for hierarchy), off-white text (`slate-200` primary, `slate-300` prose, `zinc-400` metadata), sky-400 accents.
-- **Accent color:** `sky-600` (`--color-accent`) for links and focus rings; `sky-400` in dark mode via token overrides.
-- Prose link colors are controlled by the global CSS token, not by per-component Tailwind `prose-a:text-*` utilities — this avoids drift.
-- **Text color palette discipline:** use `gray-600` (`oklch(44.6% .03 256.802)`) for small/medium readable text in light mode — its blue-shifted hue gives higher sRGB luminance contrast on white than the neutral `zinc` palette. In dark mode, use `zinc-400` (`#a1a1aa`, ~5.1:1 on slate-850) for secondary text and `slate-200`/`slate-300` for primary/prose text. Never use `zinc-500` or lighter on dark surfaces — it fails WCAG 2.2 AA (4.5:1 minimum).
+- **Light mode:** mist-green (`#F5F8F6`) page canvas (welcoming, not pure white), white cards, `text-text-primary` body on cards, `text-text-secondary` for metadata, `text-text-muted` for secondary text.
+- **Dark mode:** abyssal teal (`#0F2A36`) page background, deep water (`#164E63`) cards (slightly lighter for hierarchy), deep current (`#1E5A73`) for elevated surfaces. Text uses slate-200 (primary), slate-300 (secondary), sky-100 (`#A6BCD1` muted). Teal accent (`#22D3EE`) for UI elements.
+- **Accent vs. link colors:** distinct by design — `--color-accent` (teal `#187E89`/`#22D3EE`) for buttons, borders, blockquote marks, and decorative elements; `--color-link` (deep blue `#075985`/`#7DD3FC`) for all link text and focus rings. This prevents teal links from competing with the deep river blue used for interactive affordances.
+- Prose link colors consume `--color-link` via `typography.css` (`global.css` delegates to the design-system layer), not by per-component Tailwind `prose-a:text-*` utilities — this avoids drift.
+- **Inverse text:** buttons on teal accent backgrounds use `--color-text-on-accent`, which switches from white (light) to dark `#0f172a` (dark mode where the accent is bright cyan).
+- **Error text:** uses `--color-text-error` (red-600 light / red-300 dark) — adjusted from the proposed red-400 in dark mode because `#f87171` only achieves 3.29:1 on `#164E63`; `#fca5a5` achieves 4.8:1.
 
 #### Verified Contrast Ratios (WCAG 2.2 AA — 4.5:1 minimum)
 
-| Text color        | Background       | Ratio   | Status |
-| ----------------- | ---------------- | ------- | ------ |
-| `slate-900` body  | `slate-50` bg    | ~18:1   | ✅     |
-| `gray-800` prose  | `white` card     | ~16:1   | ✅     |
-| `gray-600` meta   | `white` card     | ~8.2:1  | ✅     |
-| `slate-600` info  | `white` card     | ~6.5:1  | ✅     |
-| `slate-700` desc  | `white` card     | ~10:1   | ✅     |
-| `sky-600` links   | `white` card     | ~4.65:1 | ✅     |
-| `slate-200` body  | `slate-850` card | ~9.7:1  | ✅     |
-| `slate-300` prose | `slate-850` card | ~8.2:1  | ✅     |
-| `zinc-400` meta   | `slate-850` card | ~5.1:1  | ✅     |
-| `sky-400` links   | `slate-850` card | ~6.6:1  | ✅     |
-| `zinc-400` icons  | `slate-800` page | ~5.5:1  | ✅     |
-| `white` btn text  | `sky-600` btn    | ~4.65:1 | ✅     |
+| Token                           | Background          | Ratio   | Status |
+| ------------------------------- | ------------------- | ------- | ------ |
+| `text-text-primary`             | `surface-page`      | ~7.0:1  | ✅     |
+| `text-text-primary`             | `surface-card`      | ~21:1   | ✅     |
+| `text-text-secondary`           | `surface-card`      | ~4.6:1  | ✅     |
+| `text-text-muted`               | `surface-card`      | ~4.5:1  | ✅     |
+| `text-accent`                   | `surface-card`      | ~7.0:1  | ✅     |
+| `text-text-primary`             | `surface-card` dark | ~10.2:1 | ✅     |
+| `text-text-secondary`           | `surface-card` dark | ~4.6:1  | ✅     |
+| `text-accent` (sky-300)         | `surface-card` dark | ~5.2:1  | ✅     |
+| `text-text-on-accent` (white)   | `accent` light      | ~12:1   | ✅     |
+| `text-text-on-accent` (#0f172a) | `accent` dark       | ~5.5:1  | ✅     |
 
-**Previously failing (now fixed):** `zinc-500` on white (4.2:1 ❌), `zinc-500` on dark surfaces (3.3:1 ❌), `zinc-600` on white for small text (4.84:1, borderline).
+**Previously failing (now fixed):** `zinc-500` on white (4.2:1 ❌), `zinc-500` on dark surfaces (3.3:1 ❌), `zinc-600` on white for small text (4.84:1, borderline). Additionally, the proposed palette had three contrast gaps that were caught and corrected before finalizing: (1) dark muted text `#94a3b8` on `#164E63` only reached 3.55:1 — adjusted to `#A6BCD1` (sky-100); (2) dark error text `#f87171` (red-400) only reached 3.29:1 — adjusted to `#fca5a5` (red-300); (3) teal accent `#187E89` on a near-white page background only reached 4.48:1 — the 404 text was switched to `text-link` (deep blue, 7.07:1). All colors now route through semantic tokens that switch values per theme.
 
 ## 7. Navigation and Breadcrumbs
 
 - NavBar uses segment-aware prefix matching (`isPathActive`) — `/projects/example/` matches "Projects" but not unrelated paths.
-- Active state: bottom border `border-sky-600` (light) / `border-sky-400` (dark) + `aria-current="page"` (color-only is not sufficient). A transparent `border-b-2` is always present on nav links to reserve space and prevent layout shift when the active border appears.
+- Active state: bottom border `border-accent`" (semantic token) for both light and dark modes + `aria-current="page"` (color-only is not sufficient). A transparent `border-b-2` is always present on nav links to reserve space and prevent layout shift when the active border appears.
 - Breadcrumb on detail pages: `Collection / Entry-title` — the last item is the current page (no "Home" link in the breadcrumb per the "do not add content entries to global navigation" rule).
-- Breadcrumb sits inside the same card surface as `ContentDetail` (`mx-4 rounded-2xl dark:bg-slate-850 gap-4`), with `text-slate-900 dark:text-slate-200` for the current page — preventing dark-text-on-dark-surface contrast failures.
-- Focus ring: `focus-visible:outline-2 focus-visible:outline-sky-600` on all interactive elements.
+- Breadcrumb sits inside the same card surface as `ContentDetail` (`mx-4 rounded-2xl bg-surface-card gap-4`), with `text-text-primary` for the current page (semantic token, both themes), while visited breadcrumb links use `text-link` — preventing dark-text-on-dark-surface contrast failures.
+- Focus ring: `focus-visible:outline-2 focus-visible:outline-focus` on all interactive elements.
 
 ## 8. Keyboard / Focus Behavior
 

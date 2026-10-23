@@ -327,7 +327,7 @@ describe("ContentCardSection empty state", () => {
 });
 
 describe("ContentCardSection dark-mode surface consistency", () => {
-  it("card surfaces use dark:bg-slate-850 (dark surface) matching the section in dark mode", () => {
+  it("card surfaces use bg-surface-card (semantic token) matching the section", () => {
     const { container } = render(
       <ContentCardSection
         heading="Projects"
@@ -337,10 +337,10 @@ describe("ContentCardSection dark-mode surface consistency", () => {
       />,
     );
     const article = container.querySelector("article");
-    expect(article).toHaveClass("dark:bg-slate-850");
+    expect(article).toHaveClass("bg-surface-card");
   });
 
-  it("card borders are visible in dark mode", () => {
+  it("card borders use semantic token", () => {
     const { container } = render(
       <ContentCardSection
         heading="Projects"
@@ -350,10 +350,10 @@ describe("ContentCardSection dark-mode surface consistency", () => {
       />,
     );
     const article = container.querySelector("article");
-    expect(article).toHaveClass("dark:border-zinc-400");
+    expect(article).toHaveClass("border-border");
   });
 
-  it("section has explicit bg-white in light mode for consistent surfaces", () => {
+  it("section uses semantic surface token for consistent surfaces", () => {
     const { container } = render(
       <ContentCardSection
         heading="Projects"
@@ -363,7 +363,7 @@ describe("ContentCardSection dark-mode surface consistency", () => {
       />,
     );
     const section = container.querySelector("section");
-    expect(section).toHaveClass("bg-white");
+    expect(section).toHaveClass("bg-surface-card");
   });
 });
 

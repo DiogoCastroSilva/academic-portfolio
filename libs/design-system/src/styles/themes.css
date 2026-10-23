@@ -9,27 +9,34 @@
  * in tokens.css).
  */
 :root[data-theme="dark"] {
-  --color-surface-page: #1e293b; /* slate-800 — page background (restored from earlier slate-blue theme) */
-  --color-surface-card: #273449; /* slate-850 — slightly lighter than page for card hierarchy */
-  --color-surface-elevated: #334155; /* slate-700 — subtle elevation above cards */
-  --color-text-primary: var(
-    --tw-color-text,
-    #e2e8f0
-  ); /* slate-200 — comfortable off-white */
-  --color-text-muted: var(
-    --tw-color-text-muted,
-    #94a3b8
-  ); /* slate-400 — passes 4.5:1 on slate-800/900 */
-  --color-border: var(
-    --tw-color-border,
-    #334155
-  ); /* slate-700 — visible separation */
-  --color-accent: #38bdf8; /* sky-400 — visible on dark backgrounds */
-  --color-accent-hover: #7dd3fc; /* sky-300 — brighter hover */
-  --color-focus: #38bdf8; /* sky-400 — matches accent for coherent focus */
-  --color-code-bg: var(--tw-color-code-bg, #1e293b); /* slate-800 */
-  --color-pre-bg: var(--tw-color-pre-bg, #0f172a); /* slate-900 */
-  --color-pre-text: var(--tw-color-pre-text, #e2e8f0); /* slate-200 */
+  /* Living Water palette: river depths at night */
+  --color-surface-page: #0f2a36; /* abyssal teal — page background */
+  --color-surface-card: #164e63; /* deep water — card surface */
+  --color-surface-elevated: #1e5a73; /* deep current — elevated surface */
+  --color-surface-tinted: #123c4b; /* glacial blue tint (darker) */
+
+  --color-text-primary: #e2e8f0; /* slate-200 — primary text */
+  --color-text-secondary: #cbd5e1; /* slate-300 — secondary text */
+  --color-text-muted: #a6bcd1; /* sky-100 — muted text (WCAG AA >=4.5:1 on deep water) */
+  /* Text on colored backgrounds (inverse text) */
+  --color-text-on-accent: #0f172a; /* dark text on bright accent (inverse) */
+  --color-text-error: #fca5a5; /* red-300 — error text (WCAG AA) */
+
+  --color-border: #94a3b8; /* slate-400 — default borders */
+  --color-border-strong: #334155; /* slate-700 — strong borders */
+
+  --color-accent: #22d3ee; /* bright cyan — brand accent */
+  --color-accent-hover: #7ef5d6; /* brighter cyan — accent hover */
+  --color-link: #7dd3fc; /* sky-300 — text links */
+  --color-link-hover: #bae6fd; /* sky-200 — link hover */
+  --color-focus: #7dd3fc; /* sky-300 — focus rings */
+
+  --color-code-bg: #0e3a5a; /* deep blue-gray — inline code bg */
+  --color-pre-bg: #0a2740; /* near-black blue — pre block bg */
+  --color-pre-text: #e2e8f0; /* slate-200 — pre block text */
+
   --color-status-info-bg: #1e3a8a;
   --color-status-info-text: #bfdbfd;
+  --color-status-warning-bg: #78350f; /* amber-900 — warning bg */
+  --color-status-warning-text: #fef3c7; /* amber-100 */
 }

@@ -6,36 +6,50 @@
  * standalone design-system package — and rely on Tailwind for layout and
  * spacing primitives.
  *
- * See docs/architecture/frontend-design-principles.md for the intended UI
- * contract and docs/product/goals-and-requirements.md for alignment notes.
+ * Living Water / Dynamic River System palette.
+ * Light-theme values are defined here on :root; dark-theme overrides live
+ * in themes.css under :root[data-theme="dark"].
+ *
+ * See docs/architecture/frontend-design-principles.md §6 for the intended
+ * UI contract and docs/product/goals-and-requirements.md for alignment notes.
  */
 
 /* ── Surface tokens ────────────────────────── */
 :root {
-  --color-surface-page: #f8fafc; /* slate-50 — soft off-white instead of pure black */
-  --color-surface-card: #ffffff;
-  --color-surface-elevated: #ffffff;
+  --color-surface-page: #f5f8f6; /* mist-green — soft page background */
+  --color-surface-card: #ffffff; /* main card surface */
+  --color-surface-elevated: #ffffff; /* elevated surface (shadow layer) */
+  --color-surface-tinted: #eaf4f3; /* glacial blue — tinted sections */
 
   /* ── Text tokens ──────────────────────────── */
-  --color-text-primary: var(--tw-color-text, #171717);
-  --color-text-muted: var(--tw-color-text-muted, #6b7280);
+  --color-text-primary: #171717; /* primary body text */
+  --color-text-secondary: #4b5563; /* secondary / metadata text */
+  --color-text-muted: #6b7280; /* captions / non-critical text */
+  /* Text on colored backgrounds (inverse text) */
+  --color-text-on-accent: #ffffff; /* text on accent bg (inverse) */
+  --color-text-error: #dc2626; /* error text (red-600) */
 
-  /* ── Border token ─────────────────────────── */
-  --color-border: var(--tw-color-border, #e5e7eb);
+  /* ── Border tokens ──────────────────────── */
+  --color-border: #d5e2e2; /* subtle separators */
+  --color-border-strong: #b8c9c9; /* strong borders */
 
   /* ── Accent / focus tokens ───────────────── */
-  --color-accent: #0284c7; /* sky-600 */
-  --color-accent-hover: #0369a1; /* sky-700 */
-  --color-focus: #0284c7; /* sky-600 */
+  --color-accent: #187e89; /* teal — brand accent, selected UI elements */
+  --color-accent-hover: #116776; /* darker teal — button hover */
+  --color-link: #075985; /* deep current — text links */
+  --color-link-hover: #0369a1; /* dark river — link hover */
+  --color-focus: #075985; /* deep current — focus rings */
 
   /* ── Code / pre tokens ───────────────────── */
-  --color-code-bg: var(--tw-color-code-bg, #f3f4f6);
-  --color-pre-bg: var(--tw-color-pre-bg, #171717);
-  --color-pre-text: var(--tw-color-pre-text, #f9fafb);
+  --color-code-bg: #f3f4f6; /* inline code background */
+  --color-pre-bg: #171717; /* pre block background */
+  --color-pre-text: #f9fafb; /* pre block text */
 
   /* ── Status tokens ───────────────────────── */
-  --color-status-info-bg: #eff6ff;
-  --color-status-info-text: #1e40af;
+  --color-status-info-bg: #eff6ff; /* blue-50 */
+  --color-status-info-text: #1e40af; /* blue-800 */
+  --color-status-warning-bg: #fef3c7; /* amber-100 — limited highlight use */
+  --color-status-warning-text: #92400e; /* amber-800 */
 
   /* ── Theme-independent radii ─────────────── */
   --radius-card: 1rem; /* 2xl */
@@ -82,6 +96,6 @@
     box-sizing: border-box;
     border-width: 0;
     border-style: solid;
-    border-color: var(--color-gray-200, currentcolor);
+    border-color: var(--color-border, currentcolor);
   }
 }

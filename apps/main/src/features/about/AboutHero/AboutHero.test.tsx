@@ -88,19 +88,15 @@ describe("AboutHero accessibility", () => {
   // Phase 3: Surface consistency
   // ---------------------------------------------------------------------------
 
-  it("section has explicit bg-white in light mode for consistent surfaces", () => {
+  it("section uses semantic surface token for consistent surfaces", () => {
     const { container } = render(<AboutHero profile={mockProfile} />);
     const section = container.querySelector("section");
-    expect(section).toHaveClass("bg-white");
-    expect(section).toHaveClass("dark:bg-slate-850");
+    expect(section).toHaveClass("bg-surface-card");
   });
 
-  it("role text uses a color that is readable on dark surfaces in dark mode", () => {
+  it("role text uses semantic text-secondary token for both themes", () => {
     const { container } = render(<AboutHero profile={mockProfile} />);
     const roleEl = container.querySelector("p.mt-2");
-    expect(roleEl).toHaveClass("text-gray-600");
-    // On dark card surfaces (slate-800), slate-300 provides adequate contrast
-    expect(roleEl).toHaveClass("dark:text-slate-300");
-    expect(roleEl).not.toHaveClass("dark:text-gray-300");
+    expect(roleEl).toHaveClass("text-text-secondary");
   });
 });

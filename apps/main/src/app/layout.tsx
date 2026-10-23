@@ -95,12 +95,12 @@ export default function RootLayout({
       </head>
       <body
         suppressHydrationWarning
-        className="min-h-full bg-slate-50 text-slate-900 dark:bg-slate-800 dark:text-slate-200"
+        className="bg-surface-page text-text-primary min-h-full"
       >
         <div className="flex min-h-full flex-col">
           <a
             href="#main-content"
-            className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-50 focus:rounded-md focus:bg-white focus:px-4 focus:py-3 focus:text-slate-900 focus:shadow-lg focus:outline-2 focus:outline-offset-2 focus:outline-sky-600"
+            className="focus:bg-surface-card focus:text-text-primary focus:outline-focus sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-50 focus:rounded-md focus:px-4 focus:py-3 focus:shadow-lg focus:outline-2 focus:outline-offset-2"
           >
             Skip to main content
           </a>

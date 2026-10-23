@@ -11,10 +11,63 @@
 @custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));
 
 @theme {
-  /* Custom slate between slate-800 (#1e293b) and slate-700 (#334155).
-     Used for card surfaces in dark mode to create visual hierarchy
-     above the slate-800 page background. */
-  --color-slate-850: #273449;
+  /* ── Living Water palette (raw values, for reference / non-token usage) ── */
+
+  /* Light theme: mist and glacial surfaces */
+  --color-water-50: #f0f9ff; /* mist — light page background */
+  --color-water-100: #e0f2fe; /* glacial blue — tinted sections */
+
+  /* Dark theme: river depths and surfaces */
+  --color-water-700: #0f2a36; /* abyssal teal — dark page background */
+  --color-water-800: #164e63; /* deep water — card surface */
+  --color-water-900: #1e5a73; /* deep current — elevated surface */
+
+  /* Amber for limited status / highlight use */
+  --color-flood-50: #fef3c7; /* amber badge background */
+  --color-flood-800: #92400e; /* amber badge text */
+
+  /* ── Semantic token references (CSS-variable-backed utilities) ──────────
+   * These map Tailwind utility names to the semantic CSS custom properties
+   * defined in libs/design-system/src/styles/tokens.css & themes.css.
+   * The CSS variables switch values based on [data-theme], so utilities
+   * using them automatically adapt to light/dark mode.
+   */
+
+  /* Surfaces */
+  --color-surface-page: var(--color-surface-page, #f5f8f6);
+  --color-surface-card: var(--color-surface-card, #ffffff);
+  --color-surface-elevated: var(--color-surface-elevated, #ffffff);
+  --color-surface-tinted: var(--color-surface-tinted, #eaf4f3);
+
+  /* Text */
+  --color-text-primary: var(--color-text-primary, #171717);
+  --color-text-secondary: var(--color-text-secondary, #4b5563);
+  --color-text-muted: var(--color-text-muted, #6b7280);
+  /* Text on colored backgrounds (inverse text) */
+  --color-text-on-accent: var(--color-text-on-accent, #ffffff);
+  --color-text-error: var(--color-text-error, #dc2626);
+
+  /* Borders */
+  --color-border: var(--color-border, #d5e2e2);
+  --color-border-strong: var(--color-border-strong, #b8c9c9);
+
+  /* Links / accents / focus */
+  --color-accent: var(--color-accent, #187e89);
+  --color-accent-hover: var(--color-accent-hover, #116776);
+  --color-link: var(--color-link, #075985);
+  --color-link-hover: var(--color-link-hover, #0369a1);
+  --color-focus: var(--color-focus, #075985);
+
+  /* Code / pre */
+  --color-code-bg: var(--color-code-bg, #f3f4f6);
+  --color-pre-bg: var(--color-pre-bg, #171717);
+  --color-pre-text: var(--color-pre-text, #f9fafb);
+
+  /* Status */
+  --color-status-info-bg: var(--color-status-info-bg, #eff6ff);
+  --color-status-info-text: var(--color-status-info-text, #1e40af);
+  --color-status-warning-bg: var(--color-status-warning-bg, #fef3c7);
+  --color-status-warning-text: var(--color-status-warning-text, #92400e);
 }
 
 @import "../../libs/design-system/src/styles/index.css";

@@ -20,19 +20,19 @@ type BreadcrumbProps = {
 export function Breadcrumb({ items }: BreadcrumbProps) {
   return (
     <nav aria-label="Breadcrumb" className="px-4 py-2">
-      <ol className="flex items-center gap-1 text-sm text-gray-600 dark:text-zinc-400">
+      <ol className="text-text-secondary flex items-center gap-1 text-sm">
         {items.map((item, index) => (
           <li key={index} className="flex min-w-0 items-center gap-1">
             {index > 0 && (
               <ChevronIcon
-                className="h-4 w-4 text-zinc-400 dark:text-zinc-400"
+                className="text-text-muted h-4 w-4"
                 aria-hidden={true}
               />
             )}
             {item.href && index < items.length - 1 ? (
               <Link
                 href={item.href}
-                className="block max-w-[100px] truncate text-gray-600 hover:text-sky-600 hover:underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-600 sm:max-w-[150px] md:max-w-xs dark:text-zinc-400 dark:hover:text-sky-400"
+                className="text-text-secondary hover:text-link focus-visible:outline-focus block max-w-[100px] truncate hover:underline focus-visible:outline-2 focus-visible:outline-offset-2 sm:max-w-[150px] md:max-w-xs"
               >
                 {item.label}
               </Link>
@@ -40,14 +40,14 @@ export function Breadcrumb({ items }: BreadcrumbProps) {
               <Link
                 href={item.href}
                 aria-current="page"
-                className="block max-w-[100px] truncate font-medium text-slate-900 sm:max-w-[150px] md:max-w-xs dark:text-slate-200"
+                className="text-text-primary block max-w-[100px] truncate font-medium sm:max-w-[150px] md:max-w-xs"
               >
                 {item.label}
               </Link>
             ) : (
               <span
                 aria-current="page"
-                className="block max-w-[100px] truncate font-medium text-slate-900 sm:max-w-[150px] md:max-w-xs dark:text-slate-200"
+                className="text-text-primary block max-w-[100px] truncate font-medium sm:max-w-[150px] md:max-w-xs"
               >
                 {item.label}
               </span>

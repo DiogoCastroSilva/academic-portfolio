@@ -33,7 +33,7 @@ export function ThemeToggle() {
       aria-label={label}
       title={label}
       className={
-        "relative inline-flex size-11 items-center justify-center rounded-md text-gray-400 hover:bg-white/5 hover:text-sky-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-600 motion-reduce:transition-none dark:text-gray-400 dark:hover:bg-white/10 dark:hover:text-sky-300 dark:focus-visible:outline-sky-400"
+        "text-text-muted hover:bg-surface-tinted hover:text-link focus-visible:bg-surface-tinted focus-visible:text-link focus-visible:outline-focus relative inline-flex size-11 items-center justify-center rounded-md focus-visible:outline-2 focus-visible:outline-offset-2 motion-reduce:transition-none"
       }
     >
       <span className="sr-only">{label}</span>
