@@ -13,6 +13,9 @@
 #     diagram.png       <- body image (referenced in Markdown)
 #
 # All images live in the same directory as README.md.
+#
+# Cover image (`image:` field) is cropped to a 16:9 frame — keep important
+# content away from the edges (see Image Guidelines in content-authoring.md).
 draft: true
 title: "My New Blog Post"
 date: "2025-01-01"

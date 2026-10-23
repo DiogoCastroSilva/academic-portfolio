@@ -291,3 +291,35 @@ describe("ContentDetail responsive link wrapping", () => {
     expect(className).toMatch(/prose-p:break-words/);
   });
 });
+
+describe("ContentDetail image overflow protection", () => {
+  it("prose images have max-w-full to prevent overflow on narrow screens", () => {
+    const { container } = render(<ContentDetail content={mockContent} />);
+    const proseDiv = Array.from(container.querySelectorAll("div")).find((d) =>
+      d.className.includes("prose"),
+    );
+    const className = proseDiv?.className || "";
+    expect(className).toMatch(/prose-img:max-w-full/);
+  });
+
+  it("prose images have rounded-lg corners", () => {
+    const { container } = render(<ContentDetail content={mockContent} />);
+    const proseDiv = Array.from(container.querySelectorAll("div")).find((d) =>
+      d.className.includes("prose"),
+    );
+    const className = proseDiv?.className || "";
+    expect(className).toMatch(/prose-img:rounded-lg/);
+  });
+
+  it("cover image container has overflow-hidden", () => {
+    const { container } = render(<ContentDetail content={mockContent} />);
+    const imgContainer = container.querySelector(".aspect-\\[16\\/9\\]");
+    expect(imgContainer).toHaveClass("overflow-hidden");
+  });
+
+  it("cover image uses object-cover to fill the 16:9 frame", () => {
+    render(<ContentDetail content={mockContent} />);
+    const img = screen.getByRole("img");
+    expect(img).toHaveClass("object-cover");
+  });
+});

@@ -92,6 +92,11 @@ image: cover.jpg
 Write the project or publication details here.
 ```
 
+See the [Image Guidelines](docs/product/content-authoring.md#image-guidelines) section
+of the Content Authoring Guide for how cover images, body images, profile portraits,
+and gallery images are rendered, including safe-margin recommendations and a
+pre-publication checklist.
+
 ## Documentation
 
 - [Documentation index](docs/README.md)
