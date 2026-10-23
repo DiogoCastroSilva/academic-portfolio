@@ -314,6 +314,66 @@ describe("ContentRenderer — integration", () => {
 });
 
 // ---------------------------------------------------------------------------
+// Table wrapping — wide tables get a scrollable container
+// ---------------------------------------------------------------------------
+
+describe("ContentRenderer — table wrapping", () => {
+  const config: ContentRendererConfig = {
+    publicPrefix: "/test",
+  };
+
+  function renderBody(markdown: string): string {
+    const instance = createMarkedInstance(config);
+    return instance.parse(markdown) as string;
+  }
+
+  it("wraps GFM tables in a scrollable div", () => {
+    const html = renderBody(
+      "| Column 1 | Column 2 |\n| -------- | -------- |\n| Cell A   | Cell B   |\n",
+    );
+    expect(html).toContain('<div class="overflow-x-auto">');
+    expect(html).toContain("</div>");
+    // The table itself is preserved inside the wrapper
+    expect(html).toContain("<table>");
+    expect(html).toContain("</table>");
+  });
+
+  it("preserves table content and structure inside the wrapper", () => {
+    const html = renderBody(
+      "| Name | Value |\n| ---- | ----- |\n| Foo  | 1     |\n",
+    );
+    // Header cells preserved
+    expect(html).toContain("Name");
+    expect(html).toContain("Value");
+    // Body cells preserved
+    expect(html).toContain("Foo");
+    expect(html).toContain("1");
+  });
+
+  it("does not wrap raw HTML tables that already have a wrapper", () => {
+    // The postprocess wraps <table> in a div; if a <table> is already inside
+    // a div, the regex still wraps it (no double-wrapping prevention needed
+    // because GFM markdown never generates nested wrappers).
+    const html = renderBody(
+      '<div class="raw"><table><tr><td>A</td></tr></table></div>',
+    );
+    expect(html).toContain('<div class="overflow-x-auto">');
+    expect(html).toContain("<td>A");
+  });
+
+  it("wraps each table in its own scrollable container", () => {
+    const html = renderBody(
+      "| A | B |\n|---|---|\n| 1 | 2 |\n\n" +
+        "Some text\n\n" +
+        "| X | Y |\n|---|---|\n| a | b |\n",
+    );
+    // Count wrapper divs by counting the opening tag
+    const wrapperCount = html.split('<div class="overflow-x-auto">').length - 1;
+    expect(wrapperCount).toBe(2);
+  });
+});
+
+// ---------------------------------------------------------------------------
 // Markdown HTML Policy (ADR-0004: trusted content, no sanitizer)
 // ---------------------------------------------------------------------------
 

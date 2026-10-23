@@ -5,28 +5,37 @@
  * apps/main/src/app/global.css.
  */
 
-/* Profile name — responsive heading scale for the profile name. */
+/* Profile name — fluid display heading scale for the researcher name.
+ *
+ * Uses CSS clamp() for continuous responsive sizing instead of discrete
+ * step-jumps. Targets ~2.5rem (40px) at 320px viewport width, scaling
+ * fluidly to ~4rem (64px) at large desktop widths.
+ *
+ * The clamp() lower bound (2.5rem) ensures the name is never smaller than
+ * 40px, which reads well against the circular portrait (128px–256px).
+ * The upper bound (4rem) prevents the name from overwhelming the layout
+ * on ultra-wide screens.
+ *
+ * text-wrap: balance prevents orphaned lines for longer names.
+ * overflow-wrap: anywhere prevents overflow of long names on narrow screens.
+ *
+ * The actual profile name (e.g. "Dr. Alex Morgan") is 2 words and typically
+ * fits on one line, so text-wrap: balance primarily protects multi-line
+ * wrapping at intermediate font sizes. */
 .profile-name {
   max-width: 100%;
   overflow-wrap: anywhere;
   text-wrap: balance;
   font-family: var(--font-display, "DM Serif Display", Georgia, serif);
-  font-size: 1.875rem;
-  font-weight: 700;
-  line-height: 1.15;
-  letter-spacing: -0.025em;
-}
-
-@media (min-width: 48rem) {
-  .profile-name {
-    font-size: 2.25rem;
-  }
-}
-
-@media (min-width: 64rem) {
-  .profile-name {
-    font-size: 2.5rem;
-  }
+  color: var(--color-text-secondary);
+  /* Fluid responsive size: ~2.5rem at 320px → ~4rem at 1200px+ */
+  font-size: clamp(2.5rem, 5vw + 1rem, 4rem);
+  font-weight: 400; /* DM Serif Display only ships weight 400 */
+  /* Tighter line-height for display headings — scales gently with size */
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  /* Tabular figures for any numeric characters in headings */
+  font-variant-numeric: tabular-nums;
 }
 
 /* Fallback anchor styles for markdown-rendered content (prose) */
@@ -36,14 +45,38 @@
   /* Prevent long URLs from overflowing prose containers on narrow screens */
   overflow-wrap: break-word;
   word-break: break-word;
+  /* Ensure underline appears at a consistent offset when it does show */
+  text-underline-offset: 0.2em;
+  text-decoration-thickness: 1px;
 }
 .prose a:hover {
   text-decoration: underline;
+  text-underline-offset: 0.2em;
+  text-decoration-thickness: 1px;
   color: var(--color-link-hover);
+}
+/* Focus-visible links also get an underline for non-color-only distinction */
+.prose a:focus-visible {
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+  text-decoration-thickness: 1px;
 }
 /* Respect reduced-motion: skip underline-on-hover animation */
 @media (prefers-reduced-motion: reduce) {
   .prose a:hover {
     text-decoration: underline;
   }
+}
+
+/* ── Prose headings: fluid wrapping and table cell word-breaking ──────────
+ * text-wrap: balance prevents orphaned heading lines when the viewport
+ * is resized or the user zooms. The cost is negligible for short headings.
+ * table cells get break-word so long values don't force horizontal overflow
+ * beyond the table's overflow-x-auto wrapper. */
+.prose :where(h1, h2, h3, h4, h5, h6) {
+  text-wrap: balance;
+}
+.prose :where(td, th) {
+  overflow-wrap: break-word;
+  word-break: break-word;
 }

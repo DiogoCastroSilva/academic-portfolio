@@ -9,7 +9,7 @@
  * in tokens.css).
  */
 :root[data-theme="dark"] {
-  /* Living Water palette: river depths at night */
+  /* River Atlas Editorial palette: river depths at night.*/
   --color-surface-page: #0f2a36; /* abyssal teal — page background */
   --color-surface-card: #164e63; /* deep water — card surface */
   --color-surface-elevated: #1e5a73; /* deep current — elevated surface */
@@ -17,15 +17,15 @@
 
   --color-text-primary: #e2e8f0; /* slate-200 — primary text */
   --color-text-secondary: #cbd5e1; /* slate-300 — secondary text */
-  --color-text-muted: #a6bcd1; /* sky-100 — muted text (WCAG AA >=4.5:1 on deep water) */
+  --color-text-muted: #bbccd9; /* sky-100 lightened from #a6bcd1 for WCAG AA on surface-elevated */
   /* Text on colored backgrounds (inverse text) */
   --color-text-on-accent: #0f172a; /* dark text on bright accent (inverse) */
-  --color-text-error: #fca5a5; /* red-300 — error text (WCAG AA) */
+  --color-text-error: #fdb8b0; /* light red — lightened from #fca5a5 for WCAG AA on surface-elevated */
 
   --color-border: #94a3b8; /* slate-400 — default borders */
   --color-border-strong: #334155; /* slate-700 — strong borders */
 
-  --color-accent: #22d3ee; /* bright cyan — brand accent */
+  --color-accent: #30dbfb; /* bright cyan — lightened from #22d3ee for WCAG AA on surface-elevated */
   --color-accent-hover: #7ef5d6; /* brighter cyan — accent hover */
   --color-link: #7dd3fc; /* sky-300 — text links */
   --color-link-hover: #bae6fd; /* sky-200 — link hover */

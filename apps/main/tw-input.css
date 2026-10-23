@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@plugin "@tailwindcss/typography";
 
 /*
   Override the default `dark` variant (which uses `prefers-color-scheme`
@@ -11,7 +12,7 @@
 @custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));
 
 @theme {
-  /* ── Living Water palette (raw values, for reference / non-token usage) ── */
+  /* ── River Atlas Editorial palette (raw values, for reference / non-token usage) ── */
 
   /* Light theme: mist and glacial surfaces */
   --color-water-50: #f0f9ff; /* mist — light page background */
@@ -42,17 +43,17 @@
   /* Text */
   --color-text-primary: var(--color-text-primary, #171717);
   --color-text-secondary: var(--color-text-secondary, #4b5563);
-  --color-text-muted: var(--color-text-muted, #6b7280);
+  --color-text-muted: var(--color-text-muted, #5e6673);
   /* Text on colored backgrounds (inverse text) */
   --color-text-on-accent: var(--color-text-on-accent, #ffffff);
-  --color-text-error: var(--color-text-error, #dc2626);
+  --color-text-error: var(--color-text-error, #c51e24);
 
   /* Borders */
   --color-border: var(--color-border, #d5e2e2);
   --color-border-strong: var(--color-border-strong, #b8c9c9);
 
   /* Links / accents / focus */
-  --color-accent: var(--color-accent, #187e89);
+  --color-accent: var(--color-accent, #166973);
   --color-accent-hover: var(--color-accent-hover, #116776);
   --color-link: var(--color-link, #075985);
   --color-link-hover: var(--color-link-hover, #0369a1);
@@ -70,8 +71,13 @@
   --color-status-warning-text: var(--color-status-warning-text, #92400e);
 
   /* Fonts (set by next/font/local on <html> via layout.tsx className) */
-  --font-sans: var(--font-sans, "Inter", system-ui, sans-serif);
-  --font-display: var(--font-display, "DM Serif Display", Georgia, serif);
+  --font-sans: var(--font-inter-loaded, "Inter", system-ui, sans-serif);
+  --font-display: var(
+    --font-display-loaded,
+    "DM Serif Display",
+    Georgia,
+    serif
+  );
 }
 
 @import "../../libs/design-system/src/styles/index.css";

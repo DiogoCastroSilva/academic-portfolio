@@ -55,9 +55,7 @@ export const AboutHero = ({ profile }: AboutHeroProps) => {
                   })}
             >
               <div>
-                <h1 className="font-display text-3xl font-bold md:text-4xl lg:text-5xl">
-                  {profile.name}
-                </h1>
+                <h1 className="profile-name">{profile.name}</h1>
                 <p className="text-text-secondary mt-2 text-xl">
                   {profile.role}
                 </p>
@@ -98,7 +96,7 @@ export const AboutHero = ({ profile }: AboutHeroProps) => {
                 transition: { duration: 0.6, delay: 0.4 },
               })}
         >
-          <h2 className="font-display mb-4 text-2xl font-bold md:text-3xl">
+          <h2 className="font-display text-text-secondary mb-4 text-2xl font-normal md:text-3xl">
             About Me
           </h2>
           <div

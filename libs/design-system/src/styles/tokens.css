@@ -6,7 +6,7 @@
  * standalone design-system package — and rely on Tailwind for layout and
  * spacing primitives.
  *
- * Living Water / Dynamic River System palette.
+ * River Atlas Editorial palette.
  * Light-theme values are defined here on :root; dark-theme overrides live
  * in themes.css under :root[data-theme="dark"].
  *
@@ -24,17 +24,17 @@
   /* ── Text tokens ──────────────────────────── */
   --color-text-primary: #171717; /* primary body text */
   --color-text-secondary: #4b5563; /* secondary / metadata text */
-  --color-text-muted: #6b7280; /* captions / non-critical text */
+  --color-text-muted: #5e6673; /* captions / non-critical text — darkened from gray-500 for WCAG AA on tinted surfaces */
   /* Text on colored backgrounds (inverse text) */
   --color-text-on-accent: #ffffff; /* text on accent bg (inverse) */
-  --color-text-error: #dc2626; /* error text (red-600) */
+  --color-text-error: #c51e24; /* error text (red-700) — darkened for WCAG AA on tinted surfaces */
 
   /* ── Border tokens ──────────────────────── */
   --color-border: #d5e2e2; /* subtle separators */
   --color-border-strong: #b8c9c9; /* strong borders */
 
   /* ── Accent / focus tokens ───────────────── */
-  --color-accent: #187e89; /* teal — brand accent, selected UI elements */
+  --color-accent: #166973; /* teal — brand accent, selected UI elements — darkened from #187e89 for WCAG AA on near-white */
   --color-accent-hover: #116776; /* darker teal — button hover */
   --color-link: #075985; /* deep current — text links */
   --color-link-hover: #0369a1; /* dark river — link hover */

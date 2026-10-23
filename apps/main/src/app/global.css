@@ -5,6 +5,32 @@
  * libs/design-system/src/styles/ (see ADR-0008).
  */
 
+/* ── Reading comfort: body text and line-height ──────────────────────
+ * The @tailwindcss/typography plugin generates prose-lg at 18px body with
+ * 1.78 line-height. We override to ~19px (1.1875rem) with 1.7 line-height
+ * for the 17–19px reading comfort target. At this base size, 65ch max-width
+ * yields ~42–46 characters per line — optimal for sustained reading.
+ */
+.prose-lg {
+  font-size: 1.1875rem; /* ~19px */
+  line-height: 1.7;
+}
+
+.prose-sm {
+  font-size: 1.0625rem; /* ~17px — bumped from 16px so the home-page AboutSection bio reads comfortably; prose-lg stays at 19px for the full About page */
+  line-height: 1.65;
+}
+
+/* Cap prose h1 so headings inside body content don't become excessively
+ * large (plugin scales h1 to 2.667em × base, which would be ~51px at 19px
+ * body — too dominant for in-content section titles). */
+.prose-lg :where(h1) {
+  font-size: 2.25rem; /* ~36px */
+}
+.prose-sm :where(h1) {
+  font-size: 1.75rem; /* ~28px */
+}
+
 /* Display font for major prose headings (h1, h2).
  * DM Serif Display provides editorial personality for section titles.
  * Smaller headings (h3–h6) and body text inherit Inter (font-sans)
@@ -12,6 +38,8 @@
 .prose h1,
 .prose h2 {
   font-family: var(--font-display, "DM Serif Display", Georgia, serif);
+  /* DM Serif Display only ships weight 400; prevent synthetic bolding */
+  font-weight: 400;
 }
 
 /* Semantic figure/figcaption styles for markdown-rendered images */

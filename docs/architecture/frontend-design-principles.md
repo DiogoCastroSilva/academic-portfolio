@@ -22,13 +22,83 @@ Every collection follows the same pattern:
 
 ## 3. Typography / Spacing / Content Widths
 
-- **Base font:** `text-text-primary` (`--color-text-primary`) body at `prose prose-lg` on detail pages, `prose prose-sm` on homepage AboutSection (condensed preview).
-- **Page title (H1):** `.profile-name` — `1.875rem` (30px) base, `2.25rem` (36px) at `md`, `2.5rem` (40px) at `lg`
-- **Section headings (H2):** `text-2xl font-bold md:text-3xl`
-- **Card titles (H3):** `text-xl font-semibold` with `line-clamp-2`
-- **Maximum content width:** `max-w-3xl` on detail pages; `max-w-6xl` on layout.
+### Font system
+
+- **Sans-serif (Inter, variable):** interface and reading typography — body, nav, cards, metadata, controls. Full `wght` range (100–900), `opsz` axis.
+- **Display (DM Serif Display, variable):** editorial personality for the researcher name (H1) and major prose headings (H1/H2 inside `prose`). Only weight 400 (normal + italic). `font-weight: 400` must be set explicitly everywhere it is used — the browser does not synthesize a bolder weight for this file, so `font-bold` would produce no visible effect or fall back to the wrong face.
+
+### Typography roles and sizes
+
+| Role                           | Element / class                          | Font                                       | Size                                                                                                                                                         | Weight              | Notes                                                                                                                                                                                                                                 |
+| ------------------------------ | ---------------------------------------- | ------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Researcher name (display)      | `.profile-name`                          | `--font-display`                           | `clamp(2.5rem, 5vw + 1rem, 4rem)`                                                                                                                            | 400                 | Fluid via `clamp()`; `~40px`@320px → `~64px`@1200px. `text-wrap: balance`, `letter-spacing: -0.02em`, `line-height: 1.05`. Uses `color: var(--color-text-secondary)` for a softer title treatment that harmonizes with metadata text. |
+| Page title (H1) — detail pages | Article `<h1>` in `ContentDetail`        | `--font-display`                           | `1.875rem` → `md:text-4xl` (2.25rem)                                                                                                                         | 400                 | Editorial display; distinct from `.profile-name` which is the site-level brand headline. Uses `text-text-secondary`.                                                                                                                  |
+| Section heading (H2)           | `.font-display` in sections              | `--font-display`                           | `text-2xl` (1.5rem) → `md:text-3xl` (1.875rem)                                                                                                               | 400                 | "About Me", "Education", "Skills & Tools", etc. Uses `text-text-secondary` so headings read lighter than body text, creating editorial contrast.                                                                                      |
+| Card title                     | `.font-semibold` in `ContentCardSection` | `--font-sans`                              | `text-xl` (1.25rem)                                                                                                                                          | 600                 | `line-clamp-2`; Inter supports weight 600.                                                                                                                                                                                            |
+| Prose headings (H2–H6)         | Inside `.prose`                          | h2: `--font-display`; h3–h6: `--font-sans` | h2: `prose-h2:text-2xl` (24px); h3: `prose-h3:text-xl` (20px); h4: `prose-h4:text-lg` (18px); h5: `prose-h5:text-base` (16px); h6: `prose-h6:text-sm` (14px) | h2: 400; h3–h6: 700 | h1/h2 use DM Serif Display 400 (weight override in `global.css`). h3–h6 use Inter 700 (via `prose-headings:font-bold`). `text-wrap: balance` on all prose headings for fluid re-wrapping on resize/zoom.                              |
+| Prose body                     | `.prose-lg` / `.prose-sm`                | `--font-sans`                              | 1.1875rem (~19px) / 1.0625rem (~17px)                                                                                                                        | 400                 | `prose-lg` for detail pages and AboutHero bio, `prose-sm` for homepage AboutSection preview.                                                                                                                                          |
+| Secondary / metadata           | `text-text-secondary`, `text-sm`         | `--font-sans`                              | 0.875rem (14px)                                                                                                                                              | 400                 | Dates, tags, captions — not long-form reading.                                                                                                                                                                                        |
+| Navigation / controls          | `--font-sans`                            | `--font-sans`                              | 0.875–1rem                                                                                                                                                   | 500                 | NavBar, buttons, tags. `font-medium` for interactive weight.                                                                                                                                                                          |
+
+### Line heights and spacing
+
+- **Long-form body:** `prose-lg` line-height 1.7 (was 1.78). Paragraph spacing overridden to `prose-p:my-4` (≈0.84em at 19px body) for tighter rhythm than the plugin default; `prose-p:leading-[1.7]` sets explicit line-height.
+- **Homepage preview:** `prose-sm` line-height 1.65; bumped from 14px → 16px → 17px (1.0625rem) so the AboutSection biography reads comfortably on the home page. `prose-lg` (19px) is reserved for the About page biography and detail page content.
+- **Display headings:** `.profile-name` line-height 1.05 — tight and authoritative.
+- **Dark-mode prose headings:** ContentDetail's prose container uses `dark:prose-headings:text-text-primary` (not `dark:prose-invert`) to ensure h1–h6 heading text inside markdown content switches to `--color-text-primary` (slate-200 light) in dark mode. Without this override, the @tailwindcss/typography plugin's default `--tw-prose-headings` resolves to a hardcoded near-black oklch value that does not adapt to the `[data-theme="dark"]` attribute.
+- **Heading hierarchy inside `prose`:** h1 capped at `2.25rem` (36px) inside `prose-lg` and `1.75rem` (28px) inside `prose-sm`. h2 at `text-2xl` (24px), h3 at `text-xl` (20px), h4 at `text-lg` (18px), h5 at `text-base` (16px), h6 at `text-sm` (14px). h1/h2 use DM Serif Display 400; h3–h6 use Inter 700.
+- **Maximum reading width:** `prose` class sets `max-width: 65ch` via the typography plugin; this yields ~42–46 characters per line at 19px body — optimally readable. The parent `ContentDetail` article constrains to `max-w-3xl`, and `max-w-none` is used on the prose div so the `65ch` constraint governs.
+
+### Spacing rules
+
 - **Spacing scale:** 4/8/12/16/24 — section padding uses `p-6 sm:p-10 lg:p-12` for responsive breathing room.
-- **Line length:** prose content limited to readable width via `max-w-none` inside the card container.
+- All cards and sections use responsive padding to avoid horizontal scroll at 320 CSS px.
+
+### Responsive behavior
+
+- **Profile name (`.profile-name`):** uses CSS `clamp()` for continuous fluid sizing — no abrupt jumps at breakpoints.
+- **All other elements:** use Tailwind's step-based responsive utilities at `sm` (640px), `md` (768px), and `lg` (1024px) breakpoints.
+- `flex min-w-0` on flex children prevents flex items from forcing minimum width and causing overflow of long URLs/titles.
+
+### Responsive testing summary
+
+| Viewport                  | Width       | Tested pages        | Check                                                               |
+| ------------------------- | ----------- | ------------------- | ------------------------------------------------------------------- |
+| iPhone SE / narrow mobile | 320–375px   | About, Home, Detail | No horizontal overflow; headings not clipped                        |
+| Tablet                    | 640–768px   | About, Home, Detail | `.profile-name` at ~48–52px; cards wrap to 2-col                    |
+| Laptop                    | 1024–1280px | About, Home, Detail | `.profile-name` at ~52–56px; cards 3-col                            |
+| Large desktop             | 1440–1920px | About, Home, Detail | `.profile-name` capped at 4rem (64px); max-width 65ch governs prose |
+
+### Browser zoom and text-scaling
+
+- `clamp()` is inherently zoom-friendly — it respects the browser's font-size preference and scales proportionally.
+- `text-wrap: balance` re-balances at every viewport size on zoom.
+- `overflow-wrap: anywhere` prevents clipping of long unbreakable strings at any zoom level.
+
+### Markdown element coverage
+
+All standard Markdown/GFM elements rendered by the `marked` pipeline are styled via `@tailwindcss/typography` with targeted overrides. See `ContentDetail.tsx` for the authoritative class list.
+
+| Element         | Treatment                                                                                        |
+| --------------- | ------------------------------------------------------------------------------------------------ |
+| `h1`            | Capped at `2.25rem` (36px) in `prose-lg`; `1.75rem` (28px) in `prose-sm`                         |
+| `h2`            | `prose-h2:text-2xl` (24px); DM Serif Display 400 via `global.css` override                       |
+| `h3`–`h6`       | `text-xl`/`text-lg`/`text-base`/`text-sm`; Inter 700 via `prose-headings:font-bold`              |
+| `p`             | `prose-p:my-4` (1rem spacing); `prose-p:leading-[1.7]`; `prose-p:break-words`                    |
+| `ul`/`ol`       | `list-disc`/`list-decimal`, `pl-6`, `my-4`; `li:my-2` for item spacing                           |
+| `a`             | `var(--color-link)`; no underline by default; underline + `text-underline-offset` on hover/focus |
+| `strong`        | `prose-strong:font-bold`                                                                         |
+| `em`            | `prose-em:italic`                                                                                |
+| `blockquote`    | `border-l-4 border-accent`, `pl-4`, `italic`                                                     |
+| `code` (inline) | `bg-code-bg`, `px-2`, `py-1`, `rounded`, `font-mono`, `text-sm`                                  |
+| `pre`           | `bg-pre-bg`, `text-pre-text`, `p-4`, `rounded-lg`, `overflow-x-auto`                             |
+| `table`         | `border-collapse`, `w-full`, `my-4`, `thead:bg-surface-tinted`; cells get `break-word`           |
+| `img`           | `rounded-lg`, `my-6`; wrapped in `<figure>` with optional `<figcaption>`                         |
+| `hr`            | Plugin default (`border-border`, `my-4`)                                                         |
+
+**Tables:** The content renderer (`marked-extensions.ts`) wraps every `<table>` in a `<div class="overflow-x-auto">` via the postprocess hook, since GFM tables can exceed the 65ch reading column. The wrapper is transparent when the table fits within the container. Table cells (`td`/`th`) get `overflow-wrap: break-word` from `typography.css`.
+
+**Links:** Prose links use `var(--color-link)` (deep river blue `#075985` in light mode, sky-300 `#7dd3fc` in dark mode) — both achieve ≥4.5:1 contrast against their backgrounds. Links are underlined on hover and focus-visible (with `text-underline-offset: 0.2em`), providing a non-color-only indicator. `prose-a:break-words` prevents long URLs from overflowing narrow containers.
 
 ## 4. Card and Tag Rules
 
@@ -50,38 +120,38 @@ Every collection follows the same pattern:
 
 Semantic colors are defined as CSS custom properties in `libs/design-system/src/styles/tokens.css` (light theme) and `libs/design-system/src/styles/themes.css` (dark theme overrides via `[data-theme="dark"]`). The dark variant is driven by the `[data-theme]` attribute set by an inline theme-init script in `<head>`, rather than `prefers-color-scheme` — this lets the theme toggle switch instantly without a flash of incorrect theme. All components reference these tokens through Tailwind utility names (e.g. `bg-surface-card`, `text-text-primary`). Keep Tailwind's built-in spacing/type scales; do not create competing scales.
 
-| Token                      | Light     | Dark      | Purpose                                          |
-| -------------------------- | --------- | --------- | ------------------------------------------------ |
-| `--color-surface-page`     | `#F5F8F6` | `#0F2A36` | Mist-green page background (welcoming)           |
-| `--color-surface-card`     | `#ffffff` | `#164E63` | Card/surface background (white / deep water)     |
-| `--color-surface-elevated` | `#ffffff` | `#1E5A73` | Elevated surfaces (white / deep current)         |
-| `--color-surface-tinted`   | `#EAF4F3` | `#123C4B` | Water-teal tint (section panels, dividers)       |
-| `--color-text-primary`     | `#171717` | `#e2e8f0` | Primary body text (slate-900 / slate-200)        |
-| `--color-text-secondary`   | `#4b5563` | `#cbd5e1` | Secondary/metadata text (slate-700 / slate-300)  |
-| `--color-text-muted`       | `#6b7280` | `#A6BCD1` | Caption / non-critical text (gray-600 / sky-100) |
-| `--color-text-on-accent`   | `#ffffff` | `#0f172a` | Inverse text on accent background                |
-| `--color-text-error`       | `#dc2626` | `#fca5a5` | Error/status text (red-600 / red-300)            |
-| `--color-border`           | `#D5E2E2` | `#94a3b8` | Subtle separators (water-gray / slate-400)       |
-| `--color-border-strong`    | `#B8C9C9` | `#334155` | Strong borders (water-gray / slate-700)          |
-| `--color-accent`           | `#187E89` | `#22D3EE` | Teal accent for UI elements (buttons, borders)   |
-| `--color-accent-hover`     | `#116776` | `#7ef5d6` | Button hover (darker teal / brighter cyan)       |
-| `--color-focus`            | `#075985` | `#7DD3FC` | Focus rings (deep current / sky-300)             |
-| `--color-link`             | `#075985` | `#7DD3FC` | Link color (deep current / sky-300) — NEW        |
-| `--color-link-hover`       | `#0369a1` | `#bae6fd` | Link hover (dark river / sky-200) — NEW          |
-| `--color-code-bg`          | `#f3f4f6` | `#0e3a5a` | Inline code background (gray-100 / glacial blue) |
-| `--color-pre-bg`           | `#171717` | `#0a2740` | Preformatted block background (near-black blue)  |
-| `--color-pre-text`         | `#f9fafb` | `#e2e8f0` | Preformatted block text (off-white / slate-200)  |
+| Token                      | Light     | Dark      | Purpose                                                     |
+| -------------------------- | --------- | --------- | ----------------------------------------------------------- |
+| `--color-surface-page`     | `#F5F8F6` | `#0F2A36` | Mist-green page background (welcoming)                      |
+| `--color-surface-card`     | `#ffffff` | `#164E63` | Card/surface background (white / deep water)                |
+| `--color-surface-elevated` | `#ffffff` | `#1E5A73` | Elevated surfaces (white / deep current)                    |
+| `--color-surface-tinted`   | `#EAF4F3` | `#123C4B` | Water-teal tint (section panels, dividers)                  |
+| `--color-text-primary`     | `#171717` | `#e2e8f0` | Primary body text (slate-900 / slate-200)                   |
+| `--color-text-secondary`   | `#4b5563` | `#cbd5e1` | Secondary/metadata text (slate-700 / slate-300)             |
+| `--color-text-muted`       | `#5e6673` | `#bbcdd9` | Caption / non-critical text (gray-500 dark / sky-100 light) |
+| `--color-text-on-accent`   | `#ffffff` | `#0f172a` | Inverse text on accent background                           |
+| `--color-text-error`       | `#c51e24` | `#fdb8b0` | Error/status text (red-700 / light red)                     |
+| `--color-border`           | `#D5E2E2` | `#94a3b8` | Subtle separators (water-gray / slate-400)                  |
+| `--color-border-strong`    | `#B8C9C9` | `#334155` | Strong borders (water-gray / slate-700)                     |
+| `--color-accent`           | `#166973` | `#30dbfb` | Teal accent for UI elements (buttons, borders)              |
+| `--color-accent-hover`     | `#116776` | `#7ef5d6` | Button hover (darker teal / brighter cyan)                  |
+| `--color-focus`            | `#075985` | `#7DD3FC` | Focus rings (deep current / sky-300)                        |
+| `--color-link`             | `#075985` | `#7DD3FC` | Link color (deep current / sky-300) — NEW                   |
+| `--color-link-hover`       | `#0369a1` | `#bae6fd` | Link hover (dark river / sky-200) — NEW                     |
+| `--color-code-bg`          | `#f3f4f6` | `#0e3a5a` | Inline code background (gray-100 / glacial blue)            |
+| `--color-pre-bg`           | `#171717` | `#0a2740` | Preformatted block background (near-black blue)             |
+| `--color-pre-text`         | `#f9fafb` | `#e2e8f0` | Preformatted block text (off-white / slate-200)             |
 
 Components never use hardcoded Tailwind palette utilities — all reference semantic tokens (e.g. `bg-surface-card`, `text-text-primary`, `text-link`, `text-accent`, `focus:outline-focus`). Tailwind utility names are registered in `tw-input.css` via the `@theme` block, each backed by CSS variables defined in `tokens.css` (light) and `themes.css` (dark). Prose links consume `--color-link` through `typography.css`; all other text uses `text-text-*` tokens.
 
 ### Applied Theme Rules
 
 - **Light mode:** mist-green (`#F5F8F6`) page canvas (welcoming, not pure white), white cards, `text-text-primary` body on cards, `text-text-secondary` for metadata, `text-text-muted` for secondary text.
-- **Dark mode:** abyssal teal (`#0F2A36`) page background, deep water (`#164E63`) cards (slightly lighter for hierarchy), deep current (`#1E5A73`) for elevated surfaces. Text uses slate-200 (primary), slate-300 (secondary), sky-100 (`#A6BCD1` muted). Teal accent (`#22D3EE`) for UI elements.
-- **Accent vs. link colors:** distinct by design — `--color-accent` (teal `#187E89`/`#22D3EE`) for buttons, borders, blockquote marks, and decorative elements; `--color-link` (deep blue `#075985`/`#7DD3FC`) for all link text and focus rings. This prevents teal links from competing with the deep river blue used for interactive affordances.
+- **Dark mode:** abyssal teal (`#0F2A36`) page background, deep water (`#164E63`) cards (slightly lighter for hierarchy), deep current (`#1E5A73`) for elevated surfaces. Text uses slate-200 (primary), slate-300 (secondary), `#bbcdd9` (muted). Cyan accent (`#30dbfb`) for UI elements.
+- **Accent vs. link colors:** distinct by design — `--color-accent` (teal `#166973`/`#30dbfb`) for buttons, borders, blockquote marks, and decorative elements; `--color-link` (deep blue `#075985`/`#7DD3FC`) for all link text and focus rings. This prevents teal links from competing with the deep river blue used for interactive affordances.
 - Prose link colors consume `--color-link` via `typography.css` (`global.css` delegates to the design-system layer), not by per-component Tailwind `prose-a:text-*` utilities — this avoids drift.
 - **Inverse text:** buttons on teal accent backgrounds use `--color-text-on-accent`, which switches from white (light) to dark `#0f172a` (dark mode where the accent is bright cyan).
-- **Error text:** uses `--color-text-error` (red-600 light / red-300 dark) — adjusted from the proposed red-400 in dark mode because `#f87171` only achieves 3.29:1 on `#164E63`; `#fca5a5` achieves 4.8:1.
+- **Error text:** uses `--color-text-error` (red-700 light / light-red dark) — darkened to `#c51e24` for WCAG AA on tinted surfaces; dark value `#fdb8b0` achieves 4.58:1 on `#1E5A73`.
 
 #### Verified Contrast Ratios (WCAG 2.2 AA — 4.5:1 minimum)
 
@@ -98,7 +168,16 @@ Components never use hardcoded Tailwind palette utilities — all reference sema
 | `text-text-on-accent` (white)   | `accent` light      | ~12:1   | ✅     |
 | `text-text-on-accent` (#0f172a) | `accent` dark       | ~5.5:1  | ✅     |
 
-**Previously failing (now fixed):** `zinc-500` on white (4.2:1 ❌), `zinc-500` on dark surfaces (3.3:1 ❌), `zinc-600` on white for small text (4.84:1, borderline). Additionally, the proposed palette had three contrast gaps that were caught and corrected before finalizing: (1) dark muted text `#94a3b8` on `#164E63` only reached 3.55:1 — adjusted to `#A6BCD1` (sky-100); (2) dark error text `#f87171` (red-400) only reached 3.29:1 — adjusted to `#fca5a5` (red-300); (3) teal accent `#187E89` on a near-white page background only reached 4.48:1 — the 404 text was switched to `text-link` (deep blue, 7.07:1). All colors now route through semantic tokens that switch values per theme.
+**Previously failing (now fixed):** `zinc-500` on white (4.2:1 ❌), `zinc-500` on dark surfaces (3.3:1 ❌), `zinc-600` on white for small text (4.84:1, borderline). Additionally, the following contrast gaps were identified and corrected during Phase 2:
+
+1. Light `text-muted` `#6b7280` on `surface-tinted` `#eaf4f3` only reached 4.31:1 — darkened to `#5e6673` (5.17:1).
+2. Light `accent` `#187e89` on `surface-page` `#f5f8f6` only reached 4.48:1 — darkened to `#166973` (5.95:1).
+3. Light `text-error` `#dc2626` on `surface-tinted` `#eaf4f3` only reached 4.31:1 — darkened to `#c51e24` (5.23:1).
+4. Dark `text-muted` `#a6bcd1` on `surface-elevated` `#1e5a73` only reached 3.88:1 — lightened to `#bbccd9` (4.61:1).
+5. Dark `accent` `#22d3ee` on `surface-elevated` `#1e5a73` only reached 4.20:1 — lightened to `#30dbfb` (4.58:1).
+6. Dark `text-error` `#fca5a5` on `surface-elevated` `#1e5a73` only reached 4.00:1 — lightened to `#fdb8b0` (4.58:1).
+
+All color combinations (text-on-surface, including elevated surfaces) now pass WCAG 2.2 AA (≥4.5:1) in both themes. The 404 page uses `text-link` rather than `text-accent` for text on the near-white page background, providing 7.07:1 contrast. Colors never hardcode palette values — all route through semantic tokens that switch values per theme.
 
 ## 7. Navigation and Breadcrumbs
 

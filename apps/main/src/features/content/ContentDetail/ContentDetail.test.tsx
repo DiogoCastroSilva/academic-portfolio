@@ -210,7 +210,7 @@ describe("ContentDetail accessibility — figures and galleries", () => {
 });
 
 describe("ContentDetail theme contrast (dark mode on dark surfaces)", () => {
-  it("prose container does not use dark:prose-invert (light text on dark surface = poor contrast)", () => {
+  it("prose container uses explicit dark: prose-headings:text-text-primary for headings (not dark:prose-invert)", () => {
     const { container } = render(<ContentDetail content={mockContent} />);
     const proseDiv = Array.from(container.querySelectorAll("div")).find((d) =>
       d.className.includes("prose"),
@@ -219,7 +219,11 @@ describe("ContentDetail theme contrast (dark mode on dark surfaces)", () => {
     const className = proseDiv?.className || "";
     // Our prose sits on a themed card surface in dark mode; we use
     // explicit Tailwind text color classes rather than prose-invert.
+    // This ensures h3/h4 heading text inherits the body text color
+    // (text-text-primary) in dark mode, keeping it light — not the
+    // @tailwindcss/typography plugin's hardcoded dark --tw-prose-headings value.
     expect(className).not.toMatch(/dark:prose-invert/);
+    expect(className).toMatch(/dark:prose-headings:text-text-primary/);
   });
 
   it("prose links use semantic accent token instead of hardcoded blue variant", () => {

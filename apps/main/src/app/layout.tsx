@@ -116,6 +116,22 @@ export default function RootLayout({
           <Footer />
         </div>
         <CloudflareAnalytics />
+        {/* Preload critical (roman/regular) font variants only.
+            Italic variants load on demand via @font-face matching. */}
+        <link
+          rel="preload"
+          as="font"
+          type="font/woff2"
+          href={withPublicBasePath("/fonts/inter/roman.var.woff2")}
+          crossOrigin="anonymous"
+        />
+        <link
+          rel="preload"
+          as="font"
+          type="font/woff2"
+          href={withPublicBasePath("/fonts/dm-serif-display/regular.woff2")}
+          crossOrigin="anonymous"
+        />
         <link
           rel="preload"
           as="image"

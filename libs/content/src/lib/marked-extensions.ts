@@ -314,6 +314,16 @@ function postprocessRawHtml(
     );
   });
 
+  // 4. Wrap every <table> in a horizontally scrollable container so that
+  //    wide tables don't cause horizontal overflow on narrow viewports.
+  //    marked/GFM never produces nested <table> elements, so a simple
+  //    non-greedy regex is safe and reliable here. The wrapper div is
+  //    transparent when the table fits within its container.
+  out = out.replace(
+    /<table([^>]*)>([\s\S]*?)<\/table>/g,
+    '<div class="overflow-x-auto">\n<table$1>$2</table>\n</div>',
+  );
+
   return out;
 }
 

@@ -22,7 +22,7 @@ export const EducationTimeline = ({ items }: EducationTimelineProps) => {
               viewport: { once: true },
             })}
       >
-        <h2 className="font-display mb-8 text-2xl font-bold md:text-3xl">
+        <h2 className="font-display text-text-secondary mb-8 text-2xl font-normal md:text-3xl">
           Education
         </h2>
 
