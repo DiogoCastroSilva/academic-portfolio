@@ -1,6 +1,6 @@
-:HL["/academic-portfolio/_next/static/css/30904e24978d709c.css","style"]
+:HL["/academic-portfolio/_next/static/css/f71f94b19ea5682f.css","style"]
 :HL["/academic-portfolio/images/profile.svg","image",{"type":"image/svg+xml"}]
 :HL["/academic-portfolio/projects/first-project/first-project.svg","image",{"imageSizes":"(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw","fetchPriority":"high"}]
 2:[["children",{"s":"__PAGE__","h":160}]]
 1:[["children",{"s":"projects","h":96,"c":"$Q2"}]]
-0:{"b":"GTY15b4Gezm3VpPfH67Ey","t":{"t":{"s":"","h":80,"c":"$Q1"}}}
+0:{"b":"sjE0SBO0jVMLQNrqChOOM","t":{"t":{"s":"","h":80,"c":"$Q1"}}}
