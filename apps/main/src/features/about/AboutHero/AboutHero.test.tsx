@@ -15,7 +15,7 @@ import { AboutHero } from "./AboutHero.js";
 
 const mockProfile: ProfileData = {
   name: "Dr. Jane Doe",
-  role: "PhD Researcher | Earth Observation | Climate Solutions",
+  role: "PhD Researcher · Earth Observation · Climate Solutions",
   email: "jane.doe@example.com",
   linkedInUrl: "https://www.linkedin.com/in/jane-doe/",
   githubUrl: "https://github.com/jane-doe",

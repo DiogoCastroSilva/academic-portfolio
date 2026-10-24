@@ -13,7 +13,7 @@ import type { ProfileData } from "@academic-portfolio/content";
 // Shared mock profile with skills
 const mockProfile: ProfileData = {
   name: "Dr. Jane Doe",
-  role: "PhD Researcher | Earth Observation",
+  role: "PhD Researcher · Earth Observation",
   email: "test@example.com",
   linkedInUrl: "https://linkedin.com/in/test",
   githubUrl: "https://github.com/test",

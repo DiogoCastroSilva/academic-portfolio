@@ -56,7 +56,7 @@ export function ContentCardSection({
   const HeadingTag: "h1" | "h2" = headingLevel;
   return (
     <section
-      className="bg-surface-card text-text-primary mx-4 rounded-2xl p-6 shadow-sm sm:p-10 lg:p-12"
+      className="bg-surface-card text-text-primary mx-4 rounded-2xl p-6 sm:p-10 lg:p-12"
       aria-labelledby={headingId ?? heading}
     >
       <HeadingTag

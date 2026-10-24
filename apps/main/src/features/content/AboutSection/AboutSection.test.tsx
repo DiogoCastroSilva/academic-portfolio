@@ -15,7 +15,7 @@ import { AboutSection } from "./AboutSection.js";
 
 const mockProfile: ProfileData = {
   name: "Dr. Jane Doe",
-  role: "PhD Researcher | Earth Observation & Climate Solutions",
+  role: "PhD Researcher · Earth Observation · Climate Solutions",
   description: "Climate researcher at Cornell University.",
   email: "jane@example.com",
   linkedInUrl: "https://linkedin.com/in/jane",
@@ -47,7 +47,7 @@ describe("AboutSection", () => {
     render(<AboutSection profile={mockProfile} />);
 
     const role = screen.getByText(
-      "PhD Researcher | Earth Observation & Climate Solutions",
+      "PhD Researcher · Earth Observation · Climate Solutions",
     );
     expect(role).toBeInTheDocument();
   });

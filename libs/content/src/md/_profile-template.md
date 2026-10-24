@@ -4,7 +4,7 @@
 # Copy the structure below and replace the values.
 title: "Profile"
 name: "Your Name"
-role: "Job Title | Specialty Area"
+role: "Job Title · Specialty Area"
 email: "you@example.com"
 linkedInUrl: "https://www.linkedin.com/in/your-profile/"
 githubUrl: "https://github.com/your-username"

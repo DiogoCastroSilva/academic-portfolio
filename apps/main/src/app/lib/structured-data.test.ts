@@ -17,7 +17,7 @@ vi.mock("@academic-portfolio/content", async (importOriginal) => {
     ...actual,
     getProfile: () => ({
       name: "Dr. Jane Doe",
-      role: "PhD Researcher | Earth Observation | Climate Solutions",
+      role: "PhD Researcher · Earth Observation · Climate Solutions",
       description: "Climate researcher studying remote sensing applications.",
       email: "jane@example.com",
       linkedInUrl: "https://linkedin.com/in/jane",
@@ -40,7 +40,7 @@ vi.mock("@academic-portfolio/content", async (importOriginal) => {
 
 const mockProfile: ProfileData = {
   name: "Dr. Jane Doe",
-  role: "PhD Researcher | Earth Observation",
+  role: "PhD Researcher · Earth Observation",
   description: "Climate researcher studying remote sensing applications.",
   email: "jane@example.com",
   linkedInUrl: "https://linkedin.com/in/jane",
@@ -61,7 +61,7 @@ describe("buildPersonSchema", () => {
     expect(schema["@context"]).toBe("https://schema.org");
     expect(schema["@type"]).toBe("Person");
     expect(schema.name).toBe("Dr. Jane Doe");
-    expect(schema.jobTitle).toBe("PhD Researcher | Earth Observation");
+    expect(schema.jobTitle).toBe("PhD Researcher · Earth Observation");
     expect(schema.email).toBe("jane@example.com");
     expect(schema.url).toBe("https://example.com/portfolio/about/");
   });

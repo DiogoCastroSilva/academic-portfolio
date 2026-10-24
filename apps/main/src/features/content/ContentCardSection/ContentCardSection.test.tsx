@@ -1,12 +1,11 @@
 /** @vitest-environment happy-dom */
 import "@testing-library/jest-dom";
 
-import React from "react";
 import { render, screen } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
 
-import { expectNoA11yViolations } from "@academic-portfolio/utils/test-helpers/a11y";
 import type { ContentMeta } from "@academic-portfolio/content";
+import { expectNoA11yViolations } from "@academic-portfolio/utils/test-helpers/a11y";
 
 import { ContentCardSection } from "./ContentCardSection.js";
 
@@ -18,6 +17,8 @@ const mockItems: ContentMeta[] = [
     tags: ["TypeScript", "React"],
     excerpt: "A description of project one.",
     imageSrc: "/projects/project-1.webp",
+    href: "",
+    imageType: "cover",
   },
   {
     slug: "project-2",
@@ -25,6 +26,8 @@ const mockItems: ContentMeta[] = [
     date: "2024-02-20",
     tags: ["Next.js", "Tailwind"],
     imageSrc: "/projects/project-2.webp",
+    href: "",
+    imageType: "cover",
   },
 ];
 
@@ -233,6 +236,8 @@ describe("ContentCardSection heading hierarchy", () => {
       date: "2024-01-15",
       tags: [],
       imageSrc: "/placeholder.svg",
+      imageType: "cover",
+      href: "",
     },
   ];
 
@@ -392,6 +397,8 @@ describe("ContentCardSection tag overflow", () => {
         tags: ["TypeScript", "React", "Next.js", "Tailwind"],
         excerpt: "A description.",
         imageSrc: "/projects/project-1.webp",
+        imageType: "cover",
+        href: "",
       },
     ];
 
@@ -424,6 +431,8 @@ describe("ContentCardSection tag overflow", () => {
         tags: ["TypeScript", "React"],
         excerpt: "A description.",
         imageSrc: "/projects/project-1.webp",
+        imageType: "cover",
+        href: "",
       },
     ];
 
@@ -484,6 +493,8 @@ describe("ContentCardSection selected badge", () => {
         excerpt: "A description.",
         imageSrc: "/projects/selected-project.webp",
         selected: true,
+        imageType: "cover",
+        href: "",
       },
     ];
 
@@ -509,6 +520,8 @@ describe("ContentCardSection selected badge", () => {
         tags: [],
         excerpt: "A description.",
         imageSrc: "/projects/regular-project.webp",
+        imageType: "cover",
+        href: "",
       },
     ];
 
@@ -534,6 +547,8 @@ describe("ContentCardSection selected badge", () => {
         excerpt: "A description.",
         imageSrc: "/projects/selected-project.webp",
         selected: true,
+        imageType: "cover",
+        href: "",
       },
     ];
 
@@ -560,6 +575,8 @@ describe("ContentCardSection title text color", () => {
         date: "2024-01-15",
         tags: ["TypeScript"],
         imageSrc: "/projects/project-1.webp",
+        imageType: "cover",
+        href: "",
       },
     ];
 

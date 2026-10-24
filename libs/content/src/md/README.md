@@ -9,7 +9,7 @@ title: "Profile"
 # ───────────────────────────────────────────────────────────────────────
 
 name: "Dr. Alex Morgan"
-role: "PhD Researcher | Earth Observation | Climate Solutions"
+role: "PhD Researcher · Earth Observation · Climate Solutions"
 description: "Earth observation researcher developing machine learning and remote sensing methods for climate change mitigation and agricultural monitoring."
 email: "alex.morgan@example.com"
 linkedInUrl: "https://www.linkedin.com/in/alex-morgan"

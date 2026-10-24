@@ -14,7 +14,7 @@ import type { ContentMeta, ProfileData } from "@academic-portfolio/content";
 // Mock content libraries to isolate page-level structure.
 const mockProfile: ProfileData = {
   name: "Dr. Jane Doe",
-  role: "PhD Researcher | Earth Observation",
+  role: "PhD Researcher · Earth Observation",
   email: "test@example.com",
   linkedInUrl: "https://linkedin.com/in/test",
   githubUrl: "https://github.com/test",
