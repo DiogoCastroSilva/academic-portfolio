@@ -51,6 +51,7 @@ Thumbs.db
 out
 /public
 apps/main/next-env.d.ts
+apps/main/AGENTS.md
 apps/main/public/projects/*
 !apps/main/public/projects/.gitkeep
 apps/main/public/publications/*
