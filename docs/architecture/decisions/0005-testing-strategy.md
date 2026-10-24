@@ -12,9 +12,10 @@
   - `@vitest/ui` was removed (not used in CI); coverage remains configured per-project via v8 provider.
 - **Accessibility testing:** A shared `expectNoA11yViolations` helper is provided via `@academic-portfolio/utils/test-helpers/a11y` for `apps/main` test files and locally within `libs/navigation/src/lib/test-utils/` for navigation tests. This helper wraps `vitest-axe` and throws a descriptive error when accessibility violations are found. Common Next.js mocks (`next/navigation`, `next/link`) are centralized in global setup files (`test-setup.ts`) to reduce boilerplate. The `next/link` mock itself is shared from `@academic-portfolio/utils/test-helpers/next-mocks`.
 - **Evidence or validation:**
-  - `libs/content` has 141 tests (73 content-library + 14 profile-loader + 39 marked-extensions + 15 constants) covering all content-processing scenarios including publication-specific field parsing and validation, URL resolution, semantic figure rendering, gallery detection, and raw HTML postprocess.
-  - `libs/navigation` has 23 tests validating the navigation configuration and component a11y.
-  - `apps/main` has 110 component tests (4 JsonLd, 12 structured-data, 5 reduced-motion, 2 og-image, 3 sitemap, plus a11y coverage), plus collection/page-level tests added in Phase 3.
+  - `libs/content` has 197 tests (87 create-content-library + 47 profile + 48 marked-extensions + 15 constants) covering all content-processing scenarios including publication-specific field parsing and validation, URL resolution, semantic figure rendering, gallery detection, and raw HTML postprocess.
+  - `libs/navigation` has 101 tests validating the navigation configuration and component a11y.
+  - `libs/design-system` has 43 tests covering ContentImage, Pagination, Breadcrumb, and ChevronIcon components with a11y, reduced-motion, and rendering assertions.
+  - `apps/main` has 323 component tests — including About-page feature tests (AboutHero, EducationTimeline, ResearchInterests, SkillsGrid), content feature tests (AboutSection, ContentCardSection, ContentDetail, Footer), collection/page tests, structured-data, SEO, pagination, sitemap, and reduced-motion coverage.
   - `libs/utils` has 8 tests validating the shared `expectNoA11yViolations` helper and utility functions.
-  - Total: 242 tests across 23 test files. All pass: `npx nx run-many --target=test --all`.
+  - Total: 672 tests across 43 test files. All pass: `npx nx run-many --target=test --all`.
 - **Conditions for revisiting:** If browser-level integration testing is needed (e.g., for the mobile navigation toggle or ContentDetail rendering), a Playwright or Vitest Browser mode setup can be added.

@@ -122,6 +122,23 @@ describe("ContentImage", () => {
       expect(img).toHaveClass("rounded-full");
       expect(img).toHaveAttribute("loading", "eager");
     });
+
+    it("passes priority to StaticImageData and sets fetchPriority", () => {
+      const staticImage: StaticImageData = {
+        src: "/images/profile.svg",
+        height: 200,
+        width: 200,
+        blurDataURL: "",
+        blurWidth: 0,
+        blurHeight: 0,
+      };
+
+      render(<ContentImage src={staticImage} alt="Profile" priority />);
+
+      const img = screen.getByRole("img");
+      expect(img).toHaveAttribute("loading", "eager");
+      expect(img).toHaveAttribute("fetchpriority", "high");
+    });
   });
 
   describe("axe accessibility", () => {
@@ -173,6 +190,18 @@ describe("ContentImage", () => {
       render(<ContentImage src="/projects/photo.jpg" alt="Photo" priority />);
       const img = screen.getByRole("img");
       expect(img).toHaveAttribute("loading", "eager");
+    });
+
+    it("sets fetchPriority to high when priority is true", () => {
+      render(<ContentImage src="/projects/photo.jpg" alt="Photo" priority />);
+      const img = screen.getByRole("img");
+      expect(img).toHaveAttribute("fetchpriority", "high");
+    });
+
+    it("sets fetchPriority to auto when priority is false", () => {
+      render(<ContentImage src="/projects/photo.jpg" alt="Photo" />);
+      const img = screen.getByRole("img");
+      expect(img).toHaveAttribute("fetchpriority", "auto");
     });
 
     it("respects custom loading attribute", () => {

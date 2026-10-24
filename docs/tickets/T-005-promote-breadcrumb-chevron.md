@@ -1,4 +1,0 @@
-- **Status:** Done
-- **Phase:** 4 — Design-system foundation
-- **Priority:** P1
-- **Dependencies:** T-001, T-004

@@ -1,6 +1,6 @@
 # T-010: Add regression tests for promoted and moved components
 
-- **Status:** To do
+- **Status:** Done
 - **Phase:** 5 — Feature-driven UI organization
 - **Priority:** P1
 - **Dependencies:** T-003, T-004, T-005, T-007, T-008
@@ -66,12 +66,12 @@ All promoted and moved components have colocated tests covering meaningful behav
 
 ## Acceptance criteria
 
-- [ ] All moved components have passing colocated tests.
-- [ ] `ContentImage` tests cover WebP `<picture>` rendering, `fetchPriority`, SVG passthrough.
-- [ ] `EducationTimeline` has a new test file with a11y + reduced-motion checks.
-- [ ] `ResearchInterests` has a new test file with a11y + rendering checks.
-- [ ] `npx nx run-many -t lint test typecheck build` passes.
-- [ ] No existing tests were weakened or deleted.
+- [x] All moved components have passing colocated tests.
+- [x] `ContentImage` tests cover WebP `<picture>` rendering, `fetchPriority`, SVG passthrough.
+- [x] `EducationTimeline` has a new test file with a11y + reduced-motion checks (see `reduced-motion.test.tsx`).
+- [x] `ResearchInterests` has a new test file with a11y + rendering checks.
+- [x] `npx nx run-many -t lint test typecheck build` passes.
+- [x] No existing tests were weakened or deleted.
 
 ## Tests and validation commands
 
