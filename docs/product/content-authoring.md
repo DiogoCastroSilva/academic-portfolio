@@ -439,6 +439,7 @@ For more control, you can also use raw HTML:
 - Image galleries: multiple adjacent image lines are automatically wrapped in a responsive grid
 - Raw HTML: Allowed for academic formatting when needed
 - No MDX: React components cannot be embedded in Markdown content
+- **Code block styling:** Code blocks render with a monospace font, background color, padding, and rounded corners for visual distinction. The `language-` class (e.g., `language-typescript`) is added to code blocks by the Markdown renderer, but there is no full syntax highlighting (colored keywords, strings, comments). If you need syntax highlighting, you would need to add a library like Prism.js or highlight.js (not included in the template).
 
 ## Image Referencing in Content Body
 

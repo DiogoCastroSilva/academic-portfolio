@@ -41,7 +41,7 @@ subtle highlights. Break up complex ideas with bullet lists:
 ### Code Blocks
 
 ```typescript
-// Inline code with syntax highlighting
+// Example code block with background styling
 function calculateMean(values: number[]): number {
   return values.reduce((sum, val) => sum + val, 0) / values.length;
 }
