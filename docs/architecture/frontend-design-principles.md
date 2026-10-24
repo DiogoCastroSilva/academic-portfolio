@@ -90,7 +90,7 @@ All standard Markdown/GFM elements rendered by the `marked` pipeline are styled 
 | `strong`        | `prose-strong:font-bold`                                                                         |
 | `em`            | `prose-em:italic`                                                                                |
 | `blockquote`    | `border-l-4 border-accent`, `pl-4`, `italic`                                                     |
-| `code` (inline) | `bg-code-bg`, `px-2`, `py-1`, `rounded`, `font-mono`, `text-sm`                                  |
+| `code` (inline) | `bg-code-bg`, `text-text-primary`, `px-2`, `py-1`, `rounded`, `font-mono`, `text-sm`                                  |
 | `pre`           | `bg-pre-bg`, `text-pre-text`, `p-4`, `rounded-lg`, `overflow-x-auto`                             |
 | `table`         | `border-collapse`, `w-full`, `my-4`, `thead:bg-surface-tinted`; cells get `break-word`           |
 | `img`           | `rounded-lg`, `my-6`; wrapped in `<figure>` with optional `<figcaption>`                         |

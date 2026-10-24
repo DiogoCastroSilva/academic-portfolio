@@ -325,6 +325,17 @@ describe("ContentDetail responsive link wrapping", () => {
     expect(className).not.toMatch(/dark:prose-strong/);
   });
 
+  it("prose inline code uses semantic text color for both themes (not dark-only)", () => {
+    const { container } = render(<ContentDetail content={mockContent} />);
+    const proseDiv = Array.from(container.querySelectorAll("div")).find((d) =>
+      d.className.includes("prose"),
+    );
+    const className = proseDiv?.className || "";
+    // Must NOT use dark: prefix — inline code text must be colored in both light and dark modes
+    expect(className).toMatch(/prose-code:text-text-primary/);
+    expect(className).not.toMatch(/dark:prose-code:text/);
+  });
+
   it("prose paragraphs have break-words for inline long content", () => {
     const { container } = render(<ContentDetail content={mockContent} />);
     const proseDiv = Array.from(container.querySelectorAll("div")).find((d) =>
