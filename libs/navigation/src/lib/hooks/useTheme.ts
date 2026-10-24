@@ -82,8 +82,10 @@ export function detectSystemTheme(): ResolvedTheme {
  * When `localStorage` is available and contains a valid value, that value
  * is returned and the in-memory fallback is synced. When `localStorage` is
  * unavailable or throws, the in-memory fallback is returned instead.
+ *
+ * @internal Exported for test suites that need to verify read behavior.
  */
-function readStoredPreference(): ThemePreference {
+export function readStoredPreference(): ThemePreference {
   if (typeof window === "undefined" || !window.localStorage) {
     return inMemoryPreference;
   }
@@ -326,15 +328,22 @@ export function useTheme(): UseThemeResult {
     }
   }, []);
 
+  /**
+   * Cycle to the next preference: system → light → dark → system.
+   *
+   * Reads the latest preference directly from `readStoredPreference()` (synchronous
+   * localStorage / in-memory fallback) rather than from the React snapshot closure.
+   * This ensures that rapid successive clicks — before React has had a chance to
+   * flush a re-render — still advance the cycle correctly. Without this, the
+   * callback would capture a stale `preference` value from the last render and
+   * multiple clicks could collapse to the same preference.
+   */
   const toggleTheme = useCallback(() => {
+    const current = readStoredPreference();
     const next: ThemePreference =
-      preference === "system"
-        ? "light"
-        : preference === "light"
-          ? "dark"
-          : "system";
+      current === "system" ? "light" : current === "light" ? "dark" : "system";
     setTheme(next);
-  }, [preference, setTheme]);
+  }, [setTheme]);
 
   return {
     preference,

@@ -220,6 +220,93 @@ describe("useTheme hook", () => {
     expect(result.current.preference).toBe("system");
   });
 
+  // ---------------------------------------------------------------------------
+  // Rapid toggle (stale-closure regression)
+  // ---------------------------------------------------------------------------
+
+  describe("rapid toggle behavior", () => {
+    it("reads latest preference from storage, not stale render closure", () => {
+      // Simulate: render with "dark" in storage, then storage is changed
+      // externally, then toggle should use the new value.
+      window.localStorage.setItem(THEME_STORAGE_KEY, "dark");
+      const { result } = renderHook(() => useTheme());
+      expect(result.current.preference).toBe("dark");
+
+      // External change to storage (e.g., another tab or direct write).
+      // With stale-closure toggleTheme, this would use preference="dark"
+      // from the render and set "system" instead of advancing from "light".
+      window.localStorage.setItem(THEME_STORAGE_KEY, "light");
+
+      act(() => {
+        result.current.toggleTheme();
+      });
+
+      // Should have read "light" from storage and advanced to "dark".
+      expect(window.localStorage.getItem(THEME_STORAGE_KEY)).toBe("dark");
+    });
+
+    it("advances through full cycle when toggled 3 times rapidly in one act()", () => {
+      const { result } = renderHook(() => useTheme());
+      expect(result.current.preference).toBe("system");
+
+      act(() => {
+        result.current.toggleTheme(); // system → light
+        result.current.toggleTheme(); // light → dark
+        result.current.toggleTheme(); // dark → system
+      });
+
+      expect(result.current.preference).toBe("system");
+      expect(window.localStorage.getItem(THEME_STORAGE_KEY)).toBe("system");
+    });
+
+    it("does not collapse to same preference when toggled rapidly", () => {
+      const { result } = renderHook(() => useTheme());
+      expect(result.current.preference).toBe("system");
+
+      act(() => {
+        result.current.toggleTheme(); // system → light
+        result.current.toggleTheme(); // light → dark
+      });
+
+      expect(window.localStorage.getItem(THEME_STORAGE_KEY)).toBe("dark");
+      expect(result.current.preference).toBe("dark");
+    });
+
+    it("works correctly with in-memory fallback (localStorage throws)", () => {
+      const restore = makeLocalStorageThrow();
+      try {
+        const { result } = renderHook(() => useTheme());
+        expect(result.current.preference).toBe("system");
+
+        act(() => {
+          result.current.toggleTheme(); // system → light
+          result.current.toggleTheme(); // light → dark
+          result.current.toggleTheme(); // dark → system
+        });
+
+        expect(result.current.preference).toBe("system");
+      } finally {
+        restore();
+      }
+    });
+
+    it("button is never disabled during rapid toggles", () => {
+      const { result } = renderHook(() => useTheme());
+
+      act(() => {
+        result.current.toggleTheme();
+        result.current.toggleTheme();
+        result.current.toggleTheme();
+      });
+
+      // After rapid toggles, the hook should still be functional.
+      act(() => {
+        result.current.toggleTheme(); // system → light
+      });
+      expect(result.current.preference).toBe("light");
+    });
+  });
+
   it("mounted is true after mount", () => {
     const { result } = renderHook(() => useTheme());
     expect(result.current.mounted).toBe(true);

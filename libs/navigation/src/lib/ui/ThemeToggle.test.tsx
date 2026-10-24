@@ -5,7 +5,13 @@
 import "@testing-library/jest-dom";
 
 import React from "react";
-import { cleanup, fireEvent, render, screen } from "@testing-library/react";
+import {
+  cleanup,
+  fireEvent,
+  act,
+  render,
+  screen,
+} from "@testing-library/react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 import { expectNoA11yViolations } from "../test-utils/index.js";
@@ -151,5 +157,40 @@ describe("ThemeToggle", () => {
     fireEvent.click(button);
     // light → dark
     expect(document.documentElement.getAttribute("data-theme")).toBe("dark");
+  });
+
+  it("cycles through all three preferences on rapid clicks", () => {
+    render(<ThemeToggle />);
+    const button = screen.getByRole("button");
+
+    // Rapid clicks: system → light → dark → system
+    // All within a single act() — simulates rapid clicking
+    act(() => {
+      fireEvent.click(button);
+      fireEvent.click(button);
+      fireEvent.click(button);
+    });
+
+    expect(window.localStorage.getItem(THEME_STORAGE_KEY)).toBe("system");
+    expect(document.documentElement.getAttribute("data-theme")).toBe("light");
+  });
+
+  it("button remains clickable (not disabled) after rapid toggles", () => {
+    render(<ThemeToggle />);
+    const button = screen.getByRole("button");
+
+    act(() => {
+      fireEvent.click(button);
+      fireEvent.click(button);
+      fireEvent.click(button);
+    });
+
+    expect(button).not.toBeDisabled();
+
+    // Button should still work after rapid clicks
+    act(() => {
+      fireEvent.click(button);
+    });
+    expect(window.localStorage.getItem(THEME_STORAGE_KEY)).toBe("light");
   });
 });

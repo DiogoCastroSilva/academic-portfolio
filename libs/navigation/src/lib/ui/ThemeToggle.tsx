@@ -40,14 +40,14 @@ export function ThemeToggle() {
       {/* Sun icon — shown for light theme, hidden for dark */}
       <SunIcon
         className={
-          "absolute size-6 transition-opacity duration-150 motion-reduce:duration-0 " +
+          "absolute size-6 transition-opacity duration-100 motion-reduce:duration-0 " +
           (resolvedTheme === "light" ? "opacity-100" : "opacity-0")
         }
       />
       {/* Moon icon — shown for dark theme, hidden for light */}
       <MoonIcon
         className={
-          "absolute size-6 transition-opacity duration-150 motion-reduce:duration-0 " +
+          "absolute size-6 transition-opacity duration-100 motion-reduce:duration-0 " +
           (resolvedTheme === "dark" ? "opacity-100" : "opacity-0")
         }
       />
