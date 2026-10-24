@@ -1,6 +1,6 @@
 # T-005: Promote `Breadcrumb` + `ChevronIcon` to design system
 
-- **Status:** To do
+- **Status:** Done
 - **Phase:** 4 — Design-system foundation
 - **Priority:** P1
 - **Dependencies:** T-001, T-002

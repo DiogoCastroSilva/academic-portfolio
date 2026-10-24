@@ -31,7 +31,7 @@ Nx is retained for concrete benefits: (1) `@nx/enforce-module-boundaries` preven
 
 ## Get started
 
-**Requirements:** Node.js 22 (see `.nvmrc`), npm 10+
+**Requirements:** Node.js 22.12.0+ (see `.nvmrc`), npm 10+
 
 ```bash
 nvm use
