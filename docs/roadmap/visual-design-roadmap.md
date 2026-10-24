@@ -86,7 +86,7 @@ Review the complete experience, not just the homepage:
 3. **Breadcrumb current-page-as-link had no focus-visible styles** (P3 — defensive). The Breadcrumb's `aria-current="page"` link branch (used when the last item has an `href`) lacked `focus-visible` styles. Added outline classes matching the other interactive elements.
 4. **`getFullUrl()` called twice** in `structured-data.ts` `buildArticleSchema` for the same argument — cached the result in a local `url` variable.
 5. **ThemeToggle button missing `cursor-pointer`** — hovering over the theme toggle showed a default arrow cursor, making the button appear non-interactive. Added `cursor-pointer` class.
-6. **Theme toggle perceived lag** — in `useTheme.ts`'s `setTheme()`, `dispatchEvent` (which triggers a synchronous React re-render via `useSyncExternalStore`) was called *before* `applyThemeAttribute`, delaying the actual `data-theme` DOM mutation. Reordered so the DOM attribute is set first, then the re-render is triggered — ensuring instant visual theme change. Also reduced icon fade transition from 200ms to 150ms for snappier feedback.
+6. **Theme toggle perceived lag** — in `useTheme.ts`'s `setTheme()`, `dispatchEvent` (which triggers a synchronous React re-render via `useSyncExternalStore`) was called _before_ `applyThemeAttribute`, delaying the actual `data-theme` DOM mutation. Reordered so the DOM attribute is set first, then the re-render is triggered — ensuring instant visual theme change. Also reduced icon fade transition from 200ms to 150ms for snappier feedback.
 
 ### Automated checks
 
