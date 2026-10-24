@@ -357,3 +357,45 @@ describe("ContentDetail image overflow protection", () => {
     expect(img).toHaveClass("object-cover");
   });
 });
+
+describe("ContentDetail publication metadata", () => {
+  it("renders authors, venue, and DOI link for publication content", () => {
+    const pubContent: ContentItemMeta = {
+      slug: "my-paper",
+      href: "/publications/my-paper",
+      title: "A Research Paper",
+      date: "2024-01-15",
+      tags: ["AI"],
+      authors: ["Jane Doe", "John Smith"],
+      venue: "Nature",
+      doi: "10.1038/nature.12345",
+      imageSrc: "/publications/my-paper.webp",
+      imageType: "cover",
+      body: "<p>Abstract here.</p>",
+    };
+
+    const { container } = render(<ContentDetail content={pubContent} />);
+
+    expect(screen.getByText(/Authors:/)).toBeInTheDocument();
+    expect(container.textContent).toContain("Jane Doe, John Smith");
+    expect(container.textContent).toContain("Nature");
+
+    const doiLink = screen.getByLabelText(/DOI:/);
+    expect(doiLink).toHaveAttribute(
+      "href",
+      "https://doi.org/10.1038/nature.12345",
+    );
+    expect(doiLink).toHaveTextContent("10.1038/nature.12345");
+  });
+
+  it("does not render publication metadata for project content", () => {
+    const projContent: ContentItemMeta = {
+      ...mockContent,
+    };
+
+    render(<ContentDetail content={projContent} />);
+
+    expect(screen.queryByText(/Authors:/)).not.toBeInTheDocument();
+    expect(screen.queryByText("Nature")).not.toBeInTheDocument();
+  });
+});

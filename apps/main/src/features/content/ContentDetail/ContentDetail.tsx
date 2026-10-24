@@ -41,6 +41,30 @@ export function ContentDetail({ content }: ContentDetailProps) {
             </ul>
           )}
         </div>
+        {content.authors && content.authors.length > 0 && (
+          <p className="text-text-secondary text-sm">
+            <span className="font-medium">Authors:</span>{" "}
+            {content.authors.join(", ")}
+            {content.venue && (
+              <>
+                {" · "}
+                <span className="font-medium">Venue:</span> {content.venue}
+              </>
+            )}
+            {content.doi && (
+              <>
+                {" · "}
+                <a
+                  href={`https://doi.org/${content.doi}`}
+                  className="text-link hover:text-link-hover break-all"
+                  aria-label={`DOI: ${content.doi}`}
+                >
+                  {content.doi}
+                </a>
+              </>
+            )}
+          </p>
+        )}
       </header>
       <div className="text-text-primary flex flex-col gap-6">
         <div

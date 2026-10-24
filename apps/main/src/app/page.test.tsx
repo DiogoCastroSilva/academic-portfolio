@@ -463,4 +463,151 @@ describe("Homepage", () => {
       expect(projectsLink).toHaveTextContent("View all projects");
     });
   });
+
+  describe("publication selection on homepage", () => {
+    it("shows only selected publications when any are selected", () => {
+      vi.mocked(getAllProjects).mockReturnValue([]);
+      vi.mocked(getAllBlogPosts).mockReturnValue([]);
+      vi.mocked(getAllPublications).mockReturnValue([
+        {
+          slug: "old-pub",
+          href: "/publications/old-pub",
+          title: "Old Publication",
+          date: "2020-01-01",
+          tags: [],
+          imageSrc: "/publications/old.webp",
+          imageType: "cover",
+        },
+        {
+          slug: "featured-pub",
+          href: "/publications/featured-pub",
+          title: "Featured Publication",
+          date: "2024-06-01",
+          tags: [],
+          authors: ["Jane Doe"],
+          venue: "Nature",
+          imageSrc: "/publications/featured.webp",
+          imageType: "cover",
+          selected: true,
+        },
+      ]);
+
+      render(<Index />);
+
+      const pubsSection = screen
+        .getAllByTestId("card-section")
+        .find((s) => s.getAttribute("data-heading") === "Publications");
+
+      const articles = pubsSection!.querySelectorAll("article");
+      expect(articles).toHaveLength(1);
+      expect(articles[0]).toHaveTextContent("Featured Publication");
+      expect(articles[0]).not.toHaveTextContent("Old Publication");
+    });
+
+    it("shows only selected publications even when fewer than 3 are selected", () => {
+      vi.mocked(getAllProjects).mockReturnValue([]);
+      vi.mocked(getAllBlogPosts).mockReturnValue([]);
+      vi.mocked(getAllPublications).mockReturnValue([
+        {
+          slug: "unselected-1",
+          href: "/publications/unselected-1",
+          title: "Unselected 1",
+          date: "2024-01-01",
+          tags: [],
+          imageSrc: "/publications/u1.webp",
+          imageType: "cover",
+        },
+        {
+          slug: "selected-1",
+          href: "/publications/selected-1",
+          title: "Selected 1",
+          date: "2024-06-01",
+          tags: [],
+          authors: ["A"],
+          imageSrc: "/publications/s1.webp",
+          imageType: "cover",
+          selected: true,
+        },
+      ]);
+
+      render(<Index />);
+
+      const pubsSection = screen
+        .getAllByTestId("card-section")
+        .find((s) => s.getAttribute("data-heading") === "Publications");
+
+      const articles = pubsSection!.querySelectorAll("article");
+      expect(articles).toHaveLength(1);
+      expect(articles[0]).toHaveTextContent("Selected 1");
+    });
+
+    it("falls back to three most recent publications when none are selected", () => {
+      vi.mocked(getAllProjects).mockReturnValue([]);
+      vi.mocked(getAllBlogPosts).mockReturnValue([]);
+      vi.mocked(getAllPublications).mockReturnValue([
+        {
+          slug: "newest",
+          href: "/publications/newest",
+          title: "Newest",
+          date: "2025-01-01",
+          tags: [],
+          imageSrc: "/publications/newest.webp",
+          imageType: "cover",
+        },
+        {
+          slug: "middle",
+          href: "/publications/middle",
+          title: "Middle",
+          date: "2024-06-01",
+          tags: [],
+          imageSrc: "/publications/middle.webp",
+          imageType: "cover",
+        },
+        {
+          slug: "old",
+          href: "/publications/old",
+          title: "Old",
+          date: "2020-01-01",
+          tags: [],
+          imageSrc: "/publications/old.webp",
+          imageType: "cover",
+        },
+      ]);
+
+      render(<Index />);
+
+      const pubsSection = screen
+        .getAllByTestId("card-section")
+        .find((s) => s.getAttribute("data-heading") === "Publications");
+
+      const articles = pubsSection!.querySelectorAll("article");
+      expect(articles).toHaveLength(3);
+    });
+
+    it("shows all publications when fewer than 3 exist and none are selected", () => {
+      vi.mocked(getAllProjects).mockReturnValue([]);
+      vi.mocked(getAllBlogPosts).mockReturnValue([]);
+      vi.mocked(getAllPublications).mockReturnValue([
+        {
+          slug: "only",
+          href: "/publications/only",
+          title: "Only Publication",
+          date: "2024-01-01",
+          tags: [],
+          imageSrc: "/publications/only.webp",
+          imageType: "cover",
+        },
+      ]);
+
+      render(<Index />);
+
+      const pubsSection = screen
+        .getAllByTestId("card-section")
+        .find((s) => s.getAttribute("data-heading") === "Publications");
+
+      const articles = pubsSection!.querySelectorAll("article");
+      expect(articles).toHaveLength(1);
+      expect(articles[0]).toHaveTextContent("Only Publication");
+    });
+  });
 });

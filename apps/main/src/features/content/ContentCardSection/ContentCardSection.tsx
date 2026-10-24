@@ -146,6 +146,24 @@ export function ContentCardSection({
                         </ul>
                       </div>
                       <div className="flex min-w-0 flex-1 flex-col">
+                        {item.authors && item.authors.length > 0 && (
+                          <p
+                            className="text-text-secondary mb-1 text-sm leading-5"
+                            aria-label={
+                              item.authors.length === 1
+                                ? `By ${item.authors[0]}`
+                                : `By ${item.authors.length} authors`
+                            }
+                          >
+                            {item.authors.join(", ")}
+                            {item.venue && ` · ${item.venue}`}
+                          </p>
+                        )}
+                        {item.venue && !item.authors?.length && (
+                          <p className="text-text-secondary mb-1 text-sm leading-5">
+                            {item.venue}
+                          </p>
+                        )}
                         <h3 className="text-text-primary mb-2 line-clamp-2 text-xl leading-tight font-semibold tracking-tight group-hover:underline">
                           {item.title}
                         </h3>

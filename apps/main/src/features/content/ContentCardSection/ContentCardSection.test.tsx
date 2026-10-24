@@ -593,3 +593,88 @@ describe("ContentCardSection title text color", () => {
     expect(h3).toHaveClass("text-text-primary");
   });
 });
+
+describe("ContentCardSection publication metadata", () => {
+  it("renders authors and venue for publication cards", () => {
+    const items: ContentMeta[] = [
+      {
+        slug: "paper-1",
+        title: "Neural Methods",
+        date: "2024-01-15",
+        tags: ["AI"],
+        authors: ["Jane Doe", "John Smith"],
+        venue: "Nature",
+        imageSrc: "/pubs/paper-1.webp",
+        imageType: "cover",
+        href: "/publications/paper-1",
+      },
+    ];
+
+    render(
+      <ContentCardSection
+        heading="Publications"
+        headingId="publications-heading"
+        items={items}
+        hrefPrefix="/publications"
+      />,
+    );
+
+    expect(
+      screen.getByText("Jane Doe, John Smith · Nature"),
+    ).toBeInTheDocument();
+  });
+
+  it("renders only venue when authors are absent", () => {
+    const items: ContentMeta[] = [
+      {
+        slug: "paper-2",
+        title: "Anonymous Paper",
+        date: "2024-02-20",
+        tags: [],
+        venue: "Science",
+        imageSrc: "/pubs/paper-2.webp",
+        imageType: "cover",
+        href: "/publications/paper-2",
+      },
+    ];
+
+    render(
+      <ContentCardSection
+        heading="Publications"
+        headingId="publications-heading"
+        items={items}
+        hrefPrefix="/publications"
+      />,
+    );
+
+    expect(screen.getByText("Science")).toBeInTheDocument();
+  });
+
+  it("does not render authors or venue for project cards", () => {
+    const items: ContentMeta[] = [
+      {
+        slug: "project-1",
+        title: "Project One",
+        date: "2024-01-15",
+        tags: ["TypeScript"],
+        imageSrc: "/projects/project-1.webp",
+        imageType: "cover",
+        href: "/projects/project-1",
+      },
+    ];
+
+    const { container } = render(
+      <ContentCardSection
+        heading="Projects"
+        headingId="projects-heading"
+        items={items}
+        hrefPrefix="/projects"
+      />,
+    );
+
+    const article = container.querySelector("article");
+    // No authors or venue line should appear
+    expect(article?.textContent).not.toContain("Authors:");
+    expect(article?.textContent).not.toContain("Venue:");
+  });
+});

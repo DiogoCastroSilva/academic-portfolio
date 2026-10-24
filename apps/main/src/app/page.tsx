@@ -25,6 +25,15 @@ export default function Index() {
   const homeProjects =
     selectedProjects.length > 0 ? selectedProjects : allProjects.slice(0, 3);
 
+  // Homepage publication selection: same pattern as projects — show only
+  // explicitly selected publications, falling back to the three most
+  // recent when none are selected.
+  const selectedPublications = publications.filter((p) => p.selected);
+  const homePublications =
+    selectedPublications.length > 0
+      ? selectedPublications
+      : publications.slice(0, 3);
+
   return (
     <div className="flex grow flex-col gap-4">
       <JsonLd data={buildWebSiteSchema()} />
@@ -42,7 +51,7 @@ export default function Index() {
       <ContentCardSection
         heading="Publications"
         headingId="publications-heading"
-        items={publications}
+        items={homePublications}
         hrefPrefix="/publications"
         limit={6}
         viewAllHref="/publications"
