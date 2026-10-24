@@ -51,7 +51,7 @@ Only stable, intended exports are exposed through `libs/design-system/src/index.
 
 - **Keep tokens in `global.css`, no design-system library:** Simpler short-term, but provides no clear boundary between generic UI and feature-specific UI. New contributors cannot easily identify reusable primitives. Fork owners have no "shared UI" marker.
 - **Multiple design-system libraries (tokens, typography, ui):** Adds Nx project complexity and circular-dependency risk for unclear benefit at this scale. Single library is the documented starting point.
-- **Storybook for component examples:** Evaluated in Ticket T-008. `eslint-plugin-storybook` is already in `devDependencies` (required by the shared ESLint config). Storybook is deferred — see T-008.
+- **Storybook for component examples:** Evaluated in Ticket T-010b. `eslint-plugin-storybook` is already in `devDependencies` (required by the shared ESLint config). Storybook is deferred — see T-010b for the full evaluation and decision rationale.
 
 ## Consequences and trade-offs
 

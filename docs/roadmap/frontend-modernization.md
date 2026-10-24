@@ -52,8 +52,8 @@ Reorganize feature-specific UI into `apps/main/src/features/` without breaking i
 
 ### Phase 6 — Validation & handoff
 
-- [ ] T-010b: Component documentation tooling evaluation (Storybook)
-- [ ] Run full lint, typecheck, test, build, and prettier checks
+- [x] T-010b: Component documentation tooling evaluation (Storybook)
+- [x] Run full lint, typecheck, test, build, and prettier checks
 - [ ] Verify static export output includes all design-system CSS
 - [ ] Verify GitHub Pages base-path handling unchanged
 - [ ] Update `AGENTS.md` with new workspace structure and commands

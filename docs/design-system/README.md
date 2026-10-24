@@ -96,4 +96,4 @@ Test expectations:
 
 ## Storybook
 
-Deferred. See [T-010b](../tickets/T-010b-storybook-evaluation.md). Components are documented via README + colocated tests. Re-evaluate when the library reaches 8+ components.
+Deferred. See [T-010b](../tickets/T-010b-storybook-evaluation.md) for the full evaluation. Components are documented via README + colocated tests — see [`component-documentation.md`](./component-documentation.md). Re-evaluate when the library reaches 8+ components.

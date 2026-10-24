@@ -1,6 +1,6 @@
 # T-010b: Component documentation tooling evaluation (Storybook)
 
-- **Status:** To do
+- **Status:** Done
 - **Phase:** 4 — Design-system foundation (evaluation)
 - **Priority:** P2
 - **Dependencies:** T-001
@@ -46,11 +46,11 @@ Determine whether Storybook is appropriate for documenting design-system compone
 
 ## Acceptance criteria
 
-- [ ] Storybook compatibility with the current toolchain is assessed.
-- [ ] Setup cost is estimated (dev deps, config files, build time impact).
-- [ ] Decision is documented: adopt or defer, with rationale.
-- [ ] If deferred, an alternative (e.g., README examples) is provided and documented.
-- [ ] ADR-0008 or a new ADR records the decision.
+- [x] Storybook compatibility with the current toolchain is assessed.
+- [x] Setup cost is estimated (dev deps, config files, build time impact).
+- [x] Decision is documented: adopt or defer, with rationale.
+- [x] If deferred, an alternative (e.g., README examples) is provided and documented.
+- [x] ADR-0008 or a new ADR records the decision.
 
 ## Tests and validation commands
 
