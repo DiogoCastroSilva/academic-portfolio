@@ -325,15 +325,44 @@ describe("ContentDetail responsive link wrapping", () => {
     expect(className).not.toMatch(/dark:prose-strong/);
   });
 
-  it("prose inline code uses semantic text color for both themes (not dark-only)", () => {
+  it("prose inline code color is controlled by CSS variable override (not utility)", () => {
     const { container } = render(<ContentDetail content={mockContent} />);
     const proseDiv = Array.from(container.querySelectorAll("div")).find((d) =>
       d.className.includes("prose"),
     );
     const className = proseDiv?.className || "";
-    // Must NOT use dark: prefix — inline code text must be colored in both light and dark modes
-    expect(className).toMatch(/prose-code:text-text-primary/);
+    // Code text color is handled via --tw-prose-code CSS variable override
+    // in typography.css. The prose-code text-color utility is intentionally
+    // NOT used because it targets ALL <code> elements including <pre><code>,
+    // overriding the plugin's color: inherit for pre code and causing
+    // black-on-black text in light mode.
+    // Verify safe code utilities are still present:
+    expect(className).toMatch(/prose-code:bg-code-bg/);
+    expect(className).toMatch(/prose-code:px-2/);
+    expect(className).toMatch(/prose-code:font-mono/);
+    // No prose-code text-color utility must be present (would break pre code)
+    expect(className).not.toMatch(/prose-code:text-text/);
     expect(className).not.toMatch(/dark:prose-code:text/);
+  });
+
+  it("renders inline <code> and <pre><code> in body without a11y violations", async () => {
+    const content: ContentItemMeta = {
+      ...mockContent,
+      body: `<p>Inline <code>git status</code> in a paragraph.</p>
+<pre><code>const result = await fetch("/api");
+console.log(result);</code></pre>`,
+    };
+    const { container } = render(<ContentDetail content={content} />);
+    // Verify both inline code and pre code are rendered
+    const allCode = container.querySelectorAll("code");
+    expect(allCode.length).toBe(2);
+    expect(allCode[0].textContent).toBe("git status");
+    expect(allCode[1].textContent).toContain("const result");
+    // aXe check for structural accessibility. Color-contrast auditing in
+    // happy-dom is not possible (no CSS engine); the --tw-prose-code
+    // variable override in typography.css ensures theme-aware code colors
+    // in the browser. See docs/architecture/frontend-design-principles.md.
+    await expectNoA11yViolations(container);
   });
 
   it("prose paragraphs have break-words for inline long content", () => {

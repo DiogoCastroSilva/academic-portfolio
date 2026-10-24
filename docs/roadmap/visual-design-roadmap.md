@@ -93,8 +93,6 @@ For each slice, the agent must state its scope before editing, avoid unrelated r
 
 #### Phase 4C — Release verification
 
-
-
 - Homepage, About, Projects, Publications, Blog, collection lists, detail pages, pagination, breadcrumbs, navigation, empty states, and footer.
 - Light and dark themes, semantic color contrast, typography, spacing, image crops, card treatments, metadata, link affordances, and active navigation states.
 - Responsive layouts at 320px, 375–390px, 640px, 768px, 1024px, and 1280px+; include long names/titles/URLs/tags, 200% zoom, and reflow.

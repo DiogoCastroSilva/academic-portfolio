@@ -38,6 +38,51 @@
   font-variant-numeric: tabular-nums;
 }
 
+/* ── Inline <code> text color: override the @tailwindcss/typography default ──
+ *
+ * The @tailwindcss/typography plugin sets --tw-prose-code to
+ * oklch(21% .034 264.665) — a fixed dark value that does NOT adapt to
+ * [data-theme="dark"]. Against the dark-mode --color-code-bg (#1e293b) this
+ * yields ~1.7:1 contrast, failing WCAG 2.2 AA.
+ *
+ * We override the CSS variable on .prose with the theme-aware
+ * --color-text-primary token: #171717 (light) / #e2e8f0 (dark), both with
+ * ample contrast on their respective --color-code-bg backgrounds.
+ *
+ * WHY a CSS-variable override instead of the prose-code text-color utility?
+ *
+ * The utility generates `.prose-code\:text-text-primary :where(code):not(...)`
+ * which targets ALL <code> elements — including <pre><code>. The
+ * @tailwindcss/typography plugin intentionally sets `color: inherit` on
+ * `pre code` (so code blocks inherit the pre text color --color-pre-text).
+ * The utility would override that `inherit`, changing pre code from
+ * #f9fafb (white) to #171717 (black) in light mode — on the #171717 pre
+ * background that is ~1:1 contrast, a complete regression.
+ *
+ * By overriding --tw-prose-code (the variable the plugin uses for standalone
+ * inline <code> color), only standalone inline <code> is affected. <pre><code>
+ * (which uses color: inherit) and <a><code> (which also uses color: inherit)
+ * are left untouched. */
+.prose {
+  --tw-prose-code: var(--color-text-primary);
+}
+
+/* Reset prose-code utilities that incorrectly target <pre><code>.
+ * The prose-code:bg-code-bg, prose-code:px-2, prose-code:rounded,
+ * prose-code:text-sm, prose-code:font-mono utilities match ALL <code>
+ * elements (their selector is `:where(code)`), but @tailwindcss/typography
+ * intends `pre code` to inherit font-size, font-family, padding, and a
+ * transparent background from <pre>. Reset those here with higher
+ * specificity than the utility rules (which are at 0,0,1,0). */
+.prose pre code {
+  background-color: transparent;
+  border-radius: 0;
+  font-size: inherit;
+  font-family: inherit;
+  line-height: inherit;
+  padding: 0;
+}
+
 /* Fallback anchor styles for markdown-rendered content (prose) */
 .prose a {
   text-decoration: none;
