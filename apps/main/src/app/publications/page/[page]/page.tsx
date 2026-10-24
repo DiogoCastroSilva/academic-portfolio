@@ -54,7 +54,7 @@ export default async function PublicationsPage({
   const { items: pageItems } = paginate(publications, currentPage);
 
   return (
-    <div className="flex grow flex-col gap-4">
+    <div className="mx-auto flex max-w-7xl grow flex-col gap-4">
       <ContentCardSection
         heading="Publications"
         headingId={`publications-page-${currentPage}-heading`}

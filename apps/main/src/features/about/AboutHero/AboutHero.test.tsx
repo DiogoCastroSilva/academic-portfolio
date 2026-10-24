@@ -95,10 +95,11 @@ describe("AboutHero accessibility", () => {
   // Phase 3: Surface consistency
   // ---------------------------------------------------------------------------
 
-  it("section uses semantic surface token for consistent surfaces", () => {
+  it("section does not use card wrapper background (floats on page surface)", () => {
     const { container } = render(<AboutHero profile={mockProfile} />);
     const section = container.querySelector("section");
-    expect(section).toHaveClass("bg-surface-card");
+    expect(section).not.toHaveClass("bg-surface-card");
+    expect(section).not.toHaveClass("rounded-2xl");
   });
 
   it("role text uses semantic text-secondary token for both themes", () => {

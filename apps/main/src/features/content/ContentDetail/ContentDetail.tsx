@@ -10,7 +10,7 @@ export interface ContentDetailProps {
 
 export function ContentDetail({ content }: ContentDetailProps) {
   return (
-    <article className="bg-surface-card text-text-primary mx-auto flex w-full max-w-3xl grow flex-col gap-8 rounded-2xl p-8">
+    <article className="text-text-primary mx-auto flex w-full max-w-3xl flex-col gap-8 p-8">
       <JsonLd data={buildArticleSchema(content)} />
       <div className="bg-surface-elevated aspect-[16/9] w-full overflow-hidden rounded-xl">
         <ContentImage
@@ -21,7 +21,7 @@ export function ContentDetail({ content }: ContentDetailProps) {
         />
       </div>
       <header className="flex flex-col gap-4">
-        <h1 className="font-display text-text-secondary text-3xl leading-tight font-normal md:text-4xl">
+        <h1 className="font-display text-text-primary text-3xl leading-tight font-normal md:text-4xl">
           {content.title}
         </h1>
         <div className="flex flex-wrap items-center gap-4">

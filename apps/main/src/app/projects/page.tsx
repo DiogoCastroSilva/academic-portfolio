@@ -31,7 +31,7 @@ export default function ProjectsPage() {
   const { items: pageItems } = paginate(projects, currentPage);
 
   return (
-    <div className="flex grow flex-col gap-4">
+    <div className="mx-auto flex max-w-7xl grow flex-col gap-4">
       <ContentCardSection
         heading="Projects"
         headingId="projects-heading"

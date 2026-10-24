@@ -93,6 +93,13 @@ describe("ContentDetail accessibility", () => {
     expect(heading).toHaveTextContent(mockContent.title);
   });
 
+  it("title h1 uses primary text color for readable contrast on page surface", () => {
+    const { container } = render(<ContentDetail content={mockContent} />);
+    const heading = container.querySelector("h1");
+    expect(heading?.className).toMatch(/text-text-primary/);
+    expect(heading?.className).not.toMatch(/text-text-secondary/);
+  });
+
   it("markdown body content starts at h2 (no h1 in body)", () => {
     const content: ContentItemMeta = {
       ...mockContent,
@@ -261,10 +268,12 @@ describe("ContentDetail theme contrast (dark mode on dark surfaces)", () => {
     expect(className).toMatch(/text-text-secondary/);
   });
 
-  it("article uses semantic surface token (consistent with sections)", () => {
+  it("article floats on page surface (no card wrapper background)", () => {
     const { container } = render(<ContentDetail content={mockContent} />);
     const article = container.querySelector("article");
-    expect(article).toHaveClass("bg-surface-card");
+    expect(article).toBeDefined();
+    expect(article).not.toHaveClass("bg-surface-card");
+    expect(article).not.toHaveClass("rounded-2xl");
   });
 
   it("image container uses semantic elevated surface token", () => {

@@ -5,7 +5,7 @@ export function Footer() {
 
   return (
     <footer className="py-4">
-      <div className="text-text-primary mx-auto flex w-full max-w-6xl flex-col gap-4 px-4 sm:px-6">
+      <div className="text-text-primary mx-auto flex w-full max-w-7xl flex-col gap-4 px-4 sm:px-6">
         <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
           <p className="text-sm leading-6">
             © {year} {siteConfig.name}. Licensed under{" "}

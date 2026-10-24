@@ -70,6 +70,9 @@
   --color-status-warning-bg: var(--color-status-warning-bg, #fef3c7);
   --color-status-warning-text: var(--color-status-warning-text, #92400e);
 
+  /* Shadows */
+  --shadow-card: var(--shadow-card, 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1));
+
   /* Fonts (set by next/font/local on <html> via layout.tsx className) */
   --font-sans: var(--font-inter-loaded, "Inter", system-ui, sans-serif);
   --font-display: var(

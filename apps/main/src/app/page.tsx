@@ -35,7 +35,7 @@ export default function Index() {
       : publications.slice(0, 3);
 
   return (
-    <div className="flex grow flex-col gap-4">
+    <div className="mx-auto flex max-w-7xl grow flex-col gap-4">
       <JsonLd data={buildWebSiteSchema()} />
       <JsonLd data={buildSiteAuthorSchema(profile.name, profile.imageSrc)} />
       <AboutSection profile={profile} />

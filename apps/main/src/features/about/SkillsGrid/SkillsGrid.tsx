@@ -12,7 +12,7 @@ export const SkillsGrid = ({ categories }: SkillsGridProps) => {
   const MotionSpan = shouldReduceMotion ? "span" : motion.span;
 
   return (
-    <section className="bg-surface-card text-text-primary mx-4 rounded-2xl p-12 shadow-sm">
+    <section className="mx-4 p-6 sm:p-10 lg:p-12">
       <MotionDiv
         {...(shouldReduceMotion
           ? {}

@@ -51,23 +51,24 @@ vi.mock("../../ui/NavBar", () => ({
 // Import after mocks
 const { default: BlogPostPage, generateMetadata } = await import("./page.js");
 
-describe("BlogPostPage card surface consistency", () => {
-  it("uses the same card container class as project/publication detail pages (bg-surface-card)", async () => {
+describe("BlogPostPage detail page layout", () => {
+  it("container floats on page surface (no card wrapper background)", async () => {
     const params = Promise.resolve({ slug: "test-post" });
     const result = await BlogPostPage({ params });
-    // The card container div is the first child — check its className
+    // The wrapper div is the first child — check its className
     const containerDiv = (
       result as { type: string; props: { className: string } }
     ).props.className;
-    expect(containerDiv).toContain("mx-4");
+    expect(containerDiv).toContain("mx-auto");
+    expect(containerDiv).toContain("max-w-7xl");
     expect(containerDiv).toContain("flex-col");
     expect(containerDiv).toContain("gap-4");
-    expect(containerDiv).toContain("rounded-2xl");
-    // Card container uses semantic surface token
-    expect(containerDiv).toContain("bg-surface-card");
+    // Wrapper no longer uses card wrapper background
+    expect(containerDiv).not.toContain("rounded-2xl");
+    expect(containerDiv).not.toContain("bg-surface-card");
   });
 
-  it("Breadcrumb and ContentDetail both render inside the card container", async () => {
+  it("Breadcrumb and ContentDetail both render inside the page wrapper", async () => {
     const params = Promise.resolve({ slug: "test-post" });
     const result = await BlogPostPage({ params });
     const children = (result as { props: { children: unknown[] } }).props

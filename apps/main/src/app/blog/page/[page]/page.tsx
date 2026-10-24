@@ -52,7 +52,7 @@ export default async function BlogPage({ params }: BlogPageProps) {
   const { items: pageItems } = paginate(posts, currentPage);
 
   return (
-    <div className="flex grow flex-col gap-4">
+    <div className="mx-auto flex max-w-7xl grow flex-col gap-4">
       <ContentCardSection
         heading="Blog"
         headingId={`blog-page-${currentPage}-heading`}

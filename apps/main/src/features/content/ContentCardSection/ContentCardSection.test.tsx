@@ -358,7 +358,7 @@ describe("ContentCardSection dark-mode surface consistency", () => {
     expect(article).toHaveClass("border-border");
   });
 
-  it("section uses semantic surface token for consistent surfaces", () => {
+  it("section floats on page surface (no card wrapper background)", () => {
     const { container } = render(
       <ContentCardSection
         heading="Projects"
@@ -368,7 +368,8 @@ describe("ContentCardSection dark-mode surface consistency", () => {
       />,
     );
     const section = container.querySelector("section");
-    expect(section).toHaveClass("bg-surface-card");
+    expect(section).not.toHaveClass("bg-surface-card");
+    expect(section).not.toHaveClass("rounded-2xl");
   });
 });
 

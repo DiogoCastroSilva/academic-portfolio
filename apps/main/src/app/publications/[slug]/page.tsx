@@ -81,7 +81,7 @@ export default async function PublicationPage({
   }
 
   return (
-    <div className="bg-surface-card mx-4 flex grow flex-col gap-4 rounded-2xl">
+    <div className="mx-auto flex max-w-7xl grow flex-col gap-4">
       <Breadcrumb
         items={[
           { label: "Publications", href: "/publications/" },
