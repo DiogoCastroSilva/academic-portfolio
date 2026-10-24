@@ -115,4 +115,21 @@ describe("Breadcrumb", () => {
     // py-2 provides vertical spacing between breadcrumb and content
     expect(nav?.className).toMatch(/py-2/);
   });
+
+  it("renders the current-page-as-link with focus-visible styles", () => {
+    const { container } = render(
+      <Breadcrumb
+        items={[
+          { label: "Projects", href: "/projects/" },
+          { label: "My Project", href: "/projects/my-project/" },
+        ]}
+      />,
+    );
+
+    const links = container.querySelectorAll("a[aria-current='page']");
+    expect(links).toHaveLength(1);
+    expect(links[0].className).toMatch(/focus-visible:outline-focus/);
+    expect(links[0].className).toMatch(/focus-visible:outline-2/);
+    expect(links[0].className).toMatch(/focus-visible:outline-offset-2/);
+  });
 });

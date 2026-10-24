@@ -33,21 +33,21 @@ export function ThemeToggle() {
       aria-label={label}
       title={label}
       className={
-        "text-text-muted hover:bg-surface-tinted hover:text-link focus-visible:bg-surface-tinted focus-visible:text-link focus-visible:outline-focus relative inline-flex size-11 items-center justify-center rounded-md focus-visible:outline-2 focus-visible:outline-offset-2 motion-reduce:transition-none"
+        "text-text-muted hover:bg-surface-tinted hover:text-link focus-visible:bg-surface-tinted focus-visible:text-link focus-visible:outline-focus relative inline-flex size-11 cursor-pointer items-center justify-center rounded-md focus-visible:outline-2 focus-visible:outline-offset-2 motion-reduce:transition-none"
       }
     >
       <span className="sr-only">{label}</span>
       {/* Sun icon — shown for light theme, hidden for dark */}
       <SunIcon
         className={
-          "absolute size-6 transition-opacity duration-200 motion-reduce:duration-0 " +
+          "absolute size-6 transition-opacity duration-150 motion-reduce:duration-0 " +
           (resolvedTheme === "light" ? "opacity-100" : "opacity-0")
         }
       />
       {/* Moon icon — shown for dark theme, hidden for light */}
       <MoonIcon
         className={
-          "absolute size-6 transition-opacity duration-200 motion-reduce:duration-0 " +
+          "absolute size-6 transition-opacity duration-150 motion-reduce:duration-0 " +
           (resolvedTheme === "dark" ? "opacity-100" : "opacity-0")
         }
       />

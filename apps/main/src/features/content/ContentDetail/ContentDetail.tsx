@@ -56,7 +56,7 @@ export function ContentDetail({ content }: ContentDetailProps) {
                 {" · "}
                 <a
                   href={`https://doi.org/${content.doi}`}
-                  className="text-link hover:text-link-hover break-all"
+                  className="text-link hover:text-link-hover focus-visible:outline-focus break-all focus-visible:outline-2 focus-visible:outline-offset-2"
                   aria-label={`DOI: ${content.doi}`}
                 >
                   {content.doi}

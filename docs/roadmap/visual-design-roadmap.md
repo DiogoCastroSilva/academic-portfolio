@@ -47,7 +47,7 @@ This roadmap is about the **visual and user experience** of the site. The broade
 
 ## Phase 3 — Homepage: Selected Publications
 
-**Status: Next.**
+**Status: Complete (committed `c8aa997`); 14 new tests passing.**
 
 Refine the publications preview to present research outputs clearly and elegantly, using the data and links already supported by the content model.
 
@@ -63,7 +63,7 @@ Refine the publications preview to present research outputs clearly and elegantl
 
 ## Phase 4 — Whole-site consistency, accessibility, and release verification
 
-**Status: Planned after Phase 3.**
+**Status: In progress — source review complete; defects fixed.**
 
 Review the complete experience, not just the homepage:
 
@@ -78,6 +78,47 @@ Review the complete experience, not just the homepage:
 - Perform a clean-fork/owner-workflow check as part of overall template release readiness, using the broader acceptance criteria in docs/product/goals-and-requirements.md.
 
 **Exit criteria:** No known critical visual, responsive, accessibility, content, SEO, or deployment defects remain; relevant automated checks pass; manual checks and their limits are recorded; a clean fork can be personalized through documented owner-facing controls without application-code edits.
+
+### Bugs found and fixed
+
+1. **DOI link on detail pages lacked a visible focus indicator** (P1 — WCAG 2.4.7/2.4.11). The `<a>` for the DOI link in `ContentDetail` had only `text-link hover:text-link-hover break-all` with no `focus-visible` outline, leaving keyboard users without a focus ring. Added `focus-visible:outline-focus focus-visible:outline-2 focus-visible:outline-offset-2`.
+2. **Nested `<main>` landmarks on error and not-found pages** (P2 — invalid HTML). The root layout already renders `<main id="main-content">`; `error.tsx` and `not-found.tsx` each rendered their own `<main>` inside it, creating duplicate main landmarks and invalid HTML. Changed both to `<div>`.
+3. **Breadcrumb current-page-as-link had no focus-visible styles** (P3 — defensive). The Breadcrumb's `aria-current="page"` link branch (used when the last item has an `href`) lacked `focus-visible` styles. Added outline classes matching the other interactive elements.
+4. **`getFullUrl()` called twice** in `structured-data.ts` `buildArticleSchema` for the same argument — cached the result in a local `url` variable.
+5. **ThemeToggle button missing `cursor-pointer`** — hovering over the theme toggle showed a default arrow cursor, making the button appear non-interactive. Added `cursor-pointer` class.
+6. **Theme toggle perceived lag** — in `useTheme.ts`'s `setTheme()`, `dispatchEvent` (which triggers a synchronous React re-render via `useSyncExternalStore`) was called *before* `applyThemeAttribute`, delaying the actual `data-theme` DOM mutation. Reordered so the DOM attribute is set first, then the re-render is triggered — ensuring instant visual theme change. Also reduced icon fade transition from 200ms to 150ms for snappier feedback.
+
+### Automated checks
+
+- **Tests:** 296 tests pass (4 new tests added: 2 landmark tests for error/not-found, 1 Breadcrumb focus test, 3 new assertions in ContentDetail DOI test). Includes `vitest-axe` aXe-core scans on ContentCardSection, ContentDetail, AboutSection, and page-level landmark tests.
+- **Lint:** ESLint passes on all projects.
+- **Typecheck:** All TypeScript project references resolve; no type errors.
+- **Prettier:** Formatting clean.
+- **Build:** Static export builds successfully, prerendering all routes.
+- **Sitemap:** `generate-sitemap.mjs` generates `robots.txt` + `sitemap.xml` after build; excludes error pages and page-1 redirect stubs. CI runs it as a post-build step.
+
+### Source-review items verified (non-browser)
+
+- **Heading order:** Each route has exactly one `<h1>` (profile name on About/Homepage, page title on collection pages, article title on detail pages); card titles are `<h3>`.
+- **Landmarks:** Layout provides `<nav aria-label="Main">`, `<main id="main-content">`, `<footer>`. All sections use `<section aria-labelledby>`. No remaining nested `<main>`.
+- **Skip link:** Present in layout, `sr-only` until focused, targets `#main-content`.
+- **Touch targets:** All buttons/links have min 44×44px (`size-11`, `min-h-11`, full-card links).
+- **Image alternatives:** All `ContentImage` uses have descriptive `alt`; decorative SVGs have `aria-hidden="true"`.
+- **Focus-visible:** Consistently applied to all interactive elements (NavBar, ThemeToggle, MobileMenuButton, Breadcrumb links, card links, view-all link, Pagination, Footer links, ContentDetail DOI link).
+- **Reduced motion:** Global CSS reset in `tokens.css` sets `transition-duration: 0.01ms` for `prefers-reduced-motion`; `motion/react` components use `useReducedMotion()` with plain-element fallback.
+- **Color tokens:** Both light and dark theme values verified for contrast against their surface tokens.
+- **OG images:** `ogImageRef` resolves with `withPublicBasePath()` for base-path compatibility; discipline-neutral (profile-driven).
+- **Canonical URLs:** Each detail page sets `alternates.canonical`; layout metadata uses `siteConfig.deploymentUrl` as `metadataBase`.
+- **Static export:** `output: "export"`, `trailingSlash: true`, `basePath` from env; build succeeds for all routes.
+
+### Items requiring browser verification (cannot automate in this environment)
+
+- 200% zoom and reflow behavior at all breakpoints (320px, 375px, 640px, 768px, 1024px, 1280px+).
+- Actual rendered color contrast measurements (source review confirms values; visual verification with a contrast tool is recommended).
+- Focus ring visibility and positioning on real rendered elements.
+- Keyboard tab order through mobile menu open/close states.
+- `prefers-reduced-motion` and `prefers-color-scheme` behavior in a real browser.
+- Lighthouse accessibility audit score (perf-audit runs in CI but is report-only, not a gate).
 
 ## Working rules
 

@@ -10,7 +10,7 @@ export default function Error({
   reset: () => void;
 }) {
   return (
-    <main className="mx-auto flex min-h-[calc(100vh-6rem)] flex-col items-center justify-center px-4 py-16 text-center">
+    <div className="mx-auto flex min-h-[calc(100vh-6rem)] flex-col items-center justify-center px-4 py-16 text-center">
       <div className="bg-surface-card ring-border rounded-3xl p-10 shadow-sm ring-1">
         <p className="text-text-error text-sm font-semibold tracking-[0.3em] uppercase">
           Something went wrong
@@ -43,6 +43,6 @@ export default function Error({
           </Link>
         </div>
       </div>
-    </main>
+    </div>
   );
 }

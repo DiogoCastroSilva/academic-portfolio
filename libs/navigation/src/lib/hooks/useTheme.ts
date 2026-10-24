@@ -314,11 +314,16 @@ export function useTheme(): UseThemeResult {
 
   const setTheme = useCallback((next: ThemePreference) => {
     writeStoredPreference(next);
+    const resolved = resolvePreference(next);
+    /* Apply the DOM attribute synchronously *before* dispatching the notification
+     * event. This ensures the theme visually changes instantly on the next
+     * microtask, rather than waiting for any React re-render work triggered by
+     * the `useSyncExternalStore` notification. The re-render then reconciles
+     * component state to match (idempotent). */
+    applyThemeAttribute(resolved);
     if (typeof window !== "undefined") {
       window.dispatchEvent(new Event(THEME_CHANGE_EVENT));
     }
-    const resolved = resolvePreference(next);
-    applyThemeAttribute(resolved);
   }, []);
 
   const toggleTheme = useCallback(() => {

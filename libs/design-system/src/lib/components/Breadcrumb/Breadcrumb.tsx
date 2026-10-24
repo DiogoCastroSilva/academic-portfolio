@@ -40,7 +40,7 @@ export function Breadcrumb({ items }: BreadcrumbProps) {
               <Link
                 href={item.href}
                 aria-current="page"
-                className="text-text-primary block max-w-[100px] truncate font-medium sm:max-w-[150px] md:max-w-xs"
+                className="text-text-primary focus-visible:outline-focus block max-w-[100px] truncate font-medium focus-visible:outline-2 focus-visible:outline-offset-2 sm:max-w-[150px] md:max-w-xs"
               >
                 {item.label}
               </Link>

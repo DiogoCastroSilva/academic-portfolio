@@ -39,6 +39,7 @@ export function buildArticleSchema(content: ContentItemMeta): JsonLdData {
   const isPublication =
     Boolean(content.authors?.length) || Boolean(content.venue);
   const schemaType = isPublication ? "ScholarlyArticle" : "Article";
+  const url = getFullUrl(`${content.href}/`);
 
   const base: JsonLdData = {
     "@context": "https://schema.org",
@@ -46,9 +47,7 @@ export function buildArticleSchema(content: ContentItemMeta): JsonLdData {
     headline: content.title,
     datePublished: content.date,
     ...(image ? { image } : {}),
-    ...(getFullUrl(`${content.href}/`)
-      ? { url: getFullUrl(`${content.href}/`) }
-      : {}),
+    ...(url ? { url } : {}),
     ...(content.excerpt ? { description: content.excerpt } : {}),
   };
 

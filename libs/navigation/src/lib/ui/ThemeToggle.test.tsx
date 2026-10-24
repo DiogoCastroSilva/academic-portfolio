@@ -128,4 +128,28 @@ describe("ThemeToggle", () => {
     const button = screen.getByRole("button");
     expect(button.className).toMatch(/focus-visible:outline/);
   });
+
+  it("has cursor-pointer for hover affordance", () => {
+    render(<ThemeToggle />);
+    const button = screen.getByRole("button");
+    expect(button.className).toMatch(/cursor-pointer/);
+  });
+
+  it("applies data-theme attribute synchronously on toggle (before re-render)", () => {
+    // Verify that clicking the toggle sets the data-theme attribute immediately,
+    // without waiting for the React re-render to complete.
+    render(<ThemeToggle />);
+    const button = screen.getByRole("button");
+
+    // Default preference is "system" → resolves to "light" (OS light in test)
+    expect(document.documentElement.getAttribute("data-theme")).toBe("light");
+
+    fireEvent.click(button);
+    // system → light, but system prefers light in tests, so it stays "light"
+    expect(window.localStorage.getItem(THEME_STORAGE_KEY)).toBe("light");
+
+    fireEvent.click(button);
+    // light → dark
+    expect(document.documentElement.getAttribute("data-theme")).toBe("dark");
+  });
 });

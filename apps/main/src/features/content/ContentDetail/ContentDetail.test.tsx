@@ -386,6 +386,11 @@ describe("ContentDetail publication metadata", () => {
       "https://doi.org/10.1038/nature.12345",
     );
     expect(doiLink).toHaveTextContent("10.1038/nature.12345");
+
+    // DOI link must have a visible focus indicator for keyboard users
+    expect(doiLink.className).toMatch(/focus-visible:outline-focus/);
+    expect(doiLink.className).toMatch(/focus-visible:outline-2/);
+    expect(doiLink.className).toMatch(/focus-visible:outline-offset-2/);
   });
 
   it("does not render publication metadata for project content", () => {

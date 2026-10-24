@@ -116,6 +116,8 @@ import AboutPage from "./about/page";
 import ProjectsPage from "./projects/page";
 import PublicationsPage from "./publications/page";
 import BlogPage from "./blog/page";
+import ErrorPage from "./error";
+import NotFound from "./not-found";
 
 // Mock og-image for pages that use it in metadata.
 vi.mock("./lib/og-image", () => ({
@@ -151,6 +153,23 @@ describe("Landmark: no duplicate <main> elements", () => {
 
   it("blog listing uses <div> not <main>", () => {
     const { container } = render(<BlogPage />);
+    const mains = container.querySelectorAll("main");
+    expect(mains).toHaveLength(0);
+  });
+
+  it("error page uses <div> not <main> (nav layout provides <main>)", () => {
+    // error.tsx renders inside the root layout which already provides <main>.
+    // Using <main> here would create a nested main landmark (invalid HTML).
+    const { container } = render(
+      <ErrorPage error={new Error("test")} reset={() => {}} />,
+    );
+    const mains = container.querySelectorAll("main");
+    expect(mains).toHaveLength(0);
+  });
+
+  it("not-found page uses <div> not <main> (nav layout provides <main>)", () => {
+    // not-found.tsx renders inside the root layout which already provides <main>.
+    const { container } = render(<NotFound />);
     const mains = container.querySelectorAll("main");
     expect(mains).toHaveLength(0);
   });
