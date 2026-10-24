@@ -65,7 +65,35 @@ Refine the publications preview to present research outputs clearly and elegantl
 
 **Status: In progress — source review complete; defects fixed.**
 
-Review the complete experience, not just the homepage:
+Review the complete experience, not just the homepage. Do this in two explicit work packages so an AI agent does not jump straight from a broad goal into unscoped redesign:
+
+#### Phase 4A — Rendered visual audit and design decisions (next)
+
+**Goal:** Establish what should change before changing the UI. Inspect the current implementation and the actual rendered site, then report findings and a prioritized plan. Do not implement visual changes during this audit unless a concrete defect blocks the audit itself.
+
+Audit the following deliberately:
+
+- **Homepage section rhythm:** Does the page feel like a sequence of boxed cards? Identify where section-level cards should be removed, where plain content on the page surface is better, and where a subtle tinted background can help group content. Avoid alternating strong colors or adding a different color to every section.
+- **Content-specific presentation:** Compare projects, publications, and blog previews. Do not force every content type into the same card/grid pattern; evaluate editorial publication lists, project image-led previews, and blog cards on their own merits.
+- **Card and image dimensions:** Record current grid columns, gaps, image aspect ratios/heights, card padding, border/radius/shadow, title line clamping, and content density at desktop and mobile widths. Recommend changes based on the rendered result rather than guessing dimensions from source classes alone.
+- **Typography and readability:** Verify actual font loading/fallbacks, body and preview font sizes, line heights, heading hierarchy, metadata legibility, content measure/line length, long-title wrapping, and text contrast in both themes. Existing Inter + DM Serif Display choices are the baseline, not a mandate to keep every size unchanged.
+- **Palette and surfaces:** Start from the existing River Atlas Editorial tokens. Recommend token changes only when the rendered experience demonstrates a real issue; do not replace the palette by default. Evaluate light and dark themes independently for visual cohesion and contrast.
+- **Whole-site consistency:** Include About, collection pages, detail pages, pagination, breadcrumbs, navigation, empty states, and footer—not just the homepage.
+- **Responsive/accessibility behavior:** Inspect 320px, 375–390px, 640px, 768px, 1024px, and 1280px+ where possible, plus keyboard focus, 200% zoom/reflow, reduced motion, and contrast.
+
+**Phase 4A deliverable:** A concise audit report grouped by `P0/blocker`, `P1/high impact`, `P2/polish`, with each finding including page/component, observed evidence (screenshot or exact viewport/behavior), why it matters, recommended direction, and likely files involved. Separate verified observations from hypotheses. Include a proposed implementation order and identify decisions that require owner input. Do not create duplicate roadmap/ticket documents; update this roadmap only after the audit establishes the agreed scope.
+
+**Gate:** Owner reviews the findings and agrees on the visual direction/scope before broad redesign work begins.
+
+#### Phase 4B — Implement the agreed visual refinements
+
+After Phase 4A is reviewed, implement in small, coherent slices. Prefer section rhythm and content hierarchy first, then card/image dimensions, typography/readability corrections, and remaining page-level consistency. Preserve content selection, routes, Markdown authoring, accessibility, static export, and both themes. Add or update tests for behavior and semantics; use browser inspection for visual acceptance.
+
+For each slice, the agent must state its scope before editing, avoid unrelated refactors, and report changed files, before/after observations, checks run, and anything not verified.
+
+#### Phase 4C — Release verification
+
+
 
 - Homepage, About, Projects, Publications, Blog, collection lists, detail pages, pagination, breadcrumbs, navigation, empty states, and footer.
 - Light and dark themes, semantic color contrast, typography, spacing, image crops, card treatments, metadata, link affordances, and active navigation states.
@@ -120,15 +148,23 @@ Review the complete experience, not just the homepage:
 - `prefers-reduced-motion` and `prefers-color-scheme` behavior in a real browser.
 - Lighthouse accessibility audit score (perf-audit runs in CI but is report-only, not a gate).
 
-## Working rules
+## AI-agent workflow and working rules
 
-1. Inspect the current branch, commits, existing documentation, and rendered site before changing anything.
-2. Work incrementally within the active phase; do not redo accepted foundations without evidence of a defect.
-3. Treat River Atlas Editorial as the design contract, not a mandate to make every section identical. Publications may use a more editorial list pattern than projects.
-4. Preserve the template's owner workflow and existing behavior; design polish must not introduce fake academic claims, required personal content, a backend, or a CMS.
-5. Validate the rendered result in a real browser when possible. Clearly distinguish automated checks, source review, and manual visual verification.
-6. Do not commit or push unless the owner explicitly authorizes it.
+Use this document as the source of truth for visual-design work. The frontend-modernization roadmap is for architecture/workspace work; do not treat it as the visual-design task list. Product-wide acceptance criteria remain in `docs/product/goals-and-requirements.md`, and the cross-site design contract remains in `docs/architecture/frontend-design-principles.md`.
+
+1. **Read before editing:** Inspect `AGENTS.md`, this roadmap, the design principles, design-system README/tokens, relevant route/components/tests, current branch and recent commits. Check whether the requested work is already implemented or documented; do not recreate existing work.
+2. **Follow the current next action only.** Do not silently skip an audit gate, start a later phase, or turn a broad visual goal into a whole-site rewrite.
+3. **Audit before redesign:** For visual issues, inspect the rendered site at representative viewports and in both themes before proposing fixes. Source inspection alone cannot confirm perceived size, density, spacing, contrast, or visual balance.
+4. **Report before broad implementation:** When the task calls for an audit, deliver findings and priorities first. Wait for owner agreement before making broad visual changes.
+5. **Small scope:** Implement one coherent, reviewable slice at a time. Avoid unrelated refactors, new dependencies, new abstractions, and new documentation unless they solve a demonstrated need.
+6. **Preserve product behavior:** Do not change content-selection rules, route structure, pagination, Markdown/frontmatter authoring, draft exclusion, SEO, static export, GitHub Pages base paths, or fork-owner workflow as a side effect of visual work.
+7. **Use the existing design language:** Reuse semantic tokens and existing fonts first. Do not introduce one-off colors or per-section color stripes. Different content types may use different presentation patterns when that improves scanning.
+8. **Validate honestly:** Separate automated checks, source review, and actual browser verification. Never claim a viewport/theme/accessibility state was visually checked if it was not.
+9. **Close the loop:** After a completed slice, update this roadmap's status/next action only as needed, record meaningful decisions in the existing decision documentation when appropriate, and report files changed, behavior preserved, tests/checks run, visual checks performed, and limitations.
+10. **No commit or push** unless the owner explicitly authorizes it.
 
 ## Current next action
 
-Start Phase 3 — Selected Publications. First inspect the current homepage, publication content schema/templates, publication cards and detail pages, existing design principles, and available publication metadata. Report what already works and the specific gaps before implementation. Do not redesign the whole site or revisit Phase 1/2 unless a concrete issue is found.
+**Phase 4A — Rendered visual audit and design decisions. Do not implement the redesign yet.**
+
+Inspect the current rendered homepage and representative About, Projects, Publications, Blog, and detail pages. Compare desktop and mobile, light and dark themes. Pay particular attention to the homepage feeling overly card-based, section transitions/backgrounds, project/publication/blog card dimensions and imagery, font sizes and line lengths, and overall visual consistency. Then provide a concise evidence-based audit and prioritized implementation proposal using the Phase 4A deliverable format above. Explicitly distinguish observed problems from preferences or hypotheses. Do not create a new roadmap or ticket set before the owner reviews that report.
