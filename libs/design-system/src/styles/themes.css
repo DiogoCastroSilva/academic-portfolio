@@ -23,7 +23,6 @@
   --color-text-error: #fdb8b0; /* light red — lightened from #fca5a5 for WCAG AA on surface-elevated */
 
   --color-border: #94a3b8; /* slate-400 — default borders */
-  --color-border-strong: #334155; /* slate-700 — strong borders */
 
   --color-accent: #30dbfb; /* bright cyan — lightened from #22d3ee for WCAG AA on surface-elevated */
   --color-accent-hover: #7ef5d6; /* brighter cyan — accent hover */
@@ -35,8 +34,6 @@
   --color-pre-bg: #0a2740; /* near-black blue — pre block bg */
   --color-pre-text: #e2e8f0; /* slate-200 — pre block text */
 
-  --color-status-info-bg: #1e3a8a;
-  --color-status-info-text: #bfdbfd;
   --color-status-warning-bg: #78350f; /* amber-900 — warning bg */
   --color-status-warning-text: #fef3c7; /* amber-100 */
 }

@@ -135,13 +135,12 @@ Semantic colors are defined as CSS custom properties in `libs/design-system/src/
 | `--color-text-on-accent`   | `#ffffff` | `#0f172a` | Inverse text on accent background                           |
 | `--color-text-error`       | `#c51e24` | `#fdb8b0` | Error/status text (red-700 / light red)                     |
 | `--color-border`           | `#D5E2E2` | `#94a3b8` | Subtle separators (water-gray / slate-400)                  |
-| `--color-border-strong`    | `#B8C9C9` | `#334155` | Strong borders (water-gray / slate-700)                     |
 | `--color-accent`           | `#166973` | `#30dbfb` | Teal accent for UI elements (buttons, borders)              |
 | `--color-accent-hover`     | `#116776` | `#7ef5d6` | Button hover (darker teal / brighter cyan)                  |
 | `--color-focus`            | `#075985` | `#7DD3FC` | Focus rings (deep current / sky-300)                        |
 | `--color-link`             | `#075985` | `#7DD3FC` | Link color (deep current / sky-300) — NEW                   |
 | `--color-link-hover`       | `#0369a1` | `#bae6fd` | Link hover (dark river / sky-200) — NEW                     |
-| `--color-code-bg`          | `#f3f4f6` | `#0e3a5a` | Inline code background (gray-100 / glacial blue)            |
+| `--color-code-bg`          | `#e2e8f0` | `#1e293b` | Inline code background (slate-200 / slate-800)              |
 | `--color-pre-bg`           | `#171717` | `#0a2740` | Preformatted block background (near-black blue)             |
 | `--color-pre-text`         | `#f9fafb` | `#e2e8f0` | Preformatted block text (off-white / slate-200)             |
 

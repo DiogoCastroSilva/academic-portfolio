@@ -31,7 +31,6 @@
 
   /* ── Border tokens ──────────────────────── */
   --color-border: #d5e2e2; /* subtle separators */
-  --color-border-strong: #b8c9c9; /* strong borders */
 
   /* ── Accent / focus tokens ───────────────── */
   --color-accent: #166973; /* teal — brand accent, selected UI elements — darkened from #187e89 for WCAG AA on near-white */
@@ -46,21 +45,14 @@
   --color-pre-text: #f9fafb; /* pre block text */
 
   /* ── Status tokens ───────────────────────── */
-  --color-status-info-bg: #eff6ff; /* blue-50 */
-  --color-status-info-text: #1e40af; /* blue-800 */
   --color-status-warning-bg: #fef3c7; /* amber-100 — limited highlight use */
   --color-status-warning-text: #92400e; /* amber-800 */
-
-  /* ── Theme-independent radii ─────────────── */
-  --radius-card: 1rem; /* 2xl */
-  --radius-input: 0.375rem; /* md */
 
   /* ── Shadows ─────────────────────────────── */
   --shadow-card: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
 
   /* ── Motion ──────────────────────────────── */
   --motion-duration-enter: 0.5s;
-  --motion-duration-stagger: 0.1s;
   --motion-ease-enter: ease-out;
 }
 

@@ -43,7 +43,6 @@
 
   /* Borders */
   --color-border: var(--color-border, #d5e2e2);
-  --color-border-strong: var(--color-border-strong, #b8c9c9);
 
   /* Links / accents / focus */
   --color-accent: var(--color-accent, #166973);
@@ -58,8 +57,6 @@
   --color-pre-text: var(--color-pre-text, #f9fafb);
 
   /* Status */
-  --color-status-info-bg: var(--color-status-info-bg, #eff6ff);
-  --color-status-info-text: var(--color-status-info-text, #1e40af);
   --color-status-warning-bg: var(--color-status-warning-bg, #fef3c7);
   --color-status-warning-text: var(--color-status-warning-text, #92400e);
 
