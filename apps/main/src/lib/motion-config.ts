@@ -2,7 +2,7 @@
  * Centralized motion timing constants for consistent choreography.
  *
  * Reuses the same semantic values defined in design-system tokens.css:
- *   --motion-duration-enter (0.5s) and --motion-ease-enter (ease-out).
+ *   --motion-duration-enter (0.5s) and --motion-ease-enter (cubic-bezier(0.22, 1, 0.36, 1)).
  *
  * These constants keep motion/react animations in sync with CSS-based
  * animations throughout the site. Adjust in one place to update the
@@ -26,11 +26,12 @@ export const MOTION_STAGGER = 0.08;
 /** Delay before the first staggered child begins (50ms). */
 export const MOTION_DELAY_CHILDREN = 0.05;
 
-/** Easing curve shared across all motion. Uses Framer Motion's enum ("easeOut")
- * which is equivalent to CSS ease-out (cubic-bezier(0.25, 0.1, 0.25, 1)).
- * The CSS animations in animations.css use the --motion-ease-enter variable
- * which is set to ease-out directly. */
-export const MOTION_EASE_ENTER = "easeOut" as const;
+/** Easing curve for all entrance animations. Uses an editorial-style
+ * ease-out cubic bezier [0.22, 1, 0.36, 1] — steeper and more intentional
+ * than the standard CSS ease-out (cubic-bezier(0.25, 0.1, 0.25, 1)).
+ * The same curve is defined as --motion-ease-enter in tokens.css for CSS
+ * animations in animations.css. */
+export const MOTION_EASE_ENTER = [0.22, 1, 0.36, 1] as const;
 
 /** Movement distance for entrance reveals (20px). */
 export const MOTION_OFFSET = 20;

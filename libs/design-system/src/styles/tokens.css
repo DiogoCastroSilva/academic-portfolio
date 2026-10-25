@@ -53,7 +53,8 @@
 
   /* ── Motion ──────────────────────────────── */
   --motion-duration-enter: 0.5s;
-  --motion-ease-enter: ease-out;
+  --motion-ease-enter: cubic-bezier(0.22, 1, 0.36, 1);
+  --motion-offset: 20px;
 }
 
 /* Reduced-motion: disable gallery animations and smooth transitions */

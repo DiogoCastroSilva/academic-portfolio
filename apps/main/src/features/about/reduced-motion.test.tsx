@@ -133,8 +133,9 @@ describe("Motion system consistency", () => {
     expect(config.MOTION_OFFSET).toBeLessThanOrEqual(20);
   });
 
-  it("uses easing shorthand for consistency", async () => {
+  it("uses editorial easing curve for consistency", async () => {
     const config = await import("@/lib/motion-config.js");
-    expect(config.MOTION_EASE_ENTER).toBe("easeOut");
+    // Editorial ease-out cubic bezier, matching CSS --motion-ease-enter
+    expect(config.MOTION_EASE_ENTER).toEqual([0.22, 1, 0.36, 1]);
   });
 });
