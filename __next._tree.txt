@@ -1,8 +1,8 @@
 :HC["/",""]
-:HL["/academic-portfolio/_next/static/css/30de6c59ba7dd551.css","style"]
+:HL["/academic-portfolio/_next/static/css/0b61a47c894b704c.css","style"]
 :HL["/academic-portfolio/fonts/inter/roman.var.woff2","font",{"crossOrigin":"anonymous","type":"font/woff2"}]
 :HL["/academic-portfolio/fonts/dm-serif-display/regular.woff2","font",{"crossOrigin":"anonymous","type":"font/woff2"}]
 :HL["/academic-portfolio/images/profile.svg","image",{"type":"image/svg+xml"}]
 :HL["/academic-portfolio/projects/first-project/first-project.svg","image",{"imageSizes":"(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw","fetchPriority":"high"}]
 1:[["children",{"s":"__PAGE__","h":128}]]
-0:{"b":"8LEZAfYq1oINJPQ-YWF74","t":{"t":{"s":"","h":16,"c":"$Q1"}}}
+0:{"b":"wBuOJATWyaEtT069cx5R6","t":{"t":{"s":"","h":16,"c":"$Q1"}}}
