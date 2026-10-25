@@ -98,6 +98,7 @@ This provides:
 | `Pagination`   | `currentPage`, `totalPages`, `baseUrl`                        | Renders nothing when ≤ 1 page, next/link anchors for static export, `aria-current` on current page | `Pagination.test.tsx`   |
 | `Breadcrumb`   | `items: { label, href? }[]`                                   | Last item = current page (non-link, `aria-current="page"`), uses `ChevronIcon` separator           | `Breadcrumb.test.tsx`   |
 | `ChevronIcon`  | `className?`, `aria-hidden?`                                  | Stateless SVG icon, `aria-hidden` support                                                          | `ChevronIcon.test.tsx`  |
+| `Tag`          | `children`, `size?`, `variant?`, `className?`                 | Semantic `<span>` pill, `size` (sm/md), `variant` (default/warning), reduced-motion compliant      | `Tag.test.tsx`          |
 
 ### How to run component tests
 

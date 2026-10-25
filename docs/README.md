@@ -36,4 +36,4 @@ Start with the document that matches your goal:
 | -------------------------------------------------------------------------------------------- | ----------------------------------------------------------- |
 | [architecture/audit-frontend-modernization.md](architecture/audit-frontend-modernization.md) | Audit of the implementation brief vs. the actual repository |
 | [roadmap/frontend-modernization.md](roadmap/frontend-modernization.md)                       | Phased implementation plan (Phases 4–6)                     |
-| [tickets/](tickets/)                                                                         | Implementation-ready work items (T-001 through T-010b)      |
+| [tickets/](tickets/)                                                                         | Implementation-ready work items (T-001 through T-012)       |

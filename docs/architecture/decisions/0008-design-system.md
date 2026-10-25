@@ -21,7 +21,7 @@ Create `libs/design-system/` as a single Nx library (one package — no splittin
 
 1. **Semantic CSS custom properties** (design tokens): surface, text, link, border, focus, status, typography roles, radius, shadow, motion.
 2. **Typography foundation**: prose styles, heading scales, the `.profile-name` rule, caption/metadata styles.
-3. **Shared UI primitives**: only components that are genuinely feature-agnostic and used across multiple feature routes. Initial set: `ContentImage`, `Pagination`, `Breadcrumb`, the `ChevronIcon` icon, and `Tag`. **No speculative Button, Badge, Card, Heading, or Text components** unless evidence of duplication arises.
+3. **Shared UI primitives**: only components that are genuinely feature-agnostic and used across multiple feature routes. Initial set: `ContentImage`, `Pagination`, `Breadcrumb`, the `ChevronIcon` icon, and `Tag`. **No speculative Button, Badge, Card, Heading, or Text components** unless evidence of duplication arises. The set grew from 4 to 5 components with the T-012 Tag promotion.
 4. **Animation utilities**: `.animate-fadeInUp` keyframes and reduced-motion fallbacks.
 
 ### Dependency direction (Nx module boundaries)
@@ -63,7 +63,7 @@ Only stable, intended exports are exposed through `libs/design-system/src/index.
 
 ## Evidence or validation
 
-- Baseline: `npx nx run-many -t lint test typecheck build` passes (8 projects, 672 tests).
+- Baseline: `npx nx run-many -t lint test typecheck build` passes (8 projects, 679 tests).
 - After each component promotion, the full check suite must still pass.
 - ESLint `@nx/enforce-module-boundaries` enforces that `design-system` cannot import `app` or `content-layer` code.
 - Visual regression: production CSS output must include all design-system token declarations.

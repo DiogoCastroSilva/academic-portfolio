@@ -11,18 +11,15 @@
 */
 @custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));
 
+/*
+  River Atlas Editorial base palette (reference values only — not registered as
+  CSS variables). These hex values are the source of the dark-theme semantic
+  tokens defined in libs/design-system/src/styles/themes.css.
+  Light:  water-50 (#f0f9ff), water-100 (#e0f2fe)
+  Dark:   water-700 (#0f2a36), water-800 (#164e63), water-900 (#1e5a73)
+*/
+
 @theme {
-  /* ── River Atlas Editorial palette (raw values, for reference / non-token usage) ── */
-
-  /* Light theme: mist and glacial surfaces */
-  --color-water-50: #f0f9ff; /* mist — light page background */
-  --color-water-100: #e0f2fe; /* glacial blue — tinted sections */
-
-  /* Dark theme: river depths and surfaces */
-  --color-water-700: #0f2a36; /* abyssal teal — dark page background */
-  --color-water-800: #164e63; /* deep water — card surface */
-  --color-water-900: #1e5a73; /* deep current — elevated surface */
-
   /* ── Semantic token references (CSS-variable-backed utilities) ──────────
    * These map Tailwind utility names to the semantic CSS custom properties
    * defined in libs/design-system/src/styles/tokens.css & themes.css.
@@ -56,7 +53,7 @@
   --color-focus: var(--color-focus, #075985);
 
   /* Code / pre */
-  --color-code-bg: var(--color-code-bg, #f3f4f6);
+  --color-code-bg: var(--color-code-bg, #e2e8f0);
   --color-pre-bg: var(--color-pre-bg, #171717);
   --color-pre-text: var(--color-pre-text, #f9fafb);
 

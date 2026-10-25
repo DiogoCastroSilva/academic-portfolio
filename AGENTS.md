@@ -79,7 +79,7 @@ See [docs/architecture/decisions/](docs/architecture/decisions/) for ADRs on:
 - **eslint.config.mjs** — composes `@diogozx-org/eslint-config/next` with `@nx/enforce-module-boundaries`
 - **prettier.config.mjs** — extends `@diogozx-org/prettier-config`, adds Tailwind CSS plugin
 - **global.css** — imports design-system CSS (tokens), dark-mode overrides, `prefers-reduced-motion` global reset; see the design-principles doc for the intended contract and current gaps
-- **design-system** (`libs/design-system/`) — owns semantic CSS tokens, typography foundation, and generic UI primitives (`ContentImage`, `Pagination`, `Breadcrumb`, `ChevronIcon`)
+- **design-system** (`libs/design-system/`) — owns semantic CSS tokens, typography foundation, and generic UI primitives (`ContentImage`, `Pagination`, `Breadcrumb`, `ChevronIcon`, `Tag`)
 - **features/** (`apps/main/src/features/`) — about-specific and content-presentation components, distinct from shared primitives
 - **ContentDetail** — server component (no `'use client'`), uses `dangerouslySetInnerHTML`
 - **ContentCardSection** — server component with CSS entrance animation and a reduced-motion fallback; `motion/react` is used by About-page components
