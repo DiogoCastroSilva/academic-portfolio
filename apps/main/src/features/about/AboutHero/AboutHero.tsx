@@ -62,12 +62,12 @@ export const AboutHero = ({ profile }: AboutHeroProps) => {
   return (
     <section className="mx-4 p-6 sm:p-10 lg:p-12">
       <MotionDiv
-        className="flex flex-col gap-8 md:gap-12"
+        className="motion-item-initial flex flex-col gap-8 md:gap-12"
         {...(shouldReduceMotion
           ? {}
           : {
               variants: heroVariants,
-              initial: "hidden",
+              initial: false,
               animate: "visible",
             })}
       >
@@ -75,7 +75,7 @@ export const AboutHero = ({ profile }: AboutHeroProps) => {
         <div className="flex flex-col gap-6">
           <div className="flex flex-col items-center gap-4 md:flex-row md:gap-8">
             <MotionDiv
-              className="flex justify-center"
+              className="motion-item-initial flex justify-center"
               {...(shouldReduceMotion
                 ? {}
                 : {
@@ -91,7 +91,7 @@ export const AboutHero = ({ profile }: AboutHeroProps) => {
               />
             </MotionDiv>
             <MotionDiv
-              className="flex flex-col gap-4 text-center md:text-left"
+              className="motion-item-initial flex flex-col gap-4 text-center md:text-left"
               {...(shouldReduceMotion
                 ? {}
                 : {
@@ -131,7 +131,7 @@ export const AboutHero = ({ profile }: AboutHeroProps) => {
 
         {/* Biography */}
         <MotionDiv
-          className="space-y-4"
+          className="motion-item-initial space-y-4"
           {...(shouldReduceMotion
             ? {}
             : {

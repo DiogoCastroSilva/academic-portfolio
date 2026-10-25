@@ -48,12 +48,12 @@ export const SkillsGrid = ({ categories }: SkillsGridProps) => {
   return (
     <section className="mx-4 p-6 sm:p-10 lg:p-12">
       <MotionDiv
-        className="flex flex-col gap-8"
+        className="motion-item-initial flex flex-col gap-8"
         {...(shouldReduceMotion
           ? {}
           : {
               variants: sectionVariants,
-              initial: "hidden",
+              initial: false,
               whileInView: "visible",
               viewport: { once: true, margin: MOTION_VIEWPORT_MARGIN },
             })}
@@ -78,7 +78,7 @@ export const SkillsGrid = ({ categories }: SkillsGridProps) => {
           {categories.map((category) => (
             <MotionDiv
               key={category.category}
-              className="flex flex-col gap-4"
+              className="motion-item-initial flex flex-col gap-4"
               {...(shouldReduceMotion
                 ? {}
                 : {

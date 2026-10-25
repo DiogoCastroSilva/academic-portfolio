@@ -29,6 +29,26 @@ describe("SkillsGrid accessibility", () => {
     await expectNoA11yViolations(container);
   });
 
+  it("has no accessibility violations with empty categories", async () => {
+    const { container } = render(<SkillsGrid categories={[]} />);
+    await expectNoA11yViolations(container);
+  });
+
+  it("applies motion-item-initial class for no-JS fallback", () => {
+    const { container } = render(<SkillsGrid categories={mockCategories} />);
+    // The outer MotionDiv and each category MotionDiv have motion-item-initial
+    const motionItems = container.querySelectorAll(".motion-item-initial");
+    expect(motionItems.length).toBeGreaterThan(0);
+  });
+
+  it("does not apply inline opacity-0 styles from Motion initial state", () => {
+    const { container } = render(<SkillsGrid categories={mockCategories} />);
+    const motionItems = container.querySelectorAll(".motion-item-initial");
+    motionItems.forEach((item) => {
+      expect(item).not.toHaveStyle({ opacity: "0" });
+    });
+  });
+
   it("has section with heading", () => {
     render(<SkillsGrid categories={mockCategories} />);
 

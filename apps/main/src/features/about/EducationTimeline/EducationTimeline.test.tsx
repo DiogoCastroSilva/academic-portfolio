@@ -137,3 +137,20 @@ describe("EducationTimeline", () => {
     expect(accentElements.length).toBeGreaterThan(0);
   });
 });
+
+describe("EducationTimeline progressive enhancement", () => {
+  it("applies motion-item-initial class to section for no-JS fallback", () => {
+    const { container } = render(<EducationTimeline items={mockEducation} />);
+    // The outer MotionDiv inside the section has motion-item-initial
+    const motionItems = container.querySelectorAll(".motion-item-initial");
+    expect(motionItems.length).toBeGreaterThan(0);
+  });
+
+  it("does not apply inline opacity-0 styles from Motion initial state", () => {
+    const { container } = render(<EducationTimeline items={mockEducation} />);
+    const entries = container.querySelectorAll(".flex.gap-4");
+    entries.forEach((entry) => {
+      expect(entry).not.toHaveStyle({ opacity: "0" });
+    });
+  });
+});

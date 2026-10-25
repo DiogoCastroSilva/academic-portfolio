@@ -155,4 +155,22 @@ describe("ResearchInterests", () => {
     const descElements = container.querySelectorAll(".text-text-secondary");
     expect(descElements.length).toBeGreaterThan(0);
   });
+
+  it("applies motion-item-initial class to section for no-JS fallback", () => {
+    const { container } = render(
+      <ResearchInterests items={mockResearchInterests} />,
+    );
+    const motionItems = container.querySelectorAll(".motion-item-initial");
+    expect(motionItems.length).toBeGreaterThanOrEqual(1);
+  });
+
+  it("does not apply inline opacity-0 styles from Motion initial state", () => {
+    const { container } = render(
+      <ResearchInterests items={mockResearchInterests} />,
+    );
+    const motionItems = container.querySelectorAll(".motion-item-initial");
+    motionItems.forEach((item) => {
+      expect(item).not.toHaveStyle({ opacity: "0" });
+    });
+  });
 });

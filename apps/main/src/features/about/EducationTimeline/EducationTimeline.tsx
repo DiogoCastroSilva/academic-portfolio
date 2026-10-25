@@ -49,12 +49,12 @@ export const EducationTimeline = ({ items }: EducationTimelineProps) => {
   return (
     <section className="mx-4 p-6 sm:p-10 lg:p-12">
       <MotionDiv
-        className="flex flex-col gap-8"
+        className="motion-item-initial flex flex-col gap-8"
         {...(shouldReduceMotion
           ? {}
           : {
               variants: sectionVariants,
-              initial: "hidden",
+              initial: false,
               whileInView: "visible",
               viewport: { once: true, margin: MOTION_VIEWPORT_MARGIN },
             })}
@@ -66,7 +66,7 @@ export const EducationTimeline = ({ items }: EducationTimelineProps) => {
         {items.map((edu, index) => (
           <MotionDiv
             key={edu.degree}
-            className="flex gap-4"
+            className="motion-item-initial flex gap-4"
             {...(shouldReduceMotion
               ? {}
               : {

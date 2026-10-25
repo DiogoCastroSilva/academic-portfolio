@@ -35,6 +35,30 @@ describe("AboutHero accessibility", () => {
     await expectNoA11yViolations(container);
   });
 
+  it("applies motion-item-initial class to animated sections for no-JS fallback", () => {
+    const { container } = render(<AboutHero profile={mockProfile} />);
+    const motionItems = container.querySelectorAll(".motion-item-initial");
+    // Hero container, portrait, text block, and biography all get the class
+    expect(motionItems.length).toBe(4);
+  });
+
+  it("does not apply inline opacity-0 styles from Motion initial state", () => {
+    const { container } = render(<AboutHero profile={mockProfile} />);
+    const motionItems = container.querySelectorAll(".motion-item-initial");
+    motionItems.forEach((item) => {
+      expect(item).not.toHaveStyle({ opacity: "0" });
+    });
+  });
+
+  it("renders name with profile-name class immediately (no hidden state)", () => {
+    const { container } = render(<AboutHero profile={mockProfile} />);
+    const nameEl = container.querySelector(".profile-name");
+    expect(nameEl).toBeInTheDocument();
+    expect(nameEl).toHaveTextContent(mockProfile.name);
+    // Parent MotionDiv has motion-item-initial, but the name itself is
+    // inside a child element and should be readable
+  });
+
   it("has h1 with person name", () => {
     render(<AboutHero profile={mockProfile} />);
 
