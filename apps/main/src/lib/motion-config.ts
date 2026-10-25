@@ -9,6 +9,14 @@
  * entire motion language.
  *
  * See docs/architecture/frontend-design-principles.md §6 for guidance.
+ *
+ * Progressive enhancement pattern:
+ *   - Motion components use `initial={false}` (NEVER `initial: "hidden"`)
+ *   - Items receive `.motion-item-initial` CSS class (see animations.css)
+ *   - The `jsDetectorScript` (libs/navigation) sets `data-js` on `<html>`
+ *     in `<head>` before first paint, gating the opacity-0 CSS state
+ *   - Without JS: `.motion-item-initial` = opacity-1 (visible in SSR)
+ *   - With JS: `.motion-item-initial` = opacity-0, Motion animates to opacity-1
  */
 
 /** Duration for section-level entrance reveals (500ms). */

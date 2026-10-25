@@ -3,6 +3,7 @@ import {
   getNavigation,
   NavBar,
   themeInitScript,
+  jsDetectorScript,
 } from "@academic-portfolio/navigation";
 import "./global.css";
 import { CloudflareAnalytics } from "../components/CloudflareAnalytics";
@@ -97,6 +98,13 @@ export default function RootLayout({
           Not a client component — pure JS string injected via dangerouslySetInnerHTML.
         */}
         <script dangerouslySetInnerHTML={{ __html: themeInitScript }} />
+        {/*
+          Inline JS-detection script: sets `data-js` on <html> synchronously
+          before first paint. Enables CSS to distinguish no-JS from JS
+          environments for progressive enhancement of Motion animations.
+          See libs/design-system/src/styles/animations.css for usage.
+        */}
+        <script dangerouslySetInnerHTML={{ __html: jsDetectorScript }} />
       </head>
       <body
         suppressHydrationWarning

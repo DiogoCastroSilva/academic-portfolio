@@ -58,6 +58,24 @@ describe("ContentCardSection reduced-motion", () => {
     // Articles should not have hidden opacity or transform styles
     expect(article).not.toHaveStyle({ opacity: 0 });
     expect(article).not.toHaveAttribute("data-framer");
+    // Articles use plain HTML elements (no Motion component markers)
+    expect(article?.tagName).toBe("ARTICLE");
+  });
+
+  it("retains motion-item-initial class but CSS keeps it visible under reduced motion", () => {
+    const { container } = render(
+      <ContentCardSection
+        heading="Projects"
+        headingId="projects-heading"
+        items={mockItems}
+        hrefPrefix="/projects"
+      />,
+    );
+    const article = container.querySelector("article");
+    // The class is present (CSS @media override handles visibility)
+    expect(article).toHaveClass("motion-item-initial");
+    // But no inline opacity-0 from Motion
+    expect(article).not.toHaveStyle({ opacity: 0 });
   });
 
   it("renders content immediately without waiting for viewport trigger", () => {

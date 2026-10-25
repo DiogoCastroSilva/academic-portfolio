@@ -123,7 +123,12 @@ export function PublicationRowSection({
         ? {}
         : {
             variants: containerVariants,
-            initial: "hidden" as const,
+            // `initial={false}` prevents Motion from applying opacity:0 in
+            // SSR — content is immediately readable without JavaScript.
+            // The `.motion-item-initial` CSS class (guarded by `html[data-js]`
+            // via jsDetectorScript) provides the pre-animation state only
+            // when JS is enabled. See animations.css.
+            initial: false as const,
             whileInView: "visible" as const,
             viewport: {
               once: true,
@@ -166,7 +171,7 @@ export function PublicationRowSection({
           {visibleItems.map((item) => (
             <MotionArticle
               key={item.slug}
-              className="group relative py-5 first:pt-0 last:pb-0"
+              className="motion-item-initial group relative py-5 first:pt-0 last:pb-0"
               {...motionProps}
             >
               <div className="flex flex-col gap-1.5 sm:flex-row sm:items-start sm:gap-4">
@@ -281,7 +286,7 @@ export function PublicationRowSection({
       )}
 
       {viewAllHref && visibleItems.length > 0 && (
-        <MotionDiv className="mt-4" {...motionProps}>
+        <MotionDiv className="motion-item-initial mt-4" {...motionProps}>
           <Link
             href={viewAllHref}
             className="text-link hover:text-link-hover focus-visible:outline-focus inline-flex items-center gap-1 text-sm font-medium hover:underline focus-visible:outline-2 focus-visible:outline-offset-2"

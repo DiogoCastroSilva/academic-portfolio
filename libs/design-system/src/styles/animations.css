@@ -28,3 +28,45 @@
     transform: none;
   }
 }
+
+/* ──────────────────────────────────────────────────────────────
+ * Progressive enhancement: Motion component pre-visibility states
+ *
+ * The `.motion-item-initial` class provides an opacity-0 + translateY
+ * state for Motion-powered components (ContentCardSection,
+ * PublicationRowSection, etc.) that use `initial={false}` — so
+ * Motion does NOT apply its own initial styles in SSR.
+ *
+ * WITHOUT JavaScript:
+ *   - `<html>` has NO `data-js` attribute
+ *   - `.motion-item-initial` resolves to opacity-100, transform: none
+ *   - Content is immediately visible and readable in SSR output
+ *
+ * WITH JavaScript:
+ *   - The inline `jsDetectorScript` (set in <head> via dangerouslySetInnerHTML)
+ *     adds `data-js` to `<html>` synchronously before first paint
+ *   - `html[data-js] .motion-item-initial` applies opacity-0 + translateY
+ *   - Motion's `whileInView` then animates to opacity-100, y:0 on scroll
+ *   - Animation is an enhancement, not a requirement
+ *
+ * REDUCED MOTION:
+ *   - `@media (prefers-reduced-motion: reduce)` overrides to opacity-100
+ *   - Motion's `useReducedMotion()` also renders plain HTML (no opacity-0)
+ *   - Content is immediately readable in both paths
+ */
+.motion-item-initial {
+  opacity: 1;
+  transform: none;
+}
+
+html[data-js] .motion-item-initial {
+  opacity: 0;
+  transform: translateY(var(--motion-offset));
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .motion-item-initial {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}

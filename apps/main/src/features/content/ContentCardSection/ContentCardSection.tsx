@@ -123,7 +123,12 @@ export function ContentCardSection({
       {...(shouldReduceMotion
         ? {}
         : {
-            initial: "hidden" as const,
+            // `initial={false}` prevents Motion from applying opacity:0 in
+            // SSR. Content is immediately visible in SSR output (progressive
+            // enhancement). The CSS `.motion-item-initial` class (guarded by
+            // `html[data-js]` via the inline jsDetectorScript) provides the
+            // pre-animation state only when JS is enabled. See animations.css.
+            initial: false as const,
             whileInView: "visible" as const,
             viewport: {
               once: true,
@@ -165,7 +170,7 @@ export function ContentCardSection({
           {visibleItems.map((item, index) => (
             <MotionArticle
               key={item.slug}
-              className="bg-surface-card border-border shadow-card rounded-2xl border"
+              className="motion-item-initial bg-surface-card border-border shadow-card rounded-2xl border"
               {...motionProps}
             >
               <Link
@@ -248,7 +253,10 @@ export function ContentCardSection({
           ))}
 
           {viewAllHref && (
-            <MotionDiv className="col-span-full mt-2" {...motionProps}>
+            <MotionDiv
+              className="motion-item-initial col-span-full mt-2"
+              {...motionProps}
+            >
               <Link
                 href={viewAllHref}
                 className="text-link hover:text-link-hover focus-visible:outline-focus inline-flex items-center gap-1 text-sm font-medium hover:underline focus-visible:outline-2 focus-visible:outline-offset-2"

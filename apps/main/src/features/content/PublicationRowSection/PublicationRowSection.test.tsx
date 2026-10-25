@@ -334,3 +334,55 @@ describe("PublicationRowSection rendering", () => {
     ).not.toBeInTheDocument();
   });
 });
+
+describe("PublicationRowSection progressive enhancement", () => {
+  it("applies motion-item-initial class to article elements for no-JS fallback", () => {
+    const { container } = render(
+      <PublicationRowSection
+        heading="Publications"
+        headingId="publications-heading"
+        items={mockItems}
+        hrefPrefix="/publications"
+      />,
+    );
+    const articles = container.querySelectorAll("article");
+    expect(articles.length).toBe(2);
+    articles.forEach((article) => {
+      expect(article).toHaveClass("motion-item-initial");
+    });
+  });
+
+  it("does not apply inline opacity-0 styles from Motion initial state", () => {
+    const { container } = render(
+      <PublicationRowSection
+        heading="Publications"
+        headingId="publications-heading"
+        items={mockItems}
+        hrefPrefix="/publications"
+      />,
+    );
+    const articles = container.querySelectorAll("article");
+    articles.forEach((article) => {
+      expect(article).not.toHaveStyle({ opacity: "0" });
+      expect(article).not.toHaveStyle({ opacity: 0 });
+    });
+  });
+
+  it("renders view-all link with motion-item-initial class", () => {
+    render(
+      <PublicationRowSection
+        heading="Publications"
+        headingId="publications-heading"
+        items={mockItems}
+        hrefPrefix="/publications"
+        viewAllHref="/publications"
+        viewAllLabel="View all publications"
+      />,
+    );
+    const link = screen.getByText("View all publications");
+    expect(link).toBeInTheDocument();
+    // The parent div should have motion-item-initial class
+    const parentDiv = link.closest("div");
+    expect(parentDiv).toHaveClass("motion-item-initial");
+  });
+});

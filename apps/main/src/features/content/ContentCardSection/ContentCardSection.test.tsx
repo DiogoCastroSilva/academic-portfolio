@@ -736,3 +736,54 @@ describe("ContentCardSection publication metadata", () => {
     expect(article?.textContent).not.toContain("Venue:");
   });
 });
+
+describe("ContentCardSection progressive enhancement", () => {
+  it("applies motion-item-initial class to article elements for no-JS fallback", () => {
+    const { container } = render(
+      <ContentCardSection
+        heading="Projects"
+        headingId="projects-heading"
+        items={mockItems}
+        hrefPrefix="/projects"
+      />,
+    );
+    const articles = container.querySelectorAll("article");
+    expect(articles.length).toBe(2);
+    articles.forEach((article) => {
+      expect(article).toHaveClass("motion-item-initial");
+    });
+  });
+
+  it("does not apply inline opacity-0 styles from Motion initial state", () => {
+    const { container } = render(
+      <ContentCardSection
+        heading="Projects"
+        headingId="projects-heading"
+        items={mockItems}
+        hrefPrefix="/projects"
+      />,
+    );
+    const articles = container.querySelectorAll("article");
+    articles.forEach((article) => {
+      expect(article).not.toHaveStyle({ opacity: "0" });
+      expect(article).not.toHaveStyle({ opacity: 0 });
+    });
+  });
+
+  it("renders view-all container with motion-item-initial class", () => {
+    render(
+      <ContentCardSection
+        heading="Projects"
+        headingId="projects-heading"
+        items={mockItems}
+        hrefPrefix="/projects"
+        viewAllHref="/projects"
+        viewAllLabel="View all projects"
+      />,
+    );
+    const link = screen.getByText("View all projects");
+    expect(link).toBeInTheDocument();
+    const parentDiv = link.closest("div");
+    expect(parentDiv).toHaveClass("motion-item-initial");
+  });
+});

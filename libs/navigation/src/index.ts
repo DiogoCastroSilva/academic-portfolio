@@ -10,6 +10,7 @@ export {
   type UseThemeResult,
 } from "./lib/hooks/useTheme.js";
 export { themeInitScript } from "./lib/hooks/theme-init.js";
+export { jsDetectorScript } from "./lib/hooks/js-detector.js";
 export {
   baseNavigation,
   blogNavigationItem,
