@@ -9,6 +9,7 @@ import {
   MOTION_EASE_ENTER,
   MOTION_OFFSET,
   MOTION_STAGGER,
+  MOTION_VIEWPORT_MARGIN,
 } from "@/lib/motion-config.js";
 
 export type EducationTimelineProps = {
@@ -55,7 +56,7 @@ export const EducationTimeline = ({ items }: EducationTimelineProps) => {
               variants: sectionVariants,
               initial: "hidden",
               whileInView: "visible",
-              viewport: { once: true },
+              viewport: { once: true, margin: MOTION_VIEWPORT_MARGIN },
             })}
       >
         <h2 className="font-display text-text-secondary text-2xl font-normal md:text-3xl">

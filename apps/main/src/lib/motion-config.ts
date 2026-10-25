@@ -38,3 +38,9 @@ export const MOTION_OFFSET = 20;
 
 /** Reduced scale factor for portrait entrance (10% shrink). */
 export const MOTION_PORTRAIT_SCALE = 0.9;
+
+/** Viewport margin for scroll-triggered animations.
+ * The -20% bottom margin triggers reveals slightly before elements
+ * fully enter the viewport, creating a smooth anticipation effect.
+ * Shared across all viewport-triggered sections for consistent behavior. */
+export const MOTION_VIEWPORT_MARGIN = "0px 0px -20% 0px";

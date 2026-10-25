@@ -12,6 +12,7 @@ import {
   MOTION_EASE_ENTER,
   MOTION_OFFSET,
   MOTION_STAGGER,
+  MOTION_VIEWPORT_MARGIN,
 } from "@/lib/motion-config.js";
 
 /**
@@ -126,7 +127,7 @@ export function ContentCardSection({
             whileInView: "visible" as const,
             viewport: {
               once: true,
-              margin: "0px 0px -20% 0px",
+              margin: MOTION_VIEWPORT_MARGIN,
             } as const,
           })}
     >
