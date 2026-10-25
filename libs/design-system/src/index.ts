@@ -33,3 +33,9 @@ export { Breadcrumb } from "./lib/components/Breadcrumb/index.js";
 export type { BreadcrumbProps } from "./lib/components/Breadcrumb/index.js";
 export { ChevronIcon } from "./lib/components/ChevronIcon/index.js";
 export type { ChevronIconProps } from "./lib/components/ChevronIcon/index.js";
+export { Tag } from "./lib/components/Tag/index.js";
+export type {
+  TagProps,
+  TagSize,
+  TagVariant,
+} from "./lib/components/Tag/index.js";

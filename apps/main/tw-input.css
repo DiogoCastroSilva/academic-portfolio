@@ -23,10 +23,6 @@
   --color-water-800: #164e63; /* deep water — card surface */
   --color-water-900: #1e5a73; /* deep current — elevated surface */
 
-  /* Amber for limited status / highlight use */
-  --color-flood-50: #fef3c7; /* amber badge background */
-  --color-flood-800: #92400e; /* amber badge text */
-
   /* ── Semantic token references (CSS-variable-backed utilities) ──────────
    * These map Tailwind utility names to the semantic CSS custom properties
    * defined in libs/design-system/src/styles/tokens.css & themes.css.

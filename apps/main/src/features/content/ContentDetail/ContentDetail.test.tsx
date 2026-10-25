@@ -139,13 +139,22 @@ describe("ContentDetail accessibility", () => {
     expect(time).toHaveAttribute("dateTime", mockContent.date);
   });
 
-  it("renders tags as list items", () => {
+  it("renders tags as Tag spans with md styling", () => {
     render(<ContentDetail content={mockContent} />);
     const tagList = screen.getByRole("list");
     const items = tagList.querySelectorAll("li");
     expect(items).toHaveLength(2);
-    expect(items[0]).toHaveTextContent("TypeScript");
-    expect(items[1]).toHaveTextContent("React");
+    // Tags render as <span> (Tag component) inside <li> wrappers
+    const tags = tagList.querySelectorAll("span");
+    expect(tags).toHaveLength(2);
+    expect(tags[0]).toHaveTextContent("TypeScript");
+    expect(tags[1]).toHaveTextContent("React");
+    // Tag span uses md size + default variant classes
+    expect(tags[0]).toHaveClass("px-3");
+    expect(tags[0]).toHaveClass("text-sm");
+    expect(tags[0]).toHaveClass("rounded-full");
+    expect(tags[0]).toHaveClass("border-border");
+    expect(tags[0]).toHaveClass("text-text-secondary");
   });
 });
 
@@ -249,13 +258,13 @@ describe("ContentDetail theme contrast (dark mode on dark surfaces)", () => {
     expect(className).not.toMatch(/prose-a:text-blue-600/);
   });
 
-  it("tag list items use semantic text color token", () => {
+  it("tag spans use semantic text color token", () => {
     render(<ContentDetail content={mockContent} />);
-    const tagItems = document.querySelectorAll("li");
-    tagItems.forEach((li) => {
-      const className = li.className;
-      // Semantic text-secondary token provides adequate contrast in both themes
-      expect(className).toMatch(/text-text-secondary/);
+    // Tags render as <span> (Tag component) inside <li> wrappers
+    const tagList = screen.getByRole("list");
+    const tags = tagList.querySelectorAll("span");
+    tags.forEach((tag) => {
+      expect(tag.className).toMatch(/text-text-secondary/);
     });
   });
 

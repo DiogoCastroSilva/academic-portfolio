@@ -1,6 +1,6 @@
 import type { ContentItemMeta } from "@academic-portfolio/content";
 import { dates } from "@academic-portfolio/utils";
-import { ContentImage } from "@academic-portfolio/design-system";
+import { ContentImage, Tag } from "@academic-portfolio/design-system";
 import { JsonLd } from "../../../lib/JsonLd";
 import { buildArticleSchema } from "../../../app/lib/structured-data";
 
@@ -31,11 +31,8 @@ export function ContentDetail({ content }: ContentDetailProps) {
           {content.tags && content.tags.length > 0 && (
             <ul className="flex flex-wrap gap-2">
               {content.tags.map((tag) => (
-                <li
-                  key={tag}
-                  className="border-border text-text-secondary rounded-full border px-3 py-1 text-sm font-medium"
-                >
-                  {tag}
+                <li key={tag}>
+                  <Tag size="md">{tag}</Tag>
                 </li>
               ))}
             </ul>

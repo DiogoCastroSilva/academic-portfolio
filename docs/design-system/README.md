@@ -38,12 +38,13 @@ Typography rules are in `libs/design-system/src/styles/typography.css`:
 
 ### UI components
 
-| Component      | Used by                                                                      | Notes                                                         |
-| -------------- | ---------------------------------------------------------------------------- | ------------------------------------------------------------- |
-| `ContentImage` | `AboutSection`, `AboutHero`, `ContentCardSection`, `ContentDetail`           | WebP-aware `<picture>` with SVG and `StaticImageData` support |
-| `Pagination`   | `/projects/page/[page]/`, `/publications/page/[page]/`, `/blog/page/[page]/` | Client component, path-based, reduced-motion compliant        |
-| `Breadcrumb`   | All detail pages (`[slug]/page.tsx`)                                         | Uses `ChevronIcon` separator                                  |
-| `ChevronIcon`  | `Breadcrumb`                                                                 | Generic icon                                                  |
+| Component      | Used by                                                                      | Notes                                                                            |
+| -------------- | ---------------------------------------------------------------------------- | -------------------------------------------------------------------------------- |
+| `ContentImage` | `AboutSection`, `AboutHero`, `ContentCardSection`, `ContentDetail`           | WebP-aware `<picture>` with SVG and `StaticImageData` support                    |
+| `Pagination`   | `/projects/page/[page]/`, `/publications/page/[page]/`, `/blog/page/[page]/` | Client component, path-based, reduced-motion compliant                           |
+| `Breadcrumb`   | All detail pages (`[slug]/page.tsx`)                                         | Uses `ChevronIcon` separator                                                     |
+| `ChevronIcon`  | `Breadcrumb`                                                                 | Generic icon                                                                     |
+| `Tag`          | `ContentCardSection`, `ContentDetail`                                        | Semantic `<span>` pill with `size` (sm/md) and `variant` (default/warning) props |
 
 ### Animation utilities
 

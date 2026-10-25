@@ -11,7 +11,7 @@ The application has grown to 14 UI components in `apps/main/src/app/ui/`, mixing
 The previous decision (ADR-0006, frontend-design-principles.md §11) was "no separate design-system package" because the component count was small and the CSS token set was minimal. Since then:
 
 - The `ui/` folder has doubled in size (from ~7 to 14 components).
-- Four components — `ContentImage`, `Pagination`, `Breadcrumb`, `ChevronIcon` — are used across multiple feature routes and are not feature-specific.
+- Five components — `ContentImage`, `Pagination`, `Breadcrumb`, `ChevronIcon`, and `Tag` — are used across multiple feature routes and are not feature-specific.
 - The semantic token system is stable with ~15 custom properties, dark-mode overrides, and prose typography rules that are currently scattered in `global.css`.
 - Fork owners who want to customize the template would benefit from a clear "shared UI / change carefully" boundary.
 
@@ -21,7 +21,7 @@ Create `libs/design-system/` as a single Nx library (one package — no splittin
 
 1. **Semantic CSS custom properties** (design tokens): surface, text, link, border, focus, status, typography roles, radius, shadow, motion.
 2. **Typography foundation**: prose styles, heading scales, the `.profile-name` rule, caption/metadata styles.
-3. **Shared UI primitives**: only components that are genuinely feature-agnostic and used across multiple feature routes. Initial set: `ContentImage`, `Pagination`, `Breadcrumb`, and the `ChevronIcon` icon. **No speculative Button, Badge, Card, Heading, or Text components** unless evidence of duplication arises.
+3. **Shared UI primitives**: only components that are genuinely feature-agnostic and used across multiple feature routes. Initial set: `ContentImage`, `Pagination`, `Breadcrumb`, the `ChevronIcon` icon, and `Tag`. **No speculative Button, Badge, Card, Heading, or Text components** unless evidence of duplication arises.
 4. **Animation utilities**: `.animate-fadeInUp` keyframes and reduced-motion fallbacks.
 
 ### Dependency direction (Nx module boundaries)

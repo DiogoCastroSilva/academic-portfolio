@@ -2,7 +2,7 @@ import type { ContentMeta } from "@academic-portfolio/content";
 import { dates } from "@academic-portfolio/utils";
 import Link from "next/link";
 
-import { ContentImage } from "@academic-portfolio/design-system";
+import { ContentImage, Tag } from "@academic-portfolio/design-system";
 
 export type ContentCardSectionProps = {
   heading: string;
@@ -128,11 +128,8 @@ export function ContentCardSection({
                         </time>
                         <ul className="flex flex-wrap items-center gap-2">
                           {item.tags?.slice(0, tagsLimit).map((tag) => (
-                            <li
-                              key={tag}
-                              className="border-border text-text-secondary min-w-0 rounded-full border px-2.5 py-1 text-xs font-medium"
-                            >
-                              {tag}
+                            <li key={tag} className="min-w-0">
+                              <Tag size="sm">{tag}</Tag>
                             </li>
                           ))}
                           {item.tags && item.tags.length > tagsLimit && (
