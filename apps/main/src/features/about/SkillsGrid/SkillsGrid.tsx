@@ -37,29 +37,18 @@ const categoryVariants = {
     transition: {
       duration: MOTION_DURATION_CHILD,
       ease: MOTION_EASE_ENTER,
-      staggerChildren: 0.03,
-      delayChildren: 0.05,
     },
-  },
-};
-
-const skillVariants = {
-  hidden: { scale: 0.9, opacity: 0 },
-  visible: {
-    scale: 1,
-    opacity: 1,
-    transition: { duration: 0.25, ease: MOTION_EASE_ENTER },
   },
 };
 
 export const SkillsGrid = ({ categories }: SkillsGridProps) => {
   const shouldReduceMotion = useReducedMotion();
   const MotionDiv = shouldReduceMotion ? "div" : motion.div;
-  const MotionSpan = shouldReduceMotion ? "span" : motion.span;
 
   return (
     <section className="mx-4 p-6 sm:p-10 lg:p-12">
       <MotionDiv
+        className="flex flex-col gap-8"
         {...(shouldReduceMotion
           ? {}
           : {
@@ -69,7 +58,7 @@ export const SkillsGrid = ({ categories }: SkillsGridProps) => {
               viewport: { once: true },
             })}
       >
-        <h2 className="font-display text-text-secondary mb-8 text-2xl font-normal md:text-3xl">
+        <h2 className="font-display text-text-secondary text-2xl font-normal md:text-3xl">
           Skills &amp; Tools
         </h2>
 
@@ -82,11 +71,11 @@ export const SkillsGrid = ({ categories }: SkillsGridProps) => {
                   hidden: { opacity: 1 },
                   visible: {
                     opacity: 1,
-                    transition: { staggerChildren: MOTION_STAGGER },
+                    transition: {
+                      staggerChildren: MOTION_STAGGER,
+                    },
                   },
                 },
-                initial: "hidden",
-                animate: "visible",
               })}
         >
           {categories.map((category) => (
@@ -104,22 +93,12 @@ export const SkillsGrid = ({ categories }: SkillsGridProps) => {
               </h3>
               <div className="flex flex-wrap gap-2">
                 {category.items.map((skill) => (
-                  <MotionSpan
+                  <span
                     key={skill}
                     className="bg-surface-tinted text-text-secondary rounded-full px-4 py-2 text-sm font-medium"
-                    {...(shouldReduceMotion
-                      ? {}
-                      : {
-                          variants: skillVariants,
-                          whileHover: { scale: 1.03 },
-                          transition: {
-                            duration: 0.25,
-                            ease: MOTION_EASE_ENTER,
-                          },
-                        })}
                   >
                     {skill}
-                  </MotionSpan>
+                  </span>
                 ))}
               </div>
             </MotionDiv>

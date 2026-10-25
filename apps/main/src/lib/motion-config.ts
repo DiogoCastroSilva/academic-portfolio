@@ -37,6 +37,3 @@ export const MOTION_OFFSET = 20;
 
 /** Reduced scale factor for portrait entrance (10% shrink). */
 export const MOTION_PORTRAIT_SCALE = 0.9;
-
-/** Hover scale multiplier for interactive cards (5% growth). */
-export const MOTION_HOVER_CARD_SCALE = 1.05;

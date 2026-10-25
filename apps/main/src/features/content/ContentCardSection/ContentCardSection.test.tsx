@@ -483,6 +483,47 @@ describe("ContentCardSection flex min-width prevents overflow", () => {
   });
 });
 
+describe("ContentCardSection card surface styling", () => {
+  it("card Link uses rounded-2xl to match article corners", () => {
+    const { container } = render(
+      <ContentCardSection
+        heading="Projects"
+        headingId="projects-heading"
+        items={mockItems}
+        hrefPrefix="/projects"
+      />,
+    );
+    const link = container.querySelector("article > a");
+    expect(link).toHaveClass("rounded-2xl");
+  });
+
+  it("card content uses p-5 for breathing room", () => {
+    const { container } = render(
+      <ContentCardSection
+        heading="Projects"
+        headingId="projects-heading"
+        items={mockItems}
+        hrefPrefix="/projects"
+      />,
+    );
+    const contentDiv = container.querySelector("article > a > div.p-5");
+    expect(contentDiv).toBeInTheDocument();
+  });
+
+  it("card title has tightened mb-1 margin for hierarchy", () => {
+    const { container } = render(
+      <ContentCardSection
+        heading="Projects"
+        headingId="projects-heading"
+        items={mockItems}
+        hrefPrefix="/projects"
+      />,
+    );
+    const title = container.querySelector("article h3");
+    expect(title).toHaveClass("mb-1");
+  });
+});
+
 describe("ContentCardSection selected badge", () => {
   it("renders 'Featured' badge when selected is true", () => {
     const items: ContentMeta[] = [

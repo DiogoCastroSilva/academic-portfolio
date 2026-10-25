@@ -98,7 +98,7 @@ export function ContentCardSection({
                 >
                   <Link
                     href={itemHref(hrefPrefix, item.slug)}
-                    className="group focus-visible:outline-focus block rounded-lg focus-visible:outline-2 focus-visible:outline-offset-2"
+                    className="group focus-visible:outline-focus block rounded-2xl focus-visible:outline-2 focus-visible:outline-offset-2"
                     aria-label={`Read more: ${item.title}`}
                   >
                     <div className="bg-surface-elevated relative aspect-[16/9] w-full overflow-hidden">
@@ -118,7 +118,7 @@ export function ContentCardSection({
                         </span>
                       )}
                     </div>
-                    <div className="p-4">
+                    <div className="p-5">
                       <div className="flex min-w-0 flex-wrap items-center gap-2">
                         <time
                           dateTime={item.date}
@@ -161,7 +161,7 @@ export function ContentCardSection({
                             {item.venue}
                           </p>
                         )}
-                        <h3 className="text-text-primary mb-2 line-clamp-2 text-xl leading-tight font-semibold tracking-tight transition-all duration-250 group-hover:underline">
+                        <h3 className="text-text-primary mb-1 line-clamp-2 text-xl leading-tight font-semibold tracking-tight transition-all duration-250 group-hover:underline">
                           {item.title}
                         </h3>
                         {item.excerpt ? (

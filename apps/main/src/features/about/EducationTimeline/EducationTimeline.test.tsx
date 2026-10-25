@@ -109,6 +109,13 @@ describe("EducationTimeline", () => {
     expect(dots.length).toBeGreaterThan(0);
   });
 
+  it("renders timeline dots with h-5 w-5 dimensions for scanability", () => {
+    const { container } = render(<EducationTimeline items={mockEducation} />);
+    // The first dot (before the connector line)
+    const dots = container.querySelectorAll(".bg-accent.h-5.w-5");
+    expect(dots.length).toBeGreaterThan(0);
+  });
+
   it("renders timeline connector lines between items", () => {
     const { container } = render(<EducationTimeline items={mockEducation} />);
     const connectors = container.querySelectorAll(".bg-border");

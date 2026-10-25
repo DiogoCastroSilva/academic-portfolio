@@ -15,6 +15,32 @@ export type EducationTimelineProps = {
   items: EducationEntry[];
 };
 
+const sectionVariants = {
+  hidden: { opacity: 0, y: MOTION_OFFSET },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration: MOTION_DURATION_SECTION,
+      ease: MOTION_EASE_ENTER,
+      staggerChildren: MOTION_STAGGER,
+      delayChildren: MOTION_DELAY_CHILDREN,
+    },
+  },
+};
+
+const entryVariants = {
+  hidden: { opacity: 0, x: -MOTION_OFFSET },
+  visible: {
+    opacity: 1,
+    x: 0,
+    transition: {
+      duration: MOTION_DURATION_CHILD,
+      ease: MOTION_EASE_ENTER,
+    },
+  },
+};
+
 export const EducationTimeline = ({ items }: EducationTimelineProps) => {
   const shouldReduceMotion = useReducedMotion();
   const MotionDiv = shouldReduceMotion ? "div" : motion.div;
@@ -26,14 +52,9 @@ export const EducationTimeline = ({ items }: EducationTimelineProps) => {
         {...(shouldReduceMotion
           ? {}
           : {
-              initial: { opacity: 0, y: MOTION_OFFSET },
-              whileInView: { opacity: 1, y: 0 },
-              transition: {
-                duration: MOTION_DURATION_SECTION,
-                ease: MOTION_EASE_ENTER,
-                staggerChildren: MOTION_STAGGER,
-                delayChildren: MOTION_DELAY_CHILDREN,
-              },
+              variants: sectionVariants,
+              initial: "hidden",
+              whileInView: "visible",
               viewport: { once: true },
             })}
       >
@@ -44,23 +65,18 @@ export const EducationTimeline = ({ items }: EducationTimelineProps) => {
         {items.map((edu, index) => (
           <MotionDiv
             key={edu.degree}
-            className="flex gap-6"
+            className="flex gap-4"
             {...(shouldReduceMotion
               ? {}
               : {
-                  initial: { opacity: 0, x: -MOTION_OFFSET },
-                  animate: { opacity: 1, x: 0 },
-                  transition: {
-                    duration: MOTION_DURATION_CHILD,
-                    ease: MOTION_EASE_ENTER,
-                  },
+                  variants: entryVariants,
                 })}
           >
             {/* Timeline dot */}
             <div className="flex flex-col items-center">
-              <MotionDiv className="bg-accent h-4 w-4 rounded-full" />
+              <MotionDiv className="bg-accent h-5 w-5 rounded-full" />
               {index < items.length - 1 && (
-                <div className="bg-border mt-2 h-16 w-0.5" />
+                <div className="bg-border mt-2 w-0.5 flex-1" />
               )}
             </div>
 

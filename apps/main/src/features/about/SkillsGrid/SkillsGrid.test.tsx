@@ -71,4 +71,14 @@ describe("SkillsGrid accessibility", () => {
     expect(screen.getByText("R")).toBeInTheDocument();
     expect(screen.getByText("Machine Learning")).toBeInTheDocument();
   });
+
+  it("renders skill chips as plain span elements (not interactive motion components)", () => {
+    const { container } = render(<SkillsGrid categories={mockCategories} />);
+    const chips = container.querySelectorAll(".rounded-full");
+    expect(chips.length).toBeGreaterThan(0);
+    // Chips should be span elements, not buttons or links
+    chips.forEach((chip) => {
+      expect(chip.tagName).toBe("SPAN");
+    });
+  });
 });

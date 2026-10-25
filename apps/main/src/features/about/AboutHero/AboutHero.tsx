@@ -17,6 +17,44 @@ export type AboutHeroProps = {
   profile: ProfileData;
 };
 
+const heroVariants = {
+  hidden: { opacity: 0, y: MOTION_OFFSET },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration: MOTION_DURATION_HERO,
+      ease: MOTION_EASE_ENTER,
+      staggerChildren: MOTION_STAGGER,
+      delayChildren: MOTION_DELAY_CHILDREN,
+    },
+  },
+};
+
+const portraitVariants = {
+  hidden: { scale: MOTION_PORTRAIT_SCALE, opacity: 0 },
+  visible: {
+    scale: 1,
+    opacity: 1,
+    transition: {
+      duration: MOTION_DURATION_CHILD,
+      ease: MOTION_EASE_ENTER,
+    },
+  },
+};
+
+const textVariants = {
+  hidden: { opacity: 0, y: MOTION_OFFSET },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration: MOTION_DURATION_CHILD,
+      ease: MOTION_EASE_ENTER,
+    },
+  },
+};
+
 export const AboutHero = ({ profile }: AboutHeroProps) => {
   const shouldReduceMotion = useReducedMotion();
   const MotionDiv = shouldReduceMotion ? "div" : motion.div;
@@ -28,28 +66,20 @@ export const AboutHero = ({ profile }: AboutHeroProps) => {
         {...(shouldReduceMotion
           ? {}
           : {
-              initial: { opacity: 0, y: MOTION_OFFSET },
-              animate: { opacity: 1, y: 0 },
-              transition: {
-                duration: MOTION_DURATION_HERO,
-                ease: MOTION_EASE_ENTER,
-              },
+              variants: heroVariants,
+              initial: "hidden",
+              animate: "visible",
             })}
       >
-        {/* Hero Header */}
+        {/* Hero Header: portrait + identity + actions */}
         <div className="flex flex-col gap-6">
           <div className="flex flex-col items-center gap-4 md:flex-row md:gap-8">
             <MotionDiv
+              className="flex justify-center"
               {...(shouldReduceMotion
                 ? {}
                 : {
-                    initial: { scale: MOTION_PORTRAIT_SCALE, opacity: 0 },
-                    animate: { scale: 1, opacity: 1 },
-                    transition: {
-                      duration: MOTION_DURATION_CHILD,
-                      ease: MOTION_EASE_ENTER,
-                      delay: MOTION_DELAY_CHILDREN,
-                    },
+                    variants: portraitVariants,
                   })}
             >
               <ContentImage
@@ -65,13 +95,7 @@ export const AboutHero = ({ profile }: AboutHeroProps) => {
               {...(shouldReduceMotion
                 ? {}
                 : {
-                    initial: { y: MOTION_OFFSET, opacity: 0 },
-                    animate: { y: 0, opacity: 1 },
-                    transition: {
-                      duration: MOTION_DURATION_CHILD,
-                      ease: MOTION_EASE_ENTER,
-                      delay: MOTION_DELAY_CHILDREN + MOTION_STAGGER,
-                    },
+                    variants: textVariants,
                   })}
             >
               <div>
@@ -84,7 +108,7 @@ export const AboutHero = ({ profile }: AboutHeroProps) => {
                 {profile.email ? (
                   <a
                     href={`mailto:${profile.email}`}
-                    className="border-accent text-accent hover:bg-accent hover:text-text-on-accent focus-visible:outline-focus rounded-full border-2 px-6 py-2 font-medium transition-all focus-visible:outline-2 focus-visible:outline-offset-2"
+                    className="border-accent text-accent hover:bg-accent hover:text-text-on-accent focus-visible:outline-focus rounded-full border-2 px-6 py-2 font-medium transition-all duration-250 focus-visible:outline-2 focus-visible:outline-offset-2"
                   >
                     Get in Touch
                   </a>
@@ -95,7 +119,7 @@ export const AboutHero = ({ profile }: AboutHeroProps) => {
                     target="_blank"
                     rel="noopener noreferrer"
                     aria-label="View CV (PDF)"
-                    className="border-accent text-accent hover:bg-accent hover:text-text-on-accent focus-visible:outline-focus rounded-full border-2 px-6 py-2 font-medium transition-all focus-visible:outline-2 focus-visible:outline-offset-2"
+                    className="border-accent text-accent hover:bg-accent hover:text-text-on-accent focus-visible:outline-focus rounded-full border-2 px-6 py-2 font-medium transition-all duration-250 focus-visible:outline-2 focus-visible:outline-offset-2"
                   >
                     View CV (PDF)
                   </a>
@@ -105,22 +129,16 @@ export const AboutHero = ({ profile }: AboutHeroProps) => {
           </div>
         </div>
 
-        {/* Main Bio */}
+        {/* Biography */}
         <MotionDiv
           className="space-y-4"
           {...(shouldReduceMotion
             ? {}
             : {
-                initial: { y: MOTION_OFFSET, opacity: 0 },
-                animate: { y: 0, opacity: 1 },
-                transition: {
-                  duration: MOTION_DURATION_CHILD,
-                  ease: MOTION_EASE_ENTER,
-                  delay: MOTION_DELAY_CHILDREN + MOTION_STAGGER * 2,
-                },
+                variants: textVariants,
               })}
         >
-          <h2 className="font-display text-text-secondary mb-4 text-2xl font-normal md:text-3xl">
+          <h2 className="font-display text-text-secondary text-2xl font-normal md:text-3xl">
             About Me
           </h2>
           <div

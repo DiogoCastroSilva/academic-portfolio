@@ -48,6 +48,7 @@ export const ResearchInterests = ({ items }: ResearchInterestsProps) => {
   return (
     <section className="mx-4 p-6 sm:p-10 lg:p-12">
       <MotionDiv
+        className="flex flex-col gap-8"
         {...(shouldReduceMotion
           ? {}
           : {
@@ -57,7 +58,7 @@ export const ResearchInterests = ({ items }: ResearchInterestsProps) => {
               viewport: { once: true },
             })}
       >
-        <h2 className="font-display text-text-secondary mb-8 text-2xl font-normal md:text-3xl">
+        <h2 className="font-display text-text-secondary text-2xl font-normal md:text-3xl">
           Research Interests &amp; Expertise
         </h2>
 
@@ -73,21 +74,19 @@ export const ResearchInterests = ({ items }: ResearchInterestsProps) => {
                     transition: { staggerChildren: MOTION_STAGGER },
                   },
                 },
-                initial: "hidden",
-                animate: "visible",
               })}
         >
           {items.map((area) => (
             <MotionDiv
               key={area.title}
-              className="bg-surface-elevated border-border flex flex-col gap-3 rounded-xl border p-6"
+              className="bg-surface-elevated border-border flex flex-col gap-2 rounded-xl border p-6"
               {...(shouldReduceMotion
                 ? {}
                 : {
                     variants: cardVariants,
                   })}
             >
-              {area.icon && <div className="text-3xl">{area.icon}</div>}
+              {area.icon && <div className="text-2xl">{area.icon}</div>}
               <h3 className="text-text-primary text-lg font-semibold">
                 {area.title}
               </h3>
