@@ -2,8 +2,43 @@
 import type { ResearchInterest } from "@academic-portfolio/content";
 import { motion, useReducedMotion } from "motion/react";
 
+import {
+  MOTION_DELAY_CHILDREN,
+  MOTION_DURATION_CHILD,
+  MOTION_DURATION_SECTION,
+  MOTION_EASE_ENTER,
+  MOTION_OFFSET,
+  MOTION_STAGGER,
+} from "@/lib/motion-config.js";
+
 export type ResearchInterestsProps = {
   items: ResearchInterest[];
+};
+
+const sectionVariants = {
+  hidden: { opacity: 0, y: MOTION_OFFSET },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration: MOTION_DURATION_SECTION,
+      ease: MOTION_EASE_ENTER,
+      staggerChildren: MOTION_STAGGER,
+      delayChildren: MOTION_DELAY_CHILDREN,
+    },
+  },
+};
+
+const cardVariants = {
+  hidden: { opacity: 0, y: MOTION_OFFSET / 2 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration: MOTION_DURATION_CHILD,
+      ease: MOTION_EASE_ENTER,
+    },
+  },
 };
 
 export const ResearchInterests = ({ items }: ResearchInterestsProps) => {
@@ -16,9 +51,9 @@ export const ResearchInterests = ({ items }: ResearchInterestsProps) => {
         {...(shouldReduceMotion
           ? {}
           : {
-              initial: { opacity: 0, y: 20 },
-              whileInView: { opacity: 1, y: 0 },
-              transition: { duration: 0.6 },
+              variants: sectionVariants,
+              initial: "hidden",
+              whileInView: "visible",
               viewport: { once: true },
             })}
       >
@@ -31,23 +66,25 @@ export const ResearchInterests = ({ items }: ResearchInterestsProps) => {
           {...(shouldReduceMotion
             ? {}
             : {
-                initial: { opacity: 0 },
-                whileInView: { opacity: 1 },
-                transition: { staggerChildren: 0.1, delayChildren: 0.2 },
-                viewport: { once: true },
+                variants: {
+                  hidden: { opacity: 1 },
+                  visible: {
+                    opacity: 1,
+                    transition: { staggerChildren: MOTION_STAGGER },
+                  },
+                },
+                initial: "hidden",
+                animate: "visible",
               })}
         >
-          {items.map((area, index) => (
+          {items.map((area) => (
             <MotionDiv
               key={area.title}
               className="bg-surface-elevated border-border flex flex-col gap-3 rounded-xl border p-6"
               {...(shouldReduceMotion
                 ? {}
                 : {
-                    initial: { opacity: 0, y: 10 },
-                    whileInView: { opacity: 1, y: 0 },
-                    transition: { duration: 0.4, delay: index * 0.1 },
-                    viewport: { once: true },
+                    variants: cardVariants,
                   })}
             >
               {area.icon && <div className="text-3xl">{area.icon}</div>}

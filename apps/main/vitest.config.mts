@@ -5,7 +5,7 @@ export default defineConfig(() => ({
   root: __dirname,
   cacheDir: "../../node_modules/.vite/apps/main",
   esbuild: {
-    jsx: "automatic",
+    jsx: "automatic" as const,
   },
   test: {
     name: "@academic-portfolio/main",
@@ -26,6 +26,7 @@ export default defineConfig(() => ({
   },
   resolve: {
     alias: {
+      "@": fileURLToPath(new URL("./src", import.meta.url)),
       "server-only": fileURLToPath(
         new URL("../../libs/content/test/server-only-shim.ts", import.meta.url),
       ),

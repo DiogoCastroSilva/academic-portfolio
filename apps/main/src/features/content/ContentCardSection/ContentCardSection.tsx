@@ -93,7 +93,7 @@ export function ContentCardSection({
                   key={item.slug}
                   className="animate-fadeInUp bg-surface-card border-border shadow-card rounded-2xl border motion-reduce:animate-none"
                   style={{
-                    animationDelay: `${index * 100}ms`,
+                    animationDelay: `${index * 80}ms`,
                   }}
                 >
                   <Link
@@ -105,7 +105,7 @@ export function ContentCardSection({
                       <ContentImage
                         src={item.imageSrc}
                         alt={item.title}
-                        className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                        className="h-full w-full object-cover transition-transform duration-250 group-hover:scale-105"
                         sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
                         priority={index === 0}
                       />
@@ -161,7 +161,7 @@ export function ContentCardSection({
                             {item.venue}
                           </p>
                         )}
-                        <h3 className="text-text-primary mb-2 line-clamp-2 text-xl leading-tight font-semibold tracking-tight group-hover:underline">
+                        <h3 className="text-text-primary mb-2 line-clamp-2 text-xl leading-tight font-semibold tracking-tight transition-all duration-250 group-hover:underline">
                           {item.title}
                         </h3>
                         {item.excerpt ? (

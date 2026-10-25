@@ -3,6 +3,15 @@ import type { ProfileData } from "@academic-portfolio/content";
 import { motion, useReducedMotion } from "motion/react";
 
 import { ContentImage } from "@academic-portfolio/design-system";
+import {
+  MOTION_DELAY_CHILDREN,
+  MOTION_DURATION_CHILD,
+  MOTION_DURATION_HERO,
+  MOTION_EASE_ENTER,
+  MOTION_OFFSET,
+  MOTION_PORTRAIT_SCALE,
+  MOTION_STAGGER,
+} from "@/lib/motion-config.js";
 
 export type AboutHeroProps = {
   profile: ProfileData;
@@ -19,9 +28,12 @@ export const AboutHero = ({ profile }: AboutHeroProps) => {
         {...(shouldReduceMotion
           ? {}
           : {
-              initial: { opacity: 0, y: 20 },
+              initial: { opacity: 0, y: MOTION_OFFSET },
               animate: { opacity: 1, y: 0 },
-              transition: { duration: 0.8 },
+              transition: {
+                duration: MOTION_DURATION_HERO,
+                ease: MOTION_EASE_ENTER,
+              },
             })}
       >
         {/* Hero Header */}
@@ -31,9 +43,13 @@ export const AboutHero = ({ profile }: AboutHeroProps) => {
               {...(shouldReduceMotion
                 ? {}
                 : {
-                    initial: { scale: 0.8, opacity: 0 },
+                    initial: { scale: MOTION_PORTRAIT_SCALE, opacity: 0 },
                     animate: { scale: 1, opacity: 1 },
-                    transition: { duration: 0.6, delay: 0.2 },
+                    transition: {
+                      duration: MOTION_DURATION_CHILD,
+                      ease: MOTION_EASE_ENTER,
+                      delay: MOTION_DELAY_CHILDREN,
+                    },
                   })}
             >
               <ContentImage
@@ -49,9 +65,13 @@ export const AboutHero = ({ profile }: AboutHeroProps) => {
               {...(shouldReduceMotion
                 ? {}
                 : {
-                    initial: { opacity: 0, x: 20 },
-                    animate: { opacity: 1, x: 0 },
-                    transition: { duration: 0.6, delay: 0.3 },
+                    initial: { y: MOTION_OFFSET, opacity: 0 },
+                    animate: { y: 0, opacity: 1 },
+                    transition: {
+                      duration: MOTION_DURATION_CHILD,
+                      ease: MOTION_EASE_ENTER,
+                      delay: MOTION_DELAY_CHILDREN + MOTION_STAGGER,
+                    },
                   })}
             >
               <div>
@@ -91,9 +111,13 @@ export const AboutHero = ({ profile }: AboutHeroProps) => {
           {...(shouldReduceMotion
             ? {}
             : {
-                initial: { opacity: 0 },
-                animate: { opacity: 1 },
-                transition: { duration: 0.6, delay: 0.4 },
+                initial: { y: MOTION_OFFSET, opacity: 0 },
+                animate: { y: 0, opacity: 1 },
+                transition: {
+                  duration: MOTION_DURATION_CHILD,
+                  ease: MOTION_EASE_ENTER,
+                  delay: MOTION_DELAY_CHILDREN + MOTION_STAGGER * 2,
+                },
               })}
         >
           <h2 className="font-display text-text-secondary mb-4 text-2xl font-normal md:text-3xl">

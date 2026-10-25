@@ -4,19 +4,18 @@
 
 import "@testing-library/jest-dom";
 
-import React from "react";
 import { render, screen } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
 
 import type {
-  ProfileData,
   EducationEntry,
+  ProfileData,
   ResearchInterest,
   SkillCategory,
 } from "@academic-portfolio/content";
 
-import { AboutHero } from "./AboutHero/AboutHero.js";
 import { AboutSection } from "../content/AboutSection/AboutSection.js";
+import { AboutHero } from "./AboutHero/AboutHero.js";
 import { EducationTimeline } from "./EducationTimeline/EducationTimeline.js";
 import { ResearchInterests } from "./ResearchInterests/ResearchInterests.js";
 import { SkillsGrid } from "./SkillsGrid/SkillsGrid.js";
@@ -105,5 +104,37 @@ describe("Reduced motion support", () => {
     expect(screen.getByText("Skills & Tools")).toBeInTheDocument();
     expect(screen.getByText("Python")).toBeInTheDocument();
     expect(screen.getByText("R")).toBeInTheDocument();
+  });
+});
+
+/**
+ * Verify the centralized motion-config module exports consistent timing values.
+ * These constants are shared across all motion components to ensure a
+ * coherent animation language across the site.
+ */
+describe("Motion system consistency", () => {
+  it("exports timing constants within design-guidance ranges", async () => {
+    const config = await import("@/lib/motion-config.js");
+
+    // Hero/intro: 500-700ms
+    expect(config.MOTION_DURATION_HERO).toBeGreaterThanOrEqual(0.5);
+    expect(config.MOTION_DURATION_HERO).toBeLessThanOrEqual(0.7);
+
+    // Section reveals: 400-550ms
+    expect(config.MOTION_DURATION_SECTION).toBeGreaterThanOrEqual(0.4);
+    expect(config.MOTION_DURATION_SECTION).toBeLessThanOrEqual(0.55);
+
+    // Sibling stagger: 70-100ms
+    expect(config.MOTION_STAGGER).toBeGreaterThanOrEqual(0.07);
+    expect(config.MOTION_STAGGER).toBeLessThanOrEqual(0.1);
+
+    // Section offset: 16-20px
+    expect(config.MOTION_OFFSET).toBeGreaterThanOrEqual(16);
+    expect(config.MOTION_OFFSET).toBeLessThanOrEqual(20);
+  });
+
+  it("uses easing shorthand for consistency", async () => {
+    const config = await import("@/lib/motion-config.js");
+    expect(config.MOTION_EASE_ENTER).toBe("easeOut");
   });
 });
