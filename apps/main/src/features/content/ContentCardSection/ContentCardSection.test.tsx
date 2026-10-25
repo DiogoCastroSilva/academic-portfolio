@@ -374,7 +374,7 @@ describe("ContentCardSection dark-mode surface consistency", () => {
 });
 
 describe("ContentCardSection reduced-motion compliance", () => {
-  it("articles include motion-reduce:animate-none class to respect prefers-reduced-motion", () => {
+  it("articles do not use CSS animation classes (viewport-triggered via Motion)", () => {
     const { container } = render(
       <ContentCardSection
         heading="Projects"
@@ -384,8 +384,24 @@ describe("ContentCardSection reduced-motion compliance", () => {
       />,
     );
     const article = container.querySelector("article");
-    expect(article).toHaveClass("motion-reduce:animate-none");
-    expect(article).toHaveClass("animate-fadeInUp");
+    expect(article).not.toHaveClass("animate-fadeInUp");
+    expect(article).toHaveClass("bg-surface-card");
+    expect(article).toHaveClass("border-border");
+    expect(article).toHaveClass("rounded-2xl");
+    // Motion variants are applied programmatically, not as CSS classes
+  });
+
+  it("heading is rendered as a semantic heading element", () => {
+    const { container } = render(
+      <ContentCardSection
+        heading="Projects"
+        headingId="projects-heading"
+        items={mockItems}
+        hrefPrefix="/projects"
+      />,
+    );
+    const heading = container.querySelector("h2");
+    expect(heading).toHaveTextContent("Projects");
   });
 });
 describe("ContentCardSection tag overflow", () => {

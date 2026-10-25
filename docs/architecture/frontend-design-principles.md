@@ -199,14 +199,14 @@ All color combinations (text-on-surface, including elevated surfaces) now pass W
 
 - CSS animations only under `@media (prefers-reduced-motion: no-preference)` — global disable in `global.css`.
 - `motion-reduce:animate-none` on individual animated elements.
-- `motion/react` is used on the About page (`AboutHero`, `EducationTimeline`, `ResearchInterests`, `SkillsGrid`) with `useReducedMotion()` to avoid motion when the user requests reduced motion. The homepage's `AboutSection` and `ContentCardSection` use CSS animations instead.
-- Card entrance: staggered `fadeInUp` with `animationDelay` per index. Card titles underline on hover without a positional transform; card images use a subtle `scale-105` hover effect that is disabled for reduced-motion users. The About-page skill chips also use a small hover animation.
+- `motion/react` is used on the About page (`AboutHero`, `EducationTimeline`, `ResearchInterests`, `SkillsGrid`) with `useReducedMotion()` to avoid motion when the user requests reduced motion. The homepage's `AboutSection` uses a CSS `animate-fadeInUp` entrance on initial page load. `ContentCardSection` uses `motion/react` with `whileInView` viewport triggers for below-the-fold reveal — content is available immediately via server-rendered HTML and animation is an enhancement.
+- Card entrance: viewport-triggered stagger via `motion/react` (`whileInView` with `viewport: { once: true }`). Card titles underline on hover without a positional transform; card images use a subtle `scale-105` hover effect that is disabled for reduced-motion users. The About-page skill chips also use a small hover animation.
 - Keep motion decorative and restrained, ensure reduced-motion preferences are honored, and do not animate controls merely to signal keyboard focus. There are no auto-playing carousels.
 
 ## 10. Static Delivery / Performance
 
 - `output: "export"` — all pages prerendered. No client JS for navigation beyond `next/link` prefetch.
-- Server components everywhere except where `motion/react` or user interaction genuinely requires `"use client"` (AboutHero, EducationTimeline, ResearchInterests, SkillsGrid, NavBar/MobileNavLinks).
+- Server components everywhere except where `motion/react` or user interaction genuinely requires `"use client"` (AboutHero, EducationTimeline, ResearchInterests, SkillsGrid, ContentCardSection, NavBar/MobileNavLinks).
 - `ContentImage` currently uses native `<img>` and `<picture>` markup; it serves generated WebP sources for JPEG/PNG where available and keeps the original as a fallback. SVGs use a plain `<img>`. Although `next.config.mjs` sets `images.unoptimized: true`, the component does not currently use `next/image`.
 - Client bundle is minimal: only the NavBar's mobile menu toggle and motion components.
 

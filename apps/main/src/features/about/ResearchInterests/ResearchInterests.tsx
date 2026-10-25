@@ -23,7 +23,6 @@ const sectionVariants = {
     transition: {
       duration: MOTION_DURATION_SECTION,
       ease: MOTION_EASE_ENTER,
-      staggerChildren: MOTION_STAGGER,
       delayChildren: MOTION_DELAY_CHILDREN,
     },
   },
@@ -68,9 +67,8 @@ export const ResearchInterests = ({ items }: ResearchInterestsProps) => {
             ? {}
             : {
                 variants: {
-                  hidden: { opacity: 1 },
+                  hidden: {},
                   visible: {
-                    opacity: 1,
                     transition: { staggerChildren: MOTION_STAGGER },
                   },
                 },
