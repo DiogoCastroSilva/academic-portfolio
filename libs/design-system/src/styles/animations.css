@@ -16,7 +16,8 @@
     }
   }
   .animate-fadeInUp {
-    animation: fadeInUp 0.5s ease-out forwards;
+    animation: fadeInUp var(--motion-duration-enter) var(--motion-ease-enter)
+      forwards;
   }
 }
 
