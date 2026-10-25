@@ -4,7 +4,7 @@ import { getAllPublications } from "@academic-portfolio/publications";
 import { withPublicBasePath } from "@academic-portfolio/content";
 
 import { paginate, parsePageParam, PAGE_SIZE } from "../../../lib/pagination";
-import { ContentCardSection } from "../../../../features/content/ContentCardSection";
+import { PublicationRowSection } from "../../../../features/content/PublicationRowSection";
 import { Pagination } from "@academic-portfolio/design-system";
 
 /**
@@ -55,7 +55,7 @@ export default async function PublicationsPage({
 
   return (
     <div className="mx-auto flex max-w-7xl grow flex-col gap-4">
-      <ContentCardSection
+      <PublicationRowSection
         heading="Publications"
         headingId={`publications-page-${currentPage}-heading`}
         headingLevel="h1"

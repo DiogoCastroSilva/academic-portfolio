@@ -153,6 +153,39 @@ vi.mock("../features/content/ContentCardSection", () => ({
   ),
 }));
 
+// Mock PublicationRowSection with a test-compatible stub
+vi.mock("../features/content/PublicationRowSection", () => ({
+  PublicationRowSection: ({
+    heading,
+    items,
+    limit,
+    viewAllHref,
+    viewAllLabel,
+  }: {
+    heading: string;
+    items: ContentMeta[];
+    limit?: number;
+    viewAllHref?: string;
+    viewAllLabel?: string;
+  }) => (
+    <section data-testid="row-section" data-heading={heading}>
+      <h2>{heading}</h2>
+      {(limit ? items.slice(0, limit) : items).map((item) => (
+        <article key={item.slug}>{item.title}</article>
+      ))}
+      {viewAllHref && items.length > 0 && (
+        <a
+          data-testid="view-all-link"
+          href={viewAllHref}
+          aria-label={viewAllLabel}
+        >
+          {viewAllLabel}
+        </a>
+      )}
+    </section>
+  ),
+}));
+
 vi.mock("../features/content/AboutSection", () => ({
   AboutSection: () => <div data-testid="about-section">About</div>,
 }));
@@ -495,7 +528,7 @@ describe("Homepage", () => {
       render(<Index />);
 
       const pubsSection = screen
-        .getAllByTestId("card-section")
+        .getAllByTestId("row-section")
         .find((s) => s.getAttribute("data-heading") === "Publications");
 
       const articles = pubsSection!.querySelectorAll("article");
@@ -533,7 +566,7 @@ describe("Homepage", () => {
       render(<Index />);
 
       const pubsSection = screen
-        .getAllByTestId("card-section")
+        .getAllByTestId("row-section")
         .find((s) => s.getAttribute("data-heading") === "Publications");
 
       const articles = pubsSection!.querySelectorAll("article");
@@ -577,7 +610,7 @@ describe("Homepage", () => {
       render(<Index />);
 
       const pubsSection = screen
-        .getAllByTestId("card-section")
+        .getAllByTestId("row-section")
         .find((s) => s.getAttribute("data-heading") === "Publications");
 
       const articles = pubsSection!.querySelectorAll("article");
@@ -602,7 +635,7 @@ describe("Homepage", () => {
       render(<Index />);
 
       const pubsSection = screen
-        .getAllByTestId("card-section")
+        .getAllByTestId("row-section")
         .find((s) => s.getAttribute("data-heading") === "Publications");
 
       const articles = pubsSection!.querySelectorAll("article");

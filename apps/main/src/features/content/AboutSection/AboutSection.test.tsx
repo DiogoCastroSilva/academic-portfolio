@@ -202,4 +202,35 @@ describe("AboutSection", () => {
       expect(className).toMatch(/prose-img:rounded-lg/);
     });
   });
+
+  describe("hero composition and scroll cue", () => {
+    it("section has a responsive min-height that fills the desktop viewport", () => {
+      const { container } = render(<AboutSection profile={mockProfile} />);
+      const section = container.querySelector("section");
+      expect(section?.className).toMatch(/md:min-h-\[calc\(100svh-4rem\)\]/);
+    });
+
+    it("renders a scroll cue link pointing to the projects section", () => {
+      render(<AboutSection profile={mockProfile} />);
+      const cue = screen.getByTestId("scroll-cue");
+      expect(cue).toHaveAttribute("href", "#projects-heading");
+    });
+
+    it("scroll cue has accessible label", () => {
+      render(<AboutSection profile={mockProfile} />);
+      const cue = screen.getByLabelText("Scroll down to explore selected work");
+      expect(cue).toBeInTheDocument();
+    });
+
+    it("scroll cue contains visible text", () => {
+      render(<AboutSection profile={mockProfile} />);
+      expect(screen.getByText("Explore selected work")).toBeInTheDocument();
+    });
+
+    it("scroll cue is hidden from reduced motion animation but remains visible", () => {
+      const { container } = render(<AboutSection profile={mockProfile} />);
+      const cue = container.querySelector('[data-testid="scroll-cue"]');
+      expect(cue?.className).toMatch(/motion-reduce:animate-none/);
+    });
+  });
 });

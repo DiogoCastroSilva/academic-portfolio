@@ -40,7 +40,14 @@ export const MOTION_OFFSET = 20;
 export const MOTION_PORTRAIT_SCALE = 0.9;
 
 /** Viewport margin for scroll-triggered animations.
- * The -20% bottom margin triggers reveals slightly before elements
- * fully enter the viewport, creating a smooth anticipation effect.
- * Shared across all viewport-triggered sections for consistent behavior. */
+ * A -20% bottom margin shrinks the effective trigger region so reveals fire
+ * just *before* an element's bottom edge reaches the viewport bottom —
+ * creating a subtle anticipation effect without triggering prematurely.
+ *
+ * Use this for sections with multiple staggered children (cards, rows,
+ * timeline entries). For very short sections (one or two lines) the default
+ * `{ once: true }` without a margin may be more appropriate.
+ *
+ * Shared across ContentCardSection, PublicationRowSection, and all
+ * About-page animated sections for consistent scroll-trigger behavior. */
 export const MOTION_VIEWPORT_MARGIN = "0px 0px -20% 0px";

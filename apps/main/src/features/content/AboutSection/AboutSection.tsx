@@ -8,8 +8,8 @@ export type AboutSectionProps = {
 
 export const AboutSection = ({ profile }: AboutSectionProps) => {
   return (
-    <section className="mx-4 p-6 sm:p-10 lg:p-12">
-      <div className="animate-fadeInUp flex flex-col gap-10 motion-reduce:animate-none md:flex-row-reverse md:items-start md:gap-12">
+    <section className="mx-4 flex flex-col p-6 sm:p-10 md:min-h-[calc(100svh-4rem)] lg:p-12">
+      <div className="animate-fadeInUp flex flex-1 flex-col gap-10 motion-reduce:animate-none md:flex-row-reverse md:items-center md:gap-12">
         <div className="flex justify-center md:w-64 md:justify-end">
           <ContentImage
             src={profile.imageSrc}
@@ -35,6 +35,37 @@ export const AboutSection = ({ profile }: AboutSectionProps) => {
           />
         </div>
       </div>
+
+      {/* Scroll cue — invites visitors to explore selected work below.
+          Always a real link (not decorative); one-time CSS entrance after
+          the hero content via animationDelay. Disabled for reduced-motion
+          users (motion-reduce:animate-none leaves it statically visible). */}
+      <a
+        href="#projects-heading"
+        className="animate-fadeInUp text-text-secondary hover:text-link focus-visible:outline-focus self-center text-sm no-underline focus-visible:outline-2 focus-visible:outline-offset-2 motion-reduce:animate-none"
+        style={{ animationDelay: "300ms" }}
+        aria-label="Scroll down to explore selected work"
+        data-testid="scroll-cue"
+      >
+        <span className="flex items-center gap-2">
+          <span>Explore selected work</span>
+          <svg
+            className="h-4 w-4"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+            xmlns="http://www.w3.org/2000/svg"
+            aria-hidden="true"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M19 9l-7 7-7-7"
+            />
+          </svg>
+        </span>
+      </a>
     </section>
   );
 };

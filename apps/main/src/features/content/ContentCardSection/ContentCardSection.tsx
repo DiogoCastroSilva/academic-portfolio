@@ -133,7 +133,7 @@ export function ContentCardSection({
     >
       <MotionHeading
         id={headingId ?? heading}
-        className="text-text-secondary font-display mb-6 text-2xl font-normal md:text-3xl"
+        className="text-text-secondary font-display mb-6 scroll-mt-16 text-2xl font-normal md:text-3xl"
         {...motionProps}
       >
         {heading}

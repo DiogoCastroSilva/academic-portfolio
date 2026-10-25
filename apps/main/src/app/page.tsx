@@ -5,6 +5,7 @@ import { getProfile } from "@academic-portfolio/content";
 
 import { AboutSection } from "../features/content/AboutSection";
 import { ContentCardSection } from "../features/content/ContentCardSection";
+import { PublicationRowSection } from "../features/content/PublicationRowSection";
 import { JsonLd } from "../lib/JsonLd";
 import {
   buildWebSiteSchema,
@@ -48,7 +49,7 @@ export default function Index() {
         viewAllHref="/projects"
         viewAllLabel="View all projects"
       />
-      <ContentCardSection
+      <PublicationRowSection
         heading="Publications"
         headingId="publications-heading"
         items={homePublications}

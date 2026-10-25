@@ -3,7 +3,7 @@ import { getAllPublications } from "@academic-portfolio/publications";
 import { siteConfig } from "../../configs/site-config";
 import { paginate, PAGE_SIZE } from "../lib/pagination";
 import { ogImageRef } from "../lib/og-image";
-import { ContentCardSection } from "../../features/content/ContentCardSection";
+import { PublicationRowSection } from "../../features/content/PublicationRowSection";
 import { Pagination } from "@academic-portfolio/design-system";
 
 export const metadata = {
@@ -32,7 +32,7 @@ export default function PublicationsPage() {
 
   return (
     <div className="mx-auto flex max-w-7xl grow flex-col gap-4">
-      <ContentCardSection
+      <PublicationRowSection
         heading="Publications"
         headingId="publications-heading"
         headingLevel="h1"
