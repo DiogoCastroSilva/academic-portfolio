@@ -740,7 +740,7 @@ Draft items are:
 - **Invalid type for optional fields** (`image`, `tags`, `links`, `authors`, `venue`, `doi`, `paperUrl`): The build fails with a message identifying the file and field.
 - **Missing images:** Explicitly-specified `image:` fields that don't exist fail the build with an error identifying the file and path. Remove the `image` field or add the file to use the placeholder fallback.
 - **Malformed Markdown:** Passed through by `marked` — invalid Markdown renders as plain text.
-- **Raw HTML in Markdown:** Allowed for academic formatting (`<figure>`, `<b>`, `<br>`, etc.). Content is author-controlled (trusted), so no HTML sanitizer is applied. See [ADR-0004](../../architecture/decisions/0004-content-validation-and-rendering.md) for the full trust model.
+- **Raw HTML in Markdown:** Allowed for academic formatting (`<figure>`, `<b>`, `<br>`, etc.). Although content is author-controlled (trusted), an HTML sanitizer (`sanitize-html`) is applied at the Markdown→HTML boundary to strip event-handler attributes, `javascript:`/`data:` URLs, and executable markup (`<script>`, `<iframe>`, etc.). This provides defense-in-depth even for trusted authors. See [ADR-0004](../../architecture/decisions/0004-content-validation-and-rendering.md) and [ADR-0009](../../architecture/decisions/0009-html-sanitization.md) for the trust model and allowlist.
 
 ### Example Error
 

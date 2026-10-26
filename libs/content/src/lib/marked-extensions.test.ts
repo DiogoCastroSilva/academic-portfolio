@@ -420,11 +420,14 @@ describe("Markdown HTML policy", () => {
     expect(html).toContain('class="external-link"');
   });
 
-  it("does not sanitize script tags (trusted-author policy)", () => {
-    // ADR-0004 documents that content is author-controlled (trusted).
-    // No HTML sanitizer is used. This test documents that <script> passes
-    // through unchanged — if a sanitizer is ever added, this test must
-    // be updated to reflect the new policy.
+  it("does not sanitize script tags at the marked.parse() layer (sanitization applied separately)", () => {
+    // `marked.parse()` itself does not sanitize HTML — that is by design.
+    // Sanitization is applied as a separate boundary AFTER `marked.parse()`
+    // returns: in `getContentBySlug()` (content collections) and in
+    // `parseBiography()` (profile biography), both via `sanitizeHtml()`.
+    // This test validates the `marked.parse()` layer only; the sanitized
+    // output is verified in sanitize-html.test.ts and create-content-library.test.ts.
+    // See ADR-0009 for the full trust model and allowlist.
     const html = renderBody("<b>text</b>\n\n<script>alert(1)</script>");
     expect(html).toContain("<script>");
   });

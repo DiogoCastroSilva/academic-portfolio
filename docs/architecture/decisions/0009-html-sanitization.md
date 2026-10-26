@@ -51,9 +51,14 @@ libs/content/src/lib/create-content-library.ts
 | `AboutSection`  | `apps/main/src/features/content/AboutSection/AboutSection.tsx`   | `profile.biography` (parsed Markdown) |
 | `AboutHero`     | `apps/main/src/features/about/AboutHero/AboutHero.tsx`           | `profile.biography` (parsed Markdown) |
 
-All three paths originate from the same `createMarkedInstance` → `marked.parse()`
-pipeline, so a single sanitization boundary in `create-content-library.ts` covers
-every injection point.
+ContentDetail obtains HTML from the content-library pipeline (`getContentBySlug()`
+in `create-content-library.ts`). AboutSection and AboutHero obtain HTML from
+`profile.biography`, parsed via `parseBiography()` in `libs/content/src/lib/profile.ts`.
+Both paths call `createMarkedInstance` → `marked.parse()` and then apply the same
+`sanitizeHtml()` function from `sanitize-html.ts`. The shared sanitization boundary
+in `create-content-library.ts` covers ContentDetail; a parallel boundary in `profile.ts`
+covers the biography used by AboutSection and AboutHero. This ensures every
+`dangerouslySetInnerHTML` injection point is sanitized.
 
 ## 2. Proposed Allowlist
 
@@ -159,9 +164,9 @@ export function sanitizeHtml(html: string): string {
 }
 ```
 
-### Step 3: Apply at the shared boundary ✅
+### Step 3: Apply at the shared boundaries ✅
 
-In `getContentBySlug()` (the method that calls `marked.parse`):
+**Collection content** — in `getContentBySlug()` (the method that calls `marked.parse`):
 
 ```typescript
 const htmlBody = await markedInstance.parse(body);
@@ -169,6 +174,18 @@ const sanitizedBody = sanitizeHtml(htmlBody);
 
 return { ...meta, body: sanitizedBody };
 ```
+
+**Profile biography** — in `parseBiography()` (the function that calls `marked.parse`
+for the profile README.md body):
+
+```typescript
+const htmlBody = markedInstance.parse(markdownBody) as string;
+const sanitizedBody = sanitizeHtml(htmlBody);
+return sanitizedBody;
+```
+
+Both paths use the same `sanitizeHtml()` function, ensuring every `dangerouslySetInnerHTML`
+injection point is covered.
 
 ### Step 4: Security + regression tests ✅
 

@@ -11,8 +11,8 @@
   - **Remark/rehype ecosystem:** More modular but adds many dependencies and configuration overhead. `marked` is lighter and sufficient for this project's Markdown subset.
   - **Custom parser:** Would violate the principle of using well-maintained libraries for content parsing.
 - **Consequences and trade-offs:**
-  - `marked` does not sanitize HTML by default. The HTML security policy is addressed in ADR-0004.
-  - Raw HTML in Markdown (e.g., `<figure>`, `<b>`) is preserved by `marked` and then processed by the `hooks.postprocess` hook for URL resolution and external link attributes. This is a deliberate choice for academic content that needs precise formatting.
+  - `marked` does not sanitize HTML by default. The HTML security policy (sanitization at the Markdown→HTML boundary) is addressed in ADR-0004 and ADR-0009.
+  - Raw HTML in Markdown (e.g., `<figure>`, `<b>`) is preserved by `marked` and then processed by the `hooks.postprocess` hook for URL resolution and external link attributes. This is a deliberate choice for academic content that needs precise formatting. After `marked` processing, the HTML is passed through `sanitize-html` at the shared boundary in `create-content-library.ts` (collection content) and `profile.ts` (biography) before injection via `dangerouslySetInnerHTML`.
   - URL resolution is split into two phases: `walkTokens` handles Markdown-native `href`/`src` tokens (image and link); `hooks.postprocess` handles raw HTML attributes. The two paths use complementary regex patterns with a negative lookahead to prevent double-processing.
   - Slugs are derived from directory names; frontmatter `slug` is accepted but ignored.
 - **Evidence or validation:**
@@ -20,4 +20,4 @@
   - 12 tests in `libs/content/src/lib/profile.test.ts` cover profile frontmatter parsing, validation of required fields, structured data parsing (education, research interests, skills), biography rendering, and image URL resolution.
   - 32 tests in `libs/content/src/lib/marked-extensions.test.ts` cover the `resolveHref` URL resolver, image rendering (`<figure>`/`<figcaption>`), link rendering (external link attributes), gallery detection, raw HTML postprocess (DEPLOYMENT_URL replacement, relative path prefixing, double-processing prevention), and integration of all features together.
   - The content pipeline runs at build time (SSG), not at request time.
-- **Conditions for revisiting:** If external contributions (e.g., a public submission form) are added, an HTML sanitizer must be introduced to prevent XSS.
+- **Conditions for revisiting:** If a public content-submission workflow is added, review the sanitization allowlist to ensure it remains appropriate for external submissions.

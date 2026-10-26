@@ -96,13 +96,19 @@ createMarkedInstance(config) - creates a Marked instance with:
 instance.parse(body) -> HTML string
     |
     v
-ContentItemMeta { ...meta, body: htmlString }
+sanitizeHtml(html)  // sanitize-html at the Markdown→HTML boundary (ADR-0009)
+    |
+    v
+ContentItemMeta { ...meta, body: sanitizedHtmlString }
     |
     v
 Rendered by ContentDetail (server component) via dangerouslySetInnerHTML
 ```
 
-**Trust model:** Content is authored by the repository maintainer (trusted). `marked` does not sanitize HTML; raw HTML in Markdown is preserved. See [ADR-0004](decisions/0004-content-validation-and-rendering.md) for details.
+**Trust model:** Content is authored by the repository maintainer (trusted). `marked` does not
+sanitize HTML, but all rendered HTML is passed through `sanitize-html` at the shared boundary
+immediately after parsing (see [ADR-0004](decisions/0004-content-validation-and-rendering.md)
+and [ADR-0009](decisions/0009-html-sanitization.md) for the trust model and allowlist).
 
 ## Static Generation and Asset Handling
 

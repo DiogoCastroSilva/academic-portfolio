@@ -63,7 +63,7 @@ Only stable, intended exports are exposed through `libs/design-system/src/index.
 
 ## Evidence or validation
 
-- Baseline: `npx nx run-many -t lint test typecheck build` passes (8 projects, 679 tests).
+- Baseline: `npx nx run-many -t lint test typecheck build` passes (8 projects, 679 tests at acceptance; 823 tests after Phase 6 HTML sanitization).
 - After each component promotion, the full check suite must still pass.
 - ESLint `@nx/enforce-module-boundaries` enforces that `design-system` cannot import `app` or `content-layer` code.
 - Visual regression: production CSS output must include all design-system token declarations.

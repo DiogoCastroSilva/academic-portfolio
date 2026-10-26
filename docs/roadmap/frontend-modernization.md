@@ -2,7 +2,12 @@
 
 > **Status:** Active
 > **Scope:** Frontend architecture, design system, and repository organization for `academic-portfolio`
-> **Baseline:** 679 tests passing, lint/typecheck/build green (8 projects; see `docs/architecture/audit-frontend-modernization.md` for the pre-modernization audit baseline of 284 tests).
+> Phase 6 complete (HTML sanitization via `sanitize-html` applied to all Markdown→HTML
+> injection points, 39 security+regression tests added). See ADR-0009. Current test count:
+> **823 tests** across 8 projects (pre-modernization baseline: 284 tests per
+> `docs/architecture/audit-frontend-modernization.md`).
+
+> **Baseline:** 679 tests passing, lint/typecheck/build green (8 projects; see `docs/architecture/audit-frontend-modernization.md` for the pre-modernization audit baseline of 284 tests). Phase 6 (HTML sanitization) is now complete, bringing the total to 823 tests.
 
 ## Objective
 
@@ -52,7 +57,7 @@ Reorganize feature-specific UI into `apps/main/src/features/` without breaking i
 
 - [x] T-010b: Component documentation tooling evaluation (Storybook)
 - [x] T-012: Promote `Tag` component to the design system (component, barrel export, tests)
-- [x] Run full lint, typecheck, test, build, and prettier checks (679 tests, 8 projects)
+- [x] Run full lint, typecheck, test, build, and prettier checks (823 tests, 8 projects)
 - [x] Verify static export output includes all design-system CSS (inspected built CSS: tokens, themes, typography, and animations all present)
 - [x] Verify GitHub Pages base-path handling unchanged (`next.config.mjs` uses `NEXT_PUBLIC_BASE_PATH` env var with `trailingSlash: true`)
 - [x] Update `AGENTS.md` with new workspace structure and commands (added `Tag` to design-system component list)
@@ -94,5 +99,5 @@ Reorganize feature-specific UI into `apps/main/src/features/` without breaking i
 
 - Section duration has been fixed: `MOTION_DURATION_SECTION = 0.45s` is now within the handoff's `350–450ms` range.
 - AboutHero now uses scroll-triggered `whileInView` with shared `MOTION_VIEWPORT` instead of mount-triggered `animate` — Phase 4 fix.
-- Markdown-to-HTML rendering has **no HTML sanitizer** applied (Phase 6 security priority — requires new dependency).
+- Markdown-to-HTML rendering now applies `sanitize-html` (v2.x) at the shared boundary after `marked.parse()` — Phase 6 security priority, implemented 2026-10-26.
 - `ContentDetail` not listed in handoff's "Relevant files" section.

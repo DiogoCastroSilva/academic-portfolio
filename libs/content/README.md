@@ -55,7 +55,13 @@ Profile information is maintained in [README.md](src/md/README.md). Do not add o
 
 ## Trust and security
 
-`marked` does not sanitize raw HTML. Markdown is treated as trusted repository-authored content and is rendered in a server component. Only merge content from trusted sources; do not turn this pipeline into an untrusted user-submission endpoint without adding a reviewed sanitization strategy.
+`marked` does not sanitize raw HTML. Markdown is treated as trusted repository-authored content
+and is rendered in a server component. All HTML output is sanitized with `sanitize-html` at the
+Markdown→HTML boundary (in `create-content-library.ts` for collection content and in `profile.ts`
+for the biography) before injection via `dangerouslySetInnerHTML`. See
+[ADR-0009](../../docs/architecture/decisions/0009-html-sanitization.md) for the allowlist
+and rationale. Only merge content from trusted sources; if a public content-submission workflow
+is added, review the sanitization allowlist to ensure it remains appropriate for external input.
 
 ## Development
 

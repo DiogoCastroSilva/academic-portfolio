@@ -296,17 +296,21 @@ All color combinations (text-on-surface, including elevated surfaces) now pass W
 
 ### Security
 
-10. **Markdown sanitization not yet implemented**: The handoff identifies this as Phase 6
-    (security priority). The repository uses `marked` (via `libs/content`) to parse Markdown,
-    and renders HTML via `dangerouslySetInnerHTML` in `ContentDetail`, `AboutSection`, and
-    `AboutHero`. **No HTML sanitizer is currently applied.** A sanitizer (`sanitize-html`)
-    needs to be integrated as a shared boundary after Markdown parsing — see
-    [ADR-0009](architecture/decisions/0009-html-sanitization.md) for the full audit,
-    proposed allowlist, and implementation plan. **Requires owner approval** for the new
-    `sanitize-html` dependency before implementation.
+10. **Markdown sanitization implemented** (Phase 6): `sanitize-html` (v2.x) is applied at the
+    Markdown→HTML boundary in `libs/content/src/lib/sanitize-html.ts`, immediately after
+    `marked.parse()` completes (including its `postprocess` hook that resolves
+    `DEPLOYMENT_URL`, prefixes relative paths, and adds external-link attributes). The boundary
+    covers collection content (`getContentBySlug()` in `create-content-library.ts`) and the
+    profile biography (`parseBiography()` in `profile.ts`). All three `dangerouslySetInnerHTML`
+    injection points — `ContentDetail`, `AboutSection`, and `AboutHero` — are now sanitized.
+    See [ADR-0009](architecture/decisions/0009-html-sanitization.md) for the allowlist, rationale,
+    and implementation details.
 
-11. **No security regression tests**: No tests exist for malicious Markdown input
-    (event-handler attributes on images, `<script>` elements, `javascript:` links, etc.).
+11. **Security regression tests added** (Phase 6): `libs/content/src/lib/sanitize-html.test.ts`
+    contains 39 tests verifying that malicious input is stripped (event-handler attributes on
+    images, `<script>` elements, `javascript:`/`data:` links, `<iframe>`, `<svg onload>`, nested
+    bypass attempts, unsafe `style` attributes) while legitimate content (figures, tables, links,
+    code, pictures, headings, lists) survives the sanitization pipeline.
 
 ### Testing & Browser Validation
 

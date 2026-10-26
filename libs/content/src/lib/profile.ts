@@ -7,6 +7,7 @@ import matter from "gray-matter";
 
 import { getDeploymentUrl, withPublicBasePath } from "./constants";
 import { createMarkedInstance } from "./marked-extensions.js";
+import { sanitizeHtml } from "./sanitize-html.js";
 
 /** A single education entry parsed from profile frontmatter. */
 export interface EducationEntry {
@@ -439,7 +440,9 @@ function parseBiography(markdownBody: string): string {
     publicPrefix: "",
     deploymentUrl: getDeploymentUrl(),
   });
-  return markedInstance.parse(markdownBody) as string;
+  const htmlBody = markedInstance.parse(markdownBody) as string;
+  const sanitizedBody = sanitizeHtml(htmlBody);
+  return sanitizedBody;
 }
 
 // ---------------------------------------------------------------------------
