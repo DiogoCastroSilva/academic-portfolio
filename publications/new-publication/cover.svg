@@ -1,0 +1,37 @@
+<svg width="1600" height="1200" viewBox="0 0 1600 1200" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1600" height="1200" fill="#ffffff"/>
+  <rect x="120" y="120" width="1360" height="960" rx="16" fill="#f0f9ff" stroke="#bae6fd" stroke-width="2"/>
+  <rect x="200" y="220" width="360" height="60" rx="8" fill="#e0f2fe"/>
+  <rect x="580" y="220" width="520" height="60" rx="8" fill="#7dd3fc"/>
+  <rect x="1120" y="220" width="280" height="60" rx="8" fill="#38bdf8"/>
+  <rect x="200" y="320" width="150" rx="4" height="320" fill="#bae6fd"/>
+  <rect x="360" y="420" width="150" rx="4" height="220" fill="#7dd3fc"/>
+  <rect x="520" y="360" width="150" rx="4" height="180" fill="#38bdf8"/>
+  <rect x="680" y="400" width="150" rx="4" height="140" fill="#0ea5e9"/>
+  <rect x="840" y="340" width="150" rx="4" height="200" fill="#0284c7"/>
+  <rect x="1000" y="380" width="150" rx="4" height="160" fill="#0369a1"/>
+  <rect x="1160" y="420" width="150" rx="4" height="120" fill="#0c4a6e"/>
+  <rect x="1320" y="460" width="80" height="80" rx="40" fill="#0ea5e9"/>
+  <path d="M320 560 L400 480 L560 640 L720 480 L800 560 L680 680 L560 560 L480 640 Z" fill="#0284c7" opacity="0.5"/>
+  <path d="M880 620 L960 540 L1120 700 L1280 540 L1360 620 L1240 740 L1120 620 L1040 700 Z" fill="#0ea5e9" opacity="0.4"/>
+  <rect x="200" y="680" width="150" height="40" rx="8" fill="#fef3c7"/>
+  <rect x="360" y="680" width="290" height="40" rx="8" fill="#fef3c7"/>
+  <rect x="660" y="680" width="250" height="40" rx="8" fill="#fde68a"/>
+  <rect x="920" y="680" width="190" height="40" rx="8" fill="#fcd34d"/>
+  <rect x="1120" y="680" width="150" height="40" rx="8" fill="#fbbf24"/>
+  <text x="820" y="160" font-family="Inter, system-ui, sans-serif" font-size="32" font-weight="600" fill="#0f172a" text-anchor="middle">Synthetic Spectral Signature Illustration</text>
+  <text x="140" y="880" font-family="Inter, system-ui, sans-serif" font-size="20" fill="#64748b" text-anchor="middle">Spectral Index</text>
+  <text x="140" y="920" font-family="Inter, system-ui, sans-serif" font-size="14" fill="#94a3b8" text-anchor="middle">Reflectance</text>
+  <text x="320" y="900" font-family="Inter, system-ui, sans-serif" font-size="14" fill="#94a3b8" text-anchor="middle">Low infection</text>
+  <text x="560" y="900" font-family="Inter, system-ui, sans-serif" font-size="14" fill="#94a3b8" text-anchor="middle">High infection</text>
+  <text x="980" y="960" font-family="Inter, system-ui, sans-serif" font-size="14" fill="#94a3b8" text-anchor="middle">NDVI vs. NDWI scatter plot (abstract)</text>
+  <text x="140" y="1000" font-family="Inter, system-ui, sans-serif" font-size="24" fill="#0f172a">Sample Data Visualization</text>
+  <text x="1320" y="580" font-family="Inter, system-ui, sans-serif" font-size="14" fill="#94a3b8" text-anchor="middle">Legend</text>
+  <rect x="1260" y="500" width="16" height="16" fill="#0ea5e9"/>
+  <text x="1285" y="514" font-family="Inter, system-ui, sans-serif" font-size="14" fill="#475569">Cover crop</text>
+  <rect x="1260" y="530" width="16" height="16" fill="#0284c7"/>
+  <text x="1285" y="544" font-family="Inter, system-ui, sans-serif" font-size="14" fill="#475569">Vineyard</text>
+  <rect x="1260" y="560" width="16" height="16" fill="#0369a1"/>
+  <text x="1285" y="574" font-family="Inter, system-ui, sans-serif" font-size="14" fill="#475569">Water body</text>
+  <text x="800" y="1140" font-family="Inter, system-ui, sans-serif" font-size="16" fill="#94a3b8" text-anchor="middle">Sample illustration for portfolio template demonstration — not a real research figure</text>
+</svg>
