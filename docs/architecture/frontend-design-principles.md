@@ -278,14 +278,16 @@ All color combinations (text-on-surface, including elevated surfaces) now pass W
 
 ### Typography & Images
 
-8. **AboutSection image `sizes` mismatch** — _Fixed in Phase 3_:
+8. **AboutSection and AboutHero portrait sizing** — _Refined in Phase 2_:
 
-   The `sizes` string didn't match class-based rendered dimensions (`h-32`/`sm:h-40`/`md:h-48`
-   = 128px → 160px → 192px). Updated to
-   `"(max-width: 640px) 128px, (max-width: 768px) 160px, 192px"`.
-   Also fixed AboutHero `sizes` from `"(max-width: 640px) 200px, 240px"` to
-   `"(max-width: 640px) 192px, (max-width: 768px) 256px, 224px"`.
-   Tests added to both `AboutSection.test.tsx` and `AboutHero.test.tsx`.
+   Both the homepage `AboutSection` and the About page `AboutHero` have been
+   aligned to consistent portrait dimensions targeting the 240–256px desktop
+   range. Updated portrait sizes from `h-32`/`sm:h-40`/`md:h-48`
+   (128px → 160px → 192px) to `h-36`/`sm:h-48`/`md:h-60`
+   (144px → 192px → 240px). Updated both `sizes` attributes to
+   `"(max-width: 640px) 144px, (max-width: 768px) 192px, 240px"`.
+   Tests in both `AboutSection.test.tsx` and `AboutHero.test.tsx` updated to
+   match.
 
 9. **ContentDetail not listed in handoff files**: The handoff document's "Relevant files"
    section omits `apps/main/src/features/content/ContentDetail/ContentDetail.tsx`, which

@@ -242,10 +242,10 @@ describe("AboutSection", () => {
     it("profile image sizes match class-based dimensions (128px/160px/192px)", () => {
       render(<AboutSection profile={mockProfile} />);
       const img = screen.getByRole("img");
-      // Classes: h-32 (128px) sm:h-40 (160px) md:h-48 (192px)
+      // Classes: h-36 (144px) sm:h-48 (192px) md:h-60 (240px)
       expect(img).toHaveAttribute(
         "sizes",
-        "(max-width: 640px) 128px, (max-width: 768px) 160px, 192px",
+        "(max-width: 640px) 144px, (max-width: 768px) 192px, 240px",
       );
     });
   });

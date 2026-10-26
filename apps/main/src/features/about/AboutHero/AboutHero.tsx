@@ -87,8 +87,8 @@ export const AboutHero = ({ profile }: AboutHeroProps) => {
               <ContentImage
                 src={profile.imageSrc}
                 alt={`Profile picture of ${profile.name}`}
-                className="h-48 w-48 rounded-full sm:h-64 sm:w-64 md:h-56 md:w-56"
-                sizes="(max-width: 640px) 192px, (max-width: 768px) 256px, 224px"
+                className="h-36 w-36 rounded-full sm:h-48 sm:w-48 md:h-60 md:w-60"
+                sizes="(max-width: 640px) 144px, (max-width: 768px) 192px, 240px"
                 priority
               />
             </MotionDiv>

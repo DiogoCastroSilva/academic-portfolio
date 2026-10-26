@@ -14,8 +14,8 @@ export const AboutSection = ({ profile }: AboutSectionProps) => {
           <ContentImage
             src={profile.imageSrc}
             alt={`Profile picture of ${profile.name}`}
-            className="h-32 w-32 rounded-full sm:h-40 sm:w-40 md:h-48 md:w-48"
-            sizes="(max-width: 640px) 128px, (max-width: 768px) 160px, 192px"
+            className="h-36 w-36 rounded-full sm:h-48 sm:w-48 md:h-60 md:w-60"
+            sizes="(max-width: 640px) 144px, (max-width: 768px) 192px, 240px"
             priority
           />
         </div>
