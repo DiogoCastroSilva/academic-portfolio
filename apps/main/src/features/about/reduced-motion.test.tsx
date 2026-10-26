@@ -120,9 +120,9 @@ describe("Motion system consistency", () => {
     expect(config.MOTION_DURATION_HERO).toBeGreaterThanOrEqual(0.5);
     expect(config.MOTION_DURATION_HERO).toBeLessThanOrEqual(0.7);
 
-    // Section reveals: 400-550ms
-    expect(config.MOTION_DURATION_SECTION).toBeGreaterThanOrEqual(0.4);
-    expect(config.MOTION_DURATION_SECTION).toBeLessThanOrEqual(0.55);
+    // Section reveals: 350-450ms (handoff document recommendation)
+    expect(config.MOTION_DURATION_SECTION).toBeGreaterThanOrEqual(0.35);
+    expect(config.MOTION_DURATION_SECTION).toBeLessThanOrEqual(0.45);
 
     // Sibling stagger: 70-100ms
     expect(config.MOTION_STAGGER).toBeGreaterThanOrEqual(0.07);

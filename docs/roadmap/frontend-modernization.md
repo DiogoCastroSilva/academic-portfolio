@@ -85,7 +85,7 @@ Reorganize feature-specific UI into `apps/main/src/features/` without breaking i
 
 **Remaining known limitations (see `frontend-design-principles.md §12` for full details):**
 
-- `MOTION_DURATION_SECTION = 0.5s` is above the handoff's recommended `350–450ms` range (pending owner preference).
+- Section duration has been fixed: `MOTION_DURATION_SECTION = 0.45s` is now within the handoff's `350–450ms` range.
 - `AboutHero` uses mount-triggered `animate: "visible"` rather than scroll — single-frame flash window before React/Motion hydrates (warrants browser verification).
 - Markdown-to-HTML rendering has **no HTML sanitizer** applied (Phase 6 security priority — requires new dependency).
 - `ContentDetail` not listed in handoff's "Relevant files" section.

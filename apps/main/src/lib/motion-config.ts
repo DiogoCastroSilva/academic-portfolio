@@ -2,7 +2,7 @@
  * Centralized motion timing constants for consistent choreography.
  *
  * Reuses the same semantic values defined in design-system tokens.css:
- *   --motion-duration-enter (0.5s) and --motion-ease-enter (cubic-bezier(0.22, 1, 0.36, 1)).
+ *   --motion-duration-enter (0.45s) and --motion-ease-enter (cubic-bezier(0.22, 1, 0.36, 1)).
  *
  * These constants keep motion/react animations in sync with CSS-based
  * animations throughout the site. Adjust in one place to update the
@@ -26,8 +26,9 @@
  *     `html[data-js]`. The `MOTION_PORTRAIT_SCALE` constant (0.9) mirrors this value.
  */
 
-/** Duration for section-level entrance reveals (500ms). */
-export const MOTION_DURATION_SECTION = 0.5;
+/** Duration for section-level entrance reveals (450ms).
+ * Within the handoff document's recommended 350-450ms range. */
+export const MOTION_DURATION_SECTION = 0.45;
 
 /** Duration for sibling/child item reveals within a section (450ms). */
 export const MOTION_DURATION_CHILD = 0.45;

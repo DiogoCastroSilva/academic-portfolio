@@ -52,7 +52,7 @@
   --shadow-card: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
 
   /* ── Motion ──────────────────────────────── */
-  --motion-duration-enter: 0.5s;
+  --motion-duration-enter: 0.45s;
   --motion-ease-enter: cubic-bezier(0.22, 1, 0.36, 1);
   --motion-offset: 12px;
   --motion-portrait-scale: 0.9; /* matches MOTION_PORTRAIT_SCALE */

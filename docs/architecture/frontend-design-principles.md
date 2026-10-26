@@ -238,10 +238,10 @@ All color combinations (text-on-surface, including elevated surfaces) now pass W
    `MOTION_OFFSET` in `motion-config.ts` and the `--motion-offset` CSS token in `tokens.css`.
    The Motion system consistency test range was updated from `16–20px` to `8–14px`.
 
-2. **Section duration above target**: `MOTION_DURATION_SECTION = 0.5s` (500ms) is above the
-   handoff's recommended `350–450ms` range. `MOTION_DURATION_CHILD = 0.45s` (450ms) is at
-   the upper boundary. These are close enough to be acceptable but could be reduced for
-   a faster, more editorial feel.
+2. **Section duration above target**: _Fixed in Phase 4_: `MOTION_DURATION_SECTION = 0.45s` (450ms) is now within
+   the handoff's recommended `350–450ms` range. `MOTION_DURATION_CHILD = 0.45s` (450ms) remains at
+   the upper boundary, which is acceptable for child item reveals. The CSS token `--motion-duration-enter`
+   was also updated from `0.5s` to `0.45s` to keep CSS animations in sync.
 
 3. **Portrait scale animation lost** — _Fixed in Phase 3_: Added a `.motion-portrait-initial`
    CSS class to `animations.css` that applies `transform: scale(0.9) translateY(var(--motion-offset))`
