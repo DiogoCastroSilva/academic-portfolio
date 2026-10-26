@@ -286,3 +286,96 @@ describe("ProjectsPage page rendering", () => {
     expect(allSeen.sort()).toEqual(items.map((i) => i.slug).sort());
   });
 });
+
+describe("ProjectsPage paginated — featured exclusion", () => {
+  afterEach(() => {
+    mockProjects.length = 0;
+    mockProjects.push({
+      slug: "project-0",
+      href: "/projects/project-0",
+      title: "Project 0",
+      date: "2024-01-15",
+      tags: ["test"],
+      imageSrc: "/projects/placeholder.svg",
+      imageType: "cover",
+    });
+  });
+
+  it("generateStaticParams excludes featured projects from page count", async () => {
+    mockProjects.length = 0;
+    // Add 1 featured + PAGE_SIZE non-featured = exactly 1 page of results
+    mockProjects.push({
+      slug: "featured-0",
+      href: "/projects/featured-0",
+      title: "Featured Zero",
+      date: "2024-01-01",
+      tags: ["test"],
+      imageSrc: "/projects/placeholder.svg",
+      imageType: "cover",
+      selected: true,
+    });
+    mockProjects.push(...buildMockPageProjects(PAGE_SIZE));
+
+    const params = (await generateStaticParams()) as Array<{ page: string }>;
+    // Only PAGE_SIZE non-featured projects → 1 page
+    expect(params).toEqual([{ page: "1" }]);
+  });
+
+  it("generateStaticParams generates extra page when featured reduces count to PAGE_SIZE+1", async () => {
+    mockProjects.length = 0;
+    // 1 featured + (PAGE_SIZE + 1) non-featured → 2 pages of regular projects
+    mockProjects.push({
+      slug: "featured-0",
+      href: "/projects/featured-0",
+      title: "Featured Zero",
+      date: "2024-01-01",
+      tags: ["test"],
+      imageSrc: "/projects/placeholder.svg",
+      imageType: "cover",
+      selected: true,
+    });
+    mockProjects.push(...buildMockPageProjects(PAGE_SIZE + 1));
+
+    const params = (await generateStaticParams()) as Array<{ page: string }>;
+    const pageNumbers = params.map((p) => p.page);
+    expect(pageNumbers).toEqual(["1", "2"]);
+  });
+
+  it("does not render featured project on page 2", async () => {
+    mockProjects.length = 0;
+    // 1 featured + (PAGE_SIZE + 1) non-featured = 2 pages of regular projects
+    mockProjects.push({
+      slug: "featured-0",
+      href: "/projects/featured-0",
+      title: "Featured Zero",
+      date: "2024-01-01",
+      tags: ["test"],
+      imageSrc: "/projects/placeholder.svg",
+      imageType: "cover",
+      selected: true,
+    });
+    mockProjects.push(...buildMockPageProjects(PAGE_SIZE + 1));
+
+    const result = await ProjectsPage({
+      params: Promise.resolve({ page: "2" }),
+    });
+    const { container } = render(result);
+
+    // Featured project should NOT appear on page 2
+    expect(container.textContent).not.toContain("Featured Zero");
+    // Non-featured page-2 items should appear (Project 10 is the last item)
+    expect(container.textContent).toContain("Project 10");
+  });
+});
+
+function buildMockPageProjects(n: number): ContentMeta[] {
+  return Array.from({ length: n }, (_, i) => ({
+    slug: `project-${i}`,
+    href: `/projects/project-${i}`,
+    title: `Project ${i}`,
+    date: "2024-01-01",
+    tags: ["test"],
+    imageSrc: "/projects/placeholder.svg",
+    imageType: "cover" as const,
+  }));
+}

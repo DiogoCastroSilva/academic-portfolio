@@ -16,7 +16,10 @@ export const dynamicParams = false;
 /** Generate static page routes at build time for all pagination pages. */
 export async function generateStaticParams() {
   const projects = getAllProjects();
-  const totalPages = Math.max(1, Math.ceil(projects.length / PAGE_SIZE));
+  // Exclude featured (selected) projects — they appear in the editorial
+  // section on page 1 only, never in the paginated grid.
+  const regularProjects = projects.filter((p) => !p.selected);
+  const totalPages = Math.max(1, Math.ceil(regularProjects.length / PAGE_SIZE));
   // Pages 1..totalPages get static HTML. Page 1 redirects to /projects/
   // for canonical-URL correctness; pages 2..N render real content.
   // Next.js output:export requires at least one static param, so when
@@ -37,7 +40,10 @@ export default async function ProjectsPage({ params }: ProjectsPageProps) {
   const currentPage = parsePageParam(pageParam, 1);
 
   const projects = getAllProjects();
-  const totalPages = Math.max(1, Math.ceil(projects.length / PAGE_SIZE));
+  // Exclude featured (selected) projects from the paginated grid so they
+  // only appear in the editorial section on the collection root page.
+  const regularProjects = projects.filter((p) => !p.selected);
+  const totalPages = Math.max(1, Math.ceil(regularProjects.length / PAGE_SIZE));
 
   // Page 1 is served by /projects/page.tsx — redirect /projects/page/1/ there.
   if (currentPage === 1) {
@@ -49,13 +55,13 @@ export default async function ProjectsPage({ params }: ProjectsPageProps) {
     notFound();
   }
 
-  const { items: pageItems } = paginate(projects, currentPage);
+  const { items: pageItems } = paginate(regularProjects, currentPage);
 
   return (
     <div className="mx-auto flex max-w-7xl grow flex-col gap-4">
       <ContentCardSection
-        heading="Projects"
-        headingId={`projects-page-${currentPage}-heading`}
+        heading="All Projects"
+        headingId={`all-projects-page-${currentPage}-heading`}
         headingLevel="h1"
         items={pageItems}
         hrefPrefix="/projects"

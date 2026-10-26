@@ -14,12 +14,13 @@ The site has three content collection families (projects, publications, blog), a
 
 Every collection follows the same pattern:
 
-| Component               | Role                                                                                      |
-| ----------------------- | ----------------------------------------------------------------------------------------- |
-| `ContentCardSection`    | Server-side list/grid of content cards with optional `limit` and `viewAllHref`            |
-| `PublicationRowSection` | Client-side text-first academic row list with viewport-triggered reveal, optional `limit` |
-| `Pagination`            | Server-side path-based pager (`/blog/`, `/blog/page/2/`) — renders nothing when ≤1 page   |
-| `ContentDetail`         | Server-side detail page with `prose` Markdown rendering                                   |
+| Component                 | Role                                                                                                  |
+| ------------------------- | ----------------------------------------------------------------------------------------------------- |
+| `ContentCardSection`      | Server-side list/grid of content cards with optional `limit` and `viewAllHref`                        |
+| `PublicationRowSection`   | Client-side text-first academic row list with viewport-triggered reveal, optional `limit`             |
+| `FeaturedProjectsSection` | Client-side editorial layout for 1–3 selected projects (lead + supporting), group-level scroll reveal |
+| `Pagination`              | Server-side path-based pager (`/blog/`, `/blog/page/2/`) — renders nothing when ≤1 page               |
+| `ContentDetail`           | Server-side detail page with `prose` Markdown rendering                                               |
 
 ## 3. Typography / Spacing / Content Widths
 
@@ -296,9 +297,11 @@ All color combinations (text-on-surface, including elevated surfaces) now pass W
 10. **Markdown sanitization not yet implemented**: The handoff identifies this as Phase 6
     (security priority). The repository uses `marked` (via `libs/content`) to parse Markdown,
     and renders HTML via `dangerouslySetInnerHTML` in `ContentDetail`, `AboutSection`, and
-    `AboutHero`. **No HTML sanitizer is currently applied.** A sanitizer (e.g., `dompurify`
-    or `@mozilla/readability`'s sanitizer) needs to be integrated as a shared boundary
-    after Markdown parsing.
+    `AboutHero`. **No HTML sanitizer is currently applied.** A sanitizer (`sanitize-html`)
+    needs to be integrated as a shared boundary after Markdown parsing — see
+    [ADR-0009](architecture/decisions/0009-html-sanitization.md) for the full audit,
+    proposed allowlist, and implementation plan. **Requires owner approval** for the new
+    `sanitize-html` dependency before implementation.
 
 11. **No security regression tests**: No tests exist for malicious Markdown input
     (event-handler attributes on images, `<script>` elements, `javascript:` links, etc.).

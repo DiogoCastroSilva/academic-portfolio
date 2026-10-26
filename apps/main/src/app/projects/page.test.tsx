@@ -190,3 +190,122 @@ describe("ProjectsPage multi-item pagination", () => {
     expect(screen.queryByTestId("pagination")).toBeNull();
   });
 });
+
+describe("ProjectsPage featured section", () => {
+  const originalMock: ContentMeta[] = [
+    {
+      slug: "first-project",
+      href: "/projects/first-project",
+      title: "First Project",
+      date: "2024-06-15",
+      tags: ["TypeScript"],
+      excerpt: "A test project.",
+      imageSrc: "/projects/first-project/cover.webp",
+      imageType: "cover",
+    },
+  ];
+
+  afterEach(() => {
+    mockProjects.length = 0;
+    mockProjects.push(...originalMock);
+  });
+
+  it("renders featured section heading when projects are selected", () => {
+    mockProjects.length = 0;
+    mockProjects.push(
+      {
+        slug: "featured-project",
+        href: "/projects/featured-project",
+        title: "Featured Project Title",
+        date: "2024-06-15",
+        tags: ["research"],
+        excerpt: "An important project.",
+        imageSrc: "/projects/featured-project/cover.webp",
+        imageType: "cover",
+        selected: true,
+      },
+      {
+        slug: "regular-project",
+        href: "/projects/regular-project",
+        title: "Regular Project Title",
+        date: "2023-01-15",
+        tags: ["analysis"],
+        excerpt: "A regular project.",
+        imageSrc: "/projects/regular-project/cover.webp",
+        imageType: "cover",
+      },
+    );
+    render(<ProjectsPage />);
+    expect(
+      screen.getByRole("heading", { level: 2, name: "Featured" }),
+    ).toBeInTheDocument();
+  });
+
+  it("excludes featured projects from the regular grid", () => {
+    mockProjects.length = 0;
+    mockProjects.push(
+      {
+        slug: "featured-project",
+        href: "/projects/featured-project",
+        title: "Featured Project Title",
+        date: "2024-06-15",
+        tags: ["research"],
+        excerpt: "An important project.",
+        imageSrc: "/projects/featured-project/cover.webp",
+        imageType: "cover",
+        selected: true,
+      },
+      {
+        slug: "regular-project",
+        href: "/projects/regular-project",
+        title: "Regular Project Title",
+        date: "2023-01-15",
+        tags: ["analysis"],
+        excerpt: "A regular project.",
+        imageSrc: "/projects/regular-project/cover.webp",
+        imageType: "cover",
+      },
+    );
+    render(<ProjectsPage />);
+
+    // Find the ContentCardSection by its heading
+    const allProjectsHeading = screen.getByRole("heading", {
+      level: 2,
+      name: "All Projects",
+    });
+    const cardSection = allProjectsHeading.closest("section");
+
+    // Featured project should NOT appear in the card grid
+    expect(cardSection?.textContent).not.toContain("Featured Project Title");
+    // Regular project SHOULD appear in the card grid
+    expect(cardSection?.textContent).toContain("Regular Project Title");
+  });
+
+  it("does not render featured section when no projects are selected", () => {
+    // mockProjects has 1 item without selected — already set by afterEach
+    render(<ProjectsPage />);
+    expect(
+      screen.queryByRole("heading", { level: 2, name: "Featured" }),
+    ).not.toBeInTheDocument();
+  });
+
+  it("renders all projects in the grid when none are selected", () => {
+    mockProjects.length = 0;
+    mockProjects.push(...buildMockProjects(3));
+    render(<ProjectsPage />);
+
+    // No featured section
+    expect(
+      screen.queryByRole("heading", { level: 2, name: "Featured" }),
+    ).not.toBeInTheDocument();
+
+    // All 3 projects appear in the grid
+    const allProjectsHeading = screen.getByRole("heading", {
+      level: 2,
+      name: "All Projects",
+    });
+    const cardSection = allProjectsHeading.closest("section");
+    const articles = cardSection?.querySelectorAll("article");
+    expect(articles).toHaveLength(3);
+  });
+});

@@ -20,15 +20,15 @@ Start with the document that matches your goal:
 ## Architecture Decision Records
 
 | ADR                                                                     | Decision                             | Key trade-off                                                            |
-| ----------------------------------------------------------------------- | ------------------------------------ | ------------------------------------------------------------------------ |
+| ----------------------------------------------------------------------- | ------------------------------------ | ------------------------------------------------------------------------ | --- | -------------------------------------------------------- | --------------------------------------------- | --------------------------------------------------------- |
 | [0001](architecture/decisions/0001-static-hosting.md)                   | Static export on GitHub Pages        | No SSR or ISR — all pages prerendered                                    |
 | [0002](architecture/decisions/0002-workspace-tooling.md)                | Retain Nx workspace                  | ~150MB deps for dependency-aware builds and task orchestration           |
-| [0003](architecture/decisions/0003-markdown-content.md)                 | `gray-matter` + `marked`             | No HTML sanitization — content must be trusted                           |
+| [0003](architecture/decisions/0003-markdown-content.md)                 | `gray-matter` + `marked`             | No HTML sanitization — content must be trusted (see ADR-0009)            |
 | [0004](architecture/decisions/0004-content-validation-and-rendering.md) | Runtime frontmatter validation       | Invalid content fails the build                                          |
 | [0005](architecture/decisions/0005-testing-strategy.md)                 | Vitest as sole test framework        | No Jest compatibility                                                    |
 | [0006](architecture/decisions/0006-shared-frontend-tooling.md)          | Adopt shared Prettier/ESLint configs | Upstream changes require workspace updates                               |
 | [0007](architecture/decisions/0007-licensing-policy.md)                 | Three-tier licensing policy          | Separate licenses for code, sample content, and owner content            |
-| [0008](architecture/decisions/0008-design-system.md)                    | Design-system library                | New Nx project adds config overhead; mitigates via strict boundary rules |
+| [0008](architecture/decisions/0008-design-system.md)                    | Design-system library                | New Nx project adds config overhead; mitigates via strict boundary rules | \n  | [0009](architecture/decisions/0009-html-sanitization.md) | `sanitize-html` at the Markdown→HTML boundary | Requires new dependency; proposed but not yet implemented |
 
 ## Frontend Modernization
 
