@@ -1,8 +1,10 @@
 import baseConfig from "../../eslint.config.mjs";
 
-export default [
+const config = [
   ...baseConfig,
   {
     ignores: [".next/**", "**/out-tsc"],
   },
 ];
+
+export default config;

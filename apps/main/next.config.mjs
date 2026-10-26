@@ -51,5 +51,7 @@ const plugins = [
  * @param {string} phase
  * @param {object} context
  */
-export default async (phase, context) =>
+const createConfig = async (phase, context) =>
   composePlugins(...plugins)(createNextConfig(phase))(phase, context);
+
+export default createConfig;
