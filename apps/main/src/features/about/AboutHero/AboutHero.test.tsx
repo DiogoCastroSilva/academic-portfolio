@@ -234,10 +234,10 @@ describe("AboutHero accessibility", () => {
     it("profile image has sizes matching class-based rendered dimensions", () => {
       render(<AboutHero profile={mockProfile} />);
       const img = screen.getByAltText(`Profile picture of ${mockProfile.name}`);
-      // h-36 (144px) sm:h-48 (192px) md:h-60 (240px)
+      // h-36 (144px) sm:h-48 (192px) md:h-64 (256px)
       expect(img).toHaveAttribute(
         "sizes",
-        "(max-width: 640px) 144px, (max-width: 768px) 192px, 240px",
+        "(max-width: 640px) 144px, (max-width: 768px) 192px, 256px",
       );
     });
   });

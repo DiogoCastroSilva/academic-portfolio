@@ -239,13 +239,13 @@ describe("AboutSection", () => {
   // ---------------------------------------------------------------------------
 
   describe("image sizes accuracy", () => {
-    it("profile image sizes match class-based dimensions (128px/160px/192px)", () => {
+    it("profile image sizes match class-based dimensions (144px/192px/256px)", () => {
       render(<AboutSection profile={mockProfile} />);
       const img = screen.getByRole("img");
-      // Classes: h-36 (144px) sm:h-48 (192px) md:h-60 (240px)
+      // Classes: h-36 (144px) sm:h-48 (192px) md:h-64 (256px)
       expect(img).toHaveAttribute(
         "sizes",
-        "(max-width: 640px) 144px, (max-width: 768px) 192px, 240px",
+        "(max-width: 640px) 144px, (max-width: 768px) 192px, 256px",
       );
     });
   });

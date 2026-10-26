@@ -283,9 +283,9 @@ All color combinations (text-on-surface, including elevated surfaces) now pass W
    Both the homepage `AboutSection` and the About page `AboutHero` have been
    aligned to consistent portrait dimensions targeting the 240–256px desktop
    range. Updated portrait sizes from `h-32`/`sm:h-40`/`md:h-48`
-   (128px → 160px → 192px) to `h-36`/`sm:h-48`/`md:h-60`
-   (144px → 192px → 240px). Updated both `sizes` attributes to
-   `"(max-width: 640px) 144px, (max-width: 768px) 192px, 240px"`.
+   (128px → 160px → 192px) to `h-36`/`sm:h-48`/`md:h-64`
+   (144px → 192px → 256px). Updated both `sizes` attributes to
+   `"(max-width: 640px) 144px, (max-width: 768px) 192px, 256px"`.
    Tests in both `AboutSection.test.tsx` and `AboutHero.test.tsx` updated to
    match.
 
