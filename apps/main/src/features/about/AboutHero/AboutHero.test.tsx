@@ -186,6 +186,33 @@ describe("AboutHero accessibility", () => {
   // Phase 3: Portrait scale animation fix
   // ---------------------------------------------------------------------------
 
+  // ---------------------------------------------------------------------------
+  // Phase 4: Switch from mount-triggered animate to scroll-triggered whileInView
+  // ---------------------------------------------------------------------------
+
+  describe("scroll-triggered reveal (whileInView, not animate)", () => {
+    it("does not apply mount-triggered animate that could flash content before Motion hydrates", () => {
+      const { container } = render(<AboutHero profile={mockProfile} />);
+      // With initial={false}, the hero's MotionDiv defers opacity to CSS
+      // (.motion-item-initial). Under html[data-js], CSS applies opacity-0,
+      // but in the test environment (no data-js), content must be visible.
+      const heroMotionDiv = container.querySelector(
+        ".motion-item-initial.flex.flex-col",
+      );
+      expect(heroMotionDiv).toBeInTheDocument();
+      expect(heroMotionDiv).not.toHaveStyle({ opacity: "0" });
+    });
+
+    it("portrait wrapper uses whileInView semantics (no inline opacity-0 from Motion initial)", () => {
+      const { container } = render(<AboutHero profile={mockProfile} />);
+      const portraitWrapper = container.querySelector(
+        ".motion-portrait-initial",
+      );
+      expect(portraitWrapper).toBeInTheDocument();
+      expect(portraitWrapper).not.toHaveStyle({ opacity: "0" });
+    });
+  });
+
   describe("portrait scale initial state", () => {
     it("applies motion-portrait-initial class to the portrait wrapper for CSS scale fallback", () => {
       const { container } = render(<AboutHero profile={mockProfile} />);

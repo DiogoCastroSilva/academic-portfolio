@@ -11,6 +11,7 @@ import {
   MOTION_OFFSET,
   MOTION_PORTRAIT_SCALE,
   MOTION_STAGGER,
+  MOTION_VIEWPORT,
 } from "@/lib/motion-config.js";
 
 export type AboutHeroProps = {
@@ -68,7 +69,8 @@ export const AboutHero = ({ profile }: AboutHeroProps) => {
           : {
               variants: heroVariants,
               initial: false,
-              animate: "visible",
+              whileInView: "visible",
+              viewport: MOTION_VIEWPORT,
             })}
       >
         {/* Hero Header: portrait + identity + actions */}

@@ -249,11 +249,13 @@ All color combinations (text-on-surface, including elevated surfaces) now pass W
    `.motion-item-initial` on the AboutHero portrait wrapper. The `prefers-reduced-motion`
    override forces `opacity: 1, transform: none`. Tests verify the class is present.
 
-4. **AboutHero uses `animate: "visible"` (mount-triggered)**: Fires immediately on mount
-   rather than on scroll. Content is visible via `.motion-item-initial` CSS before JS
-   hydrates, but the `jsDetectorScript` sets `data-js` ~synchronously, creating a brief
-   window where CSS applies `opacity-0` before React/Motion hydrates. Single-frame flash,
-   not sustained, but warrants browser verification.
+4. **AboutHero mount-triggered animation flash** — _Fixed in Phase 4_: Switched
+   `animate: "visible"` (mount-triggered) to `whileInView: "visible"` with the shared
+   `MOTION_VIEWPORT` constant (including `once: true`). This matches all 5 other Motion components
+   (EducationTimeline, SkillsGrid, ResearchInterests, ContentCardSection, PublicationRowSection),
+   eliminating the inconsistency. For above-the-fold content, the Intersection Observer fires
+   immediately after hydration, starting the reveal animation without the CSS opacity-0 gap.
+   Tests verify content is visible in rendered output (no inline opacity-0).
 
 ### Progressive Enhancement
 

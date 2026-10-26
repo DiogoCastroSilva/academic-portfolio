@@ -83,9 +83,16 @@ Reorganize feature-specific UI into `apps/main/src/features/` without breaking i
 - [x] Added replay-prevention test in `motion-config.test.ts` verifying `MOTION_VIEWPORT.once === true`.
 - Updated Motion system consistency test range from `16–20px` to `8–14px`.
 
+**Phase 4 fixes (motion duration + AboutHero consistency):**
+
+- [x] Reduced `MOTION_DURATION_SECTION` from `0.5s` to `0.45s` (within handoff's `350–450ms` range) in `motion-config.ts`, matching CSS `--motion-duration-enter` token in `tokens.css`.
+- [x] Switched `AboutHero` from mount-triggered `animate: "visible"` to scroll-triggered `whileInView: "visible"` with the shared `MOTION_VIEWPORT` constant, matching all 5 other Motion components.
+- [x] Added `whileInView` consistency tests in `AboutHero.test.tsx` verifying content is visible in SSR (no inline opacity-0).
+- [x] Updated `frontend-design-principles.md §12` findings to mark Phase 4 fixes.
+
 **Remaining known limitations (see `frontend-design-principles.md §12` for full details):**
 
 - Section duration has been fixed: `MOTION_DURATION_SECTION = 0.45s` is now within the handoff's `350–450ms` range.
-- `AboutHero` uses mount-triggered `animate: "visible"` rather than scroll — single-frame flash window before React/Motion hydrates (warrants browser verification).
+- AboutHero now uses scroll-triggered `whileInView` with shared `MOTION_VIEWPORT` instead of mount-triggered `animate` — Phase 4 fix.
 - Markdown-to-HTML rendering has **no HTML sanitizer** applied (Phase 6 security priority — requires new dependency).
 - `ContentDetail` not listed in handoff's "Relevant files" section.
