@@ -8,3 +8,4 @@ export {
 } from "./lib/constants";
 export * from "./lib/profile";
 export * from "./lib/marked-extensions";
+export { sanitizeHtml } from "./lib/sanitize-html";

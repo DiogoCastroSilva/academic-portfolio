@@ -1,13 +1,13 @@
 # ADR-0009: HTML Sanitization for Markdown Rendering
 
-- **Status:** Proposed (requires owner approval for new dependency)
+- **Status:** Implemented (2026-10-26)
 - **Context:** The repository renders Markdown to HTML via `marked` (ADR-0003) and
   injects the output via `dangerouslySetInnerHTML` in three components. `marked`
-  does **not** sanitize HTML, and no sanitizer is currently applied (ADR-0004
-  accepts this for trusted maintainer-authored content only). The River Atlas
-  Editorial handoff (Phase 6) elevates HTML sanitization to a priority
+  does **not** sanitize HTML, and no sanitizer was previously applied (ADR-0004
+  accepted this for trusted maintainer-authored content only). The River Atlas
+  Editorial handoff (Phase 6) elevated HTML sanitization to a priority
   production-readiness item.
-- **Decision:** Adopt `sanitize-html` (v2.x) as a maintained, server-side JS
+- **Decision:** Adopted `sanitize-html` (v2.x) as a maintained, server-side JS
   sanitizer at the shared Markdown→HTML boundary in
   `libs/content/src/lib/create-content-library.ts`, immediately after
   `marked.parse()` completes (including its `postprocess` hook that resolves
@@ -23,7 +23,11 @@
   - **Hand-written regex sanitizer:** Explicitly rejected — fragile and
     bypassable (see §3 below for bypass examples).
 - **Consequences:**
-  - Adds one production dependency (`sanitize-html`).
+  - Added one production dependency (`sanitize-html`).
+  - All Markdown-rendered HTML is now sanitized before injection via
+    `dangerouslySetInnerHTML` in ContentDetail, AboutSection, and AboutHero.
+  - Automated security tests (39 tests) verify malicious input is stripped and
+    legitimate content survives.
   ## 1. Rendering Pipeline Audit
 
 All Markdown→HTML conversion flows through a single entry point:
@@ -128,16 +132,16 @@ requirements):
 7. **`<svg onload>`:**
    `<svg onload="alert(1)"><script>alert(2)</script></svg>` → all removed.
 
-## 4. Implementation Plan
+## 4. Implementation Plan (Completed)
 
-### Step 1: Install dependency
+### Step 1: Install dependency ✅
 
 ```bash
 npm install sanitize-html
 npm install -D @types/sanitize-html
 ```
 
-### Step 2: Create shared sanitizer module
+### Step 2: Create shared sanitizer module ✅
 
 File: `libs/content/src/lib/sanitize-html.ts`
 
@@ -155,22 +159,22 @@ export function sanitizeHtml(html: string): string {
 }
 ```
 
-### Step 3: Apply at the shared boundary
+### Step 3: Apply at the shared boundary ✅
 
-In `getRawContent()` (the method that calls `marked.parse`):
+In `getContentBySlug()` (the method that calls `marked.parse`):
 
 ```typescript
-const rawBody = marked.parse(content.body);
-return {
-  ...meta,
-  body: sanitizeHtml(rawBody),
-};
+const htmlBody = await markedInstance.parse(body);
+const sanitizedBody = sanitizeHtml(htmlBody);
+
+return { ...meta, body: sanitizedBody };
 ```
 
-### Step 4: Security + regression tests
+### Step 4: Security + regression tests ✅
 
-- `libs/content/src/lib/sanitize-html.test.ts` — tests with malicious input
-- Verify legitimate content (figures, tables, links, code) survives
+- `libs/content/src/lib/sanitize-html.test.ts` — 39 tests with malicious input
+- Verified legitimate content (figures, tables, links, code) survives
+- All tests pass (236 total tests in @academic-portfolio/content)
 
 ## 5. Conditions for Revisiting
 

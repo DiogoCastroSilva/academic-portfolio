@@ -4,6 +4,7 @@ import path from "path";
 import "server-only";
 import { getDeploymentUrl, withPublicBasePath } from "./constants";
 import { createMarkedInstance } from "./marked-extensions.js";
+import { sanitizeHtml } from "./sanitize-html.js";
 
 import {
   ContentItemMeta,
@@ -576,8 +577,9 @@ export function createContentLibrary(
         validateBodyImages(body, entryDir, resolvedSlug, ENTRY_FILENAME);
 
         const htmlBody = await markedInstance.parse(body);
+        const sanitizedBody = sanitizeHtml(htmlBody);
 
-        return { ...meta, body: htmlBody };
+        return { ...meta, body: sanitizedBody };
       }
       return undefined;
     })();
