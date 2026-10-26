@@ -181,4 +181,37 @@ describe("AboutHero accessibility", () => {
       expect(className).not.toMatch(/dark:prose-strong/);
     });
   });
+
+  // ---------------------------------------------------------------------------
+  // Phase 3: Portrait scale animation fix
+  // ---------------------------------------------------------------------------
+
+  describe("portrait scale initial state", () => {
+    it("applies motion-portrait-initial class to the portrait wrapper for CSS scale fallback", () => {
+      const { container } = render(<AboutHero profile={mockProfile} />);
+      const portraitWrapper = container.querySelector(
+        ".motion-portrait-initial",
+      );
+      expect(portraitWrapper).toBeInTheDocument();
+      expect(portraitWrapper).toHaveClass("motion-item-initial");
+    });
+
+    it("portrait wrapper also has motion-item-initial for opacity fallback", () => {
+      const { container } = render(<AboutHero profile={mockProfile} />);
+      const portraitWrapper = container.querySelector(
+        ".motion-portrait-initial",
+      );
+      expect(portraitWrapper).toHaveClass("motion-item-initial");
+    });
+
+    it("profile image has sizes matching class-based rendered dimensions", () => {
+      render(<AboutHero profile={mockProfile} />);
+      const img = screen.getByAltText(`Profile picture of ${mockProfile.name}`);
+      // h-48 (192px) sm:h-64 (256px) md:h-56 (224px)
+      expect(img).toHaveAttribute(
+        "sizes",
+        "(max-width: 640px) 192px, (max-width: 768px) 256px, 224px",
+      );
+    });
+  });
 });

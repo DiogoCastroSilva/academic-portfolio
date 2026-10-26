@@ -233,4 +233,53 @@ describe("AboutSection", () => {
       expect(cue?.className).toMatch(/motion-reduce:animate-none/);
     });
   });
+
+  // ---------------------------------------------------------------------------
+  // Phase 3: Image sizes match class-based rendered dimensions
+  // ---------------------------------------------------------------------------
+
+  describe("image sizes accuracy", () => {
+    it("profile image sizes match class-based dimensions (128px/160px/192px)", () => {
+      render(<AboutSection profile={mockProfile} />);
+      const img = screen.getByRole("img");
+      // Classes: h-32 (128px) sm:h-40 (160px) md:h-48 (192px)
+      expect(img).toHaveAttribute(
+        "sizes",
+        "(max-width: 640px) 128px, (max-width: 768px) 160px, 192px",
+      );
+    });
+  });
+
+  // ---------------------------------------------------------------------------
+  // Phase 3: No-JS integration — content visible without JavaScript
+  // ---------------------------------------------------------------------------
+
+  describe("progressive enhancement / no-JS fallback", () => {
+    it("does not use Motion client components (CSS-only animation)", () => {
+      const { container } = render(<AboutSection profile={mockProfile} />);
+
+      // AboutSection uses CSS animate-fadeInUp, not motion/react.
+      // It should not have any data-framer attributes (Motion markers).
+      const framerElements = container.querySelectorAll("[data-framer]");
+      expect(framerElements.length).toBe(0);
+    });
+
+    it("content is immediately visible — no opacity-0 from Motion initial state", () => {
+      const { container } = render(<AboutSection profile={mockProfile} />);
+
+      // The hero wrapper uses animate-fadeInUp (CSS), not Motion.
+      // Without JS, there should be no hidden/opacity-0 elements.
+      const hiddenElements = container.querySelectorAll(
+        "[style*='opacity: 0'], [style*='opacity:0']",
+      );
+      expect(hiddenElements.length).toBe(0);
+    });
+
+    it("profile name and role are rendered in the DOM immediately", () => {
+      render(<AboutSection profile={mockProfile} />);
+
+      expect(screen.getByText(mockProfile.name)).toBeInTheDocument();
+      expect(screen.getByText(mockProfile.role)).toBeInTheDocument();
+    });
+  });
 });

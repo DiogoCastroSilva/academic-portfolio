@@ -65,3 +65,27 @@ Reorganize feature-specific UI into `apps/main/src/features/` without breaking i
 
 - Visual contrast measurement of inline-code vs. fenced-code in both themes (source-level review only).
 - Live `prefers-reduced-motion` behavior verification in a browser (covered by `tokens.css` media query and `motion-reduce:animate-none` utility classes in source).
+- Hero balance and portrait sizing at short desktop heights and narrow mobile widths (see `frontend-design-principles.md §12` for full list of browser-only QA items).
+- Featured-project composition and image proportions across all breakpoints.
+- Scroll-triggered reveal behavior: verify `viewport: { once: true }` replay prevention in a real browser.
+- No-JavaScript state: verify content visibility when `data-js` is absent from `<html>`.
+- Static asset URL verification under `/academic-portfolio` base path in deployed output.
+- Browser console errors and network failures at `/academic-portfolio/` routes.
+
+**Phase 3 fixes (completed in this pass — see `frontend-design-principles.md §12` for details):**
+
+- [x] Reduced `MOTION_OFFSET` from `20px` to `12px` (within handoff's `8–14px` range) in both `motion-config.ts` and `tokens.css`.
+- [x] Fixed `AboutHero` portrait `scale` animation: added `.motion-portrait-initial` CSS class with `scale(0.9) translateY(var(--motion-offset))`, applied alongside `.motion-item-initial` on the portrait wrapper.
+- [x] Added `initial: false` to child Motion elements (`MotionHeading`, `MotionArticle`) in `ContentCardSection` and `PublicationRowSection` via the shared `motionProps` object.
+- [x] Fixed `AboutSection` and `AboutHero` image `sizes` to match actual class-based rendered dimensions.
+- [x] Extracted shared `MOTION_VIEWPORT` constant (with `once: true`) from `motion-config.ts` and used it across all Motion components.
+- [x] Added no-JS integration tests in `AboutSection.test.tsx`.
+- [x] Added replay-prevention test in `motion-config.test.ts` verifying `MOTION_VIEWPORT.once === true`.
+- Updated Motion system consistency test range from `16–20px` to `8–14px`.
+
+**Remaining known limitations (see `frontend-design-principles.md §12` for full details):**
+
+- `MOTION_DURATION_SECTION = 0.5s` is above the handoff's recommended `350–450ms` range (pending owner preference).
+- `AboutHero` uses mount-triggered `animate: "visible"` rather than scroll — single-frame flash window before React/Motion hydrates (warrants browser verification).
+- Markdown-to-HTML rendering has **no HTML sanitizer** applied (Phase 6 security priority — requires new dependency).
+- `ContentDetail` not listed in handoff's "Relevant files" section.

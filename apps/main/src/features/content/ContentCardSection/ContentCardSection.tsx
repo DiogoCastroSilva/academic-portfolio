@@ -12,7 +12,7 @@ import {
   MOTION_EASE_ENTER,
   MOTION_OFFSET,
   MOTION_STAGGER,
-  MOTION_VIEWPORT_MARGIN,
+  MOTION_VIEWPORT,
 } from "@/lib/motion-config.js";
 
 /**
@@ -113,7 +113,9 @@ export function ContentCardSection({
   const MotionSection = shouldReduceMotion ? "section" : motion.section;
   const MotionArticle = shouldReduceMotion ? "article" : motion.article;
   const MotionDiv = shouldReduceMotion ? "div" : motion.div;
-  const motionProps = shouldReduceMotion ? {} : { variants: itemVariants };
+  const motionProps = shouldReduceMotion
+    ? {}
+    : { variants: itemVariants, initial: false as const };
 
   return (
     <MotionSection
@@ -130,10 +132,7 @@ export function ContentCardSection({
             // pre-animation state only when JS is enabled. See animations.css.
             initial: false as const,
             whileInView: "visible" as const,
-            viewport: {
-              once: true,
-              margin: MOTION_VIEWPORT_MARGIN,
-            } as const,
+            viewport: MOTION_VIEWPORT,
           })}
     >
       <MotionHeading

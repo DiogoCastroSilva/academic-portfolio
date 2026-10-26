@@ -385,4 +385,22 @@ describe("PublicationRowSection progressive enhancement", () => {
     const parentDiv = link.closest("div");
     expect(parentDiv).toHaveClass("motion-item-initial");
   });
+
+  it("child Motion elements do not have inline opacity-0 from missing initial={false}", () => {
+    const { container } = render(
+      <PublicationRowSection
+        heading="Publications"
+        headingId="publications-heading"
+        items={mockItems}
+        hrefPrefix="/publications"
+      />,
+    );
+    // Heading and articles are children with variants applied.
+    // Without initial={false}, Motion would inject inline opacity-0 in SSR.
+    const heading = container.querySelector("h2");
+    expect(heading).not.toHaveStyle({ opacity: "0" });
+
+    const article = container.querySelector("article");
+    expect(article).not.toHaveStyle({ opacity: "0" });
+  });
 });

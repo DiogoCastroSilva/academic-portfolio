@@ -128,9 +128,14 @@ describe("Motion system consistency", () => {
     expect(config.MOTION_STAGGER).toBeGreaterThanOrEqual(0.07);
     expect(config.MOTION_STAGGER).toBeLessThanOrEqual(0.1);
 
-    // Section offset: 16-20px
-    expect(config.MOTION_OFFSET).toBeGreaterThanOrEqual(16);
-    expect(config.MOTION_OFFSET).toBeLessThanOrEqual(20);
+    // Section offset: 8-14px (handoff document recommendation)
+    expect(config.MOTION_OFFSET).toBeGreaterThanOrEqual(8);
+    expect(config.MOTION_OFFSET).toBeLessThanOrEqual(14);
+
+    // Viewport replay prevention: once must be true
+    expect(config.MOTION_VIEWPORT).toBeDefined();
+    expect(config.MOTION_VIEWPORT.once).toBe(true);
+    expect(config.MOTION_VIEWPORT.margin).toBe(config.MOTION_VIEWPORT_MARGIN);
   });
 
   it("uses editorial easing curve for consistency", async () => {

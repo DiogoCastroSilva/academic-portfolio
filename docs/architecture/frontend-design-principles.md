@@ -202,7 +202,7 @@ All color combinations (text-on-surface, including elevated surfaces) now pass W
 - `motion-reduce:animate-none` on individual animated elements.
 - `motion/react` is used on the About page (`AboutHero`, `EducationTimeline`, `ResearchInterests`, `SkillsGrid`) and in `ContentCardSection` and `PublicationRowSection` with `useReducedMotion()` to avoid motion when the user requests reduced motion. The homepage's `AboutSection` uses a CSS `animate-fadeInUp` entrance on initial page load. `ContentCardSection` and `PublicationRowSection` use `motion/react` with `whileInView` viewport triggers for below-the-fold reveal — content is available immediately via server-rendered HTML and animation is an enhancement.
 - **Progressive enhancement pattern**: Motion components use `initial={false}` (not `initial: "hidden"`) so SSR HTML renders content fully visible — no inline `opacity: 0` styles. Items receive a `.motion-item-initial` CSS class that is guarded by `html[data-js]` (set by the inline `jsDetectorScript` in `<head>`). Without JavaScript, `.motion-item-initial` resolves to `opacity: 1` (visible). With JavaScript, it resolves to `opacity: 0 + translateY(var(--motion-offset))`, allowing Motion's `whileInView` to animate the reveal. The `@media (prefers-reduced-motion: reduce)` override forces `opacity: 1` regardless. This pattern is applied uniformly across `ContentCardSection`, `PublicationRowSection`, `AboutHero`, `EducationTimeline`, `ResearchInterests`, and `SkillsGrid`.
-- Card entrance: viewport-triggered stagger via `motion/react` (`whileInView` with `viewport: { once: true }`). Card titles underline on hover without a positional transform; card images use a subtle `scale-105` hover effect that is disabled for reduced-motion users. The About-page skill chips also use a small hover animation.
+- Card entrance: viewport-triggered stagger via `motion/react` (`whileInView` with `viewport: { once: true }`). Card titles underline on hover without a positional transform; card images use a subtle `scale-105` hover effect that is disabled for reduced-motion users. About-page skill chips are plain `<span>` elements with no hover animation, keeping skills visually calm and non-interactive.
 - Keep motion decorative and restrained, ensure reduced-motion preferences are honored, and do not animate controls merely to signal keyboard focus. There are no auto-playing carousels.
 
 ## 10. Static Delivery / Performance
@@ -219,3 +219,102 @@ All color combinations (text-on-surface, including elevated surfaces) now pass W
 - No Redux — Zustand only for truly local UI state (none currently used).
 - No GraphQL — REST + static export.
 - Components are function components with destructured props — no class components, no inheritance.
+
+---
+
+## 12. Known Limitations and Outstanding Issues
+
+<!--
+  This section records validated issues and gaps discovered during the
+  Phase 1-5 implementation and audit cycles. Items here require follow-up
+  either via browser testing (unavailable in terminal-only environments)
+  or additional implementation work.
+-->
+
+### Motion
+
+1. **MOTION_OFFSET vs. target range** — _Fixed in Phase 3_: Reduced from `20px` to `12px`,
+   bringing it within the handoff document's recommended `8–14px` range. Updated both
+   `MOTION_OFFSET` in `motion-config.ts` and the `--motion-offset` CSS token in `tokens.css`.
+   The Motion system consistency test range was updated from `16–20px` to `8–14px`.
+
+2. **Section duration above target**: `MOTION_DURATION_SECTION = 0.5s` (500ms) is above the
+   handoff's recommended `350–450ms` range. `MOTION_DURATION_CHILD = 0.45s` (450ms) is at
+   the upper boundary. These are close enough to be acceptable but could be reduced for
+   a faster, more editorial feel.
+
+3. **Portrait scale animation lost** — _Fixed in Phase 3_: Added a `.motion-portrait-initial`
+   CSS class to `animations.css` that applies `transform: scale(0.9) translateY(var(--motion-offset))`
+   (guarded by `html[data-js]`) when JS is enabled. The class is applied alongside
+   `.motion-item-initial` on the AboutHero portrait wrapper. The `prefers-reduced-motion`
+   override forces `opacity: 1, transform: none`. Tests verify the class is present.
+
+4. **AboutHero uses `animate: "visible"` (mount-triggered)**: Fires immediately on mount
+   rather than on scroll. Content is visible via `.motion-item-initial` CSS before JS
+   hydrates, but the `jsDetectorScript` sets `data-js` ~synchronously, creating a brief
+   window where CSS applies `opacity-0` before React/Motion hydrates. Single-frame flash,
+   not sustained, but warrants browser verification.
+
+### Progressive Enhancement
+
+5. **`jsDetectorScript` not in original handoff plan**: The progressive enhancement pattern
+   (`jsDetectorScript` → `data-js` on `<html>` → `.motion-item-initial` CSS → `initial={false}`)
+   was implemented but not explicitly called out in the handoff's phase breakdown. Documented
+   here (§12) and in `libs/navigation/src/lib/hooks/js-detector.ts`.
+
+6. **No no-JS integration test** — _Added in Phase 3_: `AboutSection.test.tsx` now includes a
+   "progressive enhancement / no-JS fallback" describe block verifying no Motion client
+   markers, no inline opacity-0, and immediate content visibility. A reusable `jsDetectorScript`
+   helper and HTML-level `<script>` injection test (with `data-js` toggling in the DOM) remain
+   as future work for the full no-JS integration layer.
+
+7. **ContentCardSection child elements lacked explicit `initial={false}`** — _Fixed in Phase 3_:
+   Added `initial: false` to the shared `motionProps` object used by `MotionHeading` and
+   `MotionArticle` in both `ContentCardSection` and `PublicationRowSection`. Tests now
+   assert no inline opacity-0 on heading and article elements.
+
+### Typography & Images
+
+8. **AboutSection image `sizes` mismatch** — _Fixed in Phase 3_:
+
+   The `sizes` string didn't match class-based rendered dimensions (`h-32`/`sm:h-40`/`md:h-48`
+   = 128px → 160px → 192px). Updated to
+   `"(max-width: 640px) 128px, (max-width: 768px) 160px, 192px"`.
+   Also fixed AboutHero `sizes` from `"(max-width: 640px) 200px, 240px"` to
+   `"(max-width: 640px) 192px, (max-width: 768px) 256px, 224px"`.
+   Tests added to both `AboutSection.test.tsx` and `AboutHero.test.tsx`.
+
+9. **ContentDetail not listed in handoff files**: The handoff document's "Relevant files"
+   section omits `apps/main/src/features/content/ContentDetail/ContentDetail.tsx`, which
+   handles detail-page rendering with structured data (JSON-LD), `prose` styling, and
+   Markdown-to-HTML rendering via `dangerouslySetInnerHTML`.
+
+### Security
+
+10. **Markdown sanitization not yet implemented**: The handoff identifies this as Phase 6
+    (security priority). The repository uses `marked` (via `libs/content`) to parse Markdown,
+    and renders HTML via `dangerouslySetInnerHTML` in `ContentDetail`, `AboutSection`, and
+    `AboutHero`. **No HTML sanitizer is currently applied.** A sanitizer (e.g., `dompurify`
+    or `@mozilla/readability`'s sanitizer) needs to be integrated as a shared boundary
+    after Markdown parsing.
+
+11. **No security regression tests**: No tests exist for malicious Markdown input
+    (event-handler attributes on images, `<script>` elements, `javascript:` links, etc.).
+
+### Testing & Browser Validation
+
+12. **Outdated doc reference (fixed)**: `frontend-design-principles.md` previously stated
+    "The About-page skill chips also use a small hover animation" — corrected to reflect
+    that skill chips are plain `<span>` elements with no hover animation.
+
+13. **No no-JS replay-prevention test** — _Partially fixed in Phase 3_: Added
+    `motion-config.test.ts` that verifies `MOTION_VIEWPORT.once === true` — the single
+    source of truth now used by all components. A full DOM-level test that simulates
+    scroll-out-and-back is out of scope for jsdom (no real scroll triggering) and
+    remains a browser-QA item.
+
+14. **No browser-based QA performed**: All validation has been done via terminal tests,
+    lint, typecheck, and build. Browser scenarios from the handoff §11 (hero balance at all
+    breakpoints, image proportions, featured-project composition, scroll behavior, page
+    navigation, console errors, network failures, asset URLs under `/academic-portfolio`)
+    have NOT been verified and require a browser-based review.

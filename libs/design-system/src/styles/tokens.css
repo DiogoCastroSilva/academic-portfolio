@@ -54,7 +54,8 @@
   /* ── Motion ──────────────────────────────── */
   --motion-duration-enter: 0.5s;
   --motion-ease-enter: cubic-bezier(0.22, 1, 0.36, 1);
-  --motion-offset: 20px;
+  --motion-offset: 12px;
+  --motion-portrait-scale: 0.9; /* matches MOTION_PORTRAIT_SCALE */
 }
 
 /* Reduced-motion: disable gallery animations and smooth transitions */

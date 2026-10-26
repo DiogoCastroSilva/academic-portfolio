@@ -75,7 +75,7 @@ export const AboutHero = ({ profile }: AboutHeroProps) => {
         <div className="flex flex-col gap-6">
           <div className="flex flex-col items-center gap-4 md:flex-row md:gap-8">
             <MotionDiv
-              className="motion-item-initial flex justify-center"
+              className="motion-item-initial motion-portrait-initial flex justify-center"
               {...(shouldReduceMotion
                 ? {}
                 : {
@@ -86,7 +86,7 @@ export const AboutHero = ({ profile }: AboutHeroProps) => {
                 src={profile.imageSrc}
                 alt={`Profile picture of ${profile.name}`}
                 className="h-48 w-48 rounded-full sm:h-64 sm:w-64 md:h-56 md:w-56"
-                sizes="(max-width: 640px) 200px, 240px"
+                sizes="(max-width: 640px) 192px, (max-width: 768px) 256px, 224px"
                 priority
               />
             </MotionDiv>

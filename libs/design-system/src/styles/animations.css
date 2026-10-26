@@ -54,6 +54,7 @@
  *   - Motion's `useReducedMotion()` also renders plain HTML (no opacity-0)
  *   - Content is immediately readable in both paths
  */
+
 .motion-item-initial {
   opacity: 1;
   transform: none;
@@ -64,8 +65,27 @@ html[data-js] .motion-item-initial {
   transform: translateY(var(--motion-offset));
 }
 
+/* Portrait-specific initial state: adds scale transform to the opacity
+   + translateY base. Requires `--motion-portrait-scale` CSS variable,
+   which defaults to 0.9 (matching MOTION_PORTRAIT_SCALE). */
+.motion-portrait-initial {
+  opacity: 1;
+  transform: none;
+}
+
+html[data-js] .motion-portrait-initial {
+  opacity: 0;
+  transform: scale(var(--motion-portrait-scale, 0.9))
+    translateY(var(--motion-offset));
+}
+
 @media (prefers-reduced-motion: reduce) {
   .motion-item-initial {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+
+  .motion-portrait-initial {
     opacity: 1 !important;
     transform: none !important;
   }

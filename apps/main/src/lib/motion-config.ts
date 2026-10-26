@@ -16,7 +16,14 @@
  *   - The `jsDetectorScript` (libs/navigation) sets `data-js` on `<html>`
  *     in `<head>` before first paint, gating the opacity-0 CSS state
  *   - Without JS: `.motion-item-initial` = opacity-1 (visible in SSR)
- *   - With JS: `.motion-item-initial` = opacity-0, Motion animates to opacity-1
+ *   - With JS: `.motion-item-initial` = opacity-0 + translateY(var(--motion-offset)),
+ *     Motion animates to opacity-1 with scale where applicable
+ *   - `@media (prefers-reduced-motion: reduce)` forces `opacity: 1 !important`
+ *     overriding `.motion-item-initial` so reduced-motion users see content immediately
+ *   - NOTE: `.motion-item-initial` CSS only controls opacity + translateY, NOT scale.
+ *     Portrait scale is handled via the dedicated `.motion-portrait-initial` CSS
+ *     class (see animations.css), which applies `scale(0.9) translateY(...)` under
+ *     `html[data-js]`. The `MOTION_PORTRAIT_SCALE` constant (0.9) mirrors this value.
  */
 
 /** Duration for section-level entrance reveals (500ms). */
@@ -41,8 +48,9 @@ export const MOTION_DELAY_CHILDREN = 0.05;
  * animations in animations.css. */
 export const MOTION_EASE_ENTER = [0.22, 1, 0.36, 1] as const;
 
-/** Movement distance for entrance reveals (20px). */
-export const MOTION_OFFSET = 20;
+/** Movement distance for entrance reveals (12px).
+ * Within the handoff document's recommended 8-14px range. */
+export const MOTION_OFFSET = 12;
 
 /** Reduced scale factor for portrait entrance (10% shrink). */
 export const MOTION_PORTRAIT_SCALE = 0.9;
@@ -56,6 +64,15 @@ export const MOTION_PORTRAIT_SCALE = 0.9;
  * timeline entries). For very short sections (one or two lines) the default
  * `{ once: true }` without a margin may be more appropriate.
  *
- * Shared across ContentCardSection, PublicationRowSection, and all
- * About-page animated sections for consistent scroll-trigger behavior. */
+ * Shared across ContentCardSection, PublicationRowSection, all About-page animated
+ * sections, and the `MOTION_VIEWPORT` constant for consistent scroll-trigger behavior. */
 export const MOTION_VIEWPORT_MARGIN = "0px 0px -20% 0px";
+
+/** Shared viewport configuration for scroll-triggered reveals.
+ *  Guaranteed `once: true` — reveals fire exactly once and never replay.
+ *  Using a shared constant ensures this guarantee is consistent and testable
+ *  across all Motion components. */
+export const MOTION_VIEWPORT = {
+  once: true,
+  margin: MOTION_VIEWPORT_MARGIN,
+} as const;
