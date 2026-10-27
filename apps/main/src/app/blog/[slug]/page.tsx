@@ -78,6 +78,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
   return (
     <div className="mx-auto flex max-w-7xl grow flex-col gap-4">
       <Breadcrumb
+        className="mx-4 max-w-5xl px-8 py-8"
         items={[{ label: "Blog", href: "/blog/" }, { label: post.title }]}
       />
       <ContentDetail content={post} />

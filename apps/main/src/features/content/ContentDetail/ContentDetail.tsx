@@ -10,14 +10,14 @@ export interface ContentDetailProps {
 
 export function ContentDetail({ content }: ContentDetailProps) {
   return (
-    <article className="text-text-primary mx-auto flex w-full max-w-3xl flex-col gap-8 p-8">
+    <article className="text-text-primary mx-4 flex w-full max-w-5xl flex-col gap-8 p-8">
       <JsonLd data={buildArticleSchema(content)} />
       <div className="bg-surface-elevated aspect-[16/9] w-full overflow-hidden rounded-xl">
         <ContentImage
           src={content.imageSrc}
           alt={content.title}
           className="h-full w-full object-cover"
-          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 90vw, 768px"
+          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 90vw, 960px"
         />
       </div>
       <header className="flex flex-col gap-4">

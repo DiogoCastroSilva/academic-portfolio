@@ -83,6 +83,7 @@ export default async function PublicationPage({
   return (
     <div className="mx-auto flex max-w-7xl grow flex-col gap-4">
       <Breadcrumb
+        className="mx-4 max-w-5xl px-8 py-8"
         items={[
           { label: "Publications", href: "/publications/" },
           { label: publication.title },

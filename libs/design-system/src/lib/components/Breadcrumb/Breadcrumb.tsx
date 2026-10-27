@@ -9,6 +9,8 @@ type BreadcrumbItem = {
 
 type BreadcrumbProps = {
   items: BreadcrumbItem[];
+  /** Optional classes merged onto the <nav> element (appended after defaults). */
+  className?: string;
 };
 
 /**
@@ -17,9 +19,9 @@ type BreadcrumbProps = {
  * If the last item has no `href`, it is rendered as the current page
  * (plain text, not a link) with `aria-current="page"`.
  */
-export function Breadcrumb({ items }: BreadcrumbProps) {
+export function Breadcrumb({ items, className }: BreadcrumbProps) {
   return (
-    <nav aria-label="Breadcrumb" className="px-4 py-2">
+    <nav aria-label="Breadcrumb" className={`px-4 py-2 ${className ?? ""}`}>
       <ol className="text-text-secondary flex items-center gap-1 text-sm">
         {items.map((item, index) => (
           <li key={index} className="flex min-w-0 items-center gap-1">
